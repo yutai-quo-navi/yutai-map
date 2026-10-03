@@ -43,15 +43,33 @@ async function init(){
 function renderChips(){
   els.chips.innerHTML = '';
   for(const c of companies){
+    const isSelected = selected.has(c.id);
     const b = document.createElement('button');
-    b.className='chip'; b.type='button'; b.textContent=c.name;
-    b.setAttribute('aria-pressed', selected.has(c.id) ? 'true' : 'false');
+    b.className='chip';
+    b.type='button';
+    b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+    b.setAttribute('aria-label', `${c.name}：${isSelected ? '選択中' : '未選択'}`);
+    b.innerHTML = `
+      <span class="chip-icon" aria-hidden="true">${isSelected ? '✓' : '＋'}</span>
+      <span class="chip-name">${esc(c.name)}</span>
+      <span class="chip-state">${isSelected ? '選択中' : '未選択'}</span>
+    `;
     b.addEventListener('click', () => {
       selected.has(c.id) ? selected.delete(c.id) : selected.add(c.id);
       persistSelection(); renderChips();
+      updateSelectionSummary();
       if(lastPosition) searchNearby(lastPosition);
     });
     els.chips.appendChild(b);
+  }
+  updateSelectionSummary();
+}
+
+function updateSelectionSummary(){
+  const summary = document.querySelector('#selectionSummary');
+  if(summary) summary.textContent = `${selected.size} / ${companies.length} 選択中`;
+  if(els.selectAll){
+    els.selectAll.textContent = selected.size === companies.length ? 'すべて解除' : 'すべて選択';
   }
 }
 
