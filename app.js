@@ -62,10 +62,25 @@ function toggleAll(){
 }
 function persistSelection(){ localStorage.setItem('yutai-selected', JSON.stringify([...selected])); }
 
-function requestLocation(){
-  if(!navigator.geolocation){ showError('このブラウザでは現在地取得に対応していません。'); return; }
+async function requestLocation(){
+  if(!navigator.geolocation){
+    showError('このブラウザでは現在地取得に対応していません。');
+    return;
+  }
+
   els.locate.disabled = true;
   setStatus('現在地を確認しています…');
+
+  let permissionState = '確認不可';
+  try {
+    if(navigator.permissions?.query){
+      const permission = await navigator.permissions.query({name:'geolocation'});
+      permissionState = permission.state;
+    }
+  } catch(e){
+    permissionState = 'Safariでは取得不可';
+  }
+
   navigator.geolocation.getCurrentPosition(
     p => {
       lastPosition = {lat:p.coords.latitude, lng:p.coords.longitude};
@@ -73,10 +88,29 @@ function requestLocation(){
     },
     err => {
       els.locate.disabled = false;
-      const msg = err.code === 1 ? '現在地の利用が許可されませんでした。ブラウザ設定から許可できます。' : '現在地を取得できませんでした。少し場所を変えて再度お試しください。';
-      showError(msg); setStatus('現在地は保存していません');
+
+      const codeName =
+        err.code === 1 ? 'PERMISSION_DENIED' :
+        err.code === 2 ? 'POSITION_UNAVAILABLE' :
+        err.code === 3 ? 'TIMEOUT' :
+        'UNKNOWN';
+
+      const base =
+        err.code === 1 ? '現在地の利用がブラウザ側から拒否されました。' :
+        err.code === 2 ? '現在地を特定できませんでした。' :
+        err.code === 3 ? '現在地の取得がタイムアウトしました。' :
+        '現在地を取得できませんでした。';
+
+      const detail = [
+        `エラー: ${codeName}（code ${err.code}）`,
+        `権限状態: ${permissionState}`,
+        err.message ? `ブラウザ応答: ${err.message}` : ''
+      ].filter(Boolean).join('<br>');
+
+      showError(`${base}<br><small>${detail}</small>`);
+      setStatus('現在地は保存していません');
     },
-    {enableHighAccuracy:true, timeout:10000, maximumAge:60000}
+    {enableHighAccuracy:true, timeout:15000, maximumAge:60000}
   );
 }
 
