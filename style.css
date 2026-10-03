@@ -404,3 +404,30 @@ html,body{
 .chip[aria-pressed="true"] .chip-state{
   color:#5f6f7f !important;
 }
+
+/* unify interactive controls with pale blue surface */
+.primary-button,
+.radius-row select,
+.feedback-form select,
+.feedback-form input,
+.feedback-form textarea,
+.secondary-button,
+.feedback-submit{
+  background:#E8F3FE !important;
+  border-color:#D7E7F7 !important;
+  color:#2f2f2f !important;
+}
+.primary-button:hover,
+.secondary-button:hover,
+.feedback-submit:hover{
+  background:#E1EFFC !important;
+}
+.card-actions .map-link,
+.card-actions a,
+.card-actions button,
+.card-actions .feedback-link{
+  color:#5f6f7f !important;
+}
+.chip[aria-pressed="true"] .chip-state{
+  color:#5f6f7f !important;
+}
