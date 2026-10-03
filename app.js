@@ -306,6 +306,10 @@ async function queryOpenPOI(batch, pos, radius){
 }
 
 function classify(p, company, origin){
+  if(company.id === 'colowide'){
+    const country = normalize(p.country || p.country_code || p.countryCode || '');
+    if(country && !['japan','jp','日本'].includes(country)) return null;
+  }
   const hay = normalize(`${p.name||''} ${p.name_kana||''}`);
   const excludedLegacy = (company.excludedNames || []).some(x => hay.includes(normalize(x)));
   const excludedBrand = (company.excludedBrands || []).some(x => hay.includes(normalize(x)));
