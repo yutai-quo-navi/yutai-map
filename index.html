@@ -22,7 +22,7 @@
       <p class="lead">いまいる場所から、優待が使える店を近い順に。</p>
 
       <div class="privacy-note">
-        <div class="privacy-note__icon">🔒</div>
+        
         <div>
           <span class="privacy-title">現在地は運営者側で収集・保存しません</span>
           <p>検索時のみOpenPOI APIへ位置座標を送信します。ログイン・X連携はありません。</p>
@@ -30,7 +30,6 @@
       </div>
 
       <button id="locateButton" class="primary-button">
-        <span class="primary-button__icon">◎</span>
         現在地から探す
       </button>
 
@@ -61,16 +60,15 @@
         <span id="resultCount" class="result-count">—</span>
       </div>
       <div id="results" class="results empty-state">
-        <div class="empty-icon">📍</div>
         <p>現在地から探すと<br>ここに近い優待店が表示されます</p>
       </div>
     </section>
   </main>
 
   <nav class="bottom-nav" aria-label="下部ナビゲーション">
-    <button class="bottom-nav__item active" data-action="nearby">⌖<span>近く</span></button>
-    <button class="bottom-nav__item" data-action="filter">☷<span>優待</span></button>
-    <button class="bottom-nav__item" data-action="privacy">🔒<span>安心</span></button>
+    <button class="bottom-nav__item active" data-action="nearby"><span>近く</span></button>
+    <button class="bottom-nav__item" data-action="filter"><span>優待</span></button>
+    <button class="bottom-nav__item" data-action="privacy"><span>安心</span></button>
   </nav>
 
   <dialog id="privacyDialog" class="privacy-dialog">
