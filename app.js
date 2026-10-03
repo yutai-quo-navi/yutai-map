@@ -176,8 +176,10 @@ async function queryOpenPOI(batch, pos, radius){
 
 function classify(p, company, origin){
   const hay = normalize(`${p.name||''} ${p.name_kana||''}`);
-  const excluded = company.excludedNames.some(x => hay.includes(normalize(x)));
-  if(excluded) return null;
+  const excludedLegacy = (company.excludedNames || []).some(x => hay.includes(normalize(x)));
+  const excludedBrand = (company.excludedBrands || []).some(x => hay.includes(normalize(x)));
+  const excludedStore = (company.excludedStores || []).some(x => hay.includes(normalize(x)));
+  if(excludedLegacy || excludedBrand || excludedStore) return null;
   const alias = company.aliases.find(x => hay.includes(normalize(x)));
   if(!alias) return null;
   const lat = Number(p.lat), lng = Number(p.lng);
