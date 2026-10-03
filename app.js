@@ -259,11 +259,17 @@ function renderResults(items, radius){
   els.results.className='results'; els.results.innerHTML='';
   for(const x of items){
     const card=document.createElement('article'); card.className='card';
-    const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${x.lat},${x.lng}`)}`;
+    const storeName = x.name || x.matchedAlias;
+    const storeAddress = x.address || [x.prefecture,x.city].filter(Boolean).join('');
+    const mapQuery = [storeName, storeAddress].filter(Boolean).join(' ');
+    const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
     card.innerHTML=`
       <div class="card-top">
         <div class="distance">${distanceText(x.distance)}<small>現在地から</small></div>
-        <div class="store"><h3 class="store-name">${esc(x.name||x.matchedAlias)}</h3><p class="store-address">${esc(x.address||[x.prefecture,x.city].filter(Boolean).join(''))}</p></div>
+        <div class="store">
+          <h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener">${esc(storeName)}</a></h3>
+          <p class="store-address">${esc(storeAddress)}</p>
+        </div>
       </div>
       <div class="badges">
         <span class="badge company">${esc(x.company.name)}優待</span>
@@ -273,7 +279,6 @@ function renderResults(items, radius){
       </div>
       <div class="card-actions">
         <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式</a>
-        <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図</a>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
     card.querySelector('.feedback-link').addEventListener('click', () => openFeedback({
