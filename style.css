@@ -52,3 +52,15 @@ h1{font-size:20px;line-height:1.2;margin:2px 0 0}h1 span{font-size:12px;color:va
 strong{font-weight:600}
 
 .privacy-title{display:block;font-size:13px;font-weight:500}
+
+.feedback-dialog{width:min(92vw,560px);max-height:86vh;border:0;border-radius:20px;padding:0;box-shadow:0 24px 70px rgba(0,0,0,.22)}
+.feedback-dialog::backdrop{background:rgba(0,0,0,.42);backdrop-filter:blur(2px)}
+.feedback-form{display:grid;gap:13px;padding:0 18px 20px}
+.feedback-intro,.feedback-note{font-size:12px;line-height:1.6;color:var(--muted);margin:0}
+.feedback-form label{display:grid;gap:6px;font-size:12px;color:var(--muted)}
+.feedback-form input,.feedback-form select,.feedback-form textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);padding:11px 12px;font:inherit;font-size:14px}
+.feedback-form textarea{resize:vertical}
+.feedback-submit{margin-top:2px}
+.footer-button{border:0;background:transparent;color:inherit;padding:0;font:inherit;text-decoration:underline}
+.card-actions{grid-template-columns:1fr 1fr}
+.card-actions .feedback-link{grid-column:1 / -1;background:#fff;color:var(--muted)}
