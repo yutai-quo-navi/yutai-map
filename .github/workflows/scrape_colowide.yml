@@ -2,6 +2,8 @@ name: Build Colowide store DB
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "15 3 1 * *"
   push:
     paths:
       - "tools/scrape_colowide.py"
@@ -10,21 +12,39 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: colowide-store-db
+  cancel-in-progress: false
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - run: pip install beautifulsoup4
-      - run: python tools/scrape_colowide.py
-      - name: Commit generated DB
+
+      - name: Build current, snapshot and diff
+        run: python tools/scrape_colowide.py
+
+      - name: Show diff summary
+        run: cat data/colowide/last_diff.md
+
+      - name: Commit generated database
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/colowide_stores.json
+          git add data/colowide/current.json
+          git add data/colowide/history.json
+          git add data/colowide/last_diff.md
+          git add data/colowide/snapshots/
+          git add data/colowide/diffs/
           git diff --cached --quiet && exit 0
-          git commit -m "Generate Colowide eligible store database"
+          git commit -m "Update Colowide store DB: $(date -u +%Y-%m-%d)"
           git push
