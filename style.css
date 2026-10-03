@@ -351,3 +351,46 @@ strong{font-weight:500}
 .chip-state{
   border-left:.5px solid #eeeeee !important;
 }
+
+/* 2026-10-03 white-base surface system */
+html,body{
+  background:#ffffff !important;
+}
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --line:#ededed;
+}
+.topbar{
+  background:#f4f4f4 !important;
+}
+.controls{
+  background:#f5f5f5 !important;
+}
+.radius-row select{
+  background:#f1f1f1 !important;
+}
+.primary-button{
+  background:#f5f5f5 !important;
+}
+.privacy-note{
+  background:transparent !important;
+}
+.results-section,
+.results,
+.card,
+.footer{
+  background:#ffffff !important;
+}
+.bottom-nav{
+  background:#f4f4f4 !important;
+}
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea{
+  background:#f5f5f5 !important;
+}
+.chip,
+.chip[aria-pressed="true"]{
+  background:#ffffff !important;
+}
