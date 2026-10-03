@@ -309,3 +309,45 @@ strong{font-weight:500}
   background:transparent !important;
   box-shadow:none !important;
 }
+
+/* 2026-10-03 hairline borders */
+:root{
+  --line:#eeeeee;
+}
+.controls,
+.privacy-note,
+.feedback-dialog,
+.privacy-dialog{
+  border-width:.5px !important;
+  border-color:#eeeeee !important;
+}
+.chip,
+.radius-row select,
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea,
+.primary-button,
+.secondary-button,
+.feedback-submit{
+  border-width:.5px !important;
+  border-color:#e8e8e8 !important;
+}
+.card{
+  border:0 !important;
+  border-bottom:.5px solid #eeeeee !important;
+}
+.card:first-child{
+  border-top:.5px solid #eeeeee !important;
+}
+.radius-row{
+  border-top:.5px solid #eeeeee !important;
+}
+.topbar{
+  border-bottom:.5px solid #eeeeee !important;
+}
+.bottom-nav{
+  border-top:.5px solid #eeeeee !important;
+}
+.chip-state{
+  border-left:.5px solid #eeeeee !important;
+}
