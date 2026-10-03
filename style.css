@@ -238,3 +238,74 @@ strong{font-weight:500}
 }
 .privacy-title{font-size:12px !important;color:#555 !important}
 .privacy-note p{font-size:11px !important;color:#8a8a8a !important}
+
+/* 2026-10-03 final no-icon / no-solid-button policy */
+.primary-button,
+.secondary-button,
+.feedback-submit,
+.card-actions a,
+.card-actions button,
+.card-actions .map-link,
+.card-actions .feedback-link{
+  background:transparent !important;
+  color:#555 !important;
+  border:1px solid #e3e3e3 !important;
+  box-shadow:none !important;
+  font-weight:400 !important;
+}
+.primary-button{
+  min-height:48px !important;
+  border-radius:12px !important;
+  color:#444 !important;
+}
+.secondary-button,
+.feedback-submit{
+  border-radius:12px !important;
+  color:#444 !important;
+}
+.card-actions{
+  display:flex !important;
+  gap:18px !important;
+  align-items:center !important;
+}
+.card-actions a,
+.card-actions button,
+.card-actions .map-link,
+.card-actions .feedback-link{
+  border:0 !important;
+  padding:0 !important;
+  border-radius:0 !important;
+  color:#6d6d6d !important;
+  font-size:12px !important;
+}
+.card-actions .map-link{color:#397c6b !important}
+.chip-icon{display:none !important}
+.chip{
+  border:1px solid #e3e3e3 !important;
+  background:#fff !important;
+  color:#444 !important;
+}
+.chip[aria-pressed="true"]{
+  background:#fff !important;
+  color:#333 !important;
+  border-color:#cfcfcf !important;
+}
+.chip-state{
+  color:#888 !important;
+  border-left:1px solid #ededed !important;
+}
+.chip[aria-pressed="true"] .chip-state{
+  color:#397c6b !important;
+}
+.badge.company{
+  background:#f4f4f4 !important;
+  color:#555 !important;
+}
+.badge.beta{
+  background:#f4f4f4 !important;
+  color:#777 !important;
+}
+.icon-button{
+  background:transparent !important;
+  box-shadow:none !important;
+}
