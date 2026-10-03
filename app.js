@@ -58,7 +58,6 @@ function renderChips(){
     b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
     b.setAttribute('aria-label', `${c.name}：${isSelected ? '選択中' : '未選択'}`);
     b.innerHTML = `
-      <span class="chip-icon" aria-hidden="true">${isSelected ? '✓' : '＋'}</span>
       <span class="chip-name">${esc(c.name)}</span>
       <span class="chip-state">${isSelected ? '選択中' : '未選択'}</span>
     `;
@@ -233,8 +232,8 @@ function renderResults(items, radius){
         <span class="badge beta">β 要公式確認</span>
       </div>
       <div class="card-actions">
-        <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式 ↗</a>
-        <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図 ↗</a>
+        <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式</a>
+        <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図</a>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
     card.querySelector('.feedback-link').addEventListener('click', () => openFeedback({
