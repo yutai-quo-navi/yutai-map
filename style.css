@@ -77,3 +77,73 @@ strong{font-weight:500}
 .eyebrow{font-weight:500}
 .lead{font-weight:500}
 .footer{color:#7a7a7a}
+
+/* 2026-10-03: airy minimal pass */
+.wrap{max-width:760px;padding:24px 20px}
+.hero,.controls,.results-section{margin-bottom:28px}
+.topbar{border-bottom:1px solid #ededed}
+.lead{font-size:24px;line-height:1.55;margin:10px 2px 22px;color:#303030}
+.privacy-note{padding:14px 16px;border-color:#ececec;background:#fff;border-radius:16px}
+.primary-button{
+  min-height:54px;
+  background:#fff;
+  color:#2f2f2f;
+  border:1px solid #dedede;
+  border-radius:14px;
+  box-shadow:none;
+}
+.primary-button__icon{color:#10a37f}
+.primary-button:active{background:#f5f5f5}
+.controls{padding:18px;border-color:#ececec;background:#fff}
+.chips{padding:16px 0 10px;gap:10px}
+.chip{background:#fff;border-color:#e2e2e2;border-radius:12px}
+.chip[aria-pressed="true"]{background:#f3faf7;border-color:#b9dfd3}
+.radius-row{margin-top:14px;padding-top:16px;border-top-color:#eeeeee}
+.radius-row select{background:#fff;border-color:#dedede}
+.results{gap:0}
+.card{
+  border:0;
+  border-bottom:1px solid #ececec;
+  border-radius:0;
+  padding:20px 2px 22px;
+  background:transparent;
+}
+.card:first-child{border-top:1px solid #ececec}
+.card-top{gap:16px}
+.distance{min-width:68px;color:#454545}
+.store-name{font-size:16px;color:#2f2f2f}
+.store-address{margin-top:6px;color:#777}
+.badges{margin-top:12px;gap:8px}
+.badge{background:#f4f4f4;color:#666;padding:5px 8px}
+.badge.company{background:#f1f8f5;color:#286b59}
+.badge.beta{background:#f5f5f5;color:#8a8a8a}
+.card-actions{
+  display:flex;
+  gap:16px;
+  margin-top:14px;
+}
+.card-actions a,.card-actions button{
+  border:0;
+  background:transparent;
+  padding:4px 0;
+  border-radius:0;
+  color:#5a5a5a;
+  text-decoration:none;
+  min-width:0;
+}
+.card-actions .map-link{
+  background:transparent;
+  color:#10a37f;
+  border:0;
+}
+.card-actions .feedback-link{
+  grid-column:auto;
+  background:transparent;
+  color:#8a8a8a;
+}
+.empty-state{
+  border:0;
+  background:transparent;
+  min-height:180px;
+}
+.footer{padding-top:18px}
