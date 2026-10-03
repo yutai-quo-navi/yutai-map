@@ -6,12 +6,12 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="現在地の近くで株主優待が使える店舗を探すスマートフォン向け検索ツール">
   <title>優待近場検索 β</title>
-  <link rel="stylesheet" href="./style.css?v=20261003-1133">
+  <link rel="stylesheet" href="./style.css?v=20261003-1145">
 </head>
 <body>
   <header class="topbar">
     <div>
-      <div class="eyebrow">株主優待 × 現在地</div>
+      <div class="eyebrow">株主優待 × 場所検索</div>
       <h1>優待近場検索 <span>β</span></h1>
     </div>
     <button id="privacyButton" class="top-link" aria-label="プライバシーについて">プライバシー</button>
@@ -29,9 +29,20 @@
         </div>
       </div>
 
-      <button id="locateButton" class="primary-button">
-        現在地から探す
-      </button>
+      <div id="searchMode" class="search-mode" aria-label="検索地点">
+        <button type="button" class="search-mode-button" data-mode="current" aria-pressed="true">現在地</button>
+        <button type="button" class="search-mode-button" data-mode="place" aria-pressed="false">場所を指定</button>
+      </div>
+
+      <div id="currentSearchPanel">
+        <button id="locateButton" class="primary-button">現在地から探す</button>
+      </div>
+
+      <form id="placeSearchPanel" class="place-search-panel" hidden>
+        <input id="placeInput" type="search" autocomplete="off" placeholder="福岡、天神、博多駅、ホテル名など">
+        <button class="primary-button" type="submit">この場所で探す</button>
+        <div id="placeSuggestions" class="place-suggestions" hidden></div>
+      </form>
 
       <p id="status" class="status" aria-live="polite">ボタンを押すまで現在地は取得しません</p>
     </section>
@@ -146,6 +157,6 @@
     <p>店舗・優待情報は変更される場合があります。利用前に各社公式情報をご確認ください。</p>
   </footer>
 
-  <script src="./app.js?v=20261003-1133" type="module"></script>
+  <script src="./app.js?v=20261003-1145" type="module"></script>
 </body>
 </html>
