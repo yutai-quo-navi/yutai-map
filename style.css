@@ -147,3 +147,37 @@ strong{font-weight:500}
   min-height:180px;
 }
 .footer{padding-top:18px}
+
+/* Remove CTA-style buttons from result rows entirely */
+.card-actions{
+  display:flex !important;
+  align-items:center;
+  gap:18px !important;
+  margin-top:14px;
+}
+.card-actions a,
+.card-actions button,
+.card-actions .map-link,
+.card-actions .feedback-link{
+  display:inline !important;
+  width:auto !important;
+  min-width:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  color:#6b6b6b !important;
+  font-size:12px !important;
+  font-weight:400 !important;
+  line-height:1.5 !important;
+  text-align:left !important;
+}
+.card-actions .map-link{
+  color:#0f7b61 !important;
+}
+.card-actions a:hover,
+.card-actions button:hover{
+  text-decoration:underline;
+}
