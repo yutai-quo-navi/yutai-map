@@ -1,4 +1,6 @@
 const API = 'https://api.openpoiapi.com/v1/search';
+const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
+const betaCompanyIds = new Set(['create','skylark']);
 const qs = (s) => document.querySelector(s);
 
 const els = {
@@ -10,13 +12,18 @@ const els = {
   feedbackClose: qs('#feedbackClose'), feedbackForm: qs('#feedbackForm'),
   feedbackType: qs('#feedbackType'), feedbackCompany: qs('#feedbackCompany'),
   feedbackStore: qs('#feedbackStore'), feedbackUrl: qs('#feedbackUrl'),
-  feedbackNote: qs('#feedbackNote'), categoryFilters: qs('#categoryFilters')
+  feedbackNote: qs('#feedbackNote'), categoryFilters: qs('#categoryFilters'),
+  searchMode: qs('#searchMode'), currentSearchPanel: qs('#currentSearchPanel'),
+  placeSearchPanel: qs('#placeSearchPanel'), placeInput: qs('#placeInput'),
+  placeSuggestions: qs('#placeSuggestions')
 };
 
 let companies = [];
 let lastPosition = null;
+let lastCenterLabel = '現在地';
 let searching = false;
 let lastResults = [];
+let suggestTimer = null;
 let activeCategory = localStorage.getItem('yutai-category') || 'all';
 const categoryLabels = {
   all:'すべて',
@@ -26,7 +33,7 @@ const categoryLabels = {
   foodcourt:'フードコート',
   other:'その他'
 };
-const selected = new Set(JSON.parse(localStorage.getItem('yutai-selected') || '["create","colowide","skylark"]'));
+const selected = new Set(JSON.parse(localStorage.getItem('yutai-selected') || '["create","skylark"]'));
 els.radius.value = localStorage.getItem('yutai-radius') || '3000';
 
 init();
@@ -34,6 +41,9 @@ init();
 async function init(){
   try {
     companies = await fetch('./data/companies.json', {cache:'no-store'}).then(r => r.json());
+    for(const id of [...selected]) if(!betaCompanyIds.has(id)) selected.delete(id);
+    if(!selected.size){ selected.add('create'); selected.add('skylark'); }
+    persistSelection();
     renderChips();
     renderCategoryFilters();
   } catch(e){
@@ -41,6 +51,12 @@ async function init(){
   }
 
   els.locate.addEventListener('click', requestLocation);
+  els.searchMode?.querySelectorAll('.search-mode-button').forEach(btn => btn.addEventListener('click', () => setSearchMode(btn.dataset.mode)));
+  els.placeSearchPanel?.addEventListener('submit', submitPlaceSearch);
+  els.placeInput?.addEventListener('input', () => {
+    clearTimeout(suggestTimer);
+    suggestTimer = setTimeout(loadPlaceSuggestions, 220);
+  });
   els.radius.addEventListener('change', () => {
     localStorage.setItem('yutai-radius', els.radius.value);
     if(lastPosition) searchNearby(lastPosition);
@@ -61,7 +77,7 @@ async function init(){
 
 function renderChips(){
   els.chips.innerHTML = '';
-  for(const c of companies){
+  for(const c of companies.filter(c => betaCompanyIds.has(c.id))){
     const isSelected = selected.has(c.id);
     const b = document.createElement('button');
     b.className='chip';
@@ -85,18 +101,116 @@ function renderChips(){
 
 function updateSelectionSummary(){
   const summary = document.querySelector('#selectionSummary');
-  if(summary) summary.textContent = `${selected.size} / ${companies.length} 選択中`;
+  const visibleCompanies = companies.filter(c => betaCompanyIds.has(c.id));
+  const selectedVisible = visibleCompanies.filter(c => selected.has(c.id)).length;
+  if(summary) summary.textContent = `${selectedVisible} / ${visibleCompanies.length} 選択中`;
   if(els.selectAll){
-    els.selectAll.textContent = selected.size === companies.length ? 'すべて解除' : 'すべて選択';
+    els.selectAll.textContent = selectedVisible === visibleCompanies.length ? 'すべて解除' : 'すべて選択';
   }
 }
 
 function toggleAll(){
-  if(selected.size === companies.length) selected.clear(); else companies.forEach(c => selected.add(c.id));
+  const visibleCompanies = companies.filter(c => betaCompanyIds.has(c.id));
+  const allSelected = visibleCompanies.every(c => selected.has(c.id));
+  visibleCompanies.forEach(c => allSelected ? selected.delete(c.id) : selected.add(c.id));
   persistSelection(); renderChips();
-  if(lastPosition) searchNearby(lastPosition);
+  if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
 }
 function persistSelection(){ localStorage.setItem('yutai-selected', JSON.stringify([...selected])); }
+
+function setSearchMode(mode){
+  const current = mode !== 'place';
+  els.currentSearchPanel.hidden = !current;
+  els.placeSearchPanel.hidden = current;
+  els.searchMode.querySelectorAll('.search-mode-button').forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.dataset.mode === mode ? 'true' : 'false');
+  });
+  if(mode === 'place'){
+    setStatus('地名・駅名・施設名を入力してください');
+    setTimeout(() => els.placeInput.focus(), 0);
+  }else{
+    setStatus('ボタンを押すまで現在地は取得しません');
+  }
+}
+
+async function loadPlaceSuggestions(){
+  const q = els.placeInput.value.trim();
+  if(q.length < 2){
+    els.placeSuggestions.hidden = true;
+    els.placeSuggestions.innerHTML = '';
+    return;
+  }
+  try{
+    const params = new URLSearchParams({q, limit:'8', fields:'minimal'});
+    const res = await fetch(`${SUGGEST_API}?${params}`);
+    if(!res.ok) return;
+    const data = await res.json();
+    const candidates = [];
+    for(const v of (data.vocabulary || [])){
+      if(v.type === 'place' && Array.isArray(v.center)){
+        candidates.push({label:v.label, sub:[v.prefecture,v.city].filter(Boolean).join(' '), lat:Number(v.center[1]), lng:Number(v.center[0])});
+      }
+    }
+    for(const s of (data.suggestions || [])){
+      candidates.push({label:s.name, sub:s.address || '', lat:Number(s.lat), lng:Number(s.lng)});
+    }
+    renderPlaceSuggestions(candidates.slice(0,8));
+  }catch(e){
+    console.error(e);
+  }
+}
+
+function renderPlaceSuggestions(items){
+  els.placeSuggestions.innerHTML = '';
+  if(!items.length){
+    els.placeSuggestions.hidden = true;
+    return;
+  }
+  for(const item of items){
+    if(!Number.isFinite(item.lat) || !Number.isFinite(item.lng)) continue;
+    const b = document.createElement('button');
+    b.type='button';
+    b.className='place-suggestion';
+    b.innerHTML = `<span>${esc(item.label)}</span>${item.sub ? `<small>${esc(item.sub)}</small>` : ''}`;
+    b.addEventListener('click', () => {
+      els.placeInput.value = item.label;
+      els.placeSuggestions.hidden = true;
+      searchNearby({lat:item.lat,lng:item.lng}, item.label);
+    });
+    els.placeSuggestions.appendChild(b);
+  }
+  els.placeSuggestions.hidden = !els.placeSuggestions.children.length;
+}
+
+async function submitPlaceSearch(e){
+  e.preventDefault();
+  const q = els.placeInput.value.trim();
+  if(!q) return;
+  setStatus('場所を探しています…');
+  try{
+    const params = new URLSearchParams({q, limit:'8', fields:'minimal'});
+    const res = await fetch(`${SUGGEST_API}?${params}`);
+    if(!res.ok) throw new Error('suggest failed');
+    const data = await res.json();
+    const places = (data.vocabulary || []).filter(v => v.type === 'place' && Array.isArray(v.center));
+    let pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
+    if(pick){
+      els.placeSuggestions.hidden = true;
+      return searchNearby({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label);
+    }
+    const s = (data.suggestions || [])[0];
+    if(s && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lng))){
+      els.placeSuggestions.hidden = true;
+      return searchNearby({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q);
+    }
+    showError('場所を特定できませんでした。地名・駅名・施設名を少し詳しく入力してください。');
+    setStatus('場所を特定できませんでした');
+  }catch(e){
+    console.error(e);
+    showError('場所の検索中にエラーが発生しました。');
+    setStatus('場所を検索できませんでした');
+  }
+}
 
 async function requestLocation(){
   if(!navigator.geolocation){
@@ -120,7 +234,8 @@ async function requestLocation(){
   navigator.geolocation.getCurrentPosition(
     p => {
       lastPosition = {lat:p.coords.latitude, lng:p.coords.longitude};
-      searchNearby(lastPosition);
+      lastCenterLabel = '現在地';
+      searchNearby(lastPosition, lastCenterLabel);
     },
     err => {
       els.locate.disabled = false;
@@ -150,9 +265,11 @@ async function requestLocation(){
   );
 }
 
-async function searchNearby(pos){
+async function searchNearby(pos, centerLabel='現在地'){
   if(searching) return;
-  const targets = companies.filter(c => selected.has(c.id));
+  lastPosition = pos;
+  lastCenterLabel = centerLabel;
+  const targets = companies.filter(c => betaCompanyIds.has(c.id) && selected.has(c.id));
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
   searching = true; els.locate.disabled = true;
@@ -168,7 +285,7 @@ async function searchNearby(pos){
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
     lastResults = normalized;
     renderFilteredResults(radius);
-    setStatus(`${radius/1000}km以内を検索しました・現在地は運営者側に保存していません`);
+    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
   } catch(e){
     console.error(e); showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
     setStatus('検索できませんでした');
@@ -265,7 +382,7 @@ function renderResults(items, radius){
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
     card.innerHTML=`
       <div class="card-top">
-        <div class="distance">${distanceText(x.distance)}<small>現在地から</small></div>
+        <div class="distance">${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
         <div class="store">
           <h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener">${esc(storeName)}</a></h3>
           <p class="store-address">${esc(storeAddress)}</p>
