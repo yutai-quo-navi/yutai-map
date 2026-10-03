@@ -394,3 +394,13 @@ html,body{
 .chip[aria-pressed="true"]{
   background:#ffffff !important;
 }
+
+/* selected benefit chip color from reference image */
+.chip[aria-pressed="true"]{
+  background:#E8F3FE !important;
+  border-color:#D7E7F7 !important;
+  color:#2f2f2f !important;
+}
+.chip[aria-pressed="true"] .chip-state{
+  color:#5f6f7f !important;
+}
