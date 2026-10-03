@@ -1,6 +1,8 @@
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
-const betaCompanyIds = new Set(['create','skylark']);
+const baseCompanyIds = new Set(['create','skylark']);
+const devColowide = new URLSearchParams(location.search).get('dev') === 'colowide';
+const visibleCompanyIds = new Set(devColowide ? ['create','skylark','colowide'] : ['create','skylark']);
 const qs = (s) => document.querySelector(s);
 
 const els = {
@@ -41,7 +43,7 @@ init();
 async function init(){
   try {
     companies = await fetch('./data/companies.json', {cache:'no-store'}).then(r => r.json());
-    for(const id of [...selected]) if(!betaCompanyIds.has(id)) selected.delete(id);
+    for(const id of [...selected]) if(!visibleCompanyIds.has(id)) selected.delete(id);
     if(!selected.size){ selected.add('create'); selected.add('skylark'); }
     persistSelection();
     renderChips();
@@ -77,7 +79,7 @@ async function init(){
 
 function renderChips(){
   els.chips.innerHTML = '';
-  for(const c of companies.filter(c => betaCompanyIds.has(c.id))){
+  for(const c of companies.filter(c => visibleCompanyIds.has(c.id))){
     const isSelected = selected.has(c.id);
     const b = document.createElement('button');
     b.className='chip';
@@ -101,7 +103,7 @@ function renderChips(){
 
 function updateSelectionSummary(){
   const summary = document.querySelector('#selectionSummary');
-  const visibleCompanies = companies.filter(c => betaCompanyIds.has(c.id));
+  const visibleCompanies = companies.filter(c => visibleCompanyIds.has(c.id));
   const selectedVisible = visibleCompanies.filter(c => selected.has(c.id)).length;
   if(summary) summary.textContent = `${selectedVisible} / ${visibleCompanies.length} 選択中`;
   if(els.selectAll){
@@ -110,7 +112,7 @@ function updateSelectionSummary(){
 }
 
 function toggleAll(){
-  const visibleCompanies = companies.filter(c => betaCompanyIds.has(c.id));
+  const visibleCompanies = companies.filter(c => visibleCompanyIds.has(c.id));
   const allSelected = visibleCompanies.every(c => selected.has(c.id));
   visibleCompanies.forEach(c => allSelected ? selected.delete(c.id) : selected.add(c.id));
   persistSelection(); renderChips();
@@ -269,7 +271,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   if(searching) return;
   lastPosition = pos;
   lastCenterLabel = centerLabel;
-  const targets = companies.filter(c => betaCompanyIds.has(c.id) && selected.has(c.id));
+  const targets = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id));
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
   searching = true; els.locate.disabled = true;
