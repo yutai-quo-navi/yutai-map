@@ -92,7 +92,53 @@
     </div>
   </dialog>
 
+  <dialog id="feedbackDialog" class="feedback-dialog">
+    <div class="dialog-head">
+      <h2>情報提供</h2>
+      <button id="feedbackClose" class="icon-button" aria-label="閉じる">×</button>
+    </div>
+    <form id="feedbackForm" class="feedback-form">
+      <p class="feedback-intro">優待情報の精度向上にご協力ください。内容は確認後に反映します。</p>
+
+      <label>
+        内容
+        <select id="feedbackType" required>
+          <option value="used">この店で優待を使えた</option>
+          <option value="not-used">この店では優待を使えない</option>
+          <option value="missing-brand">使えるブランドが抜けている</option>
+          <option value="wrong-company">会社・ブランドの判定が違う</option>
+          <option value="other">その他</option>
+        </select>
+      </label>
+
+      <label>
+        優待会社
+        <input id="feedbackCompany" type="text" placeholder="例：クリレス">
+      </label>
+
+      <label>
+        店名・ブランド名
+        <input id="feedbackStore" type="text" placeholder="例：みのるダイニング">
+      </label>
+
+      <label>
+        公式情報URL（任意）
+        <input id="feedbackUrl" type="url" inputmode="url" placeholder="https://">
+      </label>
+
+      <label>
+        補足（任意）
+        <textarea id="feedbackNote" rows="4" placeholder="使えた時期、対象外情報、店舗名の補足など"></textarea>
+      </label>
+
+      <p class="feedback-note">送信するとGitHubの投稿画面を開きます。内容は自動反映されません。</p>
+      <button class="primary-button feedback-submit" type="submit">情報を送る</button>
+    </form>
+  </dialog>
+
   <footer class="footer">
+    <button id="feedbackButton" class="footer-button" type="button">情報提供</button>
+    <span>・</span>
     <a href="./privacy.html">プライバシー</a>
     <span>・</span>
     <a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener">出典: OpenPOI API</a>
