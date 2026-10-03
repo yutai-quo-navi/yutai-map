@@ -5,7 +5,12 @@ const els = {
   locate: qs('#locateButton'), status: qs('#status'), chips: qs('#companyChips'),
   radius: qs('#radiusSelect'), results: qs('#results'), count: qs('#resultCount'),
   selectAll: qs('#selectAllButton'), privacy: qs('#privacyDialog'),
-  privacyButton: qs('#privacyButton'), privacyClose: qs('#privacyClose')
+  privacyButton: qs('#privacyButton'), privacyClose: qs('#privacyClose'),
+  feedback: qs('#feedbackDialog'), feedbackButton: qs('#feedbackButton'),
+  feedbackClose: qs('#feedbackClose'), feedbackForm: qs('#feedbackForm'),
+  feedbackType: qs('#feedbackType'), feedbackCompany: qs('#feedbackCompany'),
+  feedbackStore: qs('#feedbackStore'), feedbackUrl: qs('#feedbackUrl'),
+  feedbackNote: qs('#feedbackNote')
 };
 
 let companies = [];
@@ -32,6 +37,9 @@ async function init(){
   els.selectAll.addEventListener('click', toggleAll);
   els.privacyButton.addEventListener('click', () => els.privacy.showModal());
   els.privacyClose.addEventListener('click', () => els.privacy.close());
+  els.feedbackButton.addEventListener('click', () => openFeedback());
+  els.feedbackClose.addEventListener('click', () => els.feedback.close());
+  els.feedbackForm.addEventListener('submit', submitFeedback);
   document.querySelectorAll('.bottom-nav__item').forEach(btn => btn.addEventListener('click', () => {
     const action = btn.dataset.action;
     if(action === 'nearby') window.scrollTo({top:0,behavior:'smooth'});
@@ -227,10 +235,71 @@ function renderResults(items, radius){
       <div class="card-actions">
         <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式</a>
         <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図で見る</a>
+        <button class="feedback-link" type="button">情報修正</button>
       </div>`;
+    card.querySelector('.feedback-link').addEventListener('click', () => openFeedback({
+      company: x.company.name,
+      store: x.name || x.matchedAlias
+    }));
     els.results.appendChild(card);
   }
 }
+
+function openFeedback(prefill={}){
+  els.feedbackCompany.value = prefill.company || '';
+  els.feedbackStore.value = prefill.store || '';
+  els.feedbackUrl.value = '';
+  els.feedbackNote.value = '';
+  els.feedbackType.value = prefill.store ? 'used' : 'missing-brand';
+  els.feedback.showModal();
+}
+
+function submitFeedback(e){
+  e.preventDefault();
+
+  const typeLabels = {
+    'used':'この店で優待を使えた',
+    'not-used':'この店では優待を使えない',
+    'missing-brand':'使えるブランドが抜けている',
+    'wrong-company':'会社・ブランドの判定が違う',
+    'other':'その他'
+  };
+
+  const type = typeLabels[els.feedbackType.value] || '情報提供';
+  const company = els.feedbackCompany.value.trim();
+  const store = els.feedbackStore.value.trim();
+  const sourceUrl = els.feedbackUrl.value.trim();
+  const note = els.feedbackNote.value.trim();
+
+  const titleParts = ['[情報提供]', company, store].filter(Boolean);
+  const title = titleParts.join(' ');
+  const body = [
+    '### 種別',
+    type,
+    '',
+    '### 優待会社',
+    company || '未入力',
+    '',
+    '### 店名・ブランド名',
+    store || '未入力',
+    '',
+    '### 公式情報URL',
+    sourceUrl || '未入力',
+    '',
+    '### 補足',
+    note || 'なし',
+    '',
+    '---',
+    '※この投稿には現在地の座標は含まれません。'
+  ].join('\n');
+
+  const url = new URL('https://github.com/yutai-quo-navi/yutai-map/issues/new');
+  url.searchParams.set('title', title);
+  url.searchParams.set('body', body);
+  window.open(url.toString(), '_blank', 'noopener');
+  els.feedback.close();
+}
+
 function showError(msg){ els.results.className='results'; els.results.innerHTML=`<div class="error-box">${esc(msg)}</div>`; els.count.textContent='—'; }
 function setStatus(msg){ els.status.textContent=msg; }
 function esc(s){ return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
