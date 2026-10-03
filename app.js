@@ -147,7 +147,7 @@ async function searchNearby(pos){
 
   searching = true; els.locate.disabled = true;
   els.results.className='results';
-  els.results.innerHTML='<div class="empty-state"><div class="empty-icon">⌛</div><p>近くの優待店を探しています…</p></div>';
+  els.results.innerHTML='<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
   setStatus('OpenPOIで近隣店舗を検索中…');
 
   try{
@@ -215,7 +215,7 @@ function renderResults(items, radius){
   els.count.textContent = `${items.length}件`;
   if(!items.length){
     els.results.className='results empty-state';
-    els.results.innerHTML=`<div class="empty-icon">🤷</div><p>${radius/1000}km以内では<br>対象店舗を見つけられませんでした</p>`;
+    els.results.innerHTML=`<p>${radius/1000}km以内では<br>対象店舗を見つけられませんでした</p>`;
     return;
   }
   els.results.className='results'; els.results.innerHTML='';
@@ -228,7 +228,7 @@ function renderResults(items, radius){
         <div class="store"><h3 class="store-name">${esc(x.name||x.matchedAlias)}</h3><p class="store-address">${esc(x.address||[x.prefecture,x.city].filter(Boolean).join(''))}</p></div>
       </div>
       <div class="badges">
-        <span class="badge company">🎁 ${esc(x.company.name)}優待</span>
+        <span class="badge company">${esc(x.company.name)}優待</span>
         <span class="badge">${esc(x.matchedAlias)}</span>
         <span class="badge beta">β 要公式確認</span>
       </div>
