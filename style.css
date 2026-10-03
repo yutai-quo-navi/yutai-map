@@ -181,3 +181,60 @@ strong{font-weight:500}
 .card-actions button:hover{
   text-decoration:underline;
 }
+
+/* ultra-light pass */
+.top-link{
+  border:0;
+  background:transparent;
+  color:#7a7a7a;
+  padding:6px 0;
+  font-size:12px;
+  font-weight:400;
+}
+.primary-button{
+  min-height:48px !important;
+  background:transparent !important;
+  color:#0f7b61 !important;
+  border:1px solid #e3e3e3 !important;
+  border-radius:12px !important;
+  font-weight:400 !important;
+}
+.primary-button:hover{background:#fafafa !important}
+.controls{
+  border-color:#ededed !important;
+  box-shadow:none !important;
+}
+.chip{
+  background:#fff !important;
+  border-color:#e5e5e5 !important;
+  color:#444 !important;
+}
+.chip[aria-pressed="true"]{
+  background:#fff !important;
+  border-color:#d9d9d9 !important;
+  color:#2f2f2f !important;
+}
+.chip-icon{
+  background:#f2f2f2 !important;
+  color:#8a8a8a !important;
+}
+.chip[aria-pressed="true"] .chip-icon{
+  background:transparent !important;
+  color:#10a37f !important;
+}
+.chip-state{
+  color:#8a8a8a !important;
+  border-left-color:#ededed !important;
+  font-weight:400 !important;
+}
+.chip[aria-pressed="true"] .chip-state{
+  color:#6f6f6f !important;
+  border-left-color:#ededed !important;
+}
+.privacy-note{
+  background:transparent !important;
+  border:0 !important;
+  padding:4px 2px 10px !important;
+}
+.privacy-title{font-size:12px !important;color:#555 !important}
+.privacy-note p{font-size:11px !important;color:#8a8a8a !important}
