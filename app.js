@@ -233,8 +233,8 @@ function renderResults(items, radius){
         <span class="badge beta">β 要公式確認</span>
       </div>
       <div class="card-actions">
-        <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式</a>
-        <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図で見る</a>
+        <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式 ↗</a>
+        <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener">地図 ↗</a>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
     card.querySelector('.feedback-link').addEventListener('click', () => openFeedback({
