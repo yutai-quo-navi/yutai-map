@@ -10,12 +10,22 @@ const els = {
   feedbackClose: qs('#feedbackClose'), feedbackForm: qs('#feedbackForm'),
   feedbackType: qs('#feedbackType'), feedbackCompany: qs('#feedbackCompany'),
   feedbackStore: qs('#feedbackStore'), feedbackUrl: qs('#feedbackUrl'),
-  feedbackNote: qs('#feedbackNote')
+  feedbackNote: qs('#feedbackNote'), categoryFilters: qs('#categoryFilters')
 };
 
 let companies = [];
 let lastPosition = null;
 let searching = false;
+let lastResults = [];
+let activeCategory = localStorage.getItem('yutai-category') || 'all';
+const categoryLabels = {
+  all:'すべて',
+  restaurant:'食事',
+  cafe:'カフェ',
+  bakery:'パン',
+  foodcourt:'フードコート',
+  other:'その他'
+};
 const selected = new Set(JSON.parse(localStorage.getItem('yutai-selected') || '["create","colowide","skylark"]'));
 els.radius.value = localStorage.getItem('yutai-radius') || '3000';
 
@@ -25,6 +35,7 @@ async function init(){
   try {
     companies = await fetch('./data/companies.json', {cache:'no-store'}).then(r => r.json());
     renderChips();
+    renderCategoryFilters();
   } catch(e){
     setStatus('優待データを読み込めませんでした');
   }
@@ -155,7 +166,8 @@ async function searchNearby(pos){
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
     const raw = responses.filter(r => r.status==='fulfilled').flatMap(r => r.value);
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
-    renderResults(normalized, radius);
+    lastResults = normalized;
+    renderFilteredResults(radius);
     setStatus(`${radius/1000}km以内を検索しました・現在地は運営者側に保存していません`);
   } catch(e){
     console.error(e); showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
@@ -182,10 +194,11 @@ function classify(p, company, origin){
   if(excludedLegacy || excludedBrand || excludedStore) return null;
   const alias = company.aliases.find(x => hay.includes(normalize(x)));
   if(!alias) return null;
+  const category = company.categories?.[alias] || 'other';
   const lat = Number(p.lat), lng = Number(p.lng);
   if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
   return {
-    ...p, lat, lng, company, matchedAlias: alias,
+    ...p, lat, lng, company, matchedAlias: alias, category,
     distance: haversine(origin.lat, origin.lng, lat, lng)
   };
 }
@@ -212,6 +225,30 @@ function haversine(a,b,c,d){
 }
 function distanceText(m){ return m < 1000 ? `${Math.round(m/10)*10}m` : `${(m/1000).toFixed(m<10000?1:0)}km`; }
 
+function renderCategoryFilters(){
+  if(!els.categoryFilters) return;
+  els.categoryFilters.innerHTML='';
+  for(const [id,label] of Object.entries(categoryLabels)){
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='category-filter';
+    b.textContent=label;
+    b.setAttribute('aria-pressed', activeCategory===id ? 'true' : 'false');
+    b.addEventListener('click',()=>{
+      activeCategory=id;
+      localStorage.setItem('yutai-category',id);
+      renderCategoryFilters();
+      if(lastResults.length || lastPosition) renderFilteredResults(Number(els.radius.value));
+    });
+    els.categoryFilters.appendChild(b);
+  }
+}
+
+function renderFilteredResults(radius){
+  const items = activeCategory==='all' ? lastResults : lastResults.filter(x=>x.category===activeCategory);
+  renderResults(items, radius);
+}
+
 function renderResults(items, radius){
   els.count.textContent = `${items.length}件`;
   if(!items.length){
@@ -231,6 +268,7 @@ function renderResults(items, radius){
       <div class="badges">
         <span class="badge company">${esc(x.company.name)}優待</span>
         <span class="badge">${esc(x.matchedAlias)}</span>
+        <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
         <span class="badge beta">β 要公式確認</span>
       </div>
       <div class="card-actions">
