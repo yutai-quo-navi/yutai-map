@@ -353,9 +353,18 @@ async function searchNearby(pos, centerLabel='現在地'){
     renderFilteredResults(radius);
     setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
   } catch(e){
-    console.error(e); showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
-    setStatus('検索できませんでした');
-  } finally { searching=false; els.locate.disabled=false; }
+    console.error(e);
+    if(e?.code === 'RATE_LIMIT'){
+      showError('短時間に検索が集中しています。10分ほど待ってから再度お試しください。');
+      setStatus('検索回数が上限に達しました');
+    }else{
+      showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
+      setStatus('検索できませんでした');
+    }
+  } finally {
+    searching=false;
+    setTimeout(() => { els.locate.disabled=false; }, 1500);
+  }
 }
 
 function queryOfficialStoreDb(company, origin, radius){
@@ -391,6 +400,13 @@ async function queryD1StoreApi(targets, pos, radius){
     ...(activeCategory !== 'all' ? {category: activeCategory} : {})
   });
   const res = await fetch(`${STORE_API}?${params}`, {cache:'no-store'});
+  if(res.status === 429){
+    let data = {};
+    try { data = await res.json(); } catch {}
+    const error = new Error(data.message || '短時間に検索が集中しています。10分ほど待ってから再度お試しください。');
+    error.code = 'RATE_LIMIT';
+    throw error;
+  }
   if(!res.ok) throw new Error(`Store API ${res.status}`);
   const data = await res.json();
 
