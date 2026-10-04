@@ -1,65 +1,60 @@
 #!/usr/bin/env python3
-import re, urllib.request, urllib.parse
+import json, re, urllib.request, urllib.parse
 
 BASE="https://maps.zensho.co.jp"
 URL=BASE+"/jp/shop.html"
 UA="Mozilla/5.0 yutai-map-zensho-probe/1.0"
 
-def fetch(url):
-    req=urllib.request.Request(url,headers={"User-Agent":UA,"Accept-Language":"ja,en;q=0.8"})
-    with urllib.request.urlopen(req,timeout=60) as r:
-        data=r.read().decode("utf-8","replace")
-        print("FETCH",url,"status",getattr(r,"status",None),"bytes",len(data))
-        return data
+def fetch(url, data=None):
+    headers={"User-Agent":UA,"Accept-Language":"ja,en;q=0.8","X-Requested-With":"XMLHttpRequest"}
+    if data is not None:
+        body=urllib.parse.urlencode(data,doseq=True).encode()
+        headers["Content-Type"]="application/x-www-form-urlencoded; charset=UTF-8"
+    else:
+        body=None
+    req=urllib.request.Request(url,data=body,headers=headers)
+    with urllib.request.urlopen(req,timeout=90) as r:
+        raw=r.read()
+        text=raw.decode("utf-8","replace")
+        print("FETCH",url,"status",getattr(r,"status",None),"bytes",len(raw),"ctype",r.headers.get("Content-Type"))
+        return text
 
 html=fetch(URL)
-print("\n=== FORMS ===")
-for m in re.finditer(r"<form\b[^>]*>(.*?)</form>",html,re.I|re.S):
-    head=m.group(0)[:500]
-    print(re.sub(r"\s+"," ",head))
-    names=sorted(set(re.findall(r'\bname=["\']([^"\']+)',m.group(0),re.I)))
-    if names: print("names=",names)
 
-scripts=re.findall(r'<script\b[^>]*\bsrc=["\']([^"\']+)',html,re.I)
-print("\n=== SCRIPTS ===")
-for s in scripts: print(urllib.parse.urljoin(URL,s))
+print("\n=== BRAND/FACILITY INPUTS ===")
+for m in re.finditer(r'<input\b[^>]*\bname=["\'](brand|facility)["\'][^>]*>',html,re.I):
+    tag=m.group(0)
+    name=re.search(r'\bname=["\']([^"\']+)',tag,re.I)
+    value=re.search(r'\bvalue=["\']?([^"\' >]+)',tag,re.I)
+    iid=re.search(r'\bid=["\']([^"\']+)',tag,re.I)
+    ident=iid.group(1) if iid else ""
+    tail=html[m.end():m.end()+500]
+    label=""
+    lm=re.search(r'<label[^>]*for=["\']'+re.escape(ident)+r'["\'][^>]*>(.*?)</label>',tail,re.I|re.S) if ident else None
+    if lm:
+        label=re.sub(r'<[^>]+>',' ',lm.group(1))
+        label=re.sub(r'\s+',' ',label).strip()
+        imgalt=re.search(r'alt=["\']([^"\']+)',lm.group(1),re.I)
+        if imgalt: label=(label+" "+imgalt.group(1)).strip()
+    print("INPUT",name.group(1) if name else "",value.group(1) if value else "","id="+ident,"label="+label)
 
-patterns=[
-    r'https?://[^"\'\s)]+',
-    r'["\']([^"\']*(?:api|ajax|json|search|shop|store)[^"\']*)["\']'
-]
-keys=("api","ajax","json","search","shop","store","yutai","株主","優待","lat","lng","latitude","longitude")
+common=fetch(BASE+"/jp/js/common.js")
+print("\n=== COMMON.JS SEARCH FUNCTIONS ===")
+for fn in ["_search","_search_ajax","_update_shops"]:
+    pos=common.find("function "+fn)
+    if pos>=0:
+        print("\nFUNCTION",fn)
+        print(common[pos:pos+4500])
 
-for s in scripts:
-    u=urllib.parse.urljoin(URL,s)
-    if not u.startswith(BASE): continue
-    try: js=fetch(u)
+print("\n=== TEST API: empty search ===")
+for payload in [
+    {},
+    {"facility":"1"},
+    {"facility":"株主優待券利用可"},
+]:
+    try:
+        text=fetch(BASE+"/api/search",payload)
+        print("PAYLOAD",payload)
+        print(text[:5000])
     except Exception as e:
-        print("SCRIPT ERROR",u,repr(e)); continue
-    print("\n---",u,"---")
-    hits=[]
-    for line in js.splitlines():
-        low=line.lower()
-        if any(k.lower() in low for k in keys):
-            hits.append(line.strip())
-    if len(js.splitlines())<10:
-        # minified: extract URL-ish and endpoint-ish strings
-        vals=[]
-        for pat in patterns:
-            for x in re.findall(pat,js,re.I):
-                if isinstance(x,tuple): x="".join(x)
-                if any(k.lower() in x.lower() for k in keys):
-                    vals.append(x)
-        for x in sorted(set(vals))[:300]: print("TOKEN",x[:500])
-    else:
-        for h in hits[:300]: print("LINE",h[:1200])
-
-print("\n=== INLINE URL/ENDPOINT TOKENS ===")
-for pat in patterns:
-    vals=re.findall(pat,html,re.I)
-    out=[]
-    for x in vals:
-        if isinstance(x,tuple): x="".join(x)
-        if any(k.lower() in x.lower() for k in keys):
-            out.append(x)
-    for x in sorted(set(out))[:300]: print("HTMLTOKEN",x[:500])
+        print("API ERROR",payload,repr(e))
