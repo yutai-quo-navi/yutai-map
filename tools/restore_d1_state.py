@@ -38,6 +38,14 @@ if meta_rows:
     meta = json.loads(raw_meta)
 
 current = dict(meta)
+# Incremental D1 sync intentionally does not rewrite unchanged store_raw rows.
+# All stores present in store_raw were seen in the previous successful snapshot,
+# so reconstruct their volatile last_seen/status from issuer_state.generated_at.
+previous_run_date = str(current.get("generated_at", ""))[:10]
+for store in stores:
+    if previous_run_date:
+        store["last_seen"] = previous_run_date
+    store["status"] = "active"
 current["stores"] = stores
 
 base = pathlib.Path("data/issuers") / issuer / "stores"
@@ -55,7 +63,7 @@ for store in stores:
         continue
     h = dict(store)
     h.setdefault("first_seen", store.get("first_seen") or "")
-    h.setdefault("last_seen", store.get("last_seen") or "")
+    h["last_seen"] = previous_run_date or store.get("last_seen") or ""
     h["missing_count"] = 0
     h["status"] = "active"
     history_stores[sid] = h
