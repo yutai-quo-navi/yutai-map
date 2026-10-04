@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 import json, re, urllib.request, urllib.parse
+from collections import Counter
 
 BASE="https://maps.zensho.co.jp"
 UA="Mozilla/5.0 yutai-map-zensho-probe/1.0"
 
-def post(data):
-    body=urllib.parse.urlencode(data,doseq=True).encode()
+def post(pairs):
+    body=urllib.parse.urlencode(pairs).encode()
     req=urllib.request.Request(
         BASE+"/api/search",data=body,
         headers={
@@ -16,40 +17,28 @@ def post(data):
           "Referer":BASE+"/jp/shop.html"
         }
     )
-    with urllib.request.urlopen(req,timeout=90) as r:
+    with urllib.request.urlopen(req,timeout=180) as r:
         raw=r.read().decode("utf-8","replace")
-        print("STATUS",getattr(r,"status",None),"BYTES",len(raw),"PAYLOAD",data)
+        print("STATUS",getattr(r,"status",None),"BYTES",len(raw),"QUERY",pairs)
         return json.loads(raw)
 
-def summarize(data):
-    print("KEYS",sorted(data.keys()))
-    html=data.get("list") or ""
-    m=re.search(r'検索結果：<strong>([\d,]+)</strong>件',html)
-    print("COUNT",m.group(1) if m else "?")
-    ids=re.findall(r'/jp/detail/(\d+)\.html',html)
-    print("LIST_IDS",len(ids),ids[:8],ids[-3:])
-    more=re.findall(r'morelist\((\d+)\)',html)
-    print("MORELIST",more[:20],"...",more[-5:])
-    md=data.get("mapdata")
-    print("MAPDATA_TYPE",type(md).__name__)
-    if isinstance(md,list):
-        print("MAPDATA_LEN",len(md))
-        print("MAPDATA_SAMPLE",json.dumps(md[:2],ensure_ascii=False)[:4000])
-    elif isinstance(md,dict):
-        print("MAPDATA_KEYS",list(md)[:20])
-        print("MAPDATA_SAMPLE",json.dumps(md,ensure_ascii=False)[:4000])
-    else:
-        print("MAPDATA",repr(md)[:2000])
-    return ids,more
-
-tests=[
-  {"facility":["shareholder_coupon"]},
-  {"facility":["shareholder_coupon"],"map":1},
-  {"facility":["shareholder_coupon"],"morelist":2},
-  {"facility":["shareholder_coupon"],"morelist":50},
-]
-for t in tests:
+for pairs in [
+    [("brand[]",""),("facility[]","shareholder_coupon")],
+    [("facility[]","shareholder_coupon"),("morelist","5000")],
+    [("brand[]","1"),("facility[]","shareholder_coupon"),("morelist","5000")],
+]:
     try:
-        d=post(t); summarize(d)
+        d=post(pairs)
+        html=d.get("list") or ""
+        m=re.search(r'検索結果：<strong>([\d,]+)</strong>件',html)
+        ids=re.findall(r'/jp/detail/(\d+)\.html',html)
+        md=d.get("mapdata") or []
+        print("COUNT",m.group(1) if m else "?","LIST_IDS",len(ids),"MAPDATA",len(md))
+        print("UNIQUE_IDS",len(set(ids)))
+        brands=Counter(str(x.get("brand") or "") for x in md if isinstance(x,dict))
+        print("BRANDS",json.dumps(brands,ensure_ascii=False,sort_keys=True))
+        print("FIRST",json.dumps(md[:2],ensure_ascii=False)[:3000])
+        print("OPTIONS",Counter(o for x in md if isinstance(x,dict) for o in (x.get("options") or [])))
+        print("LAST_IDS",ids[-10:])
     except Exception as e:
-        print("ERROR",t,repr(e))
+        print("ERROR",pairs,repr(e))
