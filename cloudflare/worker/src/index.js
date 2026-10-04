@@ -4,6 +4,7 @@ const MAX_CANDIDATES = 600;
 const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
 const OPENPOI_ALIAS_CHUNK = 14;
 const OPENPOI_LIMIT = 200;
+const SEARCH_LOCK_SECONDS = 600;
 
 export default {
   async fetch(request, env) {
@@ -48,6 +49,9 @@ export default {
       return json({ error: 'invalid_radius' }, 400, cors);
     if (!issuers.length) return json({ results: [], count: 0 }, 200, cors);
 
+    const rateLimited = await enforceSearchRateLimit(env, request, cors);
+    if (rateLimited) return rateLimited;
+
     try {
       const referenceIssuers = await findReferenceIssuers(env, issuers);
       const referenceSet = new Set(referenceIssuers);
@@ -74,6 +78,47 @@ export default {
     }
   }
 };
+
+async function enforceSearchRateLimit(env, request, cors){
+  if (!env.SEARCH_RATE_LIMITER) return null;
+
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const lockUrl = new URL(request.url);
+  lockUrl.pathname = '/__rate_limit/search/' + encodeURIComponent(ip);
+  lockUrl.search = '';
+  const lockKey = new Request(lockUrl.toString(), { method: 'GET' });
+  const cache = caches.default;
+
+  const locked = await cache.match(lockKey);
+  if (locked) {
+    return json({
+      error: 'rate_limited',
+      message: '短時間に検索が集中しています。10分ほど待ってから再度お試しください。',
+      retry_after: SEARCH_LOCK_SECONDS
+    }, 429, {
+      ...cors,
+      'Retry-After': String(SEARCH_LOCK_SECONDS),
+      'Cache-Control': 'no-store'
+    });
+  }
+
+  const { success } = await env.SEARCH_RATE_LIMITER.limit({ key: ip });
+  if (success) return null;
+
+  await cache.put(lockKey, new Response('locked', {
+    headers: { 'Cache-Control': `public, max-age=${SEARCH_LOCK_SECONDS}` }
+  }));
+
+  return json({
+    error: 'rate_limited',
+    message: '短時間に検索が集中しています。10分ほど待ってから再度お試しください。',
+    retry_after: SEARCH_LOCK_SECONDS
+  }, 429, {
+    ...cors,
+    'Retry-After': String(SEARCH_LOCK_SECONDS),
+    'Cache-Control': 'no-store'
+  });
+}
 
 async function findReferenceIssuers(env, issuers){
   if (!issuers.length) return [];
