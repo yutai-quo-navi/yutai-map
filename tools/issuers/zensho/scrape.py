@@ -243,9 +243,11 @@ def fetch_prefecture(prefecture):
         pm = PREF_RE.match(address)
         actual_pref = pm.group(1) if pm else ""
         if actual_pref != prefecture:
-            raise RuntimeError(
-                f"{prefecture}: address partition mismatch for {sid}: {address!r}"
-            )
+            # Official address search is substring based (e.g. "京都府" also
+            # matches "東京都府中市"). Keep only rows whose actual address
+            # starts with the requested prefecture, then verify nationwide
+            # parity against the official eligible total after all 47 runs.
+            continue
 
         stores.append({
             "store_id": f"official:id:{sid}",
@@ -263,7 +265,7 @@ def fetch_prefecture(prefecture):
             "official_url": urllib.parse.urljoin(BASE_URL, str(item.get("link") or "")),
         })
 
-    return count, stores
+    return len(stores), stores
 
 
 def fetch_universe_count():
@@ -310,6 +312,20 @@ if len(fresh_by_id) != len(all_stores):
 eligible_count = len(all_stores)
 if not (4300 <= eligible_count <= 5200):
     raise RuntimeError(f"Suspicious shareholder-benefit store count: {eligible_count}")
+
+# Read the official nationwide shareholder-coupon total independently.
+# This catches a missing prefecture, an API behavior change, or accidental
+# filtering even when every individual prefecture request looks plausible.
+eligible_probe = post_json(
+    opener(),
+    [("brand[]", ""), ("facility[]", "shareholder_coupon")],
+)
+official_eligible_count = result_count(eligible_probe.get("list") or "")
+if eligible_count != official_eligible_count:
+    raise RuntimeError(
+        "Nationwide eligible count mismatch: "
+        f"partitioned={eligible_count} official={official_eligible_count}"
+    )
 
 if eligible_count > official_universe_count:
     raise RuntimeError(
@@ -427,6 +443,7 @@ current_obj = {
     "generated_at": GENERATED_AT,
     "official_store_universe_count": official_universe_count,
     "eligible_count": eligible_count,
+    "official_eligible_count": official_eligible_count,
     "eligible_filter": "shareholder_coupon",
     "prefecture_count": nonempty_prefectures,
     "prefecture_counts": prefecture_counts,
@@ -497,6 +514,7 @@ print(json.dumps({
     "run_date": RUN_DATE,
     "official_store_universe_count": official_universe_count,
     "eligible_count": eligible_count,
+    "official_eligible_count": official_eligible_count,
     "prefecture_count": nonempty_prefectures,
     "brand_count": len(brand_counts),
     "brand_counts": dict(sorted(brand_counts.items())),
