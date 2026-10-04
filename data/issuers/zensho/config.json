@@ -6,10 +6,63 @@
   "status": "development",
   "sourceUrl": "https://www.zensho.co.jp/jp/ir/investor/complimentary.html",
   "storeSearchUrl": "https://maps.zensho.co.jp/jp/index.html",
-  "matchingMode": "official_store_filter",
+  "matchingMode": "official_store_db",
   "officialStoreFilter": "株主優待券利用可",
-  "note": "公式グループ店舗検索の「株主優待券利用可」フィルタを正本として店舗単位DB化する予定。",
-  "aliases": [],
+  "note": "公式グループ店舗検索APIの facility[]=shareholder_coupon を正本として、47都道府県に分割取得し全国件数と完全照合する。週1回更新予定。店舗DB本体はCloudflare D1にのみ保存する。",
+  "aliases": [
+    "すき家",
+    "なか卯",
+    "はま寿司",
+    "ココス",
+    "ゼッテリア",
+    "ジョリーパスタ",
+    "ビッグボーイ",
+    "ヴィクトリアステーション",
+    "華屋与兵衛",
+    "オリーブの丘",
+    "かつ庵",
+    "熟成焼肉いちばん",
+    "久兵衛屋",
+    "エルトリート"
+  ],
   "excludedNames": [],
-  "categories": {}
+  "categories": {
+    "すき家": "restaurant",
+    "なか卯": "restaurant",
+    "はま寿司": "restaurant",
+    "ココス": "restaurant",
+    "ゼッテリア": "restaurant",
+    "ジョリーパスタ": "restaurant",
+    "ビッグボーイ": "restaurant",
+    "ヴィクトリアステーション": "restaurant",
+    "華屋与兵衛": "restaurant",
+    "オリーブの丘": "restaurant",
+    "かつ庵": "restaurant",
+    "熟成焼肉いちばん": "restaurant",
+    "久兵衛屋": "restaurant",
+    "エルトリート": "restaurant"
+  },
+  "verified": "2026-10-05",
+  "storeDataPath": "./data/issuers/zensho/stores/current.json",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 4300,
+    "maxStores": 5200,
+    "maxAgeDays": 10,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "maps.zensho.co.jp"
+    ],
+    "maxAdded": 250,
+    "maxRemoved": 250,
+    "maxChanged": 600,
+    "maxChangeRatio": 0.1,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 20,
+    "maxGroupDropRatio": 0.35
+  }
 }
