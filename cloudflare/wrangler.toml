@@ -10,3 +10,11 @@ database_id = "4540cbaa-3214-4111-9c7a-11e18fd067db"
 
 [vars]
 ALLOWED_ORIGIN = "https://yutai-quo-navi.github.io"
+
+[[ratelimits]]
+name = "SEARCH_RATE_LIMITER"
+namespace_id = "1001"
+
+[ratelimits.simple]
+limit = 10
+period = 60
