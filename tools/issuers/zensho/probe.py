@@ -2,59 +2,54 @@
 import json, re, urllib.request, urllib.parse
 
 BASE="https://maps.zensho.co.jp"
-URL=BASE+"/jp/shop.html"
 UA="Mozilla/5.0 yutai-map-zensho-probe/1.0"
 
-def fetch(url, data=None):
-    headers={"User-Agent":UA,"Accept-Language":"ja,en;q=0.8","X-Requested-With":"XMLHttpRequest"}
-    if data is not None:
-        body=urllib.parse.urlencode(data,doseq=True).encode()
-        headers["Content-Type"]="application/x-www-form-urlencoded; charset=UTF-8"
-    else:
-        body=None
-    req=urllib.request.Request(url,data=body,headers=headers)
+def post(data):
+    body=urllib.parse.urlencode(data,doseq=True).encode()
+    req=urllib.request.Request(
+        BASE+"/api/search",data=body,
+        headers={
+          "User-Agent":UA,
+          "Accept-Language":"ja,en;q=0.8",
+          "X-Requested-With":"XMLHttpRequest",
+          "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+          "Referer":BASE+"/jp/shop.html"
+        }
+    )
     with urllib.request.urlopen(req,timeout=90) as r:
-        raw=r.read()
-        text=raw.decode("utf-8","replace")
-        print("FETCH",url,"status",getattr(r,"status",None),"bytes",len(raw),"ctype",r.headers.get("Content-Type"))
-        return text
+        raw=r.read().decode("utf-8","replace")
+        print("STATUS",getattr(r,"status",None),"BYTES",len(raw),"PAYLOAD",data)
+        return json.loads(raw)
 
-html=fetch(URL)
+def summarize(data):
+    print("KEYS",sorted(data.keys()))
+    html=data.get("list") or ""
+    m=re.search(r'検索結果：<strong>([\d,]+)</strong>件',html)
+    print("COUNT",m.group(1) if m else "?")
+    ids=re.findall(r'/jp/detail/(\d+)\.html',html)
+    print("LIST_IDS",len(ids),ids[:8],ids[-3:])
+    more=re.findall(r'morelist\((\d+)\)',html)
+    print("MORELIST",more[:20],"...",more[-5:])
+    md=data.get("mapdata")
+    print("MAPDATA_TYPE",type(md).__name__)
+    if isinstance(md,list):
+        print("MAPDATA_LEN",len(md))
+        print("MAPDATA_SAMPLE",json.dumps(md[:2],ensure_ascii=False)[:4000])
+    elif isinstance(md,dict):
+        print("MAPDATA_KEYS",list(md)[:20])
+        print("MAPDATA_SAMPLE",json.dumps(md,ensure_ascii=False)[:4000])
+    else:
+        print("MAPDATA",repr(md)[:2000])
+    return ids,more
 
-print("\n=== BRAND/FACILITY INPUTS ===")
-for m in re.finditer(r'<input\b[^>]*\bname=["\'](brand|facility)["\'][^>]*>',html,re.I):
-    tag=m.group(0)
-    name=re.search(r'\bname=["\']([^"\']+)',tag,re.I)
-    value=re.search(r'\bvalue=["\']?([^"\' >]+)',tag,re.I)
-    iid=re.search(r'\bid=["\']([^"\']+)',tag,re.I)
-    ident=iid.group(1) if iid else ""
-    tail=html[m.end():m.end()+500]
-    label=""
-    lm=re.search(r'<label[^>]*for=["\']'+re.escape(ident)+r'["\'][^>]*>(.*?)</label>',tail,re.I|re.S) if ident else None
-    if lm:
-        label=re.sub(r'<[^>]+>',' ',lm.group(1))
-        label=re.sub(r'\s+',' ',label).strip()
-        imgalt=re.search(r'alt=["\']([^"\']+)',lm.group(1),re.I)
-        if imgalt: label=(label+" "+imgalt.group(1)).strip()
-    print("INPUT",name.group(1) if name else "",value.group(1) if value else "","id="+ident,"label="+label)
-
-common=fetch(BASE+"/jp/js/common.js")
-print("\n=== COMMON.JS SEARCH FUNCTIONS ===")
-for fn in ["_search","_search_ajax","_update_shops"]:
-    pos=common.find("function "+fn)
-    if pos>=0:
-        print("\nFUNCTION",fn)
-        print(common[pos:pos+4500])
-
-print("\n=== TEST API: empty search ===")
-for payload in [
-    {},
-    {"facility":"1"},
-    {"facility":"株主優待券利用可"},
-]:
+tests=[
+  {"facility":["shareholder_coupon"]},
+  {"facility":["shareholder_coupon"],"map":1},
+  {"facility":["shareholder_coupon"],"morelist":2},
+  {"facility":["shareholder_coupon"],"morelist":50},
+]
+for t in tests:
     try:
-        text=fetch(BASE+"/api/search",payload)
-        print("PAYLOAD",payload)
-        print(text[:5000])
+        d=post(t); summarize(d)
     except Exception as e:
-        print("API ERROR",payload,repr(e))
+        print("ERROR",t,repr(e))
