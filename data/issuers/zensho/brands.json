@@ -1,0 +1,63 @@
+{
+  "source": "https://maps.zensho.co.jp/jp/shop.html",
+  "generated_at": "2026-10-05T05:43:04+09:00",
+  "eligible_filter": "shareholder_coupon",
+  "brands": [
+    {
+      "name": "かつ庵",
+      "eligible_store_count": 57
+    },
+    {
+      "name": "すき家",
+      "eligible_store_count": 2004
+    },
+    {
+      "name": "なか卯",
+      "eligible_store_count": 445
+    },
+    {
+      "name": "はま寿司",
+      "eligible_store_count": 686
+    },
+    {
+      "name": "エルトリート",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "オリーブの丘",
+      "eligible_store_count": 67
+    },
+    {
+      "name": "ココス",
+      "eligible_store_count": 506
+    },
+    {
+      "name": "ジョリーパスタ",
+      "eligible_store_count": 324
+    },
+    {
+      "name": "ゼッテリア",
+      "eligible_store_count": 272
+    },
+    {
+      "name": "ビッグボーイ",
+      "eligible_store_count": 139
+    },
+    {
+      "name": "ヴィクトリアステーション",
+      "eligible_store_count": 27
+    },
+    {
+      "name": "久兵衛屋",
+      "eligible_store_count": 44
+    },
+    {
+      "name": "熟成焼肉いちばん",
+      "eligible_store_count": 87
+    },
+    {
+      "name": "華屋与兵衛",
+      "eligible_store_count": 33
+    }
+  ]
+}
