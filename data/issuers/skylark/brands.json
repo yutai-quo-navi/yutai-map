@@ -1,0 +1,251 @@
+{
+  "source": "https://store-info.skylark.co.jp/",
+  "generated_at": "2026-10-04T06:29:51+09:00",
+  "brands": [
+    {
+      "code": "0101",
+      "name": "ガスト",
+      "eligible": true,
+      "page_key": "gusto",
+      "top_url": "https://www.skylark.co.jp/gusto/"
+    },
+    {
+      "code": "0102",
+      "name": "バーミヤン",
+      "eligible": true,
+      "page_key": "bamiyan",
+      "top_url": "https://www.skylark.co.jp/bamiyan/"
+    },
+    {
+      "code": "0103",
+      "name": "ジョナサン",
+      "eligible": true,
+      "page_key": "jonathan",
+      "top_url": "https://www.skylark.co.jp/jonathan/"
+    },
+    {
+      "code": "0104",
+      "name": "夢庵",
+      "eligible": true,
+      "page_key": "yumean",
+      "top_url": "https://www.skylark.co.jp/yumean/"
+    },
+    {
+      "code": "0105",
+      "name": "ステーキガスト",
+      "eligible": true,
+      "page_key": "steak-gusto",
+      "top_url": "https://www.skylark.co.jp/steak_gusto/"
+    },
+    {
+      "code": "0106",
+      "name": "グラッチェガーデンズ",
+      "eligible": true,
+      "page_key": "grazie-gardens",
+      "top_url": "https://www.skylark.co.jp/grazie_gardens/"
+    },
+    {
+      "code": "0107",
+      "name": "藍屋",
+      "eligible": true,
+      "page_key": "aiya",
+      "top_url": "https://www.skylark.co.jp/aiya/"
+    },
+    {
+      "code": "0109",
+      "name": "魚屋路",
+      "eligible": true,
+      "page_key": "totoyamichi",
+      "top_url": "https://www.skylark.co.jp/totoyamichi/"
+    },
+    {
+      "code": "0110",
+      "name": "chawan",
+      "eligible": true,
+      "page_key": "chawan",
+      "top_url": "https://www.skylark.co.jp/chawan/"
+    },
+    {
+      "code": "0111",
+      "name": "三〇三",
+      "eligible": true,
+      "page_key": "miwami",
+      "top_url": "https://www.skylark.co.jp/miwami/"
+    },
+    {
+      "code": "0112",
+      "name": "ゆめあん食堂",
+      "eligible": true,
+      "page_key": "ym-shokudo",
+      "top_url": "https://www.skylark.co.jp/ym_shokudo/"
+    },
+    {
+      "code": "0113",
+      "name": "ラ・オハナ",
+      "eligible": true,
+      "page_key": "la_ohana",
+      "top_url": "https://www.skylark.co.jp/la_ohana/"
+    },
+    {
+      "code": "0114",
+      "name": "とんから亭",
+      "eligible": true,
+      "page_key": "tonkara_tei",
+      "top_url": "https://www.skylark.co.jp/tonkara_tei/"
+    },
+    {
+      "code": "0117",
+      "name": "から好し（単独店）",
+      "eligible": true,
+      "page_key": "karayoshi",
+      "top_url": "https://www.skylark.co.jp/karayoshi/"
+    },
+    {
+      "code": "0119",
+      "name": "しゃぶ葉",
+      "eligible": true,
+      "page_key": "syabuyo",
+      "top_url": "https://www.skylark.co.jp/syabuyo/"
+    },
+    {
+      "code": "0121",
+      "name": "八郎そば",
+      "eligible": true,
+      "page_key": "hachiro_soba",
+      "top_url": "https://www.skylark.co.jp/hachiro_soba/"
+    },
+    {
+      "code": "0201",
+      "name": "むさしの森珈琲",
+      "eligible": true,
+      "page_key": "mmcoffee",
+      "top_url": "https://www.skylark.co.jp/mmcoffee/"
+    },
+    {
+      "code": "0202",
+      "name": "フォレスト",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_bf.html"
+    },
+    {
+      "code": "0203",
+      "name": "ニューマーケット",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_nm.html"
+    },
+    {
+      "code": "0204",
+      "name": "フェスタガーデン",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_fs.html"
+    },
+    {
+      "code": "0205",
+      "name": "グランブッフェ",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_gb.html"
+    },
+    {
+      "code": "0206",
+      "name": "包包點心",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_pp.html"
+    },
+    {
+      "code": "0207",
+      "name": "點心甜心",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_tn.html"
+    },
+    {
+      "code": "0208",
+      "name": "すうぷ",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_suupu.html"
+    },
+    {
+      "code": "0209",
+      "name": "くし葉",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_ky.html"
+    },
+    {
+      "code": "0210",
+      "name": "ダイナー",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_bd.html"
+    },
+    {
+      "code": "0211",
+      "name": "ペルティカ",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://nilax.jp/pertica/"
+    },
+    {
+      "code": "0212",
+      "name": "ザ ブッフェ",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_tb.html"
+    },
+    {
+      "code": "0213",
+      "name": "八献",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_hk.html"
+    },
+    {
+      "code": "0214",
+      "name": "点心甜心",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_ts.html"
+    },
+    {
+      "code": "0220",
+      "name": "その他ブッフェレストラン",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_ni.html"
+    },
+    {
+      "code": "0301",
+      "name": "フロプレステージュ",
+      "eligible": false,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_fp.html"
+    },
+    {
+      "code": "0401",
+      "name": "トマト＆オニオン",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_to.html"
+    },
+    {
+      "code": "0402",
+      "name": "じゅうじゅうカルビ",
+      "eligible": true,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_ju.html"
+    },
+    {
+      "code": "0501",
+      "name": "資さんうどん",
+      "eligible": false,
+      "page_key": "",
+      "top_url": "https://www.sukesanudon.com/"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Validate public update history
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Validate update history JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("data/updates.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert isinstance(d.get("events"), list)
+          print("public update events:", len(d["events"]))
+          PY

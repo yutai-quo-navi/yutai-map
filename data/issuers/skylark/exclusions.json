@@ -1,0 +1,21 @@
+{
+  "source": "https://store-info.skylark.co.jp/",
+  "generated_at": "2026-10-04T06:29:51+09:00",
+  "rule": "Official store locator marker has is_yutaiken != true",
+  "brands": [
+    {
+      "code": "0301",
+      "name": "フロプレステージュ",
+      "eligible": false,
+      "page_key": "",
+      "top_url": "https://www.skylark.co.jp/link/co_fp.html"
+    },
+    {
+      "code": "0501",
+      "name": "資さんうどん",
+      "eligible": false,
+      "page_key": "",
+      "top_url": "https://www.sukesanudon.com/"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+exclude:
+  - data/issuers/skylark/stores
+  - data/issuers/colowide/stores
+  - data/issuers/create/stores
+  - data/issuers/monogatari/stores
+  - cloudflare
+  - tools

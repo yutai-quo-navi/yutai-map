@@ -1,0 +1,722 @@
+{
+  "source": "https://www.create-restaurants.co.jp/",
+  "generated_at": "2026-10-04T06:29:57+09:00",
+  "business_types": [
+    {
+      "name": "(未分類)",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "MACCHA HOUSE",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "TEX-MEX（メキシコ風アメリカ料理）専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "うどん",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "うどん・しゃぶしゃぶ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "うどん・そば",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "うなぎ料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "おにぎり",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "おにぎり、定食",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "おにぎり専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "お野菜カフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "かつカレー業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "かつ丼・かつカレー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ごはん処・居酒屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ごまそば",
+      "eligible_store_count": 11
+    },
+    {
+      "name": "しゃぶしゃぶ",
+      "eligible_store_count": 77
+    },
+    {
+      "name": "しゃぶしゃぶ・すきやき食べ放題",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶしゃぶ・すき焼き放題",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶしゃぶ・すき焼き食べ放題",
+      "eligible_store_count": 63
+    },
+    {
+      "name": "しゃぶしゃぶ・寿司",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶしゃぶ・日本料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "すしと旬の料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "そば",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "そば・うどん業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "たこ焼",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "たこ焼き",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "たこ焼き専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "つけめん",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "つけめん・ラーメン",
+      "eligible_store_count": 19
+    },
+    {
+      "name": "つけめん専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "とうふ料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "とんこつ醤油ラーメン",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "アイスクリーム/クレープ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "アジア",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "イタリアン",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "イタリアンレストラン",
+      "eligible_store_count": 11
+    },
+    {
+      "name": "オーガニックカフェ＆レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カジュアルイタリアン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カジュアルフレンチ",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "カフェ",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "カフェレストラン",
+      "eligible_store_count": 16
+    },
+    {
+      "name": "カフェ・スイーツ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カフェ・スイーツ/クレープ＆QQドリンク",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カフェ＆ダイニング",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カレーショップ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ガレット専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "クレープ",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "クレープ&QQドリンク",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "クレープ/タピオカドリンク/カフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "クレープ　カフェ",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "クレープ　カフェ　QQドリンク",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "クレープ＆QQドリンク",
+      "eligible_store_count": 25
+    },
+    {
+      "name": "クレープ＆コーヒー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "クレープ＆ソフトクリーム",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "クレープ＆ＱＱドリンク",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "グリル&バー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "グリル、BBQ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "コットンキャンディー、ソフトクリーム、QQ、カフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ゴルフ場レストラン",
+      "eligible_store_count": 11
+    },
+    {
+      "name": "ゴルフ場内レストラン",
+      "eligible_store_count": 8
+    },
+    {
+      "name": "シガー＆バー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "シンガポールチキンライス",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "シンガポール屋台料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "シーフードビュッフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "シーフードビュッフェレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "シーフードレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ジェラート / クレープ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ジュージュー鉄板焼き",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "スイーツビュッフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ステーキハウス",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "スパニッシュバル",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "スペシャルコーヒー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "タンタンメン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ダイナー/カフェ/バー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "テーマレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ハワイアン丼専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "バイキングレストラン",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "バインミー専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "バナナジュース業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "バル",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "パスタ専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "パブ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "パンケーキ",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "ビアバー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ビュッフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ビュッフェレストラン",
+      "eligible_store_count": 10
+    },
+    {
+      "name": "ビール",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "フルーツ飴&ソフトクリーム",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "フードホール",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ブラジリアンバーベキュー(シュラスコ)",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "ブラジリアンバーベキュー（シュラスコ）",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ベトナム料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ベーカリー",
+      "eligible_store_count": 79
+    },
+    {
+      "name": "ベーカリーカフェ",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "ベーカリー＆カフェ",
+      "eligible_store_count": 8
+    },
+    {
+      "name": "ベーグル",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "ホットドッグ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ポキ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ミートボール店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ラーメン",
+      "eligible_store_count": 8
+    },
+    {
+      "name": "ローストビーフ丼",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ローストビーフ丼専門店",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "三浦・湘南野菜を使ったイタリアン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "中華バイキング",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "中華ビュッフェ",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "中華・飲茶バイキング",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "中華料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "中華業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "中華食堂",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "五の五",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "和カフェ",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "和風麺屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "和食",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "和食レストラン",
+      "eligible_store_count": 41
+    },
+    {
+      "name": "和食屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "坦坦麵専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "大きな揚げたてから揚げ専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "大型ビアレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "大衆居酒屋",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "大衆酒場",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "天ぷら",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "天丼",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "天丼、海鮮丼業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "定食",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "定食料理",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "寿司",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "寿司食べ放題",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "小籠包専門店",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "居酒屋",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "山小屋レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "惣菜と定食",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "懐かし洋食屋さん",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "手揉み中華そば",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "抹茶専門店",
+      "eligible_store_count": 12
+    },
+    {
+      "name": "江戸前天丼専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "沖縄家庭料理と泡盛",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "沖縄料理",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "泡盛と沖縄料理",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "洋カジュアル",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "洋食",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "洋食-和食-中華・エスニック/ビュッフェレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "海鮮丼",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "海鮮丼と天ぷら",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "海鮮居酒屋",
+      "eligible_store_count": 111
+    },
+    {
+      "name": "炭焼豚丼",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "焼肉",
+      "eligible_store_count": 7
+    },
+    {
+      "name": "牛かつ専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "牛たん専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "石焼ビビンバ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "石焼ビビンパ専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "石焼専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "立飲居酒屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "細うどん",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "総合バイキング",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "総合ビュッフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉そば",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉そばと丼",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉そば専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉丼専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉丼業態",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "自家製麺うどん・そば",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "自然食バイキング",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "蕎麦・和食",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "蕎麦・和食・立ち飲み",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "讃岐うどん",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "野菜カフェ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "野菜居酒屋",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "野菜料理",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "鉄板ステーキ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "鉄板焼き",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "鍋専門店/しゃぶしゃぶ食べ放題",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "韓国料理",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "韓国料理専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "餃子居酒屋",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "馬肉専門店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "高級寿司食べ放題",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "魚介豚骨スープと自家製麺",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "鶏料理専門店",
+      "eligible_store_count": 43
+    },
+    {
+      "name": "麻辣湯",
+      "eligible_store_count": 6
+    }
+  ]
+}

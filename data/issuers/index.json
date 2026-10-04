@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "updated": "2026-10-03",
+  "issuers": [
+    {
+      "id": "skylark",
+      "code": "3197",
+      "name": "すかいらーく",
+      "status": "public",
+      "config": "./data/issuers/skylark/config.json"
+    },
+    {
+      "id": "colowide",
+      "code": "7616",
+      "name": "コロワイド",
+      "status": "public",
+      "config": "./data/issuers/colowide/config.json"
+    },
+    {
+      "id": "create",
+      "code": "3387",
+      "name": "クリレス",
+      "status": "public",
+      "config": "./data/issuers/create/config.json"
+    },
+    {
+      "id": "zensho",
+      "code": "7550",
+      "name": "ゼンショー",
+      "status": "development",
+      "config": "./data/issuers/zensho/config.json"
+    },
+    {
+      "id": "toridoll",
+      "code": "3397",
+      "name": "トリドール",
+      "status": "development",
+      "config": "./data/issuers/toridoll/config.json"
+    },
+    {
+      "id": "foodlife",
+      "code": "3563",
+      "name": "FOOD & LIFE COMPANIES",
+      "status": "development",
+      "config": "./data/issuers/foodlife/config.json"
+    },
+    {
+      "id": "yoshinoya",
+      "code": "9861",
+      "name": "吉野家HD",
+      "status": "development",
+      "config": "./data/issuers/yoshinoya/config.json"
+    },
+    {
+      "id": "mcd",
+      "code": "2702",
+      "name": "日本マクドナルドHD",
+      "status": "development",
+      "config": "./data/issuers/mcd/config.json"
+    },
+    {
+      "id": "monogatari",
+      "code": "3097",
+      "name": "物語",
+      "status": "public",
+      "config": "./data/issuers/monogatari/config.json"
+    }
+  ]
+}

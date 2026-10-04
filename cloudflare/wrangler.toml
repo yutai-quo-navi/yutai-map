@@ -1,0 +1,12 @@
+name = "yutai-map-api"
+main = "worker/src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yutai-map"
+database_id = "4540cbaa-3214-4111-9c7a-11e18fd067db"
+
+[vars]
+ALLOWED_ORIGIN = "https://yutai-quo-navi.github.io"

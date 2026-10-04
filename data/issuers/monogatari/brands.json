@@ -1,0 +1,142 @@
+{
+  "issuer_id": "monogatari",
+  "source": "https://www.monogatari.co.jp/brand/search/",
+  "verified": "2026-10-03",
+  "brands": [
+    {
+      "api_code": "yakiniku_king",
+      "name": "焼肉きんぐ",
+      "category": "restaurant",
+      "aliases": [
+        "焼肉きんぐ"
+      ]
+    },
+    {
+      "api_code": "yakiniku_happy",
+      "name": "牛たん大好き 焼肉はっぴぃ",
+      "category": "restaurant",
+      "aliases": [
+        "牛たん大好き 焼肉はっぴぃ",
+        "焼肉はっぴぃ"
+      ]
+    },
+    {
+      "api_code": "nikugen",
+      "name": "和牛焼肉 NIKUGEN",
+      "category": "restaurant",
+      "aliases": [
+        "和牛焼肉 NIKUGEN",
+        "NIKUGEN",
+        "肉源"
+      ]
+    },
+    {
+      "api_code": "yakitateno_karubi",
+      "name": "焼きたてのかるび",
+      "category": "restaurant",
+      "aliases": [
+        "焼きたてのかるび"
+      ]
+    },
+    {
+      "api_code": "syodai_marugen",
+      "name": "丸源ラーメン",
+      "category": "restaurant",
+      "aliases": [
+        "丸源ラーメン"
+      ]
+    },
+    {
+      "api_code": "nidaime_marugen",
+      "name": "二代目丸源",
+      "category": "restaurant",
+      "aliases": [
+        "二代目丸源",
+        "二代目 丸源"
+      ]
+    },
+    {
+      "api_code": "cabbaton",
+      "name": "熟成醤油ラーメン きゃべとん",
+      "category": "restaurant",
+      "aliases": [
+        "熟成醤油ラーメン きゃべとん",
+        "きゃべとん"
+      ]
+    },
+    {
+      "api_code": "okonomiyaki_honpo",
+      "name": "お好み焼本舗",
+      "category": "restaurant",
+      "aliases": [
+        "お好み焼本舗"
+      ]
+    },
+    {
+      "api_code": "shabu_yuzuan",
+      "name": "寿司･しゃぶしゃぶ ゆず庵",
+      "category": "restaurant",
+      "aliases": [
+        "寿司･しゃぶしゃぶ ゆず庵",
+        "寿司・しゃぶしゃぶ ゆず庵",
+        "ゆず庵"
+      ]
+    },
+    {
+      "api_code": "genya",
+      "name": "魚貝三昧 げん屋",
+      "category": "restaurant",
+      "aliases": [
+        "魚貝三昧 げん屋",
+        "げん屋"
+      ]
+    },
+    {
+      "api_code": "genji_souhonten",
+      "name": "しゃぶとかに 源氏総本店",
+      "category": "restaurant",
+      "aliases": [
+        "しゃぶとかに 源氏総本店",
+        "源氏総本店"
+      ]
+    },
+    {
+      "api_code": "marufukuhanten",
+      "name": "丸福",
+      "category": "restaurant",
+      "aliases": [
+        "町中華 丸福飯店",
+        "濃厚中華そば 餃子 丸福",
+        "丸福飯店",
+        "丸福"
+      ]
+    },
+    {
+      "api_code": "kajitsuyacafe",
+      "name": "果実屋珈琲",
+      "category": "cafe",
+      "aliases": [
+        "果実屋珈琲"
+      ]
+    },
+    {
+      "api_code": "rosudo",
+      "name": "熟成肉とんかつ ロース堂",
+      "category": "restaurant",
+      "aliases": [
+        "熟成肉とんかつ ロース堂",
+        "ロース堂"
+      ]
+    },
+    {
+      "api_code": "genjirou",
+      "name": "肉讃岐 もっちりうどん源次郎",
+      "category": "restaurant",
+      "aliases": [
+        "肉讃岐 もっちりうどん源次郎",
+        "もっちりうどん源次郎",
+        "源次郎"
+      ]
+    }
+  ]
+}

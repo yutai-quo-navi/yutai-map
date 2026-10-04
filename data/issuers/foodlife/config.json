@@ -1,0 +1,19 @@
+{
+  "id": "foodlife",
+  "code": "3563",
+  "name": "FOOD & LIFE",
+  "fullName": "FOOD & LIFE COMPANIES",
+  "status": "development",
+  "sourceUrl": "https://food-and-life.co.jp/investor/stock/shareholder-benefit/",
+  "matchingMode": "official_brand_and_store_exceptions",
+  "note": "公式優待情報を正本とし、国内スシロー・杉玉・京樽系の利用可能店舗を店舗単位で管理する予定。",
+  "discoveryBrands": [
+    "スシロー",
+    "鮨・酒・肴 杉玉",
+    "杉玉",
+    "京樽"
+  ],
+  "aliases": [],
+  "excludedNames": [],
+  "categories": {}
+}

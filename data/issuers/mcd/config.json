@@ -1,0 +1,21 @@
+{
+  "id": "mcd",
+  "code": "2702",
+  "name": "マクドナルド",
+  "fullName": "日本マクドナルドホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.mcd-holdings.co.jp/ir/individual/shareholder_benefits/",
+  "matchingMode": "single_brand",
+  "note": "単一ブランドのため、基本はブランド一致＋例外店舗のみ管理する軽量方式を予定。",
+  "aliases": [
+    "マクドナルド",
+    "McDonald's",
+    "McDonald’s"
+  ],
+  "excludedNames": [],
+  "categories": {
+    "マクドナルド": "restaurant",
+    "McDonald's": "restaurant",
+    "McDonald’s": "restaurant"
+  }
+}

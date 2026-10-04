@@ -1,0 +1,314 @@
+const MAX_RADIUS = 10000;
+const MAX_RESULTS = 30;
+const MAX_CANDIDATES = 600;
+const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
+const OPENPOI_ALIAS_CHUNK = 14;
+const OPENPOI_LIMIT = 200;
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const cors = corsHeaders(env, request);
+
+    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+    if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405, cors);
+
+    if (url.pathname === '/health') {
+      try {
+        const geo = await env.DB.prepare('SELECT COUNT(*) AS count FROM stores').first();
+        const refs = await env.DB.prepare('SELECT COUNT(*) AS count FROM reference_stores').first();
+        return json({
+          ok: true,
+          stores: Number(geo?.count || 0),
+          referenceStores: Number(refs?.count || 0)
+        }, 200, cors);
+      } catch (error) {
+        return json({ ok: false, error: 'db_unavailable' }, 503, cors);
+      }
+    }
+
+    if (url.pathname !== '/v1/stores/search') return json({ error: 'not_found' }, 404, cors);
+
+    const lat = Number(url.searchParams.get('lat'));
+    const lng = Number(url.searchParams.get('lng'));
+    const radius = Math.min(Number(url.searchParams.get('radius') || 3000), MAX_RADIUS);
+    const issuers = [...new Set(
+      (url.searchParams.get('issuers') || '')
+        .split(',')
+        .map(x => x.trim())
+        .filter(Boolean)
+    )].slice(0, 20);
+    const requestedCategory = (url.searchParams.get('category') || '').trim();
+    const category = ['restaurant','cafe','bakery','foodcourt','other'].includes(requestedCategory)
+      ? requestedCategory : '';
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180)
+      return json({ error: 'invalid_coordinates' }, 400, cors);
+    if (!Number.isFinite(radius) || radius <= 0)
+      return json({ error: 'invalid_radius' }, 400, cors);
+    if (!issuers.length) return json({ results: [], count: 0 }, 200, cors);
+
+    try {
+      const referenceIssuers = await findReferenceIssuers(env, issuers);
+      const referenceSet = new Set(referenceIssuers);
+      const geoIssuers = issuers.filter(id => !referenceSet.has(id));
+
+      const [geoResults, referenceResults] = await Promise.all([
+        searchGeoStores(env, geoIssuers, lat, lng, radius, category),
+        Promise.all(referenceIssuers.map(id =>
+          searchReferenceIssuer(env, id, lat, lng, radius, category)
+        )).then(groups => groups.flat())
+      ]);
+
+      const combined = dedupeResults([...geoResults, ...referenceResults])
+        .sort((a,b) => a.distance - b.distance)
+        .slice(0, MAX_RESULTS);
+
+      return json({ results: combined, count: combined.length, limit: MAX_RESULTS }, 200, {
+        ...cors,
+        'Cache-Control': 'public, max-age=30'
+      });
+    } catch (error) {
+      console.error(error);
+      return json({ error: 'search_failed' }, 502, cors);
+    }
+  }
+};
+
+async function findReferenceIssuers(env, issuers){
+  if (!issuers.length) return [];
+  const placeholders = issuers.map(() => '?').join(',');
+  const { results = [] } = await env.DB.prepare(
+    `SELECT DISTINCT issuer_id FROM reference_stores WHERE issuer_id IN (${placeholders})`
+  ).bind(...issuers).all();
+  return results.map(r => r.issuer_id);
+}
+
+async function searchGeoStores(env, issuers, lat, lng, radius, category){
+  if (!issuers.length) return [];
+
+  const latDelta = radius / 111320;
+  const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
+  const lngDelta = radius / (111320 * cos);
+  const placeholders = issuers.map(() => '?').join(',');
+  const sql = `SELECT issuer_id, store_id, name, address, phone, brand_name, category, lat, lng, official_url
+    FROM stores
+    WHERE issuer_id IN (${placeholders})
+      AND lat BETWEEN ? AND ?
+      AND lng BETWEEN ? AND ?
+      ${category ? 'AND category = ?' : ''}
+    ORDER BY ((lat - ?) * (lat - ?)) + ((lng - ?) * (lng - ?))
+    LIMIT ${MAX_CANDIDATES}`;
+
+  const { results = [] } = await env.DB.prepare(sql).bind(
+    ...issuers,
+    lat-latDelta, lat+latDelta,
+    lng-lngDelta, lng+lngDelta,
+    ...(category ? [category] : []),
+    lat, lat, lng, lng
+  ).all();
+
+  return results
+    .map(s => ({
+      ...s,
+      distance: Math.round(haversine(lat, lng, Number(s.lat), Number(s.lng)))
+    }))
+    .filter(s => s.distance <= radius)
+    .sort((a,b) => a.distance - b.distance)
+    .slice(0, MAX_RESULTS);
+}
+
+async function searchReferenceIssuer(env, issuer, lat, lng, radius, category){
+  const cfg = await env.DB.prepare(
+    'SELECT aliases_json FROM issuer_search_config WHERE issuer_id = ?'
+  ).bind(issuer).first();
+
+  let aliases = [];
+  try { aliases = JSON.parse(cfg?.aliases_json || '[]'); } catch {}
+  aliases = aliases.map(x => String(x || '').trim()).filter(Boolean);
+  if (!aliases.length) return [];
+
+  const refSql = `SELECT issuer_id, store_id, name, address, phone,
+      name_norm, address_norm, phone_norm, brand_name, category, official_url
+    FROM reference_stores
+    WHERE issuer_id = ?
+      ${category ? 'AND category = ?' : ''}`;
+
+  const { results: refs = [] } = await env.DB.prepare(refSql)
+    .bind(issuer, ...(category ? [category] : []))
+    .all();
+  if (!refs.length) return [];
+
+  const aliasChunks = chunk(aliases, OPENPOI_ALIAS_CHUNK);
+  const responses = await Promise.allSettled(aliasChunks.map(async group => {
+    const params = new URLSearchParams({
+      q: group.join(' '),
+      center: `${lng},${lat}`,
+      radius: String(radius),
+      limit: String(OPENPOI_LIMIT)
+    });
+    const res = await fetch(`${OPENPOI_API}?${params}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error(`OpenPOI ${res.status}`);
+    const data = await res.json();
+    return Array.isArray(data.results) ? data.results : [];
+  }));
+
+  const candidates = dedupePois(
+    responses
+      .filter(r => r.status === 'fulfilled')
+      .flatMap(r => r.value)
+  );
+
+  const matched = [];
+  for (const p of candidates) {
+    const country = normalize(p.country || p.country_code || p.countryCode || '');
+    if (country && !['japan','jp','日本'].includes(country)) continue;
+
+    const plat = Number(p.lat);
+    const plng = Number(p.lng);
+    if (!Number.isFinite(plat) || !Number.isFinite(plng)) continue;
+
+    const distance = Math.round(haversine(lat, lng, plat, plng));
+    if (distance > radius) continue;
+
+    const ref = matchReferenceStore(p, refs);
+    if (!ref) continue;
+
+    matched.push({
+      issuer_id: ref.issuer_id,
+      store_id: ref.store_id,
+      name: ref.name,
+      address: ref.address || '',
+      phone: ref.phone || '',
+      brand_name: ref.brand_name || '',
+      category: ref.category || 'restaurant',
+      lat: plat,
+      lng: plng,
+      official_url: ref.official_url || '',
+      distance
+    });
+  }
+
+  return dedupeResults(matched)
+    .sort((a,b) => a.distance - b.distance)
+    .slice(0, MAX_RESULTS);
+}
+
+function matchReferenceStore(p, refs){
+  const poiName = normalize(p.name || '');
+  const rawPoiAddress = p.address || [p.prefecture,p.city].filter(Boolean).join('');
+  const poiAddress = normalize(rawPoiAddress);
+  const poiPhone = String(p.phone || p.tel || '').replace(/\D/g,'');
+  const poiPrefecture = japanesePrefecture(rawPoiAddress || p.prefecture || '');
+
+  let best = null;
+  let bestScore = 0;
+
+  for (const ref of refs) {
+    const officialName = ref.name_norm || normalize(ref.name || '');
+    const officialAddress = ref.address_norm || normalize(ref.address || '');
+    const officialPhone = ref.phone_norm || String(ref.phone || '').replace(/\D/g,'');
+    const officialPrefecture = japanesePrefecture(ref.address || '');
+
+    if (poiPrefecture && officialPrefecture && poiPrefecture !== officialPrefecture) continue;
+
+    const phoneExact = Boolean(poiPhone && officialPhone && poiPhone === officialPhone);
+
+    let nameScore = 0;
+    if (poiName && officialName) {
+      if (poiName === officialName) nameScore = 100;
+      else if (poiName.length >= 8 && officialName.includes(poiName)) nameScore = 60;
+      else if (officialName.length >= 8 && poiName.includes(officialName)) nameScore = 60;
+    }
+
+    let addressScore = 0;
+    if (poiAddress && officialAddress) {
+      if (poiAddress === officialAddress) addressScore = 60;
+      else if (poiAddress.length >= 8 && officialAddress.includes(poiAddress)) addressScore = 35;
+      else if (officialAddress.length >= 8 && poiAddress.includes(officialAddress)) addressScore = 35;
+    }
+
+    const acceptable =
+      phoneExact ||
+      nameScore === 100 ||
+      (nameScore >= 60 && addressScore >= 35);
+
+    if (!acceptable) continue;
+
+    const score = (phoneExact ? 200 : 0) + nameScore + addressScore;
+    if (score > bestScore) {
+      best = ref;
+      bestScore = score;
+    }
+  }
+
+  return best;
+}
+
+function japanesePrefecture(value){
+  const s = String(value || '');
+  const match = s.match(/(北海道|東京都|京都府|大阪府|.{2,3}県)/);
+  return match ? match[1] : '';
+}
+
+function dedupePois(items){
+  const map = new Map();
+  for (const p of items) {
+    const lat = Number(p.lat), lng = Number(p.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+    const key = `${normalize(p.name || '')}|${lat.toFixed(5)}|${lng.toFixed(5)}`;
+    if (!map.has(key)) map.set(key, p);
+  }
+  return [...map.values()];
+}
+
+function dedupeResults(items){
+  const map = new Map();
+  for (const item of items) {
+    const key = `${item.issuer_id}|${item.store_id}`;
+    const old = map.get(key);
+    if (!old || Number(item.distance) < Number(old.distance)) map.set(key, item);
+  }
+  return [...map.values()];
+}
+
+function normalize(s){
+  return String(s || '')
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[\s・･\-‐‑–—ー_]/g,'');
+}
+
+function chunk(arr,n){
+  const out=[];
+  for(let i=0;i<arr.length;i+=n) out.push(arr.slice(i,i+n));
+  return out;
+}
+
+function haversine(a,b,c,d){
+  const R=6371000, r=Math.PI/180;
+  const x=(c-a)*r, y=(d-b)*r;
+  const q=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;
+  return 2*R*Math.asin(Math.sqrt(q));
+}
+
+function corsHeaders(env, request){
+  const allowed=env.ALLOWED_ORIGIN || '*';
+  const origin=request.headers.get('Origin') || '';
+  const value=allowed==='*' ? '*' : (origin===allowed ? origin : allowed);
+  return {
+    'Access-Control-Allow-Origin':value,
+    'Access-Control-Allow-Methods':'GET, OPTIONS',
+    'Access-Control-Allow-Headers':'Content-Type',
+    'Vary':'Origin'
+  };
+}
+
+function json(body,status,headers){
+  return new Response(JSON.stringify(body),{
+    status,
+    headers:{'Content-Type':'application/json; charset=utf-8',...headers}
+  });
+}

@@ -4,9 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.openpoiapi.com https://yutai-map-api.yutaisamurai.workers.dev; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="description" content="現在地や指定した場所から、株主優待券が使えるお店を近い順に探せる検索ツール">
   <title>優待券使えるお店検索 α</title>
-  <link rel="stylesheet" href="./style.css?v=20261003-1145">
+  <link rel="stylesheet" href="./style.css?v=20261004-menu1">
 </head>
 <body>
   <header class="topbar">
@@ -14,7 +16,15 @@
       <div class="eyebrow">株主優待 × 場所検索</div>
       <h1>優待券使えるお店検索 <span>α</span></h1>
     </div>
-    <button id="privacyButton" class="top-link" aria-label="プライバシーについて">プライバシー</button>
+    <div class="top-actions">
+      <button id="headerSearchButton" class="header-icon-button" type="button" aria-label="検索へ移動" title="検索">⌕</button>
+      <button id="menuButton" class="header-icon-button" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu" title="メニュー">☰</button>
+      <div id="navMenu" class="nav-menu" hidden>
+        <button id="historyButton" type="button">更新履歴</button>
+        <button id="privacyButton" type="button">プライバシー</button>
+        <button id="menuFeedbackButton" type="button">情報提供</button>
+      </div>
+    </div>
   </header>
 
   <main class="wrap">
@@ -50,6 +60,7 @@
     <section class="controls" aria-label="検索条件">
       <div class="section-title-row">
         <h2>優待を選ぶ</h2>
+        <span id="selectionSummary" class="selection-summary"></span>
         <button id="selectAllButton" class="text-button">すべて選択</button>
       </div>
       <div id="companyChips" class="chips"></div>
@@ -79,11 +90,42 @@
     </section>
   </main>
 
-  <nav class="bottom-nav" aria-label="下部ナビゲーション">
-    <button class="bottom-nav__item active" data-action="nearby"><span>近く</span></button>
-    <button class="bottom-nav__item" data-action="filter"><span>優待</span></button>
-    <button class="bottom-nav__item" data-action="privacy"><span>安心</span></button>
-  </nav>
+  <dialog id="historyDialog" class="history-dialog">
+    <div class="dialog-head">
+      <div>
+        <h2>店舗更新履歴</h2>
+        <p class="dialog-subtitle">公式店舗DBで検出した追加・掲載終了・情報変更を蓄積しています</p>
+      </div>
+      <button id="historyClose" class="icon-button" aria-label="閉じる">×</button>
+    </div>
+    <div class="history-body">
+      <div class="history-controls">
+        <label>
+          優待会社
+          <select id="historyCompanyFilter">
+            <option value="all">すべて</option>
+          </select>
+        </label>
+        <label>
+          種別
+          <select id="historyTypeFilter">
+            <option value="all">すべて</option>
+            <option value="added">新店・追加</option>
+            <option value="removed">閉店・対象外</option>
+            <option value="changed">対象・情報変更</option>
+          </select>
+        </label>
+      </div>
+      <p id="historyStatus" class="history-status">更新履歴を読み込んでいます…</p>
+      <div id="historyList" class="history-list"></div>
+      <div class="history-pagination">
+        <button id="historyPrev" type="button">前のページ</button>
+        <span id="historyPageLabel">—</span>
+        <button id="historyNext" type="button">次のページ</button>
+      </div>
+      <p class="history-note">履歴は直近30日などで削除せず、全期間を蓄積します。「掲載終了」は、閉店だけでなく優待対象外・公式DBからの削除を含む場合があります。</p>
+    </div>
+  </dialog>
 
   <dialog id="privacyDialog" class="privacy-dialog">
     <div class="dialog-head">
@@ -157,6 +199,6 @@
     <p>店舗・優待情報は変更される場合があります。利用前に各社公式情報をご確認ください。</p>
   </footer>
 
-  <script src="./app.js?v=20261003-1305" type="module"></script>
+  <script src="./app.js?v=20261004-d1api3" type="module"></script>
 </body>
 </html>

@@ -1,8 +1,7 @@
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
-const baseCompanyIds = new Set(['create','skylark']);
-const devColowide = new URLSearchParams(location.search).get('dev') === 'colowide';
-const visibleCompanyIds = new Set(devColowide ? ['create','skylark','colowide'] : ['create','skylark']);
+const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
+let visibleCompanyIds = new Set();
 const qs = (s) => document.querySelector(s);
 
 const els = {
@@ -10,6 +9,13 @@ const els = {
   radius: qs('#radiusSelect'), results: qs('#results'), count: qs('#resultCount'),
   selectAll: qs('#selectAllButton'), privacy: qs('#privacyDialog'),
   privacyButton: qs('#privacyButton'), privacyClose: qs('#privacyClose'),
+  headerSearchButton: qs('#headerSearchButton'), menuButton: qs('#menuButton'),
+  navMenu: qs('#navMenu'), menuFeedbackButton: qs('#menuFeedbackButton'),
+  history: qs('#historyDialog'), historyButton: qs('#historyButton'),
+  historyClose: qs('#historyClose'), historyCompanyFilter: qs('#historyCompanyFilter'),
+  historyTypeFilter: qs('#historyTypeFilter'), historyStatus: qs('#historyStatus'),
+  historyList: qs('#historyList'), historyPrev: qs('#historyPrev'),
+  historyNext: qs('#historyNext'), historyPageLabel: qs('#historyPageLabel'),
   feedback: qs('#feedbackDialog'), feedbackButton: qs('#feedbackButton'),
   feedbackClose: qs('#feedbackClose'), feedbackForm: qs('#feedbackForm'),
   feedbackType: qs('#feedbackType'), feedbackCompany: qs('#feedbackCompany'),
@@ -26,7 +32,11 @@ let lastCenterLabel = '現在地';
 let searching = false;
 let lastResults = [];
 let suggestTimer = null;
-let activeCategory = localStorage.getItem('yutai-category') || 'all';
+let activeCategory = localStorage.getItem('yutai-category') || 'restaurant';
+let historyEvents = [];
+let historyLoaded = false;
+let historyPage = 1;
+const HISTORY_PAGE_SIZE = 20;
 const categoryLabels = {
   all:'すべて',
   restaurant:'食事',
@@ -42,9 +52,33 @@ init();
 
 async function init(){
   try {
-    companies = await fetch('./data/companies.json', {cache:'no-store'}).then(r => r.json());
+    const manifest = await fetch('./data/issuers/index.json', {cache:'no-store'}).then(r => r.json());
+    const dev = new URLSearchParams(location.search).get('dev');
+    const visibleIssuers = manifest.issuers.filter(x =>
+      x.status === 'public' || (x.status === 'development' && (dev === x.id || dev === 'all'))
+    );
+    companies = await Promise.all(
+      visibleIssuers.map(async x => {
+        const c = await fetch(x.config, {cache:'no-store'}).then(r => r.json());
+        if(c.storeDataPath && !['official_coordinates','worker_reference'].includes(c.locationMode)){
+          try{
+            const db = await fetch(c.storeDataPath, {cache:'no-store'}).then(r => r.json());
+            c.officialStores = db.stores || [];
+          }catch(e){
+            console.warn(`公式店舗DBを読み込めませんでした: ${c.id}`, e);
+            c.officialStores = [];
+          }
+        }else{
+          c.officialStores = [];
+        }
+        return c;
+      })
+    );
+    visibleCompanyIds = new Set(companies.map(c => c.id));
     for(const id of [...selected]) if(!visibleCompanyIds.has(id)) selected.delete(id);
-    if(!selected.size){ selected.add('create'); selected.add('skylark'); }
+    if(!selected.size){
+      companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
+    }
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -64,17 +98,38 @@ async function init(){
     if(lastPosition) searchNearby(lastPosition);
   });
   els.selectAll.addEventListener('click', toggleAll);
-  els.privacyButton.addEventListener('click', () => els.privacy.showModal());
+  els.headerSearchButton?.addEventListener('click', () => {
+    closeNavMenu();
+    qs('.hero')?.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(() => { if(!els.placeSearchPanel.hidden) els.placeInput?.focus(); }, 350);
+  });
+  els.menuButton?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    const opening = els.navMenu.hidden;
+    els.navMenu.hidden = !opening;
+    els.menuButton.setAttribute('aria-expanded', opening ? 'true' : 'false');
+  });
+  els.navMenu?.addEventListener('click', event => event.stopPropagation());
+  document.addEventListener('click', closeNavMenu);
+  document.addEventListener('keydown', event => { if(event.key === 'Escape') closeNavMenu(); });
+  els.privacyButton.addEventListener('click', () => { closeNavMenu(); els.privacy.showModal(); });
   els.privacyClose.addEventListener('click', () => els.privacy.close());
+  els.historyButton?.addEventListener('click', () => { closeNavMenu(); openHistory(); });
+  els.historyClose?.addEventListener('click', () => els.history.close());
+  els.historyCompanyFilter?.addEventListener('change', () => { historyPage=1; renderHistory(); });
+  els.historyTypeFilter?.addEventListener('change', () => { historyPage=1; renderHistory(); });
+  els.historyPrev?.addEventListener('click', () => { if(historyPage>1){ historyPage--; renderHistory(); } });
+  els.historyNext?.addEventListener('click', () => { historyPage++; renderHistory(); });
   els.feedbackButton.addEventListener('click', () => openFeedback());
+  els.menuFeedbackButton?.addEventListener('click', () => { closeNavMenu(); openFeedback(); });
   els.feedbackClose.addEventListener('click', () => els.feedback.close());
   els.feedbackForm.addEventListener('submit', submitFeedback);
-  document.querySelectorAll('.bottom-nav__item').forEach(btn => btn.addEventListener('click', () => {
-    const action = btn.dataset.action;
-    if(action === 'nearby') window.scrollTo({top:0,behavior:'smooth'});
-    if(action === 'filter') document.querySelector('.controls').scrollIntoView({behavior:'smooth'});
-    if(action === 'privacy') els.privacy.showModal();
-  }));
+}
+
+function closeNavMenu(){
+  if(!els.navMenu || els.navMenu.hidden) return;
+  els.navMenu.hidden = true;
+  els.menuButton?.setAttribute('aria-expanded', 'false');
 }
 
 function renderChips(){
@@ -277,13 +332,22 @@ async function searchNearby(pos, centerLabel='現在地'){
   searching = true; els.locate.disabled = true;
   els.results.className='results';
   els.results.innerHTML='<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
-  setStatus('OpenPOIで近隣店舗を検索中…');
+  setStatus('近隣の優待店を検索中…');
 
   try{
     const radius = Number(els.radius.value);
-    const batches = targets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
+    const d1Targets = targets.filter(company =>
+      ['official_coordinates','worker_reference'].includes(company.locationMode)
+    );
+    const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
+
+    const d1Results = d1Targets.length ? await queryD1StoreApi(d1Targets, pos, radius) : [];
+    const batches = openPoiTargets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
-    const raw = responses.filter(r => r.status==='fulfilled').flatMap(r => r.value);
+    const raw = [
+      ...d1Results,
+      ...responses.filter(r => r.status==='fulfilled').flatMap(r => r.value)
+    ];
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
     lastResults = normalized;
     renderFilteredResults(radius);
@@ -292,6 +356,74 @@ async function searchNearby(pos, centerLabel='現在地'){
     console.error(e); showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
     setStatus('検索できませんでした');
   } finally { searching=false; els.locate.disabled=false; }
+}
+
+function queryOfficialStoreDb(company, origin, radius){
+  return (company.officialStores || []).map(s => {
+    const lat = Number(s.lat ?? s.latitude);
+    const lng = Number(s.lng ?? s.longitude);
+    if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    const distance = haversine(origin.lat, origin.lng, lat, lng);
+    if(distance > radius) return null;
+    return {
+      name: s.name,
+      address: s.address,
+      phone: s.phone || '',
+      lat,
+      lng,
+      company,
+      matchedAlias: s.brand_name || company.name,
+      category: s.category || 'restaurant',
+      officialStore: s,
+      officialVerified: true,
+      distance
+    };
+  }).filter(Boolean);
+}
+
+async function queryD1StoreApi(targets, pos, radius){
+  const companiesById = new Map(targets.map(c => [c.id, c]));
+  const params = new URLSearchParams({
+    lat: String(pos.lat),
+    lng: String(pos.lng),
+    radius: String(radius),
+    issuers: targets.map(c => c.id).join(','),
+    ...(activeCategory !== 'all' ? {category: activeCategory} : {})
+  });
+  const res = await fetch(`${STORE_API}?${params}`, {cache:'no-store'});
+  if(!res.ok) throw new Error(`Store API ${res.status}`);
+  const data = await res.json();
+
+  return (data.results || []).map(s => {
+    const company = companiesById.get(s.issuer_id);
+    if(!company) return null;
+    const lat = Number(s.lat), lng = Number(s.lng), distance = Number(s.distance);
+    if(!Number.isFinite(lat) || !Number.isFinite(lng) || !Number.isFinite(distance)) return null;
+    const officialStore = {
+      store_id: s.store_id,
+      name: s.name,
+      address: s.address || '',
+      phone: s.phone || '',
+      brand_name: s.brand_name || '',
+      category: s.category || 'restaurant',
+      lat,
+      lng,
+      official_url: s.official_url || ''
+    };
+    return {
+      name: s.name,
+      address: s.address || '',
+      phone: s.phone || '',
+      lat,
+      lng,
+      company,
+      matchedAlias: s.brand_name || company.name,
+      category: s.category || 'restaurant',
+      officialStore,
+      officialVerified: true,
+      distance
+    };
+  }).filter(Boolean);
 }
 
 async function queryOpenPOI(batch, pos, radius){
@@ -306,10 +438,38 @@ async function queryOpenPOI(batch, pos, radius){
 }
 
 function classify(p, company, origin){
-  if(company.id === 'colowide'){
+  if(company.domesticOnly){
     const country = normalize(p.country || p.country_code || p.countryCode || '');
     if(country && !['japan','jp','日本'].includes(country)) return null;
   }
+
+  if(company.storeDataPath && company.locationMode !== 'official_coordinates'){
+    const country = normalize(p.country || p.country_code || p.countryCode || '');
+    if(country && !['japan','jp','日本'].includes(country)) return null;
+
+    const officialStore = matchOfficialStore(p, company.officialStores || []);
+    if(!officialStore) return null;
+
+    const alias = officialStore.brand_name || [...(company.aliases || [])]
+      .sort((a,b) => normalize(b).length - normalize(a).length)
+      .find(x => normalize(officialStore.name).includes(normalize(x))) || company.name;
+
+    const lat = Number(p.lat), lng = Number(p.lng);
+    if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+
+    return {
+      ...p,
+      lat,
+      lng,
+      company,
+      matchedAlias: alias,
+      category: officialStore.category || company.categories?.[alias] || 'restaurant',
+      officialStore,
+      officialVerified: true,
+      distance: haversine(origin.lat, origin.lng, lat, lng)
+    };
+  }
+
   const hay = normalize(`${p.name||''} ${p.name_kana||''}`);
   const excludedLegacy = (company.excludedNames || []).some(x => hay.includes(normalize(x)));
   const excludedBrand = (company.excludedBrands || []).some(x => hay.includes(normalize(x)));
@@ -325,17 +485,64 @@ function classify(p, company, origin){
     distance: haversine(origin.lat, origin.lng, lat, lng)
   };
 }
+
+function matchOfficialStore(p, stores){
+  if(!stores.length) return null;
+
+  const poiName = normalize(p.name || '');
+  const poiAddress = normalize(p.address || [p.prefecture,p.city].filter(Boolean).join(''));
+  const poiPhone = String(p.phone || p.tel || '').replace(/\D/g,'');
+
+  let best = null;
+  let bestScore = 0;
+
+  for(const s of stores){
+    const officialName = normalize(s.name || '');
+    const officialAddress = normalize(s.address || '');
+    const officialPhone = String(s.phone || '').replace(/\D/g,'');
+
+    let score = 0;
+
+    if(poiPhone && officialPhone && poiPhone === officialPhone) score += 100;
+
+    if(poiName && officialName){
+      if(poiName === officialName) score += 80;
+      else if(poiName.length >= 6 && officialName.includes(poiName)) score += 50;
+      else if(officialName.length >= 6 && poiName.includes(officialName)) score += 50;
+    }
+
+    if(poiAddress && officialAddress){
+      if(poiAddress === officialAddress) score += 40;
+      else if(poiAddress.length >= 8 && officialAddress.includes(poiAddress)) score += 25;
+      else if(officialAddress.length >= 8 && poiAddress.includes(officialAddress)) score += 25;
+    }
+
+    if(score > bestScore){
+      best = s;
+      bestScore = score;
+    }
+  }
+
+  return bestScore >= 50 ? best : null;
+}
 function normalize(s){ return String(s).normalize('NFKC').toLowerCase().replace(/[\s・･\-‐‑–—ー_]/g,''); }
 function chunk(arr,n){ const out=[]; for(let i=0;i<arr.length;i+=n) out.push(arr.slice(i,i+n)); return out; }
 function dedupe(items){
   const map=new Map();
   for(const x of items){
-    const key=`${normalize(x.name)}|${x.lat.toFixed(5)}|${x.lng.toFixed(5)}`;
+    const key = x.officialVerified && x.officialStore?.store_id
+      ? `official|${x.company.id}|${x.officialStore.store_id}`
+      : `${normalize(x.name)}|${x.lat.toFixed(5)}|${x.lng.toFixed(5)}`;
     const existing=map.get(key);
     if(!existing) map.set(key,x);
     else if(existing.company.id !== x.company.id){
       // 同一店舗が複数優待に該当する将来拡張用
       existing.also = [...(existing.also||[]), x.company];
+    }else if(x.officialVerified && existing.officialVerified){
+      // 公式店舗IDが同じなら、住所情報が豊富な方を残す
+      const existingAddress = existing.officialStore?.address || existing.address || '';
+      const newAddress = x.officialStore?.address || x.address || '';
+      if(newAddress.length > existingAddress.length) map.set(key,x);
     }
   }
   return [...map.values()];
@@ -347,6 +554,14 @@ function haversine(a,b,c,d){
   return 2*R*Math.asin(Math.sqrt(q));
 }
 function distanceText(m){ return m < 1000 ? `${Math.round(m/10)*10}m` : `${(m/1000).toFixed(m<10000?1:0)}km`; }
+function safeExternalUrl(value){
+  try{
+    const u = new URL(String(value || ''), location.href);
+    return ['https:','http:'].includes(u.protocol) ? u.href : '#';
+  }catch(e){
+    return '#';
+  }
+}
 
 function renderCategoryFilters(){
   if(!els.categoryFilters) return;
@@ -361,7 +576,8 @@ function renderCategoryFilters(){
       activeCategory=id;
       localStorage.setItem('yutai-category',id);
       renderCategoryFilters();
-      if(lastResults.length || lastPosition) renderFilteredResults(Number(els.radius.value));
+      if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+      else if(lastResults.length) renderFilteredResults(Number(els.radius.value));
     });
     els.categoryFilters.appendChild(b);
   }
@@ -382,10 +598,11 @@ function renderResults(items, radius){
   els.results.className='results'; els.results.innerHTML='';
   for(const x of items){
     const card=document.createElement('article'); card.className='card';
-    const storeName = x.name || x.matchedAlias;
-    const storeAddress = x.address || [x.prefecture,x.city].filter(Boolean).join('');
+    const storeName = x.officialStore?.name || x.name || x.matchedAlias;
+    const storeAddress = x.officialStore?.address || x.address || [x.prefecture,x.city].filter(Boolean).join('');
     const mapQuery = [storeName, storeAddress].filter(Boolean).join(' ');
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+    const officialUrl = safeExternalUrl(x.company.sourceUrl);
     card.innerHTML=`
       <div class="card-top">
         <div class="distance">${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
@@ -398,10 +615,10 @@ function renderResults(items, radius){
         <span class="badge company">${esc(x.company.name)}優待</span>
         <span class="badge">${esc(x.matchedAlias)}</span>
         <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
-        <span class="badge beta">β 要公式確認</span>
+        <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
       <div class="card-actions">
-        <a href="${esc(x.company.sourceUrl)}" target="_blank" rel="noopener">優待公式</a>
+        <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
     card.querySelector('.feedback-link').addEventListener('click', () => openFeedback({
@@ -410,6 +627,114 @@ function renderResults(items, radius){
     }));
     els.results.appendChild(card);
   }
+}
+
+async function openHistory(){
+  historyPage = 1;
+  els.history.showModal();
+  if(!historyLoaded){
+    await loadHistory();
+  }else{
+    renderHistory();
+  }
+}
+
+async function loadHistory(){
+  els.historyStatus.textContent = '更新履歴を読み込んでいます…';
+  els.historyList.innerHTML = '';
+  try{
+    const data = await fetch('./data/updates.json', {cache:'no-store'}).then(r => {
+      if(!r.ok) throw new Error('history fetch failed');
+      return r.json();
+    });
+    historyEvents = Array.isArray(data.events) ? data.events : [];
+    historyLoaded = true;
+    renderHistoryCompanyOptions();
+    renderHistory();
+  }catch(e){
+    console.error(e);
+    els.historyStatus.textContent = '更新履歴を読み込めませんでした';
+    els.historyList.innerHTML = '<div class="history-empty">時間をおいて再度お試しください</div>';
+    els.historyPrev.disabled = true;
+    els.historyNext.disabled = true;
+    els.historyPageLabel.textContent = '—';
+  }
+}
+
+function renderHistoryCompanyOptions(){
+  const current = els.historyCompanyFilter.value || 'all';
+  els.historyCompanyFilter.innerHTML = '<option value="all">すべて</option>';
+  for(const c of companies.filter(c => visibleCompanyIds.has(c.id))){
+    const o = document.createElement('option');
+    o.value = c.id;
+    o.textContent = c.name;
+    els.historyCompanyFilter.appendChild(o);
+  }
+  els.historyCompanyFilter.value = [...els.historyCompanyFilter.options].some(o => o.value===current) ? current : 'all';
+}
+
+function filteredHistoryEvents(){
+  const company = els.historyCompanyFilter.value;
+  const type = els.historyTypeFilter.value;
+  return historyEvents.filter(e => {
+    if(!visibleCompanyIds.has(e.issuer_id)) return false;
+    if(company !== 'all' && e.issuer_id !== company) return false;
+    if(type !== 'all' && e.kind !== type) return false;
+    return true;
+  });
+}
+
+function renderHistory(){
+  const items = filteredHistoryEvents();
+  const totalPages = Math.max(1, Math.ceil(items.length / HISTORY_PAGE_SIZE));
+  if(historyPage > totalPages) historyPage = totalPages;
+  const start = (historyPage - 1) * HISTORY_PAGE_SIZE;
+  const pageItems = items.slice(start, start + HISTORY_PAGE_SIZE);
+
+  els.historyStatus.textContent = items.length ? `${items.length}件の更新履歴` : '該当する更新履歴はまだありません';
+  els.historyList.innerHTML = '';
+
+  if(!pageItems.length){
+    els.historyList.innerHTML = '<div class="history-empty">今後の公式DB更新から履歴を蓄積します</div>';
+  }else{
+    for(const e of pageItems){
+      const item = document.createElement('article');
+      item.className = 'history-item';
+      const kindLabel =
+        e.kind === 'added' ? '新店・追加' :
+        e.kind === 'removed' ? '閉店・対象外' :
+        '対象・情報変更';
+      const changed = Array.isArray(e.changed_fields) ? e.changed_fields.map(x => x.label).filter(Boolean) : [];
+      const detail =
+        e.kind === 'added' ? '公式店舗DBに新規掲載' :
+        e.kind === 'removed' ? '公式店舗DBから掲載終了' :
+        (changed.length ? `${changed.join(' / ')}を変更` : '店舗情報を変更');
+      const brand = e.brand_name ? `<span class="history-brand">${esc(e.brand_name)}</span>` : '';
+      item.innerHTML = `
+        <div class="history-item-head">
+          <time>${esc(formatHistoryDate(e.run_date || e.at))}</time>
+          <span class="history-kind ${esc(e.kind)}">${kindLabel}</span>
+        </div>
+        <div class="history-store">${esc(e.name || '店舗名不明')}</div>
+        <div class="history-address">${esc(e.address || '')}</div>
+        <div class="history-meta">
+          <span>${esc(e.issuer_name || e.issuer_id)}${e.issuer_code ? `（${esc(e.issuer_code)}）` : ''}</span>
+          ${brand}
+        </div>
+        <div class="history-detail">${esc(detail)}</div>`;
+      els.historyList.appendChild(item);
+    }
+  }
+
+  els.historyPageLabel.textContent = items.length ? `${historyPage} / ${totalPages}` : '—';
+  els.historyPrev.disabled = historyPage <= 1 || !items.length;
+  els.historyNext.disabled = historyPage >= totalPages || !items.length;
+}
+
+function formatHistoryDate(value){
+  const s = String(value || '');
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${Number(m[1])}/${Number(m[2])}/${Number(m[3])}` : s;
 }
 
 function openFeedback(prefill={}){

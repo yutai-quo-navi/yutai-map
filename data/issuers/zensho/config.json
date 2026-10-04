@@ -1,0 +1,15 @@
+{
+  "id": "zensho",
+  "code": "7550",
+  "name": "ゼンショー",
+  "fullName": "ゼンショーホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.zensho.co.jp/jp/ir/investor/complimentary.html",
+  "storeSearchUrl": "https://maps.zensho.co.jp/jp/index.html",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "株主優待券利用可",
+  "note": "公式グループ店舗検索の「株主優待券利用可」フィルタを正本として店舗単位DB化する予定。",
+  "aliases": [],
+  "excludedNames": [],
+  "categories": {}
+}

@@ -1,0 +1,1094 @@
+{
+  "source": "https://www.create-restaurants.co.jp/",
+  "generated_at": "2026-10-04T06:29:57+09:00",
+  "rule": "Official restaurant search shareholder flag is not available",
+  "shareholder_value_counts": {
+    "": 194,
+    "available": 828,
+    "aveilable": 1,
+    "not available": 22
+  },
+  "excluded_count": 216,
+  "stores": [
+    {
+      "store_id": "1578",
+      "name": "磯丸水産 栄女子大店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1547",
+      "name": "磯丸水産 山形駅前店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1542",
+      "name": "華蓮　大阪心斎橋店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1545",
+      "name": "華蓮　博多店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1540",
+      "name": "日本のごちそう　関西国際空港第2ターミナルビル（国際線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1538",
+      "name": "磯丸水産 沼津南口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1539",
+      "name": "五の五 沼津南口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1513",
+      "name": "東京下町もんじゃ まるもん　イオンモール大高",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1532",
+      "name": "鳥平ちゃん　初台南口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1589",
+      "name": "釜焼き 叉焼 こじま",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1516",
+      "name": "菜菜麻辣湯　横浜ワールドポーターズ",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1514",
+      "name": "大衆酒場 五の五 川越店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1530",
+      "name": "グリルぶどう亭 なんばウォーク店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1511",
+      "name": "町鮨とろたく神田店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1509",
+      "name": "ちひろ菓子店 自由が丘店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1503",
+      "name": "大衆酒場 五の五 西銀座通店(熊本)",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1502",
+      "name": "馬肉料理専門店 桜馬亭",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1501",
+      "name": "しゃぶ菜　池袋サンシャインシティ",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1506",
+      "name": "みのる食堂金沢フォーラス",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1491",
+      "name": "磯丸水産 浜松有楽街店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1488",
+      "name": "町鮨とろたく上大岡店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1490",
+      "name": "焼肉レストランぴゅあ　神田店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1492",
+      "name": "焼肉本舗ぴゅあ　品川店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1493",
+      "name": "焼肉すき焼き　純　池袋店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1494",
+      "name": "焼肉本舗ぴゅあ　北千住マルイ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1495",
+      "name": "焼肉本舗ぴゅあ　マルイ溝口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1496",
+      "name": "焼肉すき焼き　純　梅田本店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1497",
+      "name": "焼肉すき焼き　純　エビスタ西宮店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1498",
+      "name": "焼肉すき焼き　純　天神警固店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1499",
+      "name": "新鮮ほるもん弐日市亭",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1486",
+      "name": "しゃぶ菜　ららぽーとTOKYO-BAY",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1487",
+      "name": "磯丸水産 千日前通店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1484",
+      "name": "デザート王国　イオンモール四條畷",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1479",
+      "name": "大衆酒場 五の五 郡山駅前店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1473",
+      "name": "しゃぶ菜イオンモール須坂",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1485",
+      "name": "からあげセンター イオンモール須坂",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1469",
+      "name": "大衆酒場 鉄板ホルモン五の五 十三店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1472",
+      "name": "mugi bagel",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1462",
+      "name": "しゃぶ菜イオンモール熱田",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1449",
+      "name": "沖縄料理と泡盛 ちゅら屋 五反田東急スクエア",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1442",
+      "name": "和牛焼肉 信州そだち",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1429",
+      "name": "しゃぶ菜　ららぽーと立川立飛",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1430",
+      "name": "すすきの大衆酒場 白いたぬきホール",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1423",
+      "name": "磯丸水産食堂　ららぽーと安城",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1424",
+      "name": "海南鶏飯食堂　ららぽーと安城",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1433",
+      "name": "AWkitchen ららぽーと安城",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1431",
+      "name": "焼肉あぐり 前橋本店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1435",
+      "name": "焼肉あぐり 新田庵",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1436",
+      "name": "焼肉あぐり かぶら苑",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1437",
+      "name": "焼肉あぐり 楽楽苑",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1438",
+      "name": "焼肉あぐり 朝日庵",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1439",
+      "name": "焼肉あぐり 野田宿庵",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1440",
+      "name": "焼肉あぐり あがつま店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1427",
+      "name": "しゃぶ菜　アリオ亀有",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1422",
+      "name": "サンヴァリエ稲田店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1418",
+      "name": "神田パーキングエリア（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1586",
+      "name": "あいだや２",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1413",
+      "name": "ひとにぎり　西宮ガーデンズ",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1408",
+      "name": "大衆酒場 鉄板ホルモン五の五 川口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1407",
+      "name": "大衆酒場 五の五 本厚木北口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1409",
+      "name": "東京下町もんじゃ まるもん",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1410",
+      "name": "しゃる うぃ キャンディ？　イオンモール姫路大津",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1405",
+      "name": "海南鶏飯食堂　三井アウトレットパークマリンピア神戸",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1402",
+      "name": "牧之原サービスエリア（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1403",
+      "name": "サンヴァリエ千歳店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1401",
+      "name": "和牛焼肉　岡山そだち",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1367",
+      "name": "海南鶏飯食堂　エミテラス所沢",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1364",
+      "name": "大衆酒場 五の五 池袋芸術劇場前店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1365",
+      "name": "大衆酒場 五の五 南森町店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1588",
+      "name": "伊之瀬",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1368",
+      "name": "みのりカフェ　京都ポルタ",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1362",
+      "name": "しゃぶ菜　流山おおたかの森SC",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1354",
+      "name": "ひとにぎり　横浜ワールドポーターズ",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1360",
+      "name": "磯丸水産 なんばセンター街店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1357",
+      "name": "みのるダイニング　京都ポルタ店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1350",
+      "name": "AWkitchen イオンレイクタウン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1356",
+      "name": "Bread&Coffee IKEDAYAMA 五反田駅前店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1331",
+      "name": "GOTTA",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1347",
+      "name": "大衆酒場 鉄板ホルモン五の五 ぴおシティ桜木町店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1343",
+      "name": "若葉亭 豊橋駅東口店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1587",
+      "name": "本郷苑",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1338",
+      "name": "牛たん定食の店 にくみ。　ららぽーと富士見",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1404",
+      "name": "駿府の肉処　静岡そだち",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1336",
+      "name": "レフボン平岸店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1321",
+      "name": "AWkitchen イオンモール広島府中",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1318",
+      "name": "みのりカフェ fukuyama",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1315",
+      "name": "磯丸水産食堂　イオンモール幕張新都心",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1310",
+      "name": "CAFE DE 3　Echika表参道",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1311",
+      "name": "Ottimo Cibo　Echika表参道",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1312",
+      "name": "Bon Bon HAWAIIAN　Echika表参道",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1313",
+      "name": "VIETNAMESE CYCLO　Echika表参道",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1314",
+      "name": "Mr.FARMER　Echika表参道",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1306",
+      "name": "磯丸水産 京橋店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1307",
+      "name": "フラマンドール　エキア川越店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1308",
+      "name": "つけめんTETSU　イオンモールKYOTO",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1585",
+      "name": "あいだや",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1304",
+      "name": "大衆酒場 五の五 一番町店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1295",
+      "name": "磯丸水産 仙台名掛丁店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1273",
+      "name": "つけめんTETSU　イオンモール橿原",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1290",
+      "name": "おにぎり 青田屋　エスパル郡山",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1291",
+      "name": "MAGURO MARKET　三井アウトレットパーク横浜ベイサイド",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1266",
+      "name": "牛豊 八山田店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1261",
+      "name": "牛豊 朝日店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1265",
+      "name": "サンヴァリエ音更店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "952",
+      "name": "みのるダイニング 名古屋店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1584",
+      "name": "こいけのいえけい",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "949",
+      "name": "神戸プレジール三宮本店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1256",
+      "name": "チェリーゴルフクラブ小倉南コースレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "153",
+      "name": "JA全農ながさき直営 長崎和牛焼肉 ぴゅあ",
+      "reason": "not available"
+    },
+    {
+      "store_id": "129",
+      "name": "賤ヶ岳SA（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "132",
+      "name": "龍野西SA【上り線】",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "137",
+      "name": "龍野西SA【下り線】",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1255",
+      "name": "芳賀カントリークラブレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "114",
+      "name": "みのりカフェ 長崎駅店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "112",
+      "name": "みのりカフェ季楽 コムボックス佐賀駅前",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1522",
+      "name": "グリルロン 阪神梅田本店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "136",
+      "name": "漁師食堂 三河丸（NEOPASA岡崎フードコート内）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1583",
+      "name": "つけめん金龍",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "123",
+      "name": "GOCONC 京都リサーチパーク店",
+      "reason": "not available"
+    },
+    {
+      "store_id": "111",
+      "name": "みのる食堂 アミュプラザくまもと",
+      "reason": "not available"
+    },
+    {
+      "store_id": "110",
+      "name": "みのりカフェ 福岡パルコ",
+      "reason": "not available"
+    },
+    {
+      "store_id": "126",
+      "name": "ひゃくまんぞく亭 金沢百番街あんと店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "125",
+      "name": "JA全農 いしかわ直営店舗 肉匠 Jade金澤",
+      "reason": "not available"
+    },
+    {
+      "store_id": "108",
+      "name": "みのるダイニング 札幌ステラプレイス",
+      "reason": "not available"
+    },
+    {
+      "store_id": "109",
+      "name": "カフェ＆ダイニング みのりみのる アミュプラザおおいた",
+      "reason": "not available"
+    },
+    {
+      "store_id": "374",
+      "name": "生そば玉川錦糸町駅前プラザビル店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1167",
+      "name": "サンヴァリエ文苑店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1176",
+      "name": "サンヴァリエ緑が丘店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "106",
+      "name": "みのる食堂 銀座三越",
+      "reason": "not available"
+    },
+    {
+      "store_id": "107",
+      "name": "みのりカフェ 銀座三越",
+      "reason": "not available"
+    },
+    {
+      "store_id": "105",
+      "name": "みのるダイニング さんすて岡山",
+      "reason": "not available"
+    },
+    {
+      "store_id": "103",
+      "name": "グリルみのる エスパル仙台",
+      "reason": "not available"
+    },
+    {
+      "store_id": "104",
+      "name": "みのりカフェ エスパル仙台",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1571",
+      "name": "そばと丼 よしの",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1572",
+      "name": "武蔵野うどん みよし",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "135",
+      "name": "三芳PA（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1582",
+      "name": "キング製麺",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "113",
+      "name": "みのる食堂 エキエ広島",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1251",
+      "name": "新大阪ゴルフクラブレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1581",
+      "name": "中華蕎麦にし乃",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "134",
+      "name": "遠州森町PA【上り線】",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1568",
+      "name": "陳林",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1569",
+      "name": "きしめん平川",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1570",
+      "name": "グリル大那古や",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1573",
+      "name": "キッチン杏",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "133",
+      "name": "豊田上郷SA",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "101",
+      "name": "みのるダイニング フェザン盛岡",
+      "reason": "not available"
+    },
+    {
+      "store_id": "1369",
+      "name": "播州・瀬戸内ごはんかごの屋食堂　龍野西SA店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1370",
+      "name": "籠乃蔵　龍野西SA（下り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1566",
+      "name": "長篠陣屋食堂",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "131",
+      "name": "長篠設楽原PA(下り）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1560",
+      "name": "そば処 伊吹おろし",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1561",
+      "name": "近江長浜ラーメン 今浜軒",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1562",
+      "name": "北近江のお食事処 北國堂",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1166",
+      "name": "サンヴァリエ恵み野店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1580",
+      "name": "らぁめん小池",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1170",
+      "name": "サンヴァリエ清田店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1528",
+      "name": "大阪トンテキ なんばウォーク店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1518",
+      "name": "鹿児島華蓮　銀座店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1591",
+      "name": "しゃぶ菜　ルミネ池袋",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1525",
+      "name": "グリルらんぷ亭",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "632",
+      "name": "浜北軒　ネオパーサ浜松",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "128",
+      "name": "遠州森町PA【下り線】",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1563",
+      "name": "高山ラーメン 関亭",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1564",
+      "name": "ながらうどん",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1565",
+      "name": "食堂あぶらや",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "127",
+      "name": "関SA（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1160",
+      "name": "レフボン美幌店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "622",
+      "name": "THE PLATINUM 大阪LUCUA",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1527",
+      "name": "大阪トンテキ ホワイティうめだ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1526",
+      "name": "大阪トンテキ 第3ビル店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "246",
+      "name": "磯丸水産　錦糸町店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1184",
+      "name": "サンヴァリエ花咲店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1179",
+      "name": "レフボン自衛隊前店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1169",
+      "name": "レフボン別海店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1190",
+      "name": "レフボン登別店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1163",
+      "name": "レフボン釧路中央店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1193",
+      "name": "レフボンみどり店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1153",
+      "name": "レフボン星が浦店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1186",
+      "name": "レフボン白石店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1183",
+      "name": "サンヴァリエステイ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1173",
+      "name": "レフボンきたみ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1524",
+      "name": "グリル欧風軒 第4ビル店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1185",
+      "name": "サンヴァリエソシア店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1182",
+      "name": "レフボン遠軽みなみ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1529",
+      "name": "豚々亭 第2ビル店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1195",
+      "name": "レフボンかじ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1253",
+      "name": "下関ゴールデンゴルフクラブレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "593",
+      "name": "デザート王国　楽天モバイル 最強パーク宮城",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1158",
+      "name": "レフボンきよみ店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1159",
+      "name": "サンヴァリエ白樺店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1174",
+      "name": "レフボンほくと店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1187",
+      "name": "レフボン東店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1181",
+      "name": "サンヴァリエ２条店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1523",
+      "name": "ぶどう亭 第3ビル店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1198",
+      "name": "レフボン八軒店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1189",
+      "name": "レフボン忠和店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1191",
+      "name": "レフボン岩見沢南店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1177",
+      "name": "レフボン貝塚店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1171",
+      "name": "レフボン旭町店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1239",
+      "name": "江戸崎カントリー倶楽部レストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1175",
+      "name": "レフボン北広島店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1143",
+      "name": "レフボン神楽店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1145",
+      "name": "レフボン富良野店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1151",
+      "name": "レフボン東光店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1152",
+      "name": "レフボン倶知安店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1149",
+      "name": "レフボン札内店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1237",
+      "name": "立科ゴルフ倶楽部レストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1141",
+      "name": "レフボン東旭川店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "843",
+      "name": "日田森のビール園",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1139",
+      "name": "レフボン稚内店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1142",
+      "name": "レフボン名寄店",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1236",
+      "name": "鶴舞カントリー倶楽部レストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1246",
+      "name": "センチュリー三木ゴルフクラブレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1234",
+      "name": "千葉よみうりカントリークラブレストラン",
+      "reason": "eligibility_blank"
+    },
+    {
+      "store_id": "1521",
+      "name": "グリルロン 阪急三番街店",
+      "reason": "eligibility_blank"
+    }
+  ]
+}

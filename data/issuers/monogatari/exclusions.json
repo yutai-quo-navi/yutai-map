@@ -1,0 +1,11 @@
+{
+  "issuer_id": "monogatari",
+  "source": "https://www.monogatari.co.jp/ir/benefits/",
+  "verified": "2026-10-03",
+  "excluded_brands": [],
+  "excluded_stores": [],
+  "rules": [
+    "国内の当社グループ各店舗が対象",
+    "海外店舗は対象外として扱う"
+  ]
+}

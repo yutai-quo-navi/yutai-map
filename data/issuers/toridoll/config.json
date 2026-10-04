@@ -1,0 +1,27 @@
+{
+  "id": "toridoll",
+  "code": "3397",
+  "name": "トリドール",
+  "fullName": "トリドールホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.toridoll.com/ir",
+  "storeSearchUrl": "https://stores.toridoll.com/directory",
+  "matchingMode": "official_store_db_preferred",
+  "note": "公式店舗ディレクトリを基礎に、国内店舗と株主優待利用可否を突合して店舗単位DB化する予定。",
+  "discoveryBrands": [
+    "丸亀製麺",
+    "コナズ珈琲",
+    "とりどーる",
+    "長田本庄軒",
+    "天ぷら定食 まきの",
+    "とんかつとん一",
+    "肉のヤマ牛",
+    "晩杯屋",
+    "ずんどう屋",
+    "いぶきうどん",
+    "ふたば製麺"
+  ],
+  "aliases": [],
+  "excludedNames": [],
+  "categories": {}
+}

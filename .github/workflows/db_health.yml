@@ -1,0 +1,98 @@
+name: Official DB health watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 21 * * *"
+  push:
+    paths:
+      - "tools/check_d1_health.py"
+      - "data/issuers/index.json"
+      - "data/issuers/*/config.json"
+      - ".github/workflows/db_health.yml"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: official-db-health
+  cancel-in-progress: true
+
+jobs:
+  health:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[migration]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Prepare Cloudflare API token
+        env:
+          CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          CF_API_TOKEN="$(printf '%s' "$CF_API_TOKEN_RAW" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$CF_API_TOKEN" || { echo "CF_API_TOKEN is not configured"; exit 1; }
+          echo "::add-mask::$CF_API_TOKEN"
+          printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Install Wrangler
+        run: npm install --no-save wrangler@4
+
+      - name: Query private D1 state
+        run: |
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "
+            SELECT s.issuer_id,
+                   COALESCE(g.c,0)+COALESCE(r.c,0) AS store_count,
+                   COALESCE(raw.c,0) AS raw_count,
+                   s.updated_at
+            FROM issuer_state s
+            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM stores GROUP BY issuer_id) g ON g.issuer_id=s.issuer_id
+            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM reference_stores GROUP BY issuer_id) r ON r.issuer_id=s.issuer_id
+            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM store_raw GROUP BY issuer_id) raw ON raw.issuer_id=s.issuer_id
+            ORDER BY s.issuer_id;
+          " --json > /tmp/d1-health.json
+
+      - name: Validate D1 state
+        run: python tools/check_d1_health.py /tmp/d1-health.json
+
+      - name: Verify Worker health
+        run: curl -fsS https://yutai-map-api.yutaisamurai.workers.dev/health
+
+      - name: Notify health failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] 全体ヘルスチェック異常"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="@${GITHUB_REPOSITORY_OWNER}
+
+          Cloudflare D1上の公式店舗DBヘルスチェックで異常を検知しました。
+          店舗DB本体はPublic GitHubには保存していません。
+
+          Run: ${run_url}"
+          number=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[0].number // empty' 2>/dev/null)
+          if [ -n "${number}" ]; then
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} 再度異常を検知しました。Run: ${run_url}" || true
+          else
+            gh issue create --repo "${GITHUB_REPOSITORY}" --title "${title}" --body "${body}" >/dev/null 2>&1 || true
+          fi
+
+      - name: Resolve health alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] 全体ヘルスチェック異常"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          numbers=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[].number' 2>/dev/null)
+          for number in ${numbers}; do
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} D1ヘルスチェックが正常復旧しました。Run: ${run_url}" || true
+            gh issue close "${number}" --repo "${GITHUB_REPOSITORY}" --reason completed || true
+          done

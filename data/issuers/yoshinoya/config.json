@@ -1,0 +1,17 @@
+{
+  "id": "yoshinoya",
+  "code": "9861",
+  "name": "吉野家HD",
+  "fullName": "吉野家ホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.yoshinoya-holdings.com/ir/faq/?tab=2",
+  "storeSearchUrl": "https://stores.yoshinoya-holdings.com/yoshinoya-holdings/spot/list?c_d1=1",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "株主優待券が利用できる店舗一覧",
+  "note": "公式の株主優待券利用可能店舗一覧を正本として店舗単位DB化する予定。",
+  "aliases": [],
+  "excludedNames": [
+    "せたが屋"
+  ],
+  "categories": {}
+}

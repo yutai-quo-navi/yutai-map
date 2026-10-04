@@ -17,7 +17,7 @@ NOW = datetime.now(JST)
 RUN_DATE = NOW.strftime("%Y-%m-%d")
 GENERATED_AT = NOW.isoformat(timespec="seconds")
 
-BASE = Path("data/colowide")
+BASE = Path("data/issuers/colowide/stores")
 CURRENT = BASE / "current.json"
 HISTORY = BASE / "history.json"
 SNAPSHOT = BASE / "snapshots" / f"{RUN_DATE}.json"
@@ -146,6 +146,28 @@ previous = load_json(CURRENT, {"stores": []})
 history = load_json(HISTORY, {"stores": {}})
 previous_by_id = {s["store_id"]: s for s in previous.get("stores", [])}
 fresh_by_id = {s["store_id"]: s for s in fresh_stores}
+
+# Guard rails: if the official page structure/API changes, fail before touching current.json.
+if len(fresh_stores) < 300:
+    raise RuntimeError(f"Suspiciously small eligible store count: {len(fresh_stores)}")
+if source_store_count is not None and source_store_count < len(fresh_stores):
+    raise RuntimeError(
+        f"Eligible count exceeds official total: total={source_store_count} eligible={len(fresh_stores)}"
+    )
+if previous_by_id:
+    ratio = len(fresh_stores) / len(previous_by_id)
+    if ratio < 0.80 or ratio > 1.50:
+        raise RuntimeError(
+            f"Store count changed too much: previous={len(previous_by_id)} current={len(fresh_stores)} ratio={ratio:.3f}"
+        )
+missing_name = sum(1 for s in fresh_stores if not s.get("name"))
+missing_address = sum(1 for s in fresh_stores if not s.get("address"))
+if missing_name:
+    raise RuntimeError(f"Parsed stores without names: {missing_name}")
+if missing_address > max(10, int(len(fresh_stores) * 0.05)):
+    raise RuntimeError(
+        f"Too many parsed stores without addresses: {missing_address}/{len(fresh_stores)}"
+    )
 
 added_ids = sorted(set(fresh_by_id) - set(previous_by_id))
 removed_ids = sorted(set(previous_by_id) - set(fresh_by_id))
