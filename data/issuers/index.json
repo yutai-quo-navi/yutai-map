@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-03",
+  "updated": "2026-10-05",
   "issuers": [
     {
       "id": "skylark",
@@ -27,7 +27,7 @@
       "id": "zensho",
       "code": "7550",
       "name": "ゼンショー",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/zensho/config.json"
     },
     {
