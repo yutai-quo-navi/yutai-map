@@ -1,0 +1,41 @@
+name: Validate Zensho scraper (development)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/issuers/zensho/scrape.py"
+      - ".github/workflows/validate_zensho.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-zensho-development
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Run development scraper
+        run: python tools/issuers/zensho/scrape.py
+
+      - name: Show validation summary
+        run: cat data/issuers/zensho/stores/last_diff.md
+
+      - name: Verify private working files are ignored
+        run: |
+          if git status --short --untracked-files=all | grep 'data/issuers/zensho/stores/'; then
+            echo "Zensho private working DB is not properly ignored"
+            exit 1
+          fi
+          echo "Zensho working DB is ignored by Git"
