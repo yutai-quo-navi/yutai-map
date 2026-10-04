@@ -1,0 +1,161 @@
+name: Build Zensho store DB
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 4 * * 1"
+  push:
+    paths:
+      - "tools/issuers/zensho/scrape.py"
+      - "data/issuers/zensho/config.json"
+      - ".github/workflows/scrape_zensho.yml"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: official-store-db
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[migration]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Prepare Cloudflare API token
+        env:
+          CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          CF_API_TOKEN="$(printf '%s' "$CF_API_TOKEN_RAW" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$CF_API_TOKEN" || { echo "CF_API_TOKEN is not configured"; exit 1; }
+          echo "::add-mask::$CF_API_TOKEN"
+          printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Install Wrangler
+        run: npm install --no-save wrangler@4
+
+      - name: Restore previous private state from D1
+        run: |
+          rm -f /tmp/raw_*.json /tmp/meta.json
+          for offset in 0 500 1000 1500 2000 2500 3000 3500 4000 4500 5000; do
+            npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT raw_json FROM store_raw WHERE issuer_id='zensho' ORDER BY store_id LIMIT 500 OFFSET $offset;" --json > "/tmp/raw_${offset}.json"
+          done
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT current_meta_json FROM issuer_state WHERE issuer_id='zensho';" --json > /tmp/meta.json
+          python tools/restore_d1_state.py zensho '/tmp/raw_*.json' /tmp/meta.json
+
+      - name: Build current snapshot and diff
+        run: python tools/issuers/zensho/scrape.py
+
+      - name: Show diff summary
+        run: cat data/issuers/zensho/stores/last_diff.md
+
+      - name: Remember expected store count
+        run: |
+          EXPECTED="$(python -c 'import json; print(len(json.load(open("data/issuers/zensho/stores/current.json"))["stores"]))')"
+          echo "ZENSHO_EXPECTED=${EXPECTED}" >> "$GITHUB_ENV"
+          echo "Expected Zensho stores: ${EXPECTED}"
+
+      - name: Apply D1 schema
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/schema.sql
+
+      - name: Build issuer D1 sync
+        run: python tools/build_d1_issuer_sql.py zensho
+
+      - name: Sync issuer to private D1
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/generated/sync_zensho.sql
+
+      - name: Verify D1 sync
+        run: |
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "
+            SELECT
+              (SELECT COUNT(*) FROM stores WHERE issuer_id='zensho') AS geo_count,
+              (SELECT COUNT(*) FROM store_raw WHERE issuer_id='zensho') AS raw_count;
+          " --json > /tmp/zensho-verify.json
+          python - <<'PY'
+          import json,os
+          d=json.load(open("/tmp/zensho-verify.json"))
+          r=d[0]["results"][0]
+          expected=int(os.environ["ZENSHO_EXPECTED"])
+          geo=int(r["geo_count"]); raw=int(r["raw_count"])
+          print("expected/geo/raw:",expected,geo,raw)
+          assert geo == expected, (expected,geo)
+          assert raw == expected, (expected,raw)
+          PY
+
+      - name: Verify Worker search
+        run: |
+          BODY="$(curl -fsS 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search?lat=35.6812&lng=139.7671&radius=10000&issuers=zensho')"
+          printf '%s' "$BODY" | python -c 'import json,sys; d=json.load(sys.stdin); print("Worker results:",d.get("count")); raise SystemExit(0 if int(d.get("count",0)) > 0 else 1)'
+
+      - name: Merge public update history
+        run: python tools/build_updates.py
+
+      - name: Remove private working database
+        run: rm -rf data/issuers/zensho/stores
+
+      - name: Commit public metadata only
+        env:
+          GH_PUSH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/updates.json
+          git add data/issuers/zensho/brands.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Update ゼンショー store changes: $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            auth=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
+            if git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
+      - name: Notify DB failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] ゼンショー 公式データ取得エラー"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="@${GITHUB_REPOSITORY_OWNER}
+
+          ゼンショーの公式店舗DB更新で異常を検知しました。
+          D1の既存店舗DBを保護するため、異常時は更新処理を停止します。
+
+          - workflow: ${GITHUB_WORKFLOW}
+          - run: ${run_url}
+          - UTC: $(date -u '+%Y-%m-%d %H:%M:%S')"
+          number=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[0].number // empty' 2>/dev/null)
+          if [ -n "${number}" ]; then
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} 再度エラーを検知しました。Run: ${run_url}" || true
+          else
+            gh issue create --repo "${GITHUB_REPOSITORY}" --title "${title}" --body "${body}" >/dev/null 2>&1 || true
+          fi
+
+      - name: Resolve DB failure alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] ゼンショー 公式データ取得エラー"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          numbers=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[].number' 2>/dev/null)
+          for number in ${numbers}; do
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} 公式DB更新が正常復旧しました。Run: ${run_url}" || true
+            gh issue close "${number}" --repo "${GITHUB_REPOSITORY}" --reason completed || true
+          done
