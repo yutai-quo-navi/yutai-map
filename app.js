@@ -16,6 +16,7 @@ const els = {
   picker: qs('#companyPickerDialog'), pickerButton: qs('#companyPickerButton'),
   pickerSearch: qs('#companyPickerSearch'), pickerList: qs('#companyPickerList'),
   pickerCount: qs('#companyPickerCount'), pickerApply: qs('#companyPickerApply'),
+  about: qs('#aboutDialog'), aboutButton: qs('#aboutButton'), aboutClose: qs('#aboutClose'),
   privacy: qs('#privacyDialog'),
   privacyButton: qs('#privacyButton'), privacyClose: qs('#privacyClose'),
   headerSearchButton: qs('#headerSearchButton'), menuButton: qs('#menuButton'),
@@ -158,6 +159,8 @@ async function init(){
   document.addEventListener('keydown', event => { if(event.key === 'Escape') closeNavMenu(); });
   els.privacyButton.addEventListener('click', () => { closeNavMenu(); els.privacy.showModal(); });
   els.privacyClose.addEventListener('click', () => els.privacy.close());
+  els.aboutButton.addEventListener('click', () => { closeNavMenu(); els.about.showModal(); });
+  els.aboutClose.addEventListener('click', () => els.about.close());
   els.historyButton?.addEventListener('click', () => { closeNavMenu(); openHistory(); });
   els.historyClose?.addEventListener('click', () => els.history.close());
   els.historyCompanyFilter?.addEventListener('change', () => { historyPage=1; renderHistory(); });
