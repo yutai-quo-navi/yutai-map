@@ -69,7 +69,7 @@
       "id": "matsuya",
       "code": "9887",
       "name": "松屋フーズホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/matsuya/config.json"
     }
   ]
