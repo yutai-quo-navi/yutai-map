@@ -8,7 +8,7 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect official API parameters
+      - name: Verify official default conditions
         run: |
           python - <<'PY'
           import urllib.request,urllib.parse,re,json
@@ -16,16 +16,8 @@ jobs:
           def get(u):
               return urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=60).read().decode('utf-8','replace')
           h=get(root+'/spot/list?c_d1=1')
-          for needle in ['var replacedParam','shop/list','var search','d1','function addDefaultCondition','getJsonData','w_7_searchresult_1_1']:
-              start=0
-              for i in range(8):
-                  n=h.find(needle,start)
-                  if n<0:break
-                  print('CONTEXT',needle,h[max(0,n-600):n+1400])
-                  start=n+len(needle)
-          for query in ['limit=1&offset=0&c_d1=1','limit=1&offset=0&d1=true','limit=1&offset=0&details=00001']:
-              u=root+'/api/proxy2/shop/list?'+query
-              try:
-                  d=json.loads(get(u)); print('PROBE',query,json.dumps(d,ensure_ascii=False)[:5000])
-              except Exception as e: print('ERROR',query,str(e))
+          for needle in ['function addCategoryDefaultCondition','var param =','c_d1','c_d9','searchSpots(param','searchSpots(params','searchSpots(']:
+              hits=[m.start() for m in re.finditer(re.escape(needle),h)]
+              for n in hits[-3:]:
+                  print('CONTEXT',needle,h[max(0,n-300):n+1800])
           PY

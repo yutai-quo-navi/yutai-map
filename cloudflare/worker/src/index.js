@@ -28,17 +28,26 @@ export default {
       }
     }
 
+    if (url.pathname === '/v1/brands') {
+      const ids=parseIssuers(url.searchParams.get('issuers'));
+      if(!ids.length) return json({brands:[]},200,cors);
+      try {
+        const placeholders=ids.map(()=>'?').join(',');
+        const {results=[]}=await env.DB.prepare(`SELECT issuer_id,brand_name AS name,COUNT(*) AS count FROM (
+          SELECT issuer_id,brand_name FROM stores WHERE issuer_id IN (${placeholders})
+          UNION ALL SELECT issuer_id,brand_name FROM reference_stores WHERE issuer_id IN (${placeholders})
+        ) WHERE brand_name != '' GROUP BY issuer_id,brand_name ORDER BY issuer_id,brand_name`).bind(...ids,...ids).all();
+        return json({brands:results},200,{...cors,'Cache-Control':'public, max-age=300'});
+      } catch { return json({error:'brands_unavailable'},503,cors); }
+    }
+
     if (url.pathname !== '/v1/stores/search') return json({ error: 'not_found' }, 404, cors);
 
     const lat = Number(url.searchParams.get('lat'));
     const lng = Number(url.searchParams.get('lng'));
     const radius = Math.min(Number(url.searchParams.get('radius') || 3000), MAX_RADIUS);
-    const issuers = [...new Set(
-      (url.searchParams.get('issuers') || '')
-        .split(',')
-        .map(x => x.trim())
-        .filter(Boolean)
-    )].slice(0, 20);
+    const issuers = parseIssuers(url.searchParams.get('issuers'));
+    const brand=(url.searchParams.get('brand') || '').trim().slice(0,200);
     const requestedCategory = (url.searchParams.get('category') || '').trim();
     const category = ['restaurant','cafe','bakery','foodcourt','other'].includes(requestedCategory)
       ? requestedCategory : '';
@@ -58,9 +67,9 @@ export default {
       const geoIssuers = issuers.filter(id => !referenceSet.has(id));
 
       const [geoResults, referenceResults] = await Promise.all([
-        searchGeoStores(env, geoIssuers, lat, lng, radius, category),
+        searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand),
         Promise.all(referenceIssuers.map(id =>
-          searchReferenceIssuer(env, id, lat, lng, radius, category)
+          searchReferenceIssuer(env, id, lat, lng, radius, category, brand)
         )).then(groups => groups.flat())
       ]);
 
@@ -129,7 +138,7 @@ async function findReferenceIssuers(env, issuers){
   return results.map(r => r.issuer_id);
 }
 
-async function searchGeoStores(env, issuers, lat, lng, radius, category){
+async function searchGeoStores(env, issuers, lat, lng, radius, category, brand){
   if (!issuers.length) return [];
 
   const latDelta = radius / 111320;
@@ -142,6 +151,7 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category){
       AND lat BETWEEN ? AND ?
       AND lng BETWEEN ? AND ?
       ${category ? 'AND category = ?' : ''}
+      ${brand ? 'AND brand_name = ?' : ''}
     ORDER BY ((lat - ?) * (lat - ?)) + ((lng - ?) * (lng - ?))
     LIMIT ${MAX_CANDIDATES}`;
 
@@ -150,6 +160,7 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category){
     lat-latDelta, lat+latDelta,
     lng-lngDelta, lng+lngDelta,
     ...(category ? [category] : []),
+    ...(brand ? [brand] : []),
     lat, lat, lng, lng
   ).all();
 
@@ -163,7 +174,7 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category){
     .slice(0, MAX_RESULTS);
 }
 
-async function searchReferenceIssuer(env, issuer, lat, lng, radius, category){
+async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, brand){
   const cfg = await env.DB.prepare(
     'SELECT aliases_json FROM issuer_search_config WHERE issuer_id = ?'
   ).bind(issuer).first();
@@ -177,14 +188,15 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category){
       name_norm, address_norm, phone_norm, brand_name, category, official_url
     FROM reference_stores
     WHERE issuer_id = ?
-      ${category ? 'AND category = ?' : ''}`;
+      ${category ? 'AND category = ?' : ''}
+      ${brand ? 'AND brand_name = ?' : ''}`;
 
   const { results: refs = [] } = await env.DB.prepare(refSql)
-    .bind(issuer, ...(category ? [category] : []))
+    .bind(issuer, ...(category ? [category] : []), ...(brand ? [brand] : []))
     .all();
   if (!refs.length) return [];
 
-  const aliasChunks = chunk(aliases, OPENPOI_ALIAS_CHUNK);
+  const aliasChunks = chunk(brand ? [brand] : aliases, OPENPOI_ALIAS_CHUNK);
   const responses = await Promise.allSettled(aliasChunks.map(async group => {
     const params = new URLSearchParams({
       q: group.join(' '),
@@ -356,4 +368,8 @@ function json(body,status,headers){
     status,
     headers:{'Content-Type':'application/json; charset=utf-8',...headers}
   });
+}
+
+function parseIssuers(raw){
+  return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,20);
 }
