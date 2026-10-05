@@ -1,6 +1,6 @@
 {
   "source": "https://www.create-restaurants.co.jp/",
-  "generated_at": "2026-10-06T07:34:34+09:00",
+  "generated_at": "2026-10-06T07:38:13+09:00",
   "brands": [
     {
       "name": "AW55",
@@ -35,12 +35,8 @@
       "eligible_store_count": 1
     },
     {
-      "name": "Bar & Tapas Celona　東京ミッドタウン日比谷",
-      "eligible_store_count": 1
-    },
-    {
-      "name": "Bar&Tapas Celona　CIAL横浜",
-      "eligible_store_count": 1
+      "name": "Bar & Tapas Celona",
+      "eligible_store_count": 2
     },
     {
       "name": "Bread&Coffee IKEDAYAMA",
@@ -199,12 +195,8 @@
       "eligible_store_count": 1
     },
     {
-      "name": "THE PLATINUM 東京ソラマチ",
-      "eligible_store_count": 1
-    },
-    {
-      "name": "THE PLATINUM 沖縄",
-      "eligible_store_count": 1
+      "name": "THE PLATINUM",
+      "eligible_store_count": 2
     },
     {
       "name": "TOKYO STATION BUFFET 馳走三昧",
@@ -235,10 +227,6 @@
       "eligible_store_count": 23
     },
     {
-      "name": "うどん酒菜 ふうふや岸辺店",
-      "eligible_store_count": 1
-    },
-    {
       "name": "うな濱　ネオパーサ浜松",
       "eligible_store_count": 1
     },
@@ -252,7 +240,7 @@
     },
     {
       "name": "かごの屋",
-      "eligible_store_count": 78
+      "eligible_store_count": 79
     },
     {
       "name": "からあげセンター",
@@ -347,6 +335,10 @@
       "eligible_store_count": 1
     },
     {
+      "name": "ふうふや",
+      "eligible_store_count": 2
+    },
+    {
       "name": "まんぷく食堂　コクーン新都心",
       "eligible_store_count": 1
     },
@@ -368,10 +360,6 @@
     },
     {
       "name": "わさび　御殿場プレミアム・アウトレット",
-      "eligible_store_count": 1
-    },
-    {
-      "name": "アジア食堂　新嘉坡鶏飯　三井アウトレットパーク横浜ベイサイド",
       "eligible_store_count": 1
     },
     {
@@ -439,12 +427,8 @@
       "eligible_store_count": 1
     },
     {
-      "name": "ドゥ マゴ 　渋谷 東急フードショー店",
-      "eligible_store_count": 1
-    },
-    {
-      "name": "ドゥ マゴ　たまプラーザ店",
-      "eligible_store_count": 1
+      "name": "ドゥ マゴ",
+      "eligible_store_count": 2
     },
     {
       "name": "ナムルごはん　SHIK-TTANG　コクーン新都心",
@@ -559,10 +543,6 @@
       "eligible_store_count": 1
     },
     {
-      "name": "和食しゃぶしゃぶ　かごのや 京都リサーチパーク店",
-      "eligible_store_count": 1
-    },
-    {
       "name": "喜多方の味 蔵小町　エスパル郡山",
       "eligible_store_count": 1
     },
@@ -627,8 +607,8 @@
       "eligible_store_count": 1
     },
     {
-      "name": "新嘉坡鶏飯 御殿場プレミアム・アウトレット",
-      "eligible_store_count": 1
+      "name": "新嘉坡鶏飯",
+      "eligible_store_count": 2
     },
     {
       "name": "旬菜しゃぶ重",
@@ -692,10 +672,6 @@
     },
     {
       "name": "甜點菜楼　ルミネエスト新宿",
-      "eligible_store_count": 1
-    },
-    {
-      "name": "町屋の小鍋うどん　ふうふや鶴見店",
       "eligible_store_count": 1
     },
     {
