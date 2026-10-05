@@ -5,30 +5,31 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.openpoiapi.com; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>プライバシーポリシー｜優待近場検索 β</title>
-  <link rel="stylesheet" href="./style.css?v=20261004-security">
+  <title>プライバシーポリシー｜優待券使えるお店検索 α</title>
+  <link rel="stylesheet" href="./style.css?v=20261005-brand1">
+<link rel="stylesheet" href="./assets/brand.css?v=20261005-brand1">
 </head>
-<body>
+<body class="food-tool">
 <header class="topbar"><div><div class="eyebrow">PRIVACY</div><h1>プライバシーポリシー</h1></div></header>
 <main class="wrap">
   <a class="back" href="./">← 検索へ戻る</a>
   <article class="policy">
     <h2>1. 基本方針</h2>
-    <p>「優待近場検索 β」（以下「本サイト」）は、利用者のプライバシーを尊重し、必要以上の情報を取得しない設計を基本方針とします。本サイトはログインを必要とせず、X（旧Twitter）その他のSNSアカウントとの連携も行いません。</p>
+    <p>「優待券使えるお店検索 α」（以下「本サイト」）は、利用者のプライバシーを尊重し、必要以上の情報を取得しない設計を基本方針とします。本サイトはログインを必要とせず、X（旧Twitter）その他のSNSアカウントとの連携も行いません。</p>
 
     <h2>2. 現在地情報</h2>
     <p>本サイトは、利用者が「現在地から探す」機能を明示的に操作した場合に限り、ブラウザの位置情報機能を利用して現在地の緯度・経度を取得します。</p>
-    <p>本サイトの運営者は、取得した現在地情報を自らのサーバーへ収集・保存しません。また、利用者個人と現在地情報を結び付けたデータベースを作成しません。</p>
-    <p>ただし、近隣店舗を検索するため、現在地の緯度・経度は利用者のブラウザから第三者サービスであるOpenPOI APIへ検索条件として送信されます。OpenPOI API側での情報の取り扱いについては、同サービスの利用規約・プライバシーポリシーをご確認ください。</p>
+    <p>取得した座標は検索処理にのみ利用し、運営者は利用者の位置情報を履歴やデータベースに保存しません。ブラウザの永続保存領域にも位置座標は保存しません。また、利用者個人と現在地情報を結び付けたデータベースは作成しません。</p>
+    <p>近隣店舗の検索には、現在地の緯度・経度を運営者の検索API（Cloudflare Workers）へ検索条件として送信します。対象の優待によっては、検索APIから、またはブラウザからOpenPOI APIへも座標を送信します。場所を指定した検索では、入力した検索語をOpenPOI APIへ送信します。各サービスでの通信ログ等の取り扱いには、Cloudflare・OpenPOI APIそれぞれの規約・プライバシーポリシーが適用されます。</p>
 
     <h2>3. 端末内への設定保存</h2>
-    <p>利便性向上のため、選択した優待会社や検索範囲などの設定を、ブラウザのlocalStorage等に保存する場合があります。これらは原則として利用者の端末内に保存され、現在地の緯度・経度は保存対象としません。</p>
+    <p>利便性向上のため、選択した優待会社・検索範囲・店舗カテゴリの設定を、ブラウザのlocalStorage等に保存する場合があります。これらは原則として利用者の端末内に保存され、現在地の緯度・経度は保存対象としません。</p>
 
     <h2>4. SNS・外部アカウントとの連携</h2>
     <p>本サイトは、X（旧Twitter）を含むSNSアカウントやその他の外部アカウントとのログイン連携を行いません。SNSアカウント情報の取得、フォロー状況の取得、投稿履歴との紐付け等も行いません。</p>
 
     <h2>5. アクセス解析・広告</h2>
-    <p>本β版では、Google Analytics等のアクセス解析サービスおよび広告配信用Cookieを使用しません。将来これらを導入する場合は、本ポリシーを更新し、必要な情報を明示します。</p>
+    <p>本α版では、Google Analytics等のアクセス解析サービスおよび広告配信用Cookieを使用しません。将来これらを導入する場合は、本ポリシーを更新し、必要な情報を明示します。</p>
 
     <h2>6. 外部サービスへのリンク</h2>
     <p>本サイトから、各社公式サイト、Google Maps、OpenPOI API等の外部サービスへ移動できる場合があります。移動後の情報の取り扱いについては、各外部サービスのプライバシーポリシー等が適用されます。</p>
@@ -39,7 +40,7 @@
     <h2>8. 改定</h2>
     <p>機能追加や外部サービスの変更等に応じて、本ポリシーを改定する場合があります。</p>
 
-    <p><strong>制定日：2026年10月3日</strong></p>
+    <p><strong>制定日：2026年10月3日 ／ 最終改定日：2026年10月5日</strong></p>
   </article>
 </main>
 <footer class="footer"><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener">出典: OpenPOI API</a></footer>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#fff8ea">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-n2QFy8a1FTJA+Kxp6bGbE4SZvXmD6VjMb9YNXwCxTC8='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.openpoiapi.com https://yutai-map-api.yutaisamurai.workers.dev; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
@@ -22,15 +22,12 @@
 
   <title>株主優待券が使えるお店検索｜優待券使えるお店検索 α</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://yutai-quo-navi.github.io/yutai-map/#website","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","description":"現在地や指定した場所から、株主優待券が使える店舗を近い順に検索。すかいらーく、コロワイド、クリエイト・レストランツ、物語コーポレーション、ゼンショーホールディングスに対応。","inLanguage":"ja-JP"},{"@type":"WebApplication","@id":"https://yutai-quo-navi.github.io/yutai-map/#app","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"description":"現在地や指定した場所から、株主優待券が使える店舗を近い順に検索。すかいらーく、コロワイド、クリエイト・レストランツ、物語コーポレーション、ゼンショーホールディングスに対応。","inLanguage":"ja-JP","isPartOf":{"@id":"https://yutai-quo-navi.github.io/yutai-map/#website"}}]}</script>
-  <link rel="stylesheet" href="./style.css?v=20261005-search-icon1">
+  <link rel="stylesheet" href="./style.css?v=20261005-brand1">
+  <link rel="stylesheet" href="./assets/brand.css?v=20261005-brand1">
 </head>
-<body>
-  <header class="topbar">
-    <div>
-      <div class="eyebrow">株主優待 × 場所検索</div>
-      <h1>優待券使えるお店検索 <span>α</span></h1>
-    </div>
-    <div class="top-actions">
+<body class="food-tool">
+<header class="site-header">
+    <div class="site-brand"><div class="site-logo" aria-hidden="true">Q</div><p class="site-brand-name"><span>株主優待券店舗と</span><span>QUOガソリン給油検索</span></p></div>    <div class="top-actions">
       <button id="headerSearchButton" class="header-icon-button" type="button" aria-label="検索へ移動" title="検索"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg></button>
       <button id="menuButton" class="header-icon-button" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu" title="メニュー">☰</button>
       <div id="navMenu" class="nav-menu" hidden>
@@ -39,17 +36,23 @@
         <button id="menuFeedbackButton" type="button">情報提供</button>
       </div>
     </div>
+
+    <nav class="tool-nav" aria-label="検索ツールの切り替え">
+      <a href="/yutai-map/" aria-current="page">優待券のお店</a>
+      <a href="/" >QUOガソリン給油</a>
+    </nav>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <p class="lead">現在地や指定した場所から、優待券が使えるお店を近い順に。</p>
+      <h1 class="tool-title">優待券が使える<br class="mobile-break">お店を探す。</h1>
+      <p class="lead">現在地や指定した場所から、近い順に。</p>
 
       <div class="privacy-note">
-        
+
         <div>
-          <span class="privacy-title">現在地は運営者側で収集・保存しません</span>
-          <p>検索時のみOpenPOI APIへ位置座標を送信します。ログイン・X連携はありません。</p>
+          <span class="privacy-title">運営者は現在地を保存しません</span>
+          <p>近隣検索のため検索APIへ座標を送信します。位置座標は端末にも永続保存しません。<a href="./privacy.html">詳しく</a></p>
         </div>
       </div>
 
@@ -75,7 +78,7 @@
       <div class="section-title-row">
         <h2>優待を選ぶ</h2>
         <span id="selectionSummary" class="selection-summary"></span>
-        <button id="selectAllButton" class="text-button">すべて選択</button>
+        <button id="companyPickerButton" class="text-button" type="button" aria-haspopup="dialog" aria-controls="companyPickerDialog">選び直す</button>
       </div>
       <div id="companyChips" class="chips"></div>
 
@@ -90,11 +93,6 @@
       </div>
     </section>
 
-    <section class="service-overview" aria-labelledby="serviceOverviewTitle">
-      <h2 id="serviceOverviewTitle">株主優待券が使えるお店を検索</h2>
-      <p>現在地や指定した場所を基準に、株主優待券が使える店舗を近い順に探せる店舗検索サービスです。すかいらーく、コロワイド、クリエイト・レストランツ、物語コーポレーション、ゼンショーホールディングスに対応しています。</p>
-      <p>各社の公式情報を基に対象店舗を確認し、外食系の株主優待券を「どこで使えるか」から探せるようにしています。店舗・優待条件は変更される場合があるため、ご利用前に各社公式情報もご確認ください。</p>
-    </section>
 
     <section class="results-section">
       <div class="category-row" aria-label="店舗カテゴリ">
@@ -108,7 +106,21 @@
         <p>現在地から探すと<br>ここに近い優待店が表示されます</p>
       </div>
     </section>
+    <section class="service-overview" aria-labelledby="serviceOverviewTitle">
+      <h2 id="serviceOverviewTitle">株主優待券が使えるお店を検索</h2>
+      <p>現在地や指定した場所を基準に、株主優待券が使える店舗を近い順に探せる店舗検索サービスです。すかいらーく、コロワイド、クリエイト・レストランツ、物語コーポレーション、ゼンショーホールディングスに対応しています。</p>
+      <p>各社の公式情報を基に対象店舗を確認し、外食系の株主優待券を「どこで使えるか」から探せるようにしています。店舗・優待条件は変更される場合があるため、ご利用前に各社公式情報もご確認ください。</p>
+    </section>
   </main>
+
+  <dialog id="companyPickerDialog" class="company-picker" aria-labelledby="companyPickerTitle">
+    <div class="picker-head"><div class="dialog-head"><h2 id="companyPickerTitle">使いたい優待を選ぶ</h2><button id="companyPickerClose" class="icon-button" type="button" aria-label="変更せず閉じる">×</button></div>
+      <label class="picker-search-label" for="companyPickerSearch">優待会社・系列店名で検索</label><input id="companyPickerSearch" type="search" placeholder="例：すかいらーく、ガスト" autocomplete="off">
+      <div class="picker-tools"><span id="companyPickerCount" aria-live="polite"></span><button id="companyPickerAll" type="button">すべて選択</button><button id="companyPickerClear" type="button">解除</button></div>
+    </div>
+    <div id="companyPickerList" class="picker-list"></div>
+    <div class="picker-foot"><button id="companyPickerApply" class="primary-button" type="button">選択を反映して戻る</button><p>優待会社ごとに選択します。現在地は取得しません。</p></div>
+  </dialog>
 
   <dialog id="historyDialog" class="history-dialog">
     <div class="dialog-head">
@@ -156,11 +168,11 @@
       <p>このサイトはログイン不要です。</p>
       <ul>
         <li>現在地は「現在地から探す」を押したときだけ取得します。</li>
-        <li>サイト運営者は、現在地の座標をサーバーに収集・保存しません。</li>
-        <li>近隣店舗検索のため、取得した座標はブラウザからOpenPOI APIへ送信されます。</li>
+        <li>運営者は、現在地の座標を利用者の履歴やデータベースに保存しません。端末の永続保存領域にも位置座標は保存しません。</li>
+        <li>近隣店舗検索のため、座標を運営者の検索API（Cloudflare Workers）へ送信します。対象の優待によってOpenPOI APIへも送信します。</li>
         <li>X（旧Twitter）その他SNSアカウントとの連携は行いません。</li>
         <li>このα版ではアクセス解析・広告Cookieを使用しません。</li>
-        <li>選択した優待会社・検索範囲のみ、この端末のブラウザ内に保存する場合があります。</li>
+        <li>選択した優待会社・検索範囲・店舗カテゴリを、この端末のブラウザ内に保存します。</li>
       </ul>
       <a class="secondary-button" href="./privacy.html">詳しいプライバシーポリシー</a>
     </div>
@@ -210,15 +222,8 @@
     </form>
   </dialog>
 
-  <footer class="footer">
-    <button id="feedbackButton" class="footer-button" type="button">情報提供</button>
-    <span>・</span>
-    <a href="./privacy.html">プライバシー</a>
-    <span>・</span>
-    <a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener">出典: OpenPOI API</a>
-    <p>店舗・優待情報は変更される場合があります。利用前に各社公式情報をご確認ください。</p>
-  </footer>
+  <footer class="footer site-footer"><div class="site-footer-brand">株主優待券店舗とQUOガソリン給油検索</div><div class="footer-links"><button id="feedbackButton" type="button">情報提供</button><a href="./privacy.html">プライバシー</a><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener noreferrer">出典: OpenPOI API</a></div><p>店舗・優待情報は変更される場合があります。ご利用前に各社公式情報をご確認ください。</p><a class="creator-link" href="https://x.com/yutai_samurai" target="_blank" rel="noopener noreferrer" aria-label="運営者 yutai_samurai のX"><img src="./assets/yutai-samurai.png" width="17" height="17" alt="" loading="lazy"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-7.4L5.5 22H2.3l7.3-8.5L.8 2h6.5l4.4 6.7L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg><span>@yutai_samurai</span></a></footer>
 
-  <script src="./app.js?v=20261004-d1api3" type="module"></script>
+  <script src="./app.js?v=20261005-brand1" type="module"></script>
 </body>
 </html>

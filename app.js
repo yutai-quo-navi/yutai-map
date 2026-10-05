@@ -7,7 +7,10 @@ const qs = (s) => document.querySelector(s);
 const els = {
   locate: qs('#locateButton'), status: qs('#status'), chips: qs('#companyChips'),
   radius: qs('#radiusSelect'), results: qs('#results'), count: qs('#resultCount'),
-  selectAll: qs('#selectAllButton'), privacy: qs('#privacyDialog'),
+  picker: qs('#companyPickerDialog'), pickerButton: qs('#companyPickerButton'),
+  pickerSearch: qs('#companyPickerSearch'), pickerList: qs('#companyPickerList'),
+  pickerCount: qs('#companyPickerCount'), pickerApply: qs('#companyPickerApply'),
+  privacy: qs('#privacyDialog'),
   privacyButton: qs('#privacyButton'), privacyClose: qs('#privacyClose'),
   headerSearchButton: qs('#headerSearchButton'), menuButton: qs('#menuButton'),
   navMenu: qs('#navMenu'), menuFeedbackButton: qs('#menuFeedbackButton'),
@@ -27,6 +30,8 @@ const els = {
 };
 
 let companies = [];
+let draftSelection = new Set();
+let pickerCompanies = [];
 let lastPosition = null;
 let lastCenterLabel = '現在地';
 let searching = false;
@@ -76,7 +81,7 @@ async function init(){
     );
     visibleCompanyIds = new Set(companies.map(c => c.id));
     for(const id of [...selected]) if(!visibleCompanyIds.has(id)) selected.delete(id);
-    if(!selected.size){
+    if(!selected.size && localStorage.getItem('yutai-selected') === null){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
     persistSelection();
@@ -95,9 +100,22 @@ async function init(){
   });
   els.radius.addEventListener('change', () => {
     localStorage.setItem('yutai-radius', els.radius.value);
-    if(lastPosition) searchNearby(lastPosition);
+    if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
   });
-  els.selectAll.addEventListener('click', toggleAll);
+  els.pickerButton.addEventListener('click', openCompanyPicker);
+  qs('#companyPickerClose').addEventListener('click', () => els.picker.close());
+  els.pickerSearch.addEventListener('input', renderCompanyPicker);
+  qs('#companyPickerAll').addEventListener('click', () => {
+    pickerCompanies.forEach(c => draftSelection.add(c.id)); renderCompanyPicker();
+  });
+  qs('#companyPickerClear').addEventListener('click', () => {
+    draftSelection.clear(); renderCompanyPicker();
+  });
+  els.pickerApply.addEventListener('click', () => {
+    selected.clear(); draftSelection.forEach(id => selected.add(id));
+    persistSelection(); renderChips(); els.picker.close();
+    if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+  });
   els.headerSearchButton?.addEventListener('click', () => {
     closeNavMenu();
     qs('.hero')?.scrollIntoView({behavior:'smooth', block:'start'});
@@ -132,46 +150,66 @@ function closeNavMenu(){
   els.menuButton?.setAttribute('aria-expanded', 'false');
 }
 
+// Stable issuer colors are shared by summary, picker and Google Maps buttons.
+function issuerTone(id){
+  const fixed = {skylark:0, colowide:1, create:2, monogatari:3, zensho:4};
+  if(Object.hasOwn(fixed, id)) return `issuer-tone-${fixed[id]}`;
+  let hash = 0;
+  for(const ch of String(id)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+  return `issuer-tone-${hash % 8}`;
+}
 function renderChips(){
   els.chips.innerHTML = '';
-  for(const c of companies.filter(c => visibleCompanyIds.has(c.id))){
-    const isSelected = selected.has(c.id);
-    const b = document.createElement('button');
-    b.className='chip';
-    b.type='button';
-    b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-    b.setAttribute('aria-label', `${c.name}：${isSelected ? '選択中' : '未選択'}`);
-    b.innerHTML = `
-      <span class="chip-name">${esc(c.name)}</span>
-      <span class="chip-state">${isSelected ? '選択中' : '未選択'}</span>
-    `;
-    b.addEventListener('click', () => {
-      selected.has(c.id) ? selected.delete(c.id) : selected.add(c.id);
-      persistSelection(); renderChips();
-      updateSelectionSummary();
-      if(lastPosition) searchNearby(lastPosition);
+  const chosen = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id));
+  for(const c of chosen.slice(0,3)){
+    const badge = document.createElement('span');
+    badge.className = `selected-issuer ${issuerTone(c.id)}`;
+    badge.textContent = `✓ ${c.name}`;
+    els.chips.appendChild(badge);
+  }
+  if(chosen.length > 3){
+    const more = document.createElement('span'); more.className='selected-more';
+    more.textContent = `＋${chosen.length - 3}社`; els.chips.appendChild(more);
+  }
+  if(!chosen.length) els.chips.textContent = '使いたい優待を選んでください';
+  qs('#selectionSummary').textContent = `${chosen.length}社 選択中`;
+}
+function openCompanyPicker(){
+  draftSelection = new Set(selected);
+  // Sort once on opening so checkbox rows never move while selecting.
+  pickerCompanies = companies.filter(c => visibleCompanyIds.has(c.id)).sort((a,b) =>
+    Number(selected.has(b.id)) - Number(selected.has(a.id)) || a.name.localeCompare(b.name,'ja'));
+  els.pickerSearch.value = ''; renderCompanyPicker(); els.picker.showModal();
+  els.pickerList.scrollTop = 0;
+}
+function renderCompanyPicker(){
+  const normalize = value => String(value).normalize('NFKC').toLocaleLowerCase('ja').replace(/\s+/g,'');
+  const query = normalize(els.pickerSearch.value);
+  const matches = pickerCompanies.filter(c => normalize([c.name,...(c.aliases || [])].join(' ')).includes(query));
+  els.pickerList.innerHTML = '';
+  for(const c of matches){
+    const row = document.createElement('label'); row.className=`picker-row ${issuerTone(c.id)}`;
+    const box = document.createElement('input'); box.type='checkbox'; box.checked=draftSelection.has(c.id);
+    const label = document.createElement('span'); label.className='picker-row-text';
+    const title = document.createElement('strong'); title.textContent=c.name;
+    const aliases = document.createElement('small');
+    aliases.textContent = (c.aliases || []).slice(0,4).join('・') + ((c.aliases || []).length > 4 ? ' ほか' : '');
+    label.append(title,aliases); row.append(box,label);
+    box.addEventListener('change', () => {
+      box.checked ? draftSelection.add(c.id) : draftSelection.delete(c.id);
+      updatePickerCount();
     });
-    els.chips.appendChild(b);
+    els.pickerList.appendChild(row);
   }
-  updateSelectionSummary();
-}
-
-function updateSelectionSummary(){
-  const summary = document.querySelector('#selectionSummary');
-  const visibleCompanies = companies.filter(c => visibleCompanyIds.has(c.id));
-  const selectedVisible = visibleCompanies.filter(c => selected.has(c.id)).length;
-  if(summary) summary.textContent = `${selectedVisible} / ${visibleCompanies.length} 選択中`;
-  if(els.selectAll){
-    els.selectAll.textContent = selectedVisible === visibleCompanies.length ? 'すべて解除' : 'すべて選択';
+  if(!matches.length){
+    const empty=document.createElement('p'); empty.className='picker-empty';
+    empty.textContent='一致する優待会社・系列店がありません'; els.pickerList.appendChild(empty);
   }
+  updatePickerCount();
 }
-
-function toggleAll(){
-  const visibleCompanies = companies.filter(c => visibleCompanyIds.has(c.id));
-  const allSelected = visibleCompanies.every(c => selected.has(c.id));
-  visibleCompanies.forEach(c => allSelected ? selected.delete(c.id) : selected.add(c.id));
-  persistSelection(); renderChips();
-  if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+function updatePickerCount(){
+  els.pickerCount.textContent = `${draftSelection.size} / ${pickerCompanies.length}社 選択中`;
+  els.pickerApply.textContent = `選択を反映して戻る（${draftSelection.size}社）`;
 }
 function persistSelection(){ localStorage.setItem('yutai-selected', JSON.stringify([...selected])); }
 
@@ -341,7 +379,7 @@ async function searchNearby(pos, centerLabel='現在地'){
     );
     const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
 
-    const d1Results = d1Targets.length ? await queryD1StoreApi(d1Targets, pos, radius) : [];
+    const d1Results = d1Targets.length ? (await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius)))).flat() : [];
     const batches = openPoiTargets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
     const raw = [
@@ -613,7 +651,7 @@ function renderResults(items, radius){
   }
   els.results.className='results'; els.results.innerHTML='';
   for(const x of items){
-    const card=document.createElement('article'); card.className='card';
+    const card=document.createElement('article'); card.className=`card ${issuerTone(x.company.id)}`;
     const storeName = x.officialStore?.name || x.name || x.matchedAlias;
     const storeAddress = x.officialStore?.address || x.address || [x.prefecture,x.city].filter(Boolean).join('');
     const mapQuery = [storeName, storeAddress].filter(Boolean).join(' ');
@@ -634,6 +672,7 @@ function renderResults(items, radius){
         <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
       <div class="card-actions">
+        <a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener">Googleマップで見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
