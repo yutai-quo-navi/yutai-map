@@ -953,3 +953,12 @@ h1 span{
 .search-radius select:hover{border-color:var(--accent-text)}
 .search-radius select:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
 #currentSearchPanel[hidden]{display:none}
+
+/* The entire issuer summary is one accessible button, including empty space. */
+.issuer-selection{display:block;width:100%;min-width:0;box-sizing:border-box;padding:0 0 8px;margin:0;border:0;border-radius:12px;background:transparent;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.issuer-selection .section-title-row{display:flex;width:100%}
+.selection-heading{font-size:18px;font-weight:700;line-height:1.4}
+.selection-change{margin-left:auto;white-space:nowrap}
+.issuer-selection:hover{background:var(--surface-soft)}
+.issuer-selection:focus-visible{outline:2px solid var(--accent-text);outline-offset:6px}
+.issuer-selection .chips{min-height:28px}
