@@ -68,8 +68,8 @@ const categoryLabels = {
   foodcourt:'フードコート',
   other:'その他'
 };
-const selectedSaved = readJSON('yutai-selected', ['create','skylark']);
-const selected = new Set(Array.isArray(selectedSaved) ? selectedSaved.filter(x => typeof x==='string') : ['create','skylark']);
+const selectedSaved = readJSON('yutai-selected', null);
+const selected = new Set(Array.isArray(selectedSaved) ? selectedSaved.filter(x => typeof x==='string') : []);
 let brandCatalog = [];
 let activeBrand = readSetting('yutai-brand', '');
 let brandRequest = 0;
@@ -107,7 +107,7 @@ async function init(){
     );
     visibleCompanyIds = new Set(companies.map(c => c.id));
     for(const id of [...selected]) if(!visibleCompanyIds.has(id)) selected.delete(id);
-    if(!selected.size && readSetting('yutai-selected') === null){
+    if(!Array.isArray(selectedSaved)){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
     persistSelection();
@@ -1023,21 +1023,25 @@ function brandSearchTerms(brand){
 }
 function hideBrandSuggestions(){ els.brandSuggestions.hidden=true; els.brandCandidateStatus.textContent=''; }
 function chooseBrand(key){
+  const brand=brandCatalog.find(b=>brandKey(b)===key);
+  if(brand && !selected.has(brand.issuer_id)){
+    selected.add(brand.issuer_id); persistSelection(); renderChips();
+  }
   activeBrand=key; writeSetting('yutai-brand',key);
   els.brandSearch.value=''; brandCandidateLimit=12;
   renderBrandOptions(); hideBrandSuggestions(); resetCategoryFilter();
   if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
 }
 function renderBrandOptions(show=false){
-  const available=brandCatalog.filter(b=>selected.has(b.issuer_id));
-  if(activeBrand && !available.some(b=>brandKey(b)===activeBrand)){
+  const available=brandCatalog;
+  if(activeBrand && !available.some(b=>brandKey(b)===activeBrand && selected.has(b.issuer_id))){
     activeBrand=''; writeSetting('yutai-brand','');
   }
   const chosen=available.find(b=>brandKey(b)===activeBrand);
-  els.brandSelection.textContent=chosen ? chosen.name+' ／ '+(companies.find(c=>c.id===chosen.issuer_id)?.name||'') : '選択した優待の全ブランド';
+  els.brandSelection.textContent=chosen ? chosen.name+' ／ '+(companies.find(c=>c.id===chosen.issuer_id)?.name||'') : (selected.size ? '選択した優待の全ブランド' : '店名・ブランドを入力するか、優待を選んでください');
   els.brandReset.hidden=!chosen;
   els.brandSearch.disabled=!available.length;
-  const open=show || document.activeElement===els.brandSearch;
+  const open=(show || document.activeElement===els.brandSearch) && Boolean(els.brandSearch.value.trim());
   els.brandSuggestions.replaceChildren();
   if(!open || !available.length){ hideBrandSuggestions(); return; }
   const query=normalizeBrandQuery(els.brandSearch.value);
@@ -1047,7 +1051,7 @@ function renderBrandOptions(show=false){
   });
   els.brandSuggestions.hidden=false;
   const all=document.createElement('button'); all.type='button'; all.className='brand-option brand-all';
-  all.textContent='選択した優待の全ブランド'; all.addEventListener('click',()=>chooseBrand('')); els.brandSuggestions.appendChild(all);
+  all.textContent='選択した優待の全ブランド'; all.addEventListener('click',()=>chooseBrand('')); if(selected.size) els.brandSuggestions.appendChild(all);
   for(const b of matches.slice(0,brandCandidateLimit)){
     const button=document.createElement('button'); button.type='button'; button.className='brand-option '+issuerTone(b.issuer_id);
     if(brandKey(b)===activeBrand) button.classList.add('is-selected');
@@ -1057,7 +1061,7 @@ function renderBrandOptions(show=false){
   }
   if(matches.length>brandCandidateLimit){
     const more=document.createElement('button'); more.type='button';more.className='brand-option brand-more';more.textContent='さらに12件の候補を見る';
-    more.addEventListener('click',()=>{ const firstNew=brandCandidateLimit+1;brandCandidateLimit+=12;renderBrandOptions(true);els.brandSuggestions.querySelectorAll('button')[firstNew]?.focus(); });
+    more.addEventListener('click',()=>{ const firstNew=brandCandidateLimit+(selected.size?1:0);brandCandidateLimit+=12;renderBrandOptions(true);els.brandSuggestions.querySelectorAll('button')[firstNew]?.focus(); });
     els.brandSuggestions.appendChild(more);
   }
   els.brandCandidateStatus.textContent=query ? (matches.length ? matches.length+'候補'+(matches.length>brandCandidateLimit?'。名前を続けて入力すると絞れます。':'') : '候補がありません。別の名前や読みでお試しください。') : '名前を入力すると候補を絞れます。';
