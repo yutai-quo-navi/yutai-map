@@ -4,10 +4,10 @@
   "name": "トリドールホールディングス",
   "fullName": "トリドールホールディングス",
   "status": "development",
-  "sourceUrl": "https://www.toridoll.com/ir",
+  "sourceUrl": "https://www.toridoll.com/ir/stock/shareholder/",
   "storeSearchUrl": "https://stores.toridoll.com/directory",
-  "matchingMode": "official_store_db_preferred",
-  "note": "公式店舗ディレクトリを基礎に、国内店舗と株主優待利用可否を突合して店舗単位DB化する予定。",
+  "matchingMode": "official_store_filter",
+  "note": "公式の国内店舗一覧と株主優待カードの利用不可店舗一覧を突合。海外・開店前・閉店済み・対象外店舗は掲載しない。",
   "discoveryBrands": [
     "丸亀製麺",
     "コナズ珈琲",
@@ -21,10 +21,56 @@
     "いぶきうどん",
     "ふたば製麺"
   ],
-  "aliases": [],
+  "aliases": [
+    "丸亀製麺",
+    "コナズ珈琲",
+    "とりどーる",
+    "まきの",
+    "豚屋とん一",
+    "肉のヤマ牛",
+    "晩杯屋",
+    "ずんどう屋",
+    "いぶきうどん",
+    "ふたば製麺",
+    "焼きたてコッペ製パン",
+    "譚仔三哥米線",
+    "TamJai Mixian",
+    "PALM WAGON",
+    "KNOWS COFFEE",
+    "goodNess",
+    "長田本庄軒"
+  ],
   "excludedNames": [],
-  "categories": {},
+  "categories": {
+    "コナズ珈琲": "cafe",
+    "KNOWS COFFEE": "cafe",
+    "PALM WAGON": "cafe",
+    "焼きたてコッペ製パン": "bakery"
+  },
   "searchNames": [
     "トリドール"
-  ]
+  ],
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/toridoll/stores/current.json",
+  "verified": "2026-10-05",
+  "health": {
+    "minStores": 850,
+    "maxStores": 1600,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "stores.toridoll.com"
+    ],
+    "maxAdded": 150,
+    "maxRemoved": 150,
+    "maxChanged": 300,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
 }
