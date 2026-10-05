@@ -1,0 +1,82 @@
+name: Build expiry ledger and X drafts
+
+on:
+  push:
+    branches: [main]
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'expiry.js', 'tests/test_expiry.py', 'tests/expiry.test.mjs', '.github/workflows/expiry.yml']
+  pull_request:
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'expiry.js', 'tests/**', '.github/workflows/expiry.yml']
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'X初稿・前年候補の対象月（YYYY-MM / 空欄なら日本時間の今月）'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: expiry-${{ github.event.pull_request.number || 'main' }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12.14'
+      - name: Validate history and build
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          TARGET_MONTH: ${{ inputs.month }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" != "pull_request" ]; then
+            git fetch origin main
+            git checkout -B main origin/main
+          fi
+          args=()
+          if [ -n "$BASE_SHA" ] && git cat-file -e "$BASE_SHA:data/expiry_master.csv" 2>/dev/null; then
+            git show "$BASE_SHA:data/expiry_master.csv" > /tmp/expiry-baseline.csv
+            args+=(--baseline /tmp/expiry-baseline.csv)
+          fi
+          if [ -z "$TARGET_MONTH" ]; then
+            TARGET_MONTH=$(TZ=Asia/Tokyo date +%Y-%m)
+          fi
+          mkdir -p /tmp/expiry-drafts
+          python tools/build_expiry.py "${args[@]}" --month "$TARGET_MONTH" --draft /tmp/expiry-drafts/x-month.txt --candidates /tmp/expiry-drafts/prior-year-candidates.csv
+          python tools/build_expiry.py --month "$TARGET_MONTH" --month-end --draft /tmp/expiry-drafts/x-month-end.txt
+          cp data/expiry.json /tmp/expiry-drafts/expiry.json
+      - name: Verify countdown, filtering, validation and draft generation
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+          node --test tests/expiry.test.mjs
+          node --input-type=module --check < app.js
+          python tools/build_expiry.py --check
+      - name: Downloadable X drafts and previous-year candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: expiry-drafts
+          path: /tmp/expiry-drafts/
+      - name: Save generated JSON and rebuild GitHub Pages
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/expiry.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build public expiry ledger from CSV'
+            git push origin HEAD:main
+            # Token commits do not start Pages implicitly; request a build explicitly.
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+          fi

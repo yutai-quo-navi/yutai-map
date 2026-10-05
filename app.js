@@ -1,3 +1,5 @@
+import {initExpiry} from './expiry.js';
+
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -76,6 +78,22 @@ const savedMemos = readJSON('yutai-memos', []);
 let memos = Array.isArray(savedMemos) ? savedMemos.filter(x => x && typeof x.id==='string' && typeof x.issuer==='string' && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,200) : [];
 els.radius.value = readSetting('yutai-radius') || '3000';
 
+const expiryUI = initExpiry({
+  resolveIssuer: entry => companies.find(c => visibleCompanyIds.has(c.id) && (entry.issuer_id ? c.id === entry.issuer_id : c.code === entry.code)),
+  search: (entry, issuer) => {
+    selected.clear(); selected.add(issuer.id);
+    activeBrand=''; els.brandSearch.value='';
+    if(entry.search_brand){
+      const brand=brandCatalog.find(b => b.issuer_id === issuer.id && b.name === entry.search_brand);
+      if(brand) activeBrand=brandKey(brand);
+    }
+    writeSetting('yutai-brand', activeBrand); resetCategoryFilter();
+    persistSelection(); renderChips(); renderBrandOptions();
+    qs('.hero').scrollIntoView({behavior:'smooth',block:'start'});
+    if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+    else setStatus('優待を選択しました。場所を指定するか、現在地から探してください');
+  }
+});
 init();
 
 async function init(){
@@ -111,7 +129,7 @@ async function init(){
     renderChips();
     renderCategoryFilters();
     await loadBrandCatalog();
-    renderMemoCompanies(); renderMemos(); updateFavoritesCount();
+    renderMemoCompanies(); renderMemos(); updateFavoritesCount(); expiryUI.refresh();
   } catch(e){
     setStatus('優待データを読み込めませんでした');
   }
@@ -144,6 +162,7 @@ async function init(){
   });
   els.headerSearchButton?.addEventListener('click', () => {
     closeNavMenu();
+    expiryUI.showStore();
     qs('.hero')?.scrollIntoView({behavior:'smooth', block:'start'});
     setTimeout(() => { if(!els.placeSearchPanel.hidden) els.placeInput?.focus(); }, 350);
   });

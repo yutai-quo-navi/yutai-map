@@ -5,3 +5,6 @@ exclude:
   - data/issuers/monogatari/stores
   - cloudflare
   - tools
+  - tests
+  - docs
+  - data/expiry_master.csv
