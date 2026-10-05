@@ -108,6 +108,28 @@ h1 span{
   margin-bottom:22px;
 }
 .results-section{margin-bottom:22px}
+.service-overview{
+  margin:0 0 22px;
+  padding:18px 18px 17px;
+  border:1px solid rgba(229,230,233,.75);
+  border-radius:var(--radius-lg);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.service-overview h2{
+  margin:0 0 9px;
+  font-size:15px;
+  line-height:1.4;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.service-overview p{
+  margin:0;
+  color:#656a71;
+  font-size:10.5px;
+  line-height:1.75;
+}
+.service-overview p+p{margin-top:7px}
 
 .lead{
   margin:0 0 18px;
