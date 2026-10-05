@@ -93,9 +93,9 @@ for offset in range(0,official_total,200):
     for row in rows:
         code=str(row.get('code') or '')
         cats=row.get('categories') or []
-        small=[c for c in cats if c.get('level')=='small']
+        small=next((group for level in ['small','middle','large'] if (group:=[c for c in cats if c.get('level')==level])),[])
         if not code or not small or not row.get('name') or not row.get('address_name'):
-            raise RuntimeError('Store id/name/address/brand missing')
+            raise RuntimeError(f'Official store missing required fields: code={code}, name={row.get("name")}, category_levels={[c.get("level") for c in cats]}, has_address={bool(row.get("address_name"))}')
         if any(str(c.get('code')) in excluded for c in cats):
             raise RuntimeError('Excluded official category leaked into results')
         if any('せたが屋' in c.get('name','') for c in cats):
