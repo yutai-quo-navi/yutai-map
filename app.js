@@ -49,6 +49,7 @@ let lastCenterLabel = '現在地';
 let searching = false;
 let pendingSearch = null;
 let lastResults = [];
+let categoryCounts = null;
 let suggestTimer = null;
 // Category is a temporary refinement; do not carry a hidden restriction across visits.
 let activeCategory = 'all';
@@ -418,6 +419,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
   searching = true; els.locate.disabled = true;
+  categoryCounts=null; renderCategoryFilters();
   els.count.textContent = '';
   els.results.className='results';
   els.results.innerHTML='<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
@@ -430,7 +432,8 @@ async function searchNearby(pos, centerLabel='現在地'){
     );
     const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
 
-    const d1Results = d1Targets.length ? (await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius)))).flat() : [];
+    const d1Groups = d1Targets.length ? await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius))) : [];
+    const d1Results=d1Groups.flatMap(g=>g.results);
     const batches = openPoiTargets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
     const raw = [
@@ -438,7 +441,15 @@ async function searchNearby(pos, centerLabel='現在地'){
       ...responses.filter(r => r.status==='fulfilled').flatMap(r => r.value)
     ];
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
+    categoryCounts=Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
+    for(const group of d1Groups){
+      for(const id of Object.keys(categoryLabels)) categoryCounts[id]+=Number(group.categoryCounts[id] || 0);
+    }
+    for(const s of dedupe(responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value))){
+      categoryCounts.all++; categoryCounts[s.category || 'restaurant']++;
+    }
     lastResults = normalized;
+    renderCategoryFilters();
     renderFilteredResults(radius);
     setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
   } catch(e){
@@ -501,7 +512,7 @@ async function queryD1StoreApi(targets, pos, radius){
   if(!res.ok) throw new Error(`Store API ${res.status}`);
   const data = await res.json();
 
-  return (data.results || []).map(s => {
+  const results=(data.results || []).map(s => {
     const company = companiesById.get(s.issuer_id);
     if(!company) return null;
     const lat = Number(s.lat), lng = Number(s.lng), distance = Number(s.distance);
@@ -531,6 +542,8 @@ async function queryD1StoreApi(targets, pos, radius){
       distance
     };
   }).filter(Boolean);
+  const counts=data.category_counts || results.reduce((out,s)=>{out.all++;out[s.category]=(out[s.category] || 0)+1;return out;},{all:0});
+  return {results,categoryCounts:counts};
 }
 
 async function queryOpenPOI(batch, pos, radius){
@@ -684,6 +697,11 @@ function renderCategoryFilters(){
     b.type='button';
     b.className='category-filter';
     b.textContent=label;
+    if(categoryCounts){
+      const badge=document.createElement('span'); badge.className='category-count'; badge.textContent=`${categoryCounts[id] || 0}件`; b.prepend(badge);
+      b.setAttribute('aria-label',`${label} ${categoryCounts[id] || 0}件`);
+      b.dataset.empty=categoryCounts[id] ? 'false' : 'true';
+    }
     b.setAttribute('aria-pressed', activeCategory===id ? 'true' : 'false');
     b.addEventListener('click',()=>{
       activeCategory=id;
@@ -703,7 +721,8 @@ function renderFilteredResults(radius){
 }
 
 function renderResults(items, radius){
-  els.count.textContent = `${items.length}件`;
+  const total=Number(categoryCounts?.[activeCategory] || 0);
+  els.count.textContent = total>items.length ? `${items.length}件表示／対象${total}件` : `${items.length}件`;
   if(!items.length){
     els.results.className='results empty-state';
     const restricted=activeCategory!=='all' || activeBrand;

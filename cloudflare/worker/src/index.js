@@ -66,18 +66,22 @@ export default {
       const referenceSet = new Set(referenceIssuers);
       const geoIssuers = issuers.filter(id => !referenceSet.has(id));
 
-      const [geoResults, referenceResults] = await Promise.all([
+      const [geoResults, referenceResults, geoCounts] = await Promise.all([
         searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand),
         Promise.all(referenceIssuers.map(id =>
-          searchReferenceIssuer(env, id, lat, lng, radius, category, brand)
-        )).then(groups => groups.flat())
+          searchReferenceIssuer(env, id, lat, lng, radius, '', brand)
+        )).then(groups => groups.flat()),
+        countGeoCategories(env, geoIssuers, lat, lng, radius, brand)
       ]);
 
-      const combined = dedupeResults([...geoResults, ...referenceResults])
+      const categoryCounts = {...geoCounts};
+      for(const s of referenceResults){ const key=s.category || 'restaurant'; categoryCounts[key]=(categoryCounts[key] || 0)+1; }
+      categoryCounts.all=Object.values(categoryCounts).reduce((a,b)=>a+b,0);
+      const combined = dedupeResults([...geoResults, ...referenceResults.filter(s=>!category || s.category===category)])
         .sort((a,b) => a.distance - b.distance)
         .slice(0, MAX_RESULTS);
 
-      return json({ results: combined, count: combined.length, limit: MAX_RESULTS }, 200, {
+      return json({ results: combined, count: combined.length, limit: MAX_RESULTS, category_counts: categoryCounts }, 200, {
         ...cors,
         'Cache-Control': 'public, max-age=30'
       });
@@ -136,6 +140,18 @@ async function findReferenceIssuers(env, issuers){
     `SELECT DISTINCT issuer_id FROM reference_stores WHERE issuer_id IN (${placeholders})`
   ).bind(...issuers).all();
   return results.map(r => r.issuer_id);
+}
+
+async function countGeoCategories(env, issuers, lat, lng, radius, brand){
+  if(!issuers.length) return {};
+  const latDelta=radius/111320, lngDelta=radius/(111320*Math.max(Math.cos(lat*Math.PI/180),0.1));
+  const {results=[]}=await env.DB.prepare(`SELECT category,lat,lng FROM stores WHERE issuer_id IN (${issuers.map(()=>'?').join(',')}) AND lat BETWEEN ? AND ? AND lng BETWEEN ? AND ? ${brand ? 'AND brand_name = ?' : ''}`).bind(...issuers,lat-latDelta,lat+latDelta,lng-lngDelta,lng+lngDelta,...(brand ? [brand] : [])).all();
+  const counts={};
+  for(const s of results){
+    if(haversine(lat,lng,Number(s.lat),Number(s.lng))>radius) continue;
+    const key=s.category || 'restaurant'; counts[key]=(counts[key] || 0)+1;
+  }
+  return counts;
 }
 
 async function searchGeoStores(env, issuers, lat, lng, radius, category, brand){
@@ -249,8 +265,7 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
   }
 
   return dedupeResults(matched)
-    .sort((a,b) => a.distance - b.distance)
-    .slice(0, MAX_RESULTS);
+    .sort((a,b) => a.distance - b.distance);
 }
 
 function matchReferenceStore(p, refs){
