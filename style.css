@@ -807,7 +807,7 @@ h1 span{
   border:0;border-radius:14px;background:var(--surface);color:#4f545a;
   box-shadow:var(--shadow-soft);font:600 22px/1 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-#headerSearchButton{font-size:26px;transform:rotate(-18deg)}
+#headerSearchButton svg{display:block}
 .nav-menu{
   position:absolute;z-index:50;right:0;top:calc(100% + 8px);width:190px;
   padding:7px;border:1px solid rgba(229,230,233,.9);border-radius:17px;
