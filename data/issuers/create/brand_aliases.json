@@ -34,7 +34,8 @@
     {
       "name": "かごの屋",
       "aliases": [
-        "かごの屋"
+        "かごの屋",
+        "かごのや"
       ]
     },
     {
@@ -502,6 +503,37 @@
       "name": "BAYSIDE GRILL THE BBQ",
       "aliases": [
         "BAYSIDE GRILL THE BBQ"
+      ]
+    },
+    {
+      "name": "ふうふや",
+      "aliases": [
+        "ふうふや"
+      ]
+    },
+    {
+      "name": "ドゥ マゴ",
+      "aliases": [
+        "ドゥ マゴ"
+      ]
+    },
+    {
+      "name": "THE PLATINUM",
+      "aliases": [
+        "THE PLATINUM"
+      ]
+    },
+    {
+      "name": "新嘉坡鶏飯",
+      "aliases": [
+        "新嘉坡鶏飯"
+      ]
+    },
+    {
+      "name": "Bar & Tapas Celona",
+      "aliases": [
+        "Bar & Tapas Celona",
+        "Bar&Tapas Celona"
       ]
     }
   ]
