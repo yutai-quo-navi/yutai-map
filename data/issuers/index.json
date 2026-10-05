@@ -48,7 +48,7 @@
       "id": "yoshinoya",
       "code": "9861",
       "name": "吉野家ホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/yoshinoya/config.json"
     },
     {
