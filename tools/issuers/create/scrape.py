@@ -1,5 +1,6 @@
 import json
 import re
+import unicodedata
 import urllib.request
 from collections import Counter
 from datetime import datetime, timezone, timedelta
@@ -14,6 +15,7 @@ HISTORY = BASE / "history.json"
 SUMMARY = BASE / "last_diff.md"
 BRANDS = Path("data/issuers/create/brands.json")
 EXCLUSIONS = Path("data/issuers/create/exclusions.json")
+BRAND_ALIASES = Path("data/issuers/create/brand_aliases.json")
 
 JST = timezone(timedelta(hours=9))
 NOW = datetime.now(JST)
@@ -125,6 +127,36 @@ def category_for(row):
         return "foodcourt"
     return "restaurant"
 
+
+def normalize_brand(value):
+    text = unicodedata.normalize("NFKD", str(value or "")).casefold()
+    return "".join(c for c in text if c.isalnum() and not unicodedata.combining(c))
+
+def load_brand_rules():
+    catalog = load_json(BRAND_ALIASES, {})
+    rules = []
+    for brand in catalog.get("brands", []):
+        name = str(brand.get("name") or "").strip()
+        if not name:
+            raise RuntimeError("Empty canonical Create Restaurants brand")
+        for alias in brand.get("aliases") or [name]:
+            key = normalize_brand(alias)
+            if key:
+                rules.append((key, name))
+    if not rules:
+        raise RuntimeError("Create Restaurants brand aliases missing")
+    return sorted(rules, key=lambda rule: len(rule[0]), reverse=True)
+
+def brand_for(row, rules):
+    name = str(row.get("name_jp") or "").strip()
+    hay = normalize_brand(name)
+    for alias, canonical in rules:
+        if alias in hay:
+            return canonical
+    # Keep the actual official store name when its brand is not yet mapped.
+    # Never substitute the business type (e.g. "海鮮居酒屋") for a brand.
+    return name
+
 def comparable(store):
     return {
         "name": store.get("name"),
@@ -200,6 +232,8 @@ if len(eligible_rows) < 750:
 current_stores = []
 upcoming_stores = []
 business_counts = Counter()
+brand_counts = Counter()
+brand_rules = load_brand_rules()
 excluded_rows = []
 
 for row in main_rows:
@@ -224,7 +258,7 @@ for row in main_rows:
         "original_id": str(row.get("original_id") or ""),
         "name": str(row.get("name_jp") or "").strip(),
         "business_type": str(row.get("business_type") or "").strip(),
-        "brand_name": str(row.get("business_type") or "").strip() or "公式対象店",
+        "brand_name": brand_for(row, brand_rules),
         "category": category_for(row),
         "address": join_address(row),
         "prefecture": str(row.get("pref_name") or "").strip(),
@@ -260,6 +294,7 @@ for row in main_rows:
 
     current_stores.append(store)
     business_counts[store["business_type"] or "(未分類)"] += 1
+    brand_counts[store["brand_name"]] += 1
 
 if len(current_stores) < 750:
     raise RuntimeError(f"Suspiciously small current eligible store count: {len(current_stores)}")
@@ -297,6 +332,11 @@ common_ids = sorted(set(fresh_by_id) & set(previous_by_id))
 changed_ids = [
     sid for sid in common_ids
     if comparable(fresh_by_id[sid]) != comparable(previous_by_id[sid])
+]
+
+brand_reclassified = [
+    sid for sid in common_ids
+    if fresh_by_id[sid]["brand_name"] != previous_by_id[sid].get("brand_name")
 ]
 
 for sid, store in fresh_by_id.items():
@@ -349,6 +389,10 @@ sorted_upcoming = sorted(
 brands_obj = {
     "source": SOURCE_URL,
     "generated_at": GENERATED_AT,
+    "brands": [
+        {"name": name, "eligible_store_count": count}
+        for name, count in sorted(brand_counts.items())
+    ],
     "business_types": [
         {"name": name, "eligible_store_count": count}
         for name, count in sorted(business_counts.items())
@@ -376,6 +420,7 @@ current_obj = {
     "container_counts": container_counts,
     "shareholder_value_counts": dict(sorted(shareholder_counts.items())),
     "business_type_counts": dict(sorted(business_counts.items())),
+    "brand_counts": dict(sorted(brand_counts.items())),
     "stores": sorted_stores,
     "upcoming_stores": sorted_upcoming,
 }
@@ -395,6 +440,7 @@ diff_obj = {
         "changed": len(changed_ids),
         "upcoming": len(sorted_upcoming),
     },
+    "brand_reclassified": brand_reclassified,
     "added": [fresh_by_id[sid] for sid in added_ids],
     "removed": [previous_by_id[sid] for sid in removed_ids],
     "changed": [
@@ -445,4 +491,5 @@ print(json.dumps({
     "added": len(added_ids),
     "removed": len(removed_ids),
     "changed": len(changed_ids),
+    "brand_reclassified": len(brand_reclassified),
 }, ensure_ascii=False))

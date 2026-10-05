@@ -234,6 +234,16 @@ still_current = sorted(removed_set & set(current_by_id))
 if still_current:
     raise SystemExit(f"{issuer}: removed ids still present in current snapshot: {still_current[:10]}")
 
+# Internal brand corrections must be synced without generating store-change events.
+brand_reclassified = diff.get("brand_reclassified") or []
+if not isinstance(brand_reclassified, list) or any(not isinstance(sid, str) for sid in brand_reclassified):
+    raise SystemExit(f"{issuer}: malformed brand_reclassified IDs")
+brand_set = set(brand_reclassified)
+if len(brand_set) != len(brand_reclassified) or brand_set - set(current_by_id):
+    raise SystemExit(f"{issuer}: duplicate/missing current brand_reclassified IDs")
+if brand_set & (added_set | removed_set):
+    raise SystemExit(f"{issuer}: brand correction overlaps added/removed stores")
+
 aliases = config.get("aliases", [])
 categories = config.get("categories", {})
 
@@ -249,7 +259,7 @@ for sid in sorted(removed_set):
     lines.extend(delete_store_rows(issuer, sid))
 
 # Insert new stores and UPSERT only stores whose official data changed.
-for sid in sorted(added_set | changed_set):
+for sid in sorted(added_set | changed_set | brand_set):
     lines.extend(upsert_store(issuer, current_by_id[sid], aliases, categories, generated))
 
 # Keep issuer-level metadata current. These are the only routine writes when
@@ -278,5 +288,6 @@ out.write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(
     f"{issuer}: incremental sync previous={previous_count} current={expected_current} "
     f"added={expected_added} removed={expected_removed} changed={expected_changed} "
-    f"store_writes={expected_added + expected_changed} -> {out.relative_to(ROOT)}"
+    f"brand_reclassified={len(brand_set)} "
+    f"store_writes={len(added_set | changed_set | brand_set)} -> {out.relative_to(ROOT)}"
 )

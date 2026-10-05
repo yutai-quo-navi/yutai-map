@@ -1,0 +1,508 @@
+{
+  "version": 1,
+  "brands": [
+    {
+      "name": "磯丸水産食堂",
+      "aliases": [
+        "磯丸水産食堂"
+      ]
+    },
+    {
+      "name": "磯丸水産",
+      "aliases": [
+        "磯丸水産"
+      ]
+    },
+    {
+      "name": "磯丸酒場",
+      "aliases": [
+        "磯丸酒場"
+      ]
+    },
+    {
+      "name": "鳥良商店",
+      "aliases": [
+        "鳥良商店"
+      ]
+    },
+    {
+      "name": "おもてなしとりよし",
+      "aliases": [
+        "おもてなしとりよし"
+      ]
+    },
+    {
+      "name": "かごの屋",
+      "aliases": [
+        "かごの屋"
+      ]
+    },
+    {
+      "name": "しゃぶ菜別邸",
+      "aliases": [
+        "しゃぶ菜別邸"
+      ]
+    },
+    {
+      "name": "しゃぶ菜",
+      "aliases": [
+        "しゃぶ菜"
+      ]
+    },
+    {
+      "name": "つけめんTETSU",
+      "aliases": [
+        "つけめんTETSU"
+      ]
+    },
+    {
+      "name": "つけめん102",
+      "aliases": [
+        "つけめん102"
+      ]
+    },
+    {
+      "name": "きみはん",
+      "aliases": [
+        "きみはん"
+      ]
+    },
+    {
+      "name": "MACCHA HOUSE",
+      "aliases": [
+        "MACCHA HOUSE"
+      ]
+    },
+    {
+      "name": "デザート王国",
+      "aliases": [
+        "デザート王国"
+      ]
+    },
+    {
+      "name": "雛鮨",
+      "aliases": [
+        "雛鮨"
+      ]
+    },
+    {
+      "name": "祭雛",
+      "aliases": [
+        "祭雛"
+      ]
+    },
+    {
+      "name": "やさい家めい",
+      "aliases": [
+        "やさい家めい"
+      ]
+    },
+    {
+      "name": "サンジェルマン",
+      "aliases": [
+        "サンジェルマン",
+        "Saint-Germain"
+      ]
+    },
+    {
+      "name": "プルミエ サンジェルマン",
+      "aliases": [
+        "プルミエ サンジェルマン"
+      ]
+    },
+    {
+      "name": "小樽サンジェルマン",
+      "aliases": [
+        "小樽サンジェルマン"
+      ]
+    },
+    {
+      "name": "JEAN FRANÇOIS",
+      "aliases": [
+        "JEAN FRANÇOIS",
+        "JEAN FRANCOIS"
+      ]
+    },
+    {
+      "name": "レフボン",
+      "aliases": [
+        "レフボン"
+      ]
+    },
+    {
+      "name": "サンヴァリエ",
+      "aliases": [
+        "サンヴァリエ"
+      ]
+    },
+    {
+      "name": "フラマンドール",
+      "aliases": [
+        "フラマンドール"
+      ]
+    },
+    {
+      "name": "五の五",
+      "aliases": [
+        "五の五",
+        "大衆酒場 五の五"
+      ]
+    },
+    {
+      "name": "鉄板ホルモン五の五",
+      "aliases": [
+        "鉄板ホルモン五の五"
+      ]
+    },
+    {
+      "name": "菜菜麻辣湯",
+      "aliases": [
+        "菜菜麻辣湯"
+      ]
+    },
+    {
+      "name": "遊鶴",
+      "aliases": [
+        "遊鶴"
+      ]
+    },
+    {
+      "name": "えびそば 一幻",
+      "aliases": [
+        "えびそば 一幻",
+        "えびそば一幻"
+      ]
+    },
+    {
+      "name": "ローストビーフ星",
+      "aliases": [
+        "ローストビーフ星"
+      ]
+    },
+    {
+      "name": "町鮨とろたく",
+      "aliases": [
+        "町鮨とろたく"
+      ]
+    },
+    {
+      "name": "みそ源",
+      "aliases": [
+        "みそ源"
+      ]
+    },
+    {
+      "name": "みのりカフェ",
+      "aliases": [
+        "みのりカフェ"
+      ]
+    },
+    {
+      "name": "みのるダイニング",
+      "aliases": [
+        "みのるダイニング"
+      ]
+    },
+    {
+      "name": "グリルみのる",
+      "aliases": [
+        "グリルみのる"
+      ]
+    },
+    {
+      "name": "みのる食堂",
+      "aliases": [
+        "みのる食堂"
+      ]
+    },
+    {
+      "name": "肉そば 岳しろ",
+      "aliases": [
+        "肉そば 岳しろ"
+      ]
+    },
+    {
+      "name": "海山亭いっちょう",
+      "aliases": [
+        "海山亭いっちょう"
+      ]
+    },
+    {
+      "name": "いっちょう",
+      "aliases": [
+        "いっちょう"
+      ]
+    },
+    {
+      "name": "AWkitchen",
+      "aliases": [
+        "AWkitchen"
+      ]
+    },
+    {
+      "name": "AW55",
+      "aliases": [
+        "AW55"
+      ]
+    },
+    {
+      "name": "Mr.FARMER",
+      "aliases": [
+        "Mr.FARMER"
+      ]
+    },
+    {
+      "name": "TANTO TANTO",
+      "aliases": [
+        "TANTO TANTO"
+      ]
+    },
+    {
+      "name": "PRECIOUS BUFFET",
+      "aliases": [
+        "PRECIOUS BUFFET"
+      ]
+    },
+    {
+      "name": "RIO GRANDE GRILL",
+      "aliases": [
+        "RIO GRANDE GRILL"
+      ]
+    },
+    {
+      "name": "D’s Sweet Marche",
+      "aliases": [
+        "D’s Sweet Marche"
+      ]
+    },
+    {
+      "name": "Bread&Coffee IKEDAYAMA",
+      "aliases": [
+        "Bread&Coffee IKEDAYAMA"
+      ]
+    },
+    {
+      "name": "MAISON GALETTE",
+      "aliases": [
+        "MAISON GALETTE"
+      ]
+    },
+    {
+      "name": "MAISON CRÊPE",
+      "aliases": [
+        "MAISON CRÊPE"
+      ]
+    },
+    {
+      "name": "MAISON DE BUFFET",
+      "aliases": [
+        "MAISON DE BUFFET"
+      ]
+    },
+    {
+      "name": "テコナベーグルワークス",
+      "aliases": [
+        "テコナベーグルワークス"
+      ]
+    },
+    {
+      "name": "テコナベーグル",
+      "aliases": [
+        "テコナベーグル"
+      ]
+    },
+    {
+      "name": "ひとにぎり",
+      "aliases": [
+        "ひとにぎり"
+      ]
+    },
+    {
+      "name": "鳥平ちゃん",
+      "aliases": [
+        "鳥平ちゃん"
+      ]
+    },
+    {
+      "name": "海人酒房",
+      "aliases": [
+        "海人酒房"
+      ]
+    },
+    {
+      "name": "旬菜しゃぶ重",
+      "aliases": [
+        "旬菜しゃぶ重"
+      ]
+    },
+    {
+      "name": "狼煙",
+      "aliases": [
+        "狼煙"
+      ]
+    },
+    {
+      "name": "はしや",
+      "aliases": [
+        "はしや"
+      ]
+    },
+    {
+      "name": "ごっつええ本舗",
+      "aliases": [
+        "ごっつええ本舗"
+      ]
+    },
+    {
+      "name": "銀座木屋",
+      "aliases": [
+        "銀座木屋"
+      ]
+    },
+    {
+      "name": "萬家",
+      "aliases": [
+        "萬家"
+      ]
+    },
+    {
+      "name": "天つるり",
+      "aliases": [
+        "天つるり"
+      ]
+    },
+    {
+      "name": "海南鶏飯食堂",
+      "aliases": [
+        "海南鶏飯食堂"
+      ]
+    },
+    {
+      "name": "南翔饅頭店",
+      "aliases": [
+        "南翔饅頭店"
+      ]
+    },
+    {
+      "name": "香港蒸蘢",
+      "aliases": [
+        "香港蒸蘢"
+      ]
+    },
+    {
+      "name": "FISHERMAN’S MARKET",
+      "aliases": [
+        "FISHERMAN’S MARKET"
+      ]
+    },
+    {
+      "name": "島ぬ風",
+      "aliases": [
+        "島ぬ風"
+      ]
+    },
+    {
+      "name": "肉丼の星",
+      "aliases": [
+        "肉丼の星"
+      ]
+    },
+    {
+      "name": "もみじ茶屋",
+      "aliases": [
+        "もみじ茶屋"
+      ]
+    },
+    {
+      "name": "江戸前天丼 濱乃屋",
+      "aliases": [
+        "江戸前天丼 濱乃屋",
+        "濱乃屋"
+      ]
+    },
+    {
+      "name": "前川水軍",
+      "aliases": [
+        "前川水軍"
+      ]
+    },
+    {
+      "name": "ア・ル・ロイック",
+      "aliases": [
+        "ア・ル・ロイック"
+      ]
+    },
+    {
+      "name": "九龍點心",
+      "aliases": [
+        "九龍點心"
+      ]
+    },
+    {
+      "name": "きづなすし",
+      "aliases": [
+        "きづなすし"
+      ]
+    },
+    {
+      "name": "からあげセンター",
+      "aliases": [
+        "からあげセンター"
+      ]
+    },
+    {
+      "name": "Manoa Pancake House",
+      "aliases": [
+        "Manoa Pancake House"
+      ]
+    },
+    {
+      "name": "はーべすと",
+      "aliases": [
+        "はーべすと"
+      ]
+    },
+    {
+      "name": "鉄板二百℃",
+      "aliases": [
+        "鉄板二百℃"
+      ]
+    },
+    {
+      "name": "麺大将",
+      "aliases": [
+        "麺大将"
+      ]
+    },
+    {
+      "name": "あずさ珈琲",
+      "aliases": [
+        "あずさ珈琲"
+      ]
+    },
+    {
+      "name": "Creperie Cafe Sucre",
+      "aliases": [
+        "Creperie Cafe Sucre"
+      ]
+    },
+    {
+      "name": "餃子販売所 いち五郎",
+      "aliases": [
+        "餃子販売所"
+      ]
+    },
+    {
+      "name": "BAYSIDE ROASTERY COFFEE",
+      "aliases": [
+        "BAYSIDE ROASTERY COFFEE"
+      ]
+    },
+    {
+      "name": "BAYSIDE GRILL THE BBQ",
+      "aliases": [
+        "BAYSIDE GRILL THE BBQ"
+      ]
+    }
+  ]
+}

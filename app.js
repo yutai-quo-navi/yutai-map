@@ -977,7 +977,7 @@ async function loadBrandCatalog(){
   try {
     const groups=await Promise.all(chunk(companies,20).map(async group=>{
       const params=new URLSearchParams({issuers:group.map(c=>c.id).join(',')});
-      const res=await fetch(`${STORE_API.replace('/stores/search','/brands')}?${params}`);
+      const res=await fetch(`${STORE_API.replace('/stores/search','/brands')}?${params}`, {cache:'no-store'});
       if(!res.ok) throw new Error('brand catalog unavailable');
       return (await res.json()).brands || [];
     }));
@@ -993,6 +993,13 @@ async function loadBrandCatalog(){
 let brandCandidateLimit=12;
 // Small local reading dictionary; typing never requests the store API.
 const brandReadings={
+  '鳥良商店':'とりよししょうてん とりよし', 'おもてなしとりよし':'おもてなしとりよし',
+  'サンジェルマン':'さんじぇるまん', 'プルミエ サンジェルマン':'ぷるみえさんじぇるまん', '小樽サンジェルマン':'おたるさんじぇるまん',
+  'レフボン':'れふぼん', 'サンヴァリエ':'さんゔぁりえ さんばりえ', 'フラマンドール':'ふらまんどーる',
+  'えびそば 一幻':'えびそばいちげん いちげん', 'つけめんTETSU':'つけめんてつ てつ',
+  'いっちょう':'いっちょう', '海山亭いっちょう':'かいざんていいっちょう', 'ひとにぎり':'ひとにぎり',
+  '鳥平ちゃん':'とりへいちゃん', '海人酒房':'うみんちゅしゅぼう', '旬菜しゃぶ重':'しゅんさいしゃぶじゅう',
+  '町鮨とろたく':'まちずしとろたく', '銀座木屋':'ぎんざきや', 'あずさ珈琲':'あずさこーひー',
   '吉野家':'よしのや よし', '松屋':'まつや まつ', '松のや':'まつのや まつの', 'マイカリー食堂':'まいかりーしょくどう まいかれー',
   '丸亀製麺':'まるがめせいめん まるかめ まるがめ', 'コナズ珈琲':'こなずこーひー こなずかふぇ', '豚屋とん一':'ぶたやとんいち とんいち',
   '肉のヤマ牛':'にくのやまぎゅう やまぎゅう', '晩杯屋':'ばんぱいや', 'ふたば製麺':'ふたばせいめん', '焼きたてコッペ製パン':'やきたてこっぺせいぱん',
