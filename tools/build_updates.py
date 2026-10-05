@@ -136,6 +136,10 @@ for issuer_dir in sorted(ISSUERS.iterdir()):
             before = row.get("before") or {}
             after = row.get("after") or {}
             fields = changed_fields(before, after)
+            # Brand-label maintenance is not an official store-information change.
+            sid = row.get("store_id") or after.get("store_id") or before.get("store_id")
+            if sid in (diff.get("brand_reclassified") or []):
+                fields = [field for field in fields if field["key"] != "brand_name"]
             if not fields:
                 continue
             store = after or before
