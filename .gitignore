@@ -1,2 +1,4 @@
 data/issuers/*/stores/
 cloudflare/generated/
+__pycache__/
+*.py[cod]

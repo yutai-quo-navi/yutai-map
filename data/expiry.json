@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "timezone": "Asia/Tokyo",
+  "entries": [
+    {
+      "id": "3193-2026-10-seed",
+      "code": "3193",
+      "company_name": "エターナルホスピタリティグループ",
+      "benefit_name": "鳥貴族株主優待券",
+      "issue": "2026年1月末基準日分",
+      "expiry_date": "2026-10-31",
+      "research_month": "2026-10",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [
+        "鳥貴族"
+      ],
+      "source_url": "https://eternal-hospitality.co.jp/ir/preferential/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-05",
+      "status": "confirmed",
+      "notes": "利用期間：2026年5月～10月末。国内の鳥貴族全店（鳥貴族〇〇家を除く）。やきとり大吉は対象外",
+      "issuer_id": "",
+      "search_brand": "",
+      "emoji": "🐔"
+    }
+  ]
+}
