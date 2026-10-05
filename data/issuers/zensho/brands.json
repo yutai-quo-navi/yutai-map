@@ -1,6 +1,6 @@
 {
   "source": "https://maps.zensho.co.jp/jp/shop.html",
-  "generated_at": "2026-10-05T05:49:43+09:00",
+  "generated_at": "2026-10-05T11:23:40+09:00",
   "eligible_filter": "shareholder_coupon",
   "brands": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "name": "すき家",
-      "eligible_store_count": 2004
+      "eligible_store_count": 2003
     },
     {
       "name": "なか卯",

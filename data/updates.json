@@ -1,6 +1,20 @@
 {
   "version": 1,
-  "generated_at": "2026-10-05T05:51:42+09:00",
-  "event_count": 0,
-  "events": []
+  "generated_at": "2026-10-05T11:26:00+09:00",
+  "event_count": 1,
+  "events": [
+    {
+      "event_id": "db4bf988910539d546d030bd4288fbd1de57fabe",
+      "at": "2026-10-05T11:23:40+09:00",
+      "run_date": "2026-10-05",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:722",
+      "name": "すき家 250号赤穂駅前店",
+      "address": "兵庫県赤穂市加里屋69-11",
+      "brand_name": "すき家"
+    }
+  ]
 }
