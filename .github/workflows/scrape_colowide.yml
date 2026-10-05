@@ -27,7 +27,8 @@ jobs:
           python-version: "3.12.14"
 
       - name: Install locked dependencies
-        run: pip install --disable-pip-version-check --no-input --no-deps --only-binary=:all: --require-hashes -r tools/requirements-colowide.txt
+        run: |
+          pip install --disable-pip-version-check --no-input --no-deps --only-binary=:all: --require-hashes -r tools/requirements-colowide.txt
       - name: Prepare Cloudflare API token
         env:
           CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
