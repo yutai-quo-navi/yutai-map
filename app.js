@@ -34,7 +34,9 @@ const els = {
   searchMode: qs('#searchMode'), currentSearchPanel: qs('#currentSearchPanel'),
   placeSearchPanel: qs('#placeSearchPanel'), placeInput: qs('#placeInput'),
   placeSuggestions: qs('#placeSuggestions'),
-  brandSearch: qs('#brandSearch'), brandSelect: qs('#brandSelect'),
+  brandSearch: qs('#brandSearch'), brandControls: qs('#brandControls'),
+  brandSuggestions: qs('#brandSuggestions'), brandSelection: qs('#brandSelection'),
+  brandReset: qs('#brandReset'), brandCandidateStatus: qs('#brandCandidateStatus'),
   favorites: qs('#favoritesDialog'), favoritesList: qs('#favoritesList'),
   favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount'),
   memo: qs('#memoDialog'), memoForm: qs('#memoForm'), memoList: qs('#memoList'),
@@ -171,12 +173,29 @@ async function init(){
   els.menuFeedbackButton?.addEventListener('click', () => { closeNavMenu(); openFeedback(); });
   els.feedbackClose.addEventListener('click', () => els.feedback.close());
   els.feedbackForm.addEventListener('submit', submitFeedback);
-  els.brandSearch.addEventListener('input', renderBrandOptions);
-  els.brandSelect.addEventListener('change', () => {
-    activeBrand=els.brandSelect.value; writeSetting('yutai-brand',activeBrand);
-    resetCategoryFilter();
-    if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+  els.brandSearch.addEventListener('input', () => { brandCandidateLimit=12; renderBrandOptions(true); });
+  els.brandSearch.addEventListener('focus', () => renderBrandOptions(true));
+  els.brandSearch.addEventListener('keydown', event => {
+    if(event.isComposing) return;
+    if(event.key==='ArrowDown'){
+      event.preventDefault(); renderBrandOptions(true);
+      els.brandSuggestions.querySelector('button')?.focus();
+    } else if(event.key==='Escape') hideBrandSuggestions();
   });
+  els.brandSuggestions.addEventListener('keydown', event => {
+    if(event.key==='Escape'){ hideBrandSuggestions(); els.brandSearch.focus(); hideBrandSuggestions(); return; }
+    if(!['ArrowDown','ArrowUp'].includes(event.key)) return;
+    event.preventDefault();
+    const buttons=[...els.brandSuggestions.querySelectorAll('button')];
+    const index=buttons.indexOf(document.activeElement);
+    if(event.key==='ArrowUp' && index===0){ els.brandSearch.focus(); return; }
+    buttons[(index+(event.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length]?.focus();
+  });
+  els.brandReset.addEventListener('click', () => chooseBrand(''));
+  document.addEventListener('click', event => { if(!els.brandControls.contains(event.target)) hideBrandSuggestions(); });
+  els.brandControls.addEventListener('focusout', () => setTimeout(() => {
+    if(!els.brandControls.contains(document.activeElement)) hideBrandSuggestions();
+  },0));
   els.favoritesButton.addEventListener('click', () => { renderFavorites(); els.favorites.showModal(); });
   qs('#favoritesClose').addEventListener('click', () => els.favorites.close());
   qs('#memoButton').addEventListener('click', () => { renderMemos(); els.memo.showModal(); });
@@ -959,30 +978,89 @@ async function loadBrandCatalog(){
     brandCatalog=groups.flat().filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
     renderBrandOptions();
   } catch {
-    els.brandSelect.disabled=true;
     els.brandSearch.disabled=true;
-    els.brandSelect.innerHTML='<option value="">ブランド一覧を取得できませんでした</option>';
-    activeBrand='';
+    hideBrandSuggestions();
+    els.brandCandidateStatus.textContent='ブランド候補を取得できませんでした。ページを再読み込みしてください。';
   }
 }
-function renderBrandOptions(){
+let brandCandidateLimit=12;
+// Small local reading dictionary; typing never requests the store API.
+const brandReadings={
+  '吉野家':'よしのや よし', '松屋':'まつや まつ', '松のや':'まつのや まつの', 'マイカリー食堂':'まいかりーしょくどう まいかれー',
+  '丸亀製麺':'まるがめせいめん まるかめ まるがめ', 'コナズ珈琲':'こなずこーひー こなずかふぇ', '豚屋とん一':'ぶたやとんいち とんいち',
+  '肉のヤマ牛':'にくのやまぎゅう やまぎゅう', '晩杯屋':'ばんぱいや', 'ふたば製麺':'ふたばせいめん', '焼きたてコッペ製パン':'やきたてこっぺせいぱん',
+  '長田本庄軒':'ながたほんじょうけん', '譚仔三哥米線':'たむじゃいさむごーみーしぇん たむじゃい',
+  'しゃぶ葉':'しゃぶよう', '夢庵':'ゆめあん', 'から好し':'からよし', 'むさしの森珈琲':'むさしのもりこーひー', '藍屋':'あいや',
+  '魚屋路':'ととやみち', '八郎そば':'はちろうそば', 'くし葉':'くしは', '資さん':'すけさん', 'chawan':'ちゃわん',
+  'MACCHA HOUSE':'まっちゃはうす', 'La Ohana':'らおはな', 'Saint-Germain':'さんじぇるまん', 'JEAN FRANÇOIS':'じゃんふらんそわ',
+  '甘太郎':'あまたろう', '北海道':'ほっかいどう', '贔屓屋':'ひいきや', '横丁':'よこちょう', '酒場':'さかば',
+  'ステーキ宮':'すてーきみや', 'にぎりの徳兵衛':'にぎりのとくべえ とくべえ', '寧々家':'ねねや', 'カルビ大将':'かるびたいしょう',
+  'がんこ亭':'がんこてい', 'かつ時':'かつとき', '海へ':'うみへ', '暖や':'だんや', '海鮮アトム':'かいせんあとむ',
+  '鳥の蔵':'とりのくら', '小さな森珈琲':'ちいさなもりこーひー', 'なぎさ橋珈琲':'なぎさばしこーひー', '寿司':'すし ずし',
+  '羊々亭':'ようようてい', 'KITEKI':'きてき', 'CANTINA':'かんてぃーな',
+  'なか卯':'なかう', '華屋与兵衛':'はなやよへえ はなやよへい', 'オリーブの丘':'おりーぶのおか', 'かつ庵':'かつあん',
+  '熟成焼肉いちばん':'じゅくせいやきにくいちばん', '久兵衛屋':'きゅうべえや',
+  'さぬき麺屋':'さぬきめんや', '竹清':'ちくせい', '千吉':'せんきち', '鶏千':'とりせん', '炒王':'ちゃお', 'ばり嗎':'ばりうま', '風雲丸':'ふううんまる',
+  '磯丸水産':'いそまるすいさん いそまる', 'しゃぶ菜':'しゃぶな', 'かごの屋':'かごのや', 'TETSU':'てつ', 'デザート王国':'でざーとおうこく',
+  '雛鮨':'ひなずし', 'やさい家めい':'やさいやめい', '五の五':'ごのご', '菜菜麻辣湯':'さいさいまーらーたん', '遊鶴':'ゆうづる',
+  '一幻':'いちげん', 'ローストビーフ星':'ろーすとびーふほし', '小樽':'おたる', 'みそ源':'みそげん', '肉そば岳しろ':'にくそばたけしろ',
+  '焼肉':'やきにく', '牛たん':'ぎゅうたん', '和牛':'わぎゅう', 'NIKUGEN':'にくげん', '肉源':'にくげん',
+  '丸源':'まるげん', '二代目':'にだいめ', 'お好み焼本舗':'おこのみやきほんぽ', 'ゆず庵':'ゆずあん', '魚貝三昧':'ぎょかいざんまい',
+  '源氏総本店':'げんじそうほんてん', '丸福':'まるふく', '果実屋珈琲':'かじつやこーひー', 'ロース堂':'ろーすどう', '源次郎':'げんじろう',
+  '珈琲':'こーひー かふぇ', '食堂':'しょくどう', '製麺':'せいめん', '専門店':'せんもんてん', 'うどん':'饂飩',
+  '海鮮':'かいせん', '天ぷら':'てんぷら', '蕎麦':'そば', '居酒屋':'いざかや', '定食':'ていしょく', '洋食':'ようしょく',
+  '和食':'わしょく', '中華':'ちゅうか', '餃子':'ぎょうざ', '丼':'どん どんぶり', '焼きたて':'やきたて', '併設':'へいせつ'
+};
+function normalizeBrandQuery(text){
+  return normalize(text).replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+}
+function brandSearchTerms(brand){
+  let terms=brand.name;
+  for(const [name,reading] of Object.entries(brandReadings)){
+    if(normalizeBrandQuery(brand.name).includes(normalizeBrandQuery(name))) terms+=' '+reading;
+  }
+  return normalizeBrandQuery(terms);
+}
+function hideBrandSuggestions(){ els.brandSuggestions.hidden=true; els.brandCandidateStatus.textContent=''; }
+function chooseBrand(key){
+  activeBrand=key; writeSetting('yutai-brand',key);
+  els.brandSearch.value=''; brandCandidateLimit=12;
+  renderBrandOptions(); hideBrandSuggestions(); resetCategoryFilter();
+  if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+}
+function renderBrandOptions(show=false){
   const available=brandCatalog.filter(b=>selected.has(b.issuer_id));
   if(activeBrand && !available.some(b=>brandKey(b)===activeBrand)){
     activeBrand=''; writeSetting('yutai-brand','');
   }
-  const query=normalize(els.brandSearch.value);
-  els.brandSelect.innerHTML='<option value="">選択した優待の全ブランド</option>';
-  for(const c of companies.filter(c=>selected.has(c.id))){
-    const matches=available.filter(b=>b.issuer_id===c.id && (!query || normalize(b.name+' '+c.name).includes(query) || brandKey(b)===activeBrand));
-    if(!matches.length) continue;
-    const group=document.createElement('optgroup'); group.label=c.name;
-    for(const b of matches.sort((a,b)=>a.name.localeCompare(b.name,'ja'))){
-      const option=document.createElement('option'); option.value=brandKey(b); option.textContent=b.name; group.appendChild(option);
-    }
-    els.brandSelect.appendChild(group);
+  const chosen=available.find(b=>brandKey(b)===activeBrand);
+  els.brandSelection.textContent=chosen ? chosen.name+' ／ '+(companies.find(c=>c.id===chosen.issuer_id)?.name||'') : '選択した優待の全ブランド';
+  els.brandReset.hidden=!chosen;
+  els.brandSearch.disabled=!available.length;
+  const open=show || document.activeElement===els.brandSearch;
+  els.brandSuggestions.replaceChildren();
+  if(!open || !available.length){ hideBrandSuggestions(); return; }
+  const query=normalizeBrandQuery(els.brandSearch.value);
+  const matches=available.filter(b=>!query || brandSearchTerms(b).includes(query)).sort((a,b)=>{
+    const rank=b=>normalizeBrandQuery(b.name)===query?0:normalizeBrandQuery(b.name).startsWith(query)?1:brandSearchTerms(b).startsWith(query)?2:3;
+    return rank(a)-rank(b) || a.name.localeCompare(b.name,'ja') || a.issuer_id.localeCompare(b.issuer_id);
+  });
+  els.brandSuggestions.hidden=false;
+  const all=document.createElement('button'); all.type='button'; all.className='brand-option brand-all';
+  all.textContent='選択した優待の全ブランド'; all.addEventListener('click',()=>chooseBrand('')); els.brandSuggestions.appendChild(all);
+  for(const b of matches.slice(0,brandCandidateLimit)){
+    const button=document.createElement('button'); button.type='button'; button.className='brand-option '+issuerTone(b.issuer_id);
+    if(brandKey(b)===activeBrand) button.classList.add('is-selected');
+    const title=document.createElement('strong');title.textContent=b.name;
+    const company=document.createElement('small'); company.textContent=companies.find(c=>c.id===b.issuer_id)?.name||'';
+    button.append(title,company); button.addEventListener('click',()=>chooseBrand(brandKey(b))); els.brandSuggestions.appendChild(button);
   }
-  els.brandSelect.value=activeBrand;
-  els.brandSelect.disabled=!available.length; els.brandSearch.disabled=!available.length;
+  if(matches.length>brandCandidateLimit){
+    const more=document.createElement('button'); more.type='button';more.className='brand-option brand-more';more.textContent='さらに12件の候補を見る';
+    more.addEventListener('click',()=>{ const firstNew=brandCandidateLimit+1;brandCandidateLimit+=12;renderBrandOptions(true);els.brandSuggestions.querySelectorAll('button')[firstNew]?.focus(); });
+    els.brandSuggestions.appendChild(more);
+  }
+  els.brandCandidateStatus.textContent=query ? (matches.length ? matches.length+'候補'+(matches.length>brandCandidateLimit?'。名前を続けて入力すると絞れます。':'') : '候補がありません。別の名前や読みでお試しください。') : '名前を入力すると候補を絞れます。';
 }
 function storeKey(x){ return JSON.stringify([x.company.id,x.officialStore?.store_id || [x.name,x.address].join('|')]); }
 function toggleFavorite(x){
@@ -1067,3 +1145,4 @@ function renderMemos(){
     els.memoList.appendChild(card);
   }
 }
+
