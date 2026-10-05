@@ -1,6 +1,904 @@
 {
   "source": "https://www.create-restaurants.co.jp/",
-  "generated_at": "2026-10-04T06:29:57+09:00",
+  "generated_at": "2026-10-06T07:34:34+09:00",
+  "brands": [
+    {
+      "name": "AW55",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "AWkitchen",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "Atlantic　ららぽーとEXPOCITY",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "BAYSIDE GRILL THE BBQ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "BAYSIDE ROASTERY COFFEE",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "BEER BAR　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "BERRY BEANS COFFEE　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "BOSTON Seafood Place 東京ミッドタウン日比谷",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Bar & Tapas Celona　東京ミッドタウン日比谷",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Bar&Tapas Celona　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Bread&Coffee IKEDAYAMA",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "CARROLL アトレ五反田2",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "COFFEE & NY DELI  CAFE NOLITA　アトレ川崎店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "COUNTRY KITCHEN　FKDショッピングモール宇都宮インターパーク",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "CYCLO Banh mi　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Creperie Cafe Sucre",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "D’s Sweet Marche",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "EBISU FOOD HALL 恵比寿",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "EVERYONEs CAFE 上野恩賜公園",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "EVERYONE’S CAFE ペリエ千葉",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "FISHERMAN’S MARKET",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "FREEMAN CAFE 渋谷メトロプラザ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "JEAN FRANÇOIS",
+      "eligible_store_count": 10
+    },
+    {
+      "name": "JINNAN CAFE　渋谷店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "L’HOTEL de BUFFET　イオンレイクタウン店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "MACCARONI　名古屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "MACCHA HOUSE",
+      "eligible_store_count": 13
+    },
+    {
+      "name": "MAGURO MARKET　RAYARD MIYASHITA PARK",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "MAISON CRÊPE",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "MAISON DE BUFFET",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "MAISON GALETTE",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Manoa Pancake House",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "Mare Cucina　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Morton’s The Steakhouse 丸の内二重橋ビル",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Mr.FARMER",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "Natural Bread Bakery　Pasar幕張",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "OCEAN CLUB BUFFET デックス東京ビーチ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "PRECIOUS BUFFET",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "Philly’s　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "RIO GRANDE GRILL",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "ROMANO　三井アウトレットパーク横浜ベイサイド",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "STEAK MOUNTAIN  御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Salon de Sweets　イクスピアリ店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Sam Choy’s　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "San Antonio TEX-MEX 東京ミッドタウン日比谷",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "Susan’s MEAT BALL 東京ミッドタウン日比谷",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "TANTO TANTO",
+      "eligible_store_count": 7
+    },
+    {
+      "name": "TAP9　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "THE CENTRAL BUFFET　イオンモール岡山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "THE PLATINUM 東京ソラマチ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "THE PLATINUM 沖縄",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "TOKYO STATION BUFFET 馳走三昧",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "TReeTalk　宇都宮福田屋百貨店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "VIETNAMESE CYCLO　東京ミッドタウン日比谷",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "cafe locally　ルミネ横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "あずさ珈琲",
+      "eligible_store_count": 14
+    },
+    {
+      "name": "いち膳屋　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "いっちょう",
+      "eligible_store_count": 23
+    },
+    {
+      "name": "うどん酒菜 ふうふや岸辺店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "うな濱　ネオパーサ浜松",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "えびそば 一幻",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "おもてなしとりよし",
+      "eligible_store_count": 7
+    },
+    {
+      "name": "かごの屋",
+      "eligible_store_count": 78
+    },
+    {
+      "name": "からあげセンター",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "きづなすし",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "きみはん",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "ごっつええ本舗",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "しゃぶしゃぶ すき焼き ステーキ  籠乃屋  本店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶしゃぶ・すし 六本木 八山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶしゃぶ・すし 紀尾井町 八山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃぶ菜",
+      "eligible_store_count": 56
+    },
+    {
+      "name": "しゃぶ菜別邸",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "しゃる うぃ キャンディ？　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "すいれん",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "せいろ蕎麦 ゆうづる　イオンモール広島府中",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ちゃんぷら~　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ちゅら屋　ジョイナス横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "つけめん102",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "つけめんTETSU",
+      "eligible_store_count": 17
+    },
+    {
+      "name": "とうふ料理　吉座",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "とん楽　Pasar幕張",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "はしや",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "はーべすと",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "ひたち大宮ゴルフクラブ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ひとにぎり",
+      "eligible_store_count": 7
+    },
+    {
+      "name": "ひゃくしょう茶屋　駕町店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "まんぷく食堂　コクーン新都心",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "もみじ茶屋",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "やさい家めい",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "やなぎ茶屋 ecute上野",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "よつばの香　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "わさび　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "アジア食堂　新嘉坡鶏飯　三井アウトレットパーク横浜ベイサイド",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ア・ル・ロイック",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "オールド・オウル　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "カフェ・トレイル＆トラック　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "グリーンバーズゴルフ倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "グロワールゴルフ倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ココパ三重白山ゴルフコースレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "サンジェルマン",
+      "eligible_store_count": 39
+    },
+    {
+      "name": "サンメンバーズカントリークラブ内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "サンヴァリエ",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "スタミナまんぷく食堂　ネオパーサ浜松",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ステーキの店　吉備　さんすて岡山店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "テコナベーグル",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "テコナベーグルワークス",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "デコラクリーマリー",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "デザート王国",
+      "eligible_store_count": 32
+    },
+    {
+      "name": "トルセドール　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ドゥ マゴ 　渋谷 東急フードショー店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ドゥ マゴ　たまプラーザ店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ナムルごはん　SHIK-TTANG　コクーン新都心",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ハタケノパスタ　イオンモールナゴヤドーム前",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ハマチカ酒場　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "バル・リカ・セルヴェッサ　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ビストロ ISOMARU 町田店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ビストロ磯丸会館",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ピッタ ゼロゼロ イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "フラマンドール",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "プルミエ サンジェルマン",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "プレジデントカントリー倶楽部レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ホームベース　伊勢佐木町店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "レインフォレスト カフェ・トーキョー イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "レフボン",
+      "eligible_store_count": 25
+    },
+    {
+      "name": "ロッキーズ　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ロティズ・ハウス　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "ローストビーフ星",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "三河の海女さん・魚河岸うお坐食堂 上郷SA店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "九龍點心",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "五の五",
+      "eligible_store_count": 8
+    },
+    {
+      "name": "伊達祭　大津店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "伊香保國際カンツリークラブレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "佐藤商店　完熟バナナジュース　ＰＡＳＡＲ幕張上り",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "前川水軍",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "前川珈琲店　戸島店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "北神戸ゴルフ場レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "南翔饅頭店",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "博多豚骨たかくら　武蔵小杉東急スクエア店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "右衛門　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "和食しゃぶしゃぶ　かごのや 京都リサーチパーク店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "喜多方の味 蔵小町　エスパル郡山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "大分ななせゴルフ倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "天つるり",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "天ぷらと寿司18坪",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "天草水軍　健軍店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "太田双葉カントリークラブレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "太陽のごちそう　エアポートウォーク名古屋",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "宮島カンツリー倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "宮島志和カンツリー倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "富士ロイヤルカントリークラブ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "小樽サンジェルマン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "島ぬ風",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "彩の国レストラン　ららぽーと富士見",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "御殿場カリー　御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "手揉み中華そば 中村",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "揚げたて天ぷら はま天",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "新嘉坡鶏飯 御殿場プレミアム・アウトレット",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "旬菜しゃぶ重",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "東大門　エスパル郡山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "森林公園ゴルフ倶楽部内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "江戸前天丼 濱乃屋",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "波止場食堂　ＰＡＳＡＲ幕張上り",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "海人酒房",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "海南鶏飯食堂",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "海山亭いっちょう",
+      "eligible_store_count": 18
+    },
+    {
+      "name": "満点カレー　ＰＡＳＡＲ幕張上り",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "焼肉じゅん 枚方市役所前店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "牛かつ ふたば亭 ららぽーとTOKYO-BAY",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "牛かつ上村　イオンモール岡山",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "牛たん伊之助　イオンモール各務原インター",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "狼煙",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "玉丁本店 八重洲店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "甜點菜楼　ルミネエスト新宿",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "町屋の小鍋うどん　ふうふや鶴見店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "町鮨とろたく",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "白浜軒　ＰＡＳＡＲ幕張上り",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "石焼ビビンバ BIBI イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "磯丸水産",
+      "eligible_store_count": 105
+    },
+    {
+      "name": "磯丸水産食堂",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "磯丸酒場",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "祭雛",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "立ち寿司　おや潮　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "笑福厨房　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "紀の善 神楽坂",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "紀南カントリークラブ内レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉そば 岳しろ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉そばと丼　そば匠　十兵衛　イオンモール長久手",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "肉丼の星",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "肉麺　右衛門　ＰＡＳＡＲ幕張上り",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "自然派ビュッフェ　饗の詩　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "舞浜洋食軒　イクスピアリ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "菜の庵　神戸ハーバーランドumie",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "菜菜麻辣湯",
+      "eligible_store_count": 7
+    },
+    {
+      "name": "華都飯店 Osaka Metro本町ビル店",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "萬家",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "蕎麦五反 五反田",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "蕎麦六本　六本木",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "角川食堂 ところざわサクラタウン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "足柄の森レストラン　エクスパーサ足柄SA",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "遊鶴",
+      "eligible_store_count": 11
+    },
+    {
+      "name": "金ごま屋　コクーン新都心",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "鉄板ホルモン五の五",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "鉄板二百℃",
+      "eligible_store_count": 2
+    },
+    {
+      "name": "銀座　炎蔵",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "銀座木屋",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "鍋’ｓ KITCHEN　イオンモール堺鉄砲町",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "鍋専門店　籠菜　イオンレイクタウン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "長南カントリークラブレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "長南パブリックコースレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "長野といえば、バニクマン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "阿騎野ゴルフ倶楽部レストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "雛鮨",
+      "eligible_store_count": 5
+    },
+    {
+      "name": "静岡よみうりカントリークラブレストラン",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "韓国料理 SHIK-TTANG　CIAL横浜",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "韓国料理　SHIK-TTANG　三井アウトレットパーク横浜ベイサイド",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "韓食菜美　SHIK-TTANG　イオンモール各務原インター",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "餃子販売所 いち五郎",
+      "eligible_store_count": 4
+    },
+    {
+      "name": "香港厨房　三井アウトレットパーク入間",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "香港蒸蘢",
+      "eligible_store_count": 3
+    },
+    {
+      "name": "馳走小町　イオンモール京都桂川",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "鳥平ちゃん",
+      "eligible_store_count": 6
+    },
+    {
+      "name": "鳥良商店",
+      "eligible_store_count": 27
+    },
+    {
+      "name": "麦うさぎ",
+      "eligible_store_count": 1
+    },
+    {
+      "name": "麺大将",
+      "eligible_store_count": 2
+    }
+  ],
   "business_types": [
     {
       "name": "(未分類)",

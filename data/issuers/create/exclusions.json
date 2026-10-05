@@ -1,14 +1,14 @@
 {
   "source": "https://www.create-restaurants.co.jp/",
-  "generated_at": "2026-10-04T06:29:57+09:00",
+  "generated_at": "2026-10-06T07:34:34+09:00",
   "rule": "Official restaurant search shareholder flag is not available",
   "shareholder_value_counts": {
-    "": 194,
+    "": 193,
     "available": 828,
     "aveilable": 1,
     "not available": 22
   },
-  "excluded_count": 216,
+  "excluded_count": 215,
   "stores": [
     {
       "store_id": "1578",
@@ -228,11 +228,6 @@
     {
       "store_id": "1423",
       "name": "磯丸水産食堂　ららぽーと安城",
-      "reason": "eligibility_blank"
-    },
-    {
-      "store_id": "1424",
-      "name": "海南鶏飯食堂　ららぽーと安城",
       "reason": "eligibility_blank"
     },
     {

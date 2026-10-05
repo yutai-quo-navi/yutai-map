@@ -1,8 +1,35 @@
 {
   "version": 1,
-  "generated_at": "2026-10-06T03:13:48+09:00",
-  "event_count": 1,
+  "generated_at": "2026-10-06T07:34:44+09:00",
+  "event_count": 2,
   "events": [
+    {
+      "event_id": "a7d6c96bf3ed9b9a68bf07d1a3e1f41cfcaec22a",
+      "at": "2026-10-06T07:34:34+09:00",
+      "run_date": "2026-10-06",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:499",
+      "name": "銀座　炎蔵",
+      "address": "東京都中央区 銀座4-1 西銀座デパート2階",
+      "brand_name": "銀座　炎蔵",
+      "changed_fields": [
+        {
+          "key": "brand_name",
+          "label": "ブランド",
+          "before": "焼肉",
+          "after": "銀座　炎蔵"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2026-10-18",
+          "after": "2026-10-28"
+        }
+      ]
+    },
     {
       "event_id": "db4bf988910539d546d030bd4288fbd1de57fabe",
       "at": "2026-10-05T11:23:40+09:00",
