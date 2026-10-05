@@ -1,7 +1,7 @@
 {
   "id": "yoshinoya",
   "code": "9861",
-  "name": "吉野家HD",
+  "name": "吉野家ホールディングス",
   "fullName": "吉野家ホールディングス",
   "status": "development",
   "sourceUrl": "https://www.yoshinoya-holdings.com/ir/faq/?tab=2",
@@ -13,5 +13,8 @@
   "excludedNames": [
     "せたが屋"
   ],
-  "categories": {}
+  "categories": {},
+  "searchNames": [
+    "吉野家HD"
+  ]
 }

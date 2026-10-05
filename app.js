@@ -185,7 +185,7 @@ function openCompanyPicker(){
 function renderCompanyPicker(){
   const normalize = value => String(value).normalize('NFKC').toLocaleLowerCase('ja').replace(/\s+/g,'');
   const query = normalize(els.pickerSearch.value);
-  const matches = pickerCompanies.filter(c => normalize([c.name,...(c.aliases || [])].join(' ')).includes(query));
+  const matches = pickerCompanies.filter(c => normalize([c.name,...(c.searchNames || []),...(c.aliases || [])].join(' ')).includes(query));
   els.pickerList.innerHTML = '';
   for(const c of matches){
     const row = document.createElement('label'); row.className=`picker-row ${issuerTone(c.id)}`;
@@ -774,7 +774,7 @@ function renderHistory(){
         <div class="history-store">${esc(e.name || '店舗名不明')}</div>
         <div class="history-address">${esc(e.address || '')}</div>
         <div class="history-meta">
-          <span>${esc(e.issuer_name || e.issuer_id)}${e.issuer_code ? `（${esc(e.issuer_code)}）` : ''}</span>
+          <span>${esc(companies.find(c => c.id === e.issuer_id)?.name || e.issuer_name || e.issuer_id)}${e.issuer_code ? `（${esc(e.issuer_code)}）` : ''}</span>
           ${brand}
         </div>
         <div class="history-detail">${esc(detail)}</div>`;

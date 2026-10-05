@@ -5,7 +5,7 @@
     {
       "id": "skylark",
       "code": "3197",
-      "name": "すかいらーく",
+      "name": "すかいらーくホールディングス",
       "status": "public",
       "config": "./data/issuers/skylark/config.json"
     },
@@ -19,21 +19,21 @@
     {
       "id": "create",
       "code": "3387",
-      "name": "クリレス",
+      "name": "クリエイト・レストランツ・ホールディングス",
       "status": "public",
       "config": "./data/issuers/create/config.json"
     },
     {
       "id": "zensho",
       "code": "7550",
-      "name": "ゼンショー",
+      "name": "ゼンショーホールディングス",
       "status": "public",
       "config": "./data/issuers/zensho/config.json"
     },
     {
       "id": "toridoll",
       "code": "3397",
-      "name": "トリドール",
+      "name": "トリドールホールディングス",
       "status": "development",
       "config": "./data/issuers/toridoll/config.json"
     },
@@ -47,21 +47,21 @@
     {
       "id": "yoshinoya",
       "code": "9861",
-      "name": "吉野家HD",
+      "name": "吉野家ホールディングス",
       "status": "development",
       "config": "./data/issuers/yoshinoya/config.json"
     },
     {
       "id": "mcd",
       "code": "2702",
-      "name": "日本マクドナルドHD",
+      "name": "日本マクドナルドホールディングス",
       "status": "development",
       "config": "./data/issuers/mcd/config.json"
     },
     {
       "id": "monogatari",
       "code": "3097",
-      "name": "物語",
+      "name": "物語コーポレーション",
       "status": "public",
       "config": "./data/issuers/monogatari/config.json"
     }

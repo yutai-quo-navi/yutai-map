@@ -140,5 +140,6 @@
     "minGroupSize": 10,
     "maxGroupDropRatio": 0.5
   },
-  "locationMode": "worker_reference"
+  "locationMode": "worker_reference",
+  "searchNames": []
 }

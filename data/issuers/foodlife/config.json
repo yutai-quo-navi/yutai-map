@@ -1,7 +1,7 @@
 {
   "id": "foodlife",
   "code": "3563",
-  "name": "FOOD & LIFE",
+  "name": "FOOD & LIFE COMPANIES",
   "fullName": "FOOD & LIFE COMPANIES",
   "status": "development",
   "sourceUrl": "https://food-and-life.co.jp/investor/stock/shareholder-benefit/",
@@ -15,5 +15,8 @@
   ],
   "aliases": [],
   "excludedNames": [],
-  "categories": {}
+  "categories": {},
+  "searchNames": [
+    "FOOD & LIFE"
+  ]
 }

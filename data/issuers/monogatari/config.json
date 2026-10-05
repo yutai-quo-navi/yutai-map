@@ -1,7 +1,7 @@
 {
   "id": "monogatari",
   "code": "3097",
-  "name": "物語",
+  "name": "物語コーポレーション",
   "fullName": "物語コーポレーション",
   "status": "public",
   "sourceUrl": "https://www.monogatari.co.jp/ir/benefits/",
@@ -98,5 +98,8 @@
     ],
     "minGroupSize": 10,
     "maxGroupDropRatio": 0.5
-  }
+  },
+  "searchNames": [
+    "物語"
+  ]
 }

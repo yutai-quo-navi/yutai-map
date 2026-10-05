@@ -1,8 +1,8 @@
 {
   "id": "skylark",
   "code": "3197",
-  "name": "すかいらーく",
-  "fullName": "すかいらーくHD",
+  "name": "すかいらーくホールディングス",
+  "fullName": "すかいらーくホールディングス",
   "sourceUrl": "https://corp.skylark.co.jp/ir/stock/incentive/",
   "verified": "2026-10-03",
   "note": "公式店舗検索の店舗データと、公式ブランド定義の is_yutaiken=true を正本にした公式店舗DB。月次で新店・閉店・変更を追跡。",
@@ -90,5 +90,9 @@
     ],
     "minGroupSize": 10,
     "maxGroupDropRatio": 0.5
-  }
+  },
+  "searchNames": [
+    "すかいらーく",
+    "すかいらーくHD"
+  ]
 }

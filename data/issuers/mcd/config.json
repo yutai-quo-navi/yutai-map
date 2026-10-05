@@ -1,7 +1,7 @@
 {
   "id": "mcd",
   "code": "2702",
-  "name": "マクドナルド",
+  "name": "日本マクドナルドホールディングス",
   "fullName": "日本マクドナルドホールディングス",
   "status": "development",
   "sourceUrl": "https://www.mcd-holdings.co.jp/ir/individual/shareholder_benefits/",
@@ -17,5 +17,8 @@
     "マクドナルド": "restaurant",
     "McDonald's": "restaurant",
     "McDonald’s": "restaurant"
-  }
+  },
+  "searchNames": [
+    "マクドナルド"
+  ]
 }

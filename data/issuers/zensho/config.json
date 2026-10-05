@@ -1,7 +1,7 @@
 {
   "id": "zensho",
   "code": "7550",
-  "name": "ゼンショー",
+  "name": "ゼンショーホールディングス",
   "fullName": "ゼンショーホールディングス",
   "status": "public",
   "sourceUrl": "https://www.zensho.co.jp/jp/ir/investor/complimentary.html",
@@ -64,5 +64,8 @@
     ],
     "minGroupSize": 20,
     "maxGroupDropRatio": 0.35
-  }
+  },
+  "searchNames": [
+    "ゼンショー"
+  ]
 }
