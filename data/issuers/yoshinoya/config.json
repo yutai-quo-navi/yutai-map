@@ -4,17 +4,54 @@
   "name": "吉野家ホールディングス",
   "fullName": "吉野家ホールディングス",
   "status": "development",
-  "sourceUrl": "https://www.yoshinoya-holdings.com/ir/faq/?tab=2",
+  "sourceUrl": "https://www.yoshinoya-holdings.com/ir/info/dividend/",
   "storeSearchUrl": "https://stores.yoshinoya-holdings.com/yoshinoya-holdings/spot/list?c_d1=1",
   "matchingMode": "official_store_filter",
   "officialStoreFilter": "株主優待券が利用できる店舗一覧",
-  "note": "公式の株主優待券利用可能店舗一覧を正本として店舗単位DB化する予定。",
-  "aliases": [],
+  "note": "公式グループ店舗検索の株主優待券利用可フィルタと通常の掲載条件を使い、対象店舗と公式座標を定期取得。対象外店舗は掲載しない。",
+  "aliases": [
+    "吉野家",
+    "はなまるうどん",
+    "うまげな",
+    "さぬき麺屋",
+    "つるさく",
+    "竹清",
+    "カレーうどん千吉",
+    "鶏千",
+    "炒王",
+    "ばり嗎",
+    "とりの助",
+    "風雲丸",
+    "キラメキノトリ"
+  ],
   "excludedNames": [
     "せたが屋"
   ],
   "categories": {},
   "searchNames": [
     "吉野家HD"
-  ]
+  ],
+  "verified": "2026-10-05",
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/yoshinoya/stores/current.json",
+  "health": {
+    "minStores": 1500,
+    "maxStores": 2200,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "stores.yoshinoya-holdings.com"
+    ],
+    "maxAdded": 150,
+    "maxRemoved": 150,
+    "maxChanged": 300,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
 }
