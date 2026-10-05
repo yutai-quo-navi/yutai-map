@@ -50,7 +50,8 @@ let searching = false;
 let pendingSearch = null;
 let lastResults = [];
 let suggestTimer = null;
-let activeCategory = readSetting('yutai-category') || 'restaurant';
+// Category is a temporary refinement; do not carry a hidden restriction across visits.
+let activeCategory = 'all';
 let historyEvents = [];
 let historyLoaded = false;
 let historyPage = 1;
@@ -136,6 +137,7 @@ async function init(){
   });
   els.pickerApply.addEventListener('click', () => {
     selected.clear(); draftSelection.forEach(id => selected.add(id));
+    resetCategoryFilter();
     persistSelection(); renderChips(); renderBrandOptions(); els.picker.close();
     if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
   });
@@ -168,6 +170,7 @@ async function init(){
   els.brandSearch.addEventListener('input', renderBrandOptions);
   els.brandSelect.addEventListener('change', () => {
     activeBrand=els.brandSelect.value; writeSetting('yutai-brand',activeBrand);
+    resetCategoryFilter();
     if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
   });
   els.favoritesButton.addEventListener('click', () => { renderFavorites(); els.favorites.showModal(); });
@@ -667,6 +670,12 @@ function safeExternalUrl(value){
   }
 }
 
+function resetCategoryFilter(){
+  activeCategory='all';
+  writeSetting('yutai-category','all');
+  renderCategoryFilters();
+}
+
 function renderCategoryFilters(){
   if(!els.categoryFilters) return;
   els.categoryFilters.innerHTML='';
@@ -697,7 +706,12 @@ function renderResults(items, radius){
   els.count.textContent = `${items.length}件`;
   if(!items.length){
     els.results.className='results empty-state';
-    els.results.innerHTML=`<p>${radius/1000}km以内では<br>対象店舗を見つけられませんでした</p>`;
+    const restricted=activeCategory!=='all' || activeBrand;
+    els.results.innerHTML=`<p>${radius/1000}km以内では<br>${activeCategory!=='all' ? `「${esc(categoryLabels[activeCategory])}」の条件に一致する店舗がありません` : '対象店舗を見つけられませんでした'}</p>${restricted ? '<button type="button" class="category-filter" id="clearResultFilters">絞り込みを解除して探す</button>' : ''}`;
+    qs('#clearResultFilters')?.addEventListener('click',()=>{
+      activeBrand=''; writeSetting('yutai-brand',''); els.brandSearch.value=''; renderBrandOptions(); resetCategoryFilter();
+      if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+    });
     return;
   }
   els.results.className='results'; els.results.innerHTML='';
