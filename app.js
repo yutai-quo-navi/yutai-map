@@ -173,7 +173,12 @@ async function init(){
   els.menuFeedbackButton?.addEventListener('click', () => { closeNavMenu(); openFeedback(); });
   els.feedbackClose.addEventListener('click', () => els.feedback.close());
   els.feedbackForm.addEventListener('submit', submitFeedback);
-  els.brandSearch.addEventListener('input', () => { brandCandidateLimit=12; renderBrandOptions(true); });
+  els.brandSearch.addEventListener('input', event => {
+    brandCandidateLimit=12;
+    if(!event.isComposing) syncTypedBrand();
+    renderBrandOptions(true);
+  });
+  els.brandSearch.addEventListener('compositionend', () => { syncTypedBrand(); renderBrandOptions(true); });
   els.brandSearch.addEventListener('focus', () => renderBrandOptions(true));
   els.brandSearch.addEventListener('keydown', event => {
     if(event.isComposing) return;
@@ -978,7 +983,7 @@ async function loadBrandCatalog(){
     }));
     if(request!==brandRequest) return;
     brandCatalog=groups.flat().filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
-    renderBrandOptions();
+    syncTypedBrand(); renderBrandOptions();
   } catch {
     els.brandSearch.disabled=true;
     hideBrandSuggestions();
@@ -1024,13 +1029,23 @@ function brandSearchTerms(brand){
   return normalizeBrandQuery(terms);
 }
 function hideBrandSuggestions(){ els.brandSuggestions.hidden=true; els.brandCandidateStatus.textContent=''; }
-function chooseBrand(key){
+function syncTypedBrand(){
+  const query=normalizeBrandQuery(els.brandSearch.value);
+  if(!query) return;
+  const matches=brandCatalog.filter(b=>normalizeBrandQuery(b.name)===query ||
+    (brandReadings[b.name] && normalizeBrandQuery(brandReadings[b.name].split(' ')[0])===query));
+  if(matches.length!==1) return;
+  const brand=matches[0], key=brandKey(brand);
+  if(key!==activeBrand || !selected.has(brand.issuer_id)) chooseBrand(key,true);
+}
+function chooseBrand(key, preserveQuery=false){
   const brand=brandCatalog.find(b=>brandKey(b)===key);
   if(brand && !selected.has(brand.issuer_id)){
     selected.add(brand.issuer_id); persistSelection(); renderChips();
   }
   activeBrand=key; writeSetting('yutai-brand',key);
-  els.brandSearch.value=''; brandCandidateLimit=12;
+  if(!preserveQuery) els.brandSearch.value='';
+  brandCandidateLimit=12;
   renderBrandOptions(); hideBrandSuggestions(); resetCategoryFilter();
   if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
 }
