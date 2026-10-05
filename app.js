@@ -289,6 +289,8 @@ function setSearchMode(mode){
   const current = mode !== 'place';
   els.currentSearchPanel.hidden = !current;
   els.placeSearchPanel.hidden = current;
+  const radiusControl=els.radius.closest('.search-radius');
+  (current ? els.currentSearchPanel : qs('#placeSearchActions')).appendChild(radiusControl);
   els.searchMode.querySelectorAll('.search-mode-button').forEach(btn => {
     btn.setAttribute('aria-pressed', btn.dataset.mode === mode ? 'true' : 'false');
   });

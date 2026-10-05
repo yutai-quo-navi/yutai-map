@@ -942,3 +942,11 @@ h1 span{
 .brand-option:focus-visible{outline:2px solid var(--issuer,var(--text));outline-offset:-3px}
 .brand-all,.brand-more{font-size:13px;font-weight:700}
 @media(max-width:480px){.brand-input-row{flex-wrap:wrap}.brand-input-row input{flex-basis:100%}.brand-suggestions{max-height:250px}}
+
+/* Keep distance selection beside either search action. */
+.search-action-row{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:10px;align-items:end}
+.search-action-row .primary-button{min-width:0;min-height:58px;margin:0;padding:12px 8px}
+.search-radius{min-width:0;display:grid;gap:5px;text-align:left}
+.search-radius label{font-size:11px;font-weight:700;color:var(--muted)}
+.search-radius select{width:100%;min-width:0;height:58px;box-sizing:border-box;padding:10px 8px;border:1px solid var(--line);border-radius:16px;background:var(--surface-soft);color:var(--text);font:inherit;font-size:15px;cursor:pointer}
+#currentSearchPanel[hidden]{display:none}
