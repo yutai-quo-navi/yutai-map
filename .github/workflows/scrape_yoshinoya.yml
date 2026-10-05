@@ -70,15 +70,15 @@ jobs:
       - name: Verify eligible store search
         run: |
           python - <<'PY'
-          import json,urllib.request,urllib.parse,time
+          import json,urllib.parse,subprocess
           base='https://yutai-map-api.yutaisamurai.workers.dev'
           for lat,lng in [(35.6812,139.7671),(43.0618,141.3545)]:
               q=urllib.parse.urlencode({'lat':lat,'lng':lng,'radius':10000,'issuers':'yoshinoya'})
-              data=json.load(urllib.request.urlopen(base+'/v1/stores/search?'+q,timeout=60))
+              data=json.loads(subprocess.check_output(['curl','-fsS','--retry','2','--max-time','60',base+'/v1/stores/search?'+q],text=True))
               assert data['count']>0, 'No eligible Yoshinoya stores returned'
               assert all(s['issuer_id']=='yoshinoya' for s in data['results'])
               print('Verified Yoshinoya search:',data['count'],'near',lat,lng)
-          brands=json.load(urllib.request.urlopen(base+'/v1/brands?issuers=yoshinoya',timeout=60))
+          brands=json.loads(subprocess.check_output(['curl','-fsS','--retry','2','--max-time','60',base+'/v1/brands?issuers=yoshinoya'],text=True))
           assert len(brands['brands'])>=5
           print('Eligible brand counts:',[(b['name'],b['count']) for b in brands['brands']])
           PY
