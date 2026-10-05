@@ -368,6 +368,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
   searching = true; els.locate.disabled = true;
+  els.count.textContent = '';
   els.results.className='results';
   els.results.innerHTML='<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
   setStatus('近隣の優待店を検索中…');
@@ -847,6 +848,6 @@ function submitFeedback(e){
   els.feedback.close();
 }
 
-function showError(msg){ els.results.className='results'; els.results.innerHTML=`<div class="error-box">${esc(msg)}</div>`; els.count.textContent='—'; }
+function showError(msg){ els.results.className='results'; els.results.innerHTML=`<div class="error-box">${esc(msg)}</div>`; els.count.textContent=''; }
 function setStatus(msg){ els.status.textContent=msg; }
 function esc(s){ return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
