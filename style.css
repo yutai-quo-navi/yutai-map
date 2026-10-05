@@ -366,7 +366,7 @@ h1 span{
   font-size:11px;
   font-weight:500;
 }
-.category-filters:has(.category-count){padding-top:26px}
+.category-filters:has(.category-count){padding-top:26px;row-gap:24px}
 .category-count{position:absolute;top:-20px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:10px;background:#945025;color:white;font-size:11px;font-weight:700;white-space:nowrap;line-height:1.4}
 .category-count::after{content:'';position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);border:4px solid transparent;border-top-color:#945025;border-bottom:0}
 .category-filter[data-empty="true"] .category-count{background:#e0d5c5;color:#6b6257}
