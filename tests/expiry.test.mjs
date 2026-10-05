@@ -21,3 +21,9 @@ test('only current year and month confirmed entries; expired entries remain labe
   const entries=[['old','2025-10-12','confirmed'],['past','2026-10-01','confirmed'],['ok','2026-10-12','confirmed'],['hidden','2026-10-15','checking'],['next','2026-11-01','confirmed']].map(([code,expiry_date,status]) => ({code,expiry_date,status}));
   assert.deepEqual(monthEntries(entries,'2026-10-05').map(e=>e.code), ['past','ok']);
 });
+test('approved month-only entries stay in their month without inventing a date', () => {
+  const entries=[{code:'3197',expiry_date:'',research_month:'2026-09',status:'confirmed'}];
+  assert.equal(monthEntries(entries,'2026-09-05').length,1);
+  assert.equal(monthEntries(entries,'2026-10-05').length,0);
+  assert.equal(entries[0].expiry_date,'');
+});

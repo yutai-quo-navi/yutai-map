@@ -1,4 +1,4 @@
-import {initExpiry} from './expiry.js';
+import {initExpiry} from './expiry.js?v=20261005-expiry2';
 
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
