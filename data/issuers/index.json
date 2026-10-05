@@ -34,7 +34,7 @@
       "id": "toridoll",
       "code": "3397",
       "name": "トリドールホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/toridoll/config.json"
     },
     {

@@ -3,7 +3,7 @@
   "code": "3397",
   "name": "トリドールホールディングス",
   "fullName": "トリドールホールディングス",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://www.toridoll.com/ir/stock/shareholder/",
   "storeSearchUrl": "https://stores.toridoll.com/directory",
   "matchingMode": "official_store_filter",
@@ -48,7 +48,8 @@
     "焼きたてコッペ製パン": "bakery"
   },
   "searchNames": [
-    "トリドール"
+    "トリドール",
+    "譚仔麻辣湯"
   ],
   "locationMode": "official_coordinates",
   "storeDataPath": "./data/issuers/toridoll/stores/current.json",
