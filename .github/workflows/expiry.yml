@@ -3,9 +3,9 @@ name: Build expiry ledger and X drafts
 on:
   push:
     branches: [main]
-    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'expiry.js', 'tests/test_expiry.py', 'tests/expiry.test.mjs', '.github/workflows/expiry.yml']
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'tools/google-sheets/**', 'expiry.js', 'tests/test_expiry.py', 'tests/expiry.test.mjs', 'tests/sheets-editor.test.mjs', '.github/workflows/expiry.yml']
   pull_request:
-    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'expiry.js', 'tests/**', '.github/workflows/expiry.yml']
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'tools/google-sheets/**', 'expiry.js', 'tests/**', '.github/workflows/expiry.yml']
   workflow_dispatch:
     inputs:
       month:
@@ -59,6 +59,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_*.py'
           node --test tests/expiry.test.mjs
+          node --test tests/sheets-editor.test.mjs
           node --input-type=module --check < app.js
           python tools/build_expiry.py --check
       - name: Downloadable X drafts and previous-year candidates
