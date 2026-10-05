@@ -35,26 +35,6 @@ button,input,select,textarea{font:inherit}
 button{touch-action:manipulation}
 a{color:inherit}
 [hidden]{display:none!important}
-
-/* The public expiry ledger is separate from browser-local personal memos. */
-.content-tabs{display:flex;gap:6px;padding:5px;margin:0 0 16px;border-radius:17px;background:var(--surface-strong)}
-.content-tabs button{flex:1;min-height:44px;border:0;border-radius:13px;background:transparent;color:var(--text);font-weight:700}
-.content-tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent-text);box-shadow:0 1px 4px rgba(20,24,32,.07)}
-.content-tabs button:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
-.expiry-panel{margin-bottom:24px}
-.expiry-note,.expiry-meta{font-size:12px;color:var(--muted);line-height:1.7;overflow-wrap:anywhere}
-.expiry-list{display:grid;gap:12px}
-.expiry-card{padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--surface);overflow-wrap:anywhere}
-.expiry-card h3{font-size:16px;line-height:1.6;margin:8px 0}
-.expiry-card p{margin:6px 0}
-.expiry-countdown{font-weight:800;color:var(--accent-text)}
-.expiry-date{font-weight:700;font-size:14px}
-.expiry-card.soon{border-color:#d79b39}
-.expiry-card.urgent,.expiry-card.today{border-color:#d95336;background:#fff3e8}
-.expiry-card.today .expiry-countdown{color:#b42c18}
-.expiry-card.expired{background:var(--surface-soft)}
-.expiry-card.expired .expiry-countdown{color:var(--muted)}
-.expiry-search{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--surface-soft);color:var(--accent-text);font-weight:700;min-height:44px}
 :focus-visible{outline:3px solid rgba(89,151,204,.22);outline-offset:2px}
 
 /* Header: app-like, quiet, no fixed navigation */
