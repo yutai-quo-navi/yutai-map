@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "issuers": [
     {
       "id": "skylark",
@@ -64,6 +64,13 @@
       "name": "物語コーポレーション",
       "status": "public",
       "config": "./data/issuers/monogatari/config.json"
+    },
+    {
+      "id": "matsuya",
+      "code": "9887",
+      "name": "松屋フーズホールディングス",
+      "status": "development",
+      "config": "./data/issuers/matsuya/config.json"
     }
   ]
 }

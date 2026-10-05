@@ -1,0 +1,47 @@
+{
+  "id": "matsuya",
+  "code": "9887",
+  "name": "松屋フーズホールディングス",
+  "fullName": "松屋フーズホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.matsuyafoods-holdings.co.jp/ir/yutai/",
+  "storeSearchUrl": "https://pkg.navitime.co.jp/matsuyafoods/spot/list",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "松屋・松のやを主業態とする店舗（併設店含む）",
+  "note": "公式の優待対象業態と店舗検索を照合。併設店は重複を除く。",
+  "aliases": [
+    "松屋",
+    "松のや",
+    "マイカリー食堂"
+  ],
+  "excludedNames": [
+    "松屋PREMIUM"
+  ],
+  "categories": {},
+  "searchNames": [
+    "松屋フーズ"
+  ],
+  "verified": "2026-10-06",
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/matsuya/stores/current.json",
+  "health": {
+    "minStores": 1200,
+    "maxStores": 1800,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "pkg.navitime.co.jp"
+    ],
+    "maxAdded": 150,
+    "maxRemoved": 150,
+    "maxChanged": 300,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
+}
