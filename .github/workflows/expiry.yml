@@ -3,9 +3,9 @@ name: Build expiry ledger and X drafts
 on:
   push:
     branches: [main]
-    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'expiry.js', 'tests/test_expiry.py', 'tests/expiry.test.mjs', '.github/workflows/expiry.yml']
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'expiry.js', 'tests/test_expiry.py', 'tests/expiry.test.mjs', '.github/workflows/expiry.yml']
   pull_request:
-    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'expiry.js', 'tests/**', '.github/workflows/expiry.yml']
+    paths: ['data/expiry_master.csv', 'data/expiry.json', 'tools/build_expiry.py', 'tools/edit_expiry.py', 'expiry.js', 'tests/**', '.github/workflows/expiry.yml']
   workflow_dispatch:
     inputs:
       month:

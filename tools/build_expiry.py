@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 COLUMNS = ['id', 'code', 'company_name', 'benefit_name', 'issue', 'expiry_date',
            'research_month', 'expiry_type', 'category', 'brands', 'source_url',
            'secondary_source_url', 'checked_on', 'status', 'notes', 'issuer_id',
-           'search_brand', 'emoji']
+           'search_brand', 'emoji', 'verification_method']
 TYPES = {'利用期限', '申込期限', '登録期限', '予約期限', 'ポイント失効', '交換期限', '受取期限'}
 CATEGORIES = {'dining': '外食・飲食系', 'shopping': '買物・割引系',
               'leisure': 'サービス・レジャー系', 'catalog': 'カタログ・申込期限', 'other': 'その他'}
@@ -37,17 +37,20 @@ def month(value):
     return value
 
 
-def load_master(path, manifest_path=ROOT / 'data/issuers/index.json'):
+def load_master(path, manifest_path=ROOT / 'data/issuers/index.json', allow_legacy=False):
     issuers = {v['id']: v for v in json.loads(manifest_path.read_text())['issuers']}
     rows, ids, keys = [], set(), set()
     with Path(path).open(encoding='utf-8-sig', newline='') as handle:
         reader = csv.DictReader(handle)
-        if reader.fieldnames != COLUMNS:
+        legacy = allow_legacy and reader.fieldnames == COLUMNS[:-1]
+        if reader.fieldnames != COLUMNS and not legacy:
             raise ValueError('CSV列・順序が違います: ' + ','.join(COLUMNS))
         for line, raw in enumerate(reader, 2):
             try:
                 if None in raw or any(v is None for v in raw.values()):
                     raise ValueError('列数が違います')
+                if legacy:
+                    raw['verification_method'] = 'official' if raw['status'] == 'confirmed' else ''
                 row = {k: unicodedata.normalize('NFC', v).strip() for k, v in raw.items()}
                 row['code'] = unicodedata.normalize('NFKC', row['code']).upper()
                 if not re.fullmatch(r'[0-9]{3}[0-9A-Z]', row['code']):
@@ -68,8 +71,13 @@ def load_master(path, manifest_path=ROOT / 'data/issuers/index.json'):
                 for field in ['source_url', 'secondary_source_url']:
                     if row[field] and (urlparse(row[field]).scheme not in {'https', 'http'} or not urlparse(row[field]).netloc):
                         raise ValueError(f'{field}はhttp(s) URL')
-                if row['status'] == 'confirmed' and not all(row[k] for k in ['expiry_date', 'source_url', 'checked_on', 'issue']):
-                    raise ValueError('confirmedは期限日・公式URL・最終確認日・対象発行回が必須')
+                if row['verification_method'] not in {'', 'official', 'user'}:
+                    raise ValueError('確認経路はofficial / user / 空欄')
+                if row['status'] == 'confirmed':
+                    if not row['checked_on'] or not row['verification_method']:
+                        raise ValueError('confirmedは確認日と確認経路が必須')
+                    if row['verification_method'] == 'official' and not all(row[k] for k in ['expiry_date', 'source_url', 'issue']):
+                        raise ValueError('公式確認済みは期限日・公式URL・対象発行回が必須')
                 if row['status'] == 'secondary' and not row['secondary_source_url']:
                     raise ValueError('secondaryは二次情報URLが必須')
                 if row['issuer_id']:
@@ -92,13 +100,13 @@ def load_master(path, manifest_path=ROOT / 'data/issuers/index.json'):
 def public_document(rows):
     # Keep historical confirmed entries too. The client computes the current month in JST.
     return {'version': 1, 'timezone': 'Asia/Tokyo',
-            'entries': [r for r in rows if r['status'] == 'confirmed']}
+            'entries': [{**r, 'expiry_year': int(r['research_month'][:4])} for r in rows if r['status'] == 'confirmed']}
 
 
 def x_draft(rows, target_month, month_end=False):
     month(target_month)
     last_day = calendar.monthrange(int(target_month[:4]), int(target_month[5:]))[1]
-    entries = [r for r in rows if r['status'] == 'confirmed' and r['expiry_date'][:7] == target_month
+    entries = [r for r in rows if r['status'] == 'confirmed' and r['research_month'] == target_month
                and (not month_end or r['expiry_date'].endswith(f'-{last_day:02}'))]
     heading = f'⚠️{int(target_month[5:])}月' + ('末' if month_end else '') + ' 期限優待まとめ'
     lines = [heading, '', 'お持ちの方はぜひ確認推奨👇']
@@ -107,10 +115,11 @@ def x_draft(rows, target_month, month_end=False):
         if group:
             lines += ['', '◇' + label]
             for r in group:
-                d = date.fromisoformat(r['expiry_date'])
-                lines.append(f"{r['emoji'] or '🎁'} {r['code']} {r['company_name']} {r['benefit_name']} / {d.month}/{d.day} {r['expiry_type']}" + (f" / {r['issue']}" if r['issue'] else ''))
+                d = date.fromisoformat(r['expiry_date']) if r['expiry_date'] else None
+                deadline = f'{d.month}/{d.day}' if d else f'{int(target_month[5:])}月（日付未登録）'
+                lines.append(f"{r['emoji'] or '🎁'} {r['code']} {r['company_name']} {r['benefit_name']} / {deadline} {r['expiry_type']}" + (f" / {r['issue']}" if r['issue'] else ''))
     if not entries:
-        lines += ['', '公式確認済みの期限情報はまだありません']
+        lines += ['', '確認済みの期限情報はまだありません']
     return '\n'.join(lines) + '\n'
 
 
@@ -140,7 +149,7 @@ def main():
     args = parser.parse_args()
     rows = load_master(args.master)
     if args.baseline:
-        previous = load_master(args.baseline)
+        previous = load_master(args.baseline, allow_legacy=True)
         removed = {r['id'] for r in previous} - {r['id'] for r in rows}
         if removed:
             parser.error('履歴行は削除不可。訂正は同じidを編集: ' + ', '.join(sorted(removed)))

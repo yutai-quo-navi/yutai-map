@@ -3,10 +3,13 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from build_expiry import COLUMNS, ROOT, candidates, load_master, public_document, x_draft
+from edit_expiry import select_record
+import edit_expiry
 
 
 class ExpiryTests(unittest.TestCase):
@@ -15,7 +18,7 @@ class ExpiryTests(unittest.TestCase):
         r.update(id='skylark-2026-a', code='3197', company_name='すかいらーく', benefit_name='食事券',
                  issue='2025年12月権利分', expiry_date='2026-09-30', research_month='2026-09',
                  expiry_type='利用期限', category='dining', source_url='https://example.com/official',
-                 checked_on='2026-09-01', status='confirmed', issuer_id='skylark')
+                 checked_on='2026-09-01', status='confirmed', issuer_id='skylark', verification_method='official')
         r.update(changes)
         return r
 
@@ -60,6 +63,47 @@ class ExpiryTests(unittest.TestCase):
         previous = candidates(rows, '2027-09')
         self.assertIn('3197', previous); self.assertIn('checking', previous)
         self.assertNotIn('3197', x_draft(rows, '2027-09'))
+
+    def test_user_approval_can_confirm_month_without_fabricating_day(self):
+        rows = self.load([self.row(verification_method='user', expiry_date='', source_url='', issue='')])
+        self.assertEqual(len(public_document(rows)['entries']), 1)
+        self.assertIn('9月（日付未登録）', x_draft(rows, '2026-09'))
+        self.assertNotIn('3197', x_draft(rows, '2026-09', month_end=True))
+
+    def test_legacy_baseline_is_readable_after_schema_extension(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'baseline.csv'
+            with p.open('w', encoding='utf-8', newline='') as f:
+                w = csv.DictWriter(f, fieldnames=COLUMNS[:-1]); w.writeheader()
+                row = self.row(); row.pop('verification_method'); w.writerow(row)
+            self.assertEqual(load_master(p, allow_legacy=True)[0]['verification_method'], 'official')
+
+    def test_corrections_stay_in_same_year_and_next_year_is_new(self):
+        rows = self.load([self.row()])
+        self.assertEqual(select_record(rows, '3197', '2026-11')['id'], 'skylark-2026-a')
+        self.assertIsNone(select_record(rows, '3197', '2027-11'))
+        with self.assertRaises(ValueError):
+            select_record(rows, '3197', '2027-11', 'skylark-2026-a')
+        self.assertEqual(public_document(rows)['entries'][0]['expiry_year'], 2026)
+
+    def test_easy_edit_regenerates_json_and_preserves_brands_and_previous_year(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d); (root / 'data/issuers').mkdir(parents=True)
+            (root / 'data/issuers/index.json').write_text((ROOT / 'data/issuers/index.json').read_text())
+            master = root / 'data/expiry_master.csv'
+            with master.open('w', encoding='utf-8', newline='') as f:
+                writer = csv.DictWriter(f, fieldnames=COLUMNS); writer.writeheader(); writer.writerow(self.row(brands='ガスト|バーミヤン'))
+            with patch.object(edit_expiry, 'ROOT', root), patch.object(sys, 'argv', ['edit', '--code','3197','--month','2026-11']):
+                edit_expiry.main()
+            rows = load_master(master)
+            self.assertEqual(rows[0]['id'], 'skylark-2026-a')
+            self.assertEqual(rows[0]['brands'], ['ガスト','バーミヤン'])
+            self.assertEqual(rows[0]['expiry_date'], '')
+            with patch.object(edit_expiry, 'ROOT', root), patch.object(sys, 'argv', ['edit','--code','3197','--date','2027-11-30']):
+                edit_expiry.main()
+            rows = load_master(master)
+            self.assertEqual([r['research_month'] for r in rows], ['2026-11','2027-11'])
+            self.assertEqual(json.loads((root / 'data/expiry.json').read_text()), public_document(rows))
 
     def test_committed_json_matches_master_and_atom_correction(self):
         rows = load_master(ROOT / 'data/expiry_master.csv')
