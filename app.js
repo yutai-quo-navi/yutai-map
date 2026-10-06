@@ -1,4 +1,4 @@
-import {nearestDeadline, deadlineLabel, japanDay} from './expiry.js?v=20261006-1';
+import {nearestDeadline, deadlineLabel, japanDay} from './expiry.js?v=20261006-round1';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -256,6 +256,9 @@ function deadlineBubble(issuer){
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
+  const heading=document.createElement('span'); heading.textContent='⚠️失効';
+  const count=document.createElement('strong'); count.textContent=entry.days===0 ? '本日' : entry.days+'日前';
+  bubble.replaceChildren(heading,count);
   const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
@@ -279,7 +282,7 @@ function renderChips(){
     const active=selected.has(c.id);
     const group=document.createElement('span');
     group.className='selected-issuer-group';
-    const bubble=active ? deadlineBubble(c.id) : null;
+    const bubble=deadlineBubble(c.id);
     if(bubble) group.appendChild(bubble);
     const badge=document.createElement('button');
     badge.type='button';

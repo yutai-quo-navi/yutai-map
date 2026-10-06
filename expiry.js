@@ -19,5 +19,5 @@ export function nearestDeadline(entries, issuer, now = new Date()) {
     .sort((a,b)=>a.date.localeCompare(b.date))[0] || null;
 }
 export function deadlineLabel(entry) {
-  return entry.days===0 ? '⚠ 本日が優待期限' : '⚠ 優待期限まであと'+entry.days+'日';
+  return entry.days===0 ? '⚠️本日失効' : '⚠️失効'+entry.days+'日前';
 }

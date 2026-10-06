@@ -986,3 +986,14 @@ button.selected-issuer:hover{filter:brightness(.96)}
 button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 
 .issuer-selection{cursor:pointer}
+
+/* Compact round expiry bubbles stay visible for unselected issuers too. */
+#companyChips{gap:38px 10px;padding-top:30px}
+.selected-issuer-group{position:relative}
+.voucher-deadline-bubble{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:52px;min-width:52px;height:52px;padding:5px 3px;border:0;border-radius:50%;background:#dc302c;color:#fff;font-size:10px;line-height:1.2;font-weight:700;overflow-wrap:normal;white-space:nowrap;margin-bottom:0}
+.voucher-deadline-bubble strong{font-size:13px}
+.voucher-deadline-bubble::after{left:9px;bottom:0;width:12px;height:12px;background:#dc302c;border:0;transform:rotate(18deg) skew(-20deg,-20deg)}
+.selected-issuer-group>.voucher-deadline-bubble{position:absolute;right:5px;bottom:calc(100% - 5px);z-index:1}
+.voucher-deadline-bubble.is-today{background:#b91f1b;color:#fff}
+.voucher-deadline-bubble.is-today::after{background:#b91f1b;border:0}
+.store>.voucher-deadline-bubble{margin-bottom:10px}
