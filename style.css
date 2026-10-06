@@ -967,3 +967,13 @@ h1 span{
 .issuer-selection:hover{background:var(--surface-soft);box-shadow:0 0 0 12px var(--surface-soft)}
 .issuer-selection:focus-visible{outline:2px solid var(--accent-text);outline-offset:6px}
 .issuer-selection .chips{min-height:28px}
+
+/* Voucher deadlines are supplementary: preserve issuer order and distance sorting. */
+.selected-issuer-group{display:inline-flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:100%}
+.selected-issuer-group .selected-issuer{max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere}
+#companyChips{align-items:flex-end;gap:18px 10px}
+.voucher-deadline-bubble{position:relative;display:inline-block;align-self:flex-start;max-width:100%;box-sizing:border-box;padding:5px 9px;margin-bottom:4px;border:1px solid #e6bd79;border-radius:9px;background:#fff3d9;color:#78501a;font-size:11px;font-weight:600;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.voucher-deadline-bubble::after{content:'';position:absolute;left:16px;bottom:-5px;width:7px;height:7px;background:#fff3d9;border-right:1px solid #e6bd79;border-bottom:1px solid #e6bd79;transform:rotate(45deg)}
+.voucher-deadline-bubble.is-today{background:#ffebe6;color:#9b3825;border-color:#e6aa9c}
+.voucher-deadline-bubble.is-today::after{background:#ffebe6;border-color:#e6aa9c}
+.store>.voucher-deadline-bubble{margin-bottom:10px}

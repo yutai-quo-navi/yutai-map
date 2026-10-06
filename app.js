@@ -1,3 +1,4 @@
+import {nearestDeadline, deadlineLabel, japanDay} from './expiry.js?v=20261006-1';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -45,6 +46,8 @@ const els = {
 };
 
 let companies = [];
+let voucherDeadlines = [];
+let deadlineDay = japanDay();
 let draftSelection = new Set();
 let pickerCompanies = [];
 let lastPosition = null;
@@ -110,6 +113,7 @@ async function init(){
     if(!Array.isArray(selectedSaved)){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
+    await loadVoucherDeadlines();
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -235,22 +239,50 @@ function issuerTone(id){
   for(const ch of String(id)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
   return `issuer-tone-${hash % 8}`;
 }
+async function loadVoucherDeadlines(){
+  try {
+    const response=await fetch('./data/voucher-deadlines.json', {cache:'no-store'});
+    if(!response.ok) throw new Error('Deadlines unavailable');
+    const data=await response.json();
+    voucherDeadlines=Array.isArray(data.entries) ? data.entries.filter(e=>e && typeof e.issuer==='string' && typeof e.date==='string') : [];
+  } catch(error) { voucherDeadlines=[]; console.warn('優待期限データを読み込めませんでした',error); }
+}
+function deadlineBubble(issuer){
+  const entry=nearestDeadline(voucherDeadlines,issuer);
+  if(!entry || entry.days>=30) return null;
+  const bubble=document.createElement('span');
+  bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
+  bubble.textContent=deadlineLabel(entry);
+  const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
+  bubble.title=detail;
+  bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
+  return bubble;
+}
 function renderChips(){
   els.chips.innerHTML = '';
   const chosen = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id));
-  for(const c of chosen.slice(0,3)){
-    const badge = document.createElement('span');
-    badge.className = `selected-issuer ${issuerTone(c.id)}`;
-    badge.textContent = `✓ ${c.name}`;
-    els.chips.appendChild(badge);
+  for(const c of chosen){
+    const group=document.createElement('span');
+    group.className='selected-issuer-group';
+    const bubble=deadlineBubble(c.id);
+    if(bubble) group.appendChild(bubble);
+    const badge=document.createElement('span');
+    badge.className=`selected-issuer ${issuerTone(c.id)}`;
+    badge.textContent=`✓ ${c.name}`;
+    group.appendChild(badge);
+    els.chips.appendChild(group);
   }
-  if(chosen.length > 3){
-    const more = document.createElement('span'); more.className='selected-more';
-    more.textContent = `＋${chosen.length - 3}社`; els.chips.appendChild(more);
-  }
-  if(!chosen.length) els.chips.textContent = '使いたい優待を選んでください';
-  qs('#selectionSummary').textContent = `${chosen.length}社 選択中`;
+  if(!chosen.length) els.chips.textContent='使いたい優待を選んでください';
+  qs('#selectionSummary').textContent=`${chosen.length}社 選択中`;
 }
+function refreshDeadlineDisplay(){
+  const next=japanDay();
+  if(next===deadlineDay) return;
+  deadlineDay=next; renderChips();
+  if(lastResults.length) renderFilteredResults(Number(els.radius.value));
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden) refreshDeadlineDisplay();});
+setInterval(refreshDeadlineDisplay,60000);
 function openCompanyPicker(){
   draftSelection = new Set(selected);
   // Sort once on opening so checkbox rows never move while selecting.
@@ -790,6 +822,8 @@ function renderResults(items, radius){
         <button class="favorite-toggle" type="button" aria-pressed="false">☆ 保存</button>
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
+    const deadline=deadlineBubble(x.company.id);
+    if(deadline) card.querySelector('.store').insertBefore(deadline,card.querySelector('.store-name'));
     const favorite=card.querySelector('.favorite-toggle');
     favorite.dataset.favoriteKey=storeKey(x);
     favorite.addEventListener('click',()=>toggleFavorite(x));
