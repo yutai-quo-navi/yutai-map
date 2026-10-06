@@ -997,3 +997,6 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 .voucher-deadline-bubble.is-today{background:#b91f1b;color:#fff}
 .voucher-deadline-bubble.is-today::after{background:#b91f1b;border:0}
 .store>.voucher-deadline-bubble{margin-bottom:10px}
+
+/* Speech bubble tail protrudes clearly from the lower-left edge. */
+.voucher-deadline-bubble::after{left:0;bottom:-3px;width:18px;height:18px;background:inherit;border:0;clip-path:polygon(45% 0,100% 35%,0 100%);transform:none}
