@@ -267,8 +267,13 @@ function deadlineBubble(issuer){
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
   return bubble;
 }
-function shortIssuerName(name){
-  return name.replace(/・?ホールディングス/g,'…');
+const issuerDisplayNames = {
+  skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
+  zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
+  monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD'
+};
+function shortIssuerName(company){
+  return issuerDisplayNames[company.id] || company.name;
 }
 function toggleIssuer(id){
   if(!visibleCompanyIds.has(id)) return;
@@ -294,7 +299,7 @@ function renderChips(){
     badge.setAttribute('aria-label',c.name);
     badge.title=c.name;
     const name=document.createElement('span'); name.className='selected-issuer-name';
-    name.textContent=(active ? '✓ ' : '')+shortIssuerName(c.name);
+    name.textContent=shortIssuerName(c);
     badge.appendChild(name);
     if(bubble) badge.appendChild(bubble);
     badge.addEventListener('click',()=>toggleIssuer(c.id));
@@ -322,13 +327,13 @@ function openCompanyPicker(){
 function renderCompanyPicker(){
   const normalize = value => String(value).normalize('NFKC').toLocaleLowerCase('ja').replace(/\s+/g,'');
   const query = normalize(els.pickerSearch.value);
-  const matches = pickerCompanies.filter(c => normalize([c.name,...(c.searchNames || []),...(c.aliases || [])].join(' ')).includes(query));
+  const matches = pickerCompanies.filter(c => normalize([shortIssuerName(c),c.name,...(c.searchNames || []),...(c.aliases || [])].join(' ')).includes(query));
   els.pickerList.innerHTML = '';
   for(const c of matches){
     const row = document.createElement('label'); row.className=`picker-row ${issuerTone(c.id)}`;
     const box = document.createElement('input'); box.type='checkbox'; box.checked=draftSelection.has(c.id);
     const label = document.createElement('span'); label.className='picker-row-text';
-    const title = document.createElement('strong'); title.textContent=c.name;
+    const title = document.createElement('strong'); title.textContent=shortIssuerName(c);
     const aliases = document.createElement('small');
     aliases.textContent = (c.aliases || []).slice(0,4).join('・') + ((c.aliases || []).length > 4 ? ' ほか' : '');
     label.append(title,aliases); row.append(box,label);
