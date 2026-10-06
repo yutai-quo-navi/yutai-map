@@ -299,7 +299,7 @@ function renderChips(){
     badge.setAttribute('aria-label',c.name);
     badge.title=c.name;
     const name=document.createElement('span'); name.className='selected-issuer-name';
-    name.textContent=shortIssuerName(c);
+    name.textContent=(active ? '✓ ' : '')+shortIssuerName(c);
     badge.appendChild(name);
     if(bubble) badge.appendChild(bubble);
     badge.addEventListener('click',()=>toggleIssuer(c.id));

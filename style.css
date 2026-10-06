@@ -277,6 +277,48 @@ h1 span{
   font-size:11px;
   font-weight:500;
 }
+.chips{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  width:100%;
+  padding:15px 0 8px;
+}
+.chip{
+  width:100%;
+  min-width:0;
+  min-height:51px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border:1px solid transparent;
+  border-radius:15px;
+  background:var(--surface-soft);
+  color:#45494f;
+  padding:9px 11px;
+}
+.chip-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:13px;
+  font-weight:500;
+  text-align:left;
+}
+.chip-state{
+  flex:0 0 auto;
+  color:var(--muted-2);
+  font-size:9.5px;
+  font-weight:400;
+}
+.chip[aria-pressed="true"]{
+  border-color:var(--accent-border);
+  background:var(--accent);
+  color:#ba480d;
+}
+.chip[aria-pressed="true"] .chip-state{color:#796a59}
 
 .radius-row{
   display:flex;
@@ -745,6 +787,7 @@ h1 span{
   .hero{padding:26px 24px 22px}
   .controls{padding:22px 24px}
   .lead{font-size:23px}
+  .chips{grid-template-columns:repeat(3,minmax(0,1fr))}
   .category-filters{grid-template-columns:repeat(6,1fr)}
 }
 
@@ -757,6 +800,8 @@ h1 span{
   .topbar{padding-left:15px;padding-right:15px}
   .wrap{padding-left:12px;padding-right:12px}
   .hero,.controls{border-radius:21px}
+  .chip{padding-left:9px;padding-right:9px}
+  .chip-name{font-size:12px}
 }
 
 /* Compact header navigation */
@@ -805,6 +850,9 @@ h1 span{
 .search-mode-button[aria-pressed="true"],.category-filter[aria-pressed="true"]{color:var(--accent-text);font-weight:700}
 .controls .section-title-row{flex-wrap:wrap;gap:8px}
 .controls .text-button{margin-left:auto;min-height:44px;color:var(--accent-text);font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:7px;font-size:12px;color:var(--muted)}
+.selected-issuer{display:inline-flex;align-items:center;border-radius:999px;padding:7px 10px;border:1px solid var(--issuer-line);background:var(--issuer-soft);color:var(--issuer);font-size:11px;line-height:1.4;font-weight:700}
+.selected-more{align-self:center;color:var(--muted);font-size:11px;font-weight:700}
 .issuer-tone-0{--issuer:#a34427;--issuer-soft:#fbe5dc;--issuer-line:#edd0c1}
 .issuer-tone-1{--issuer:#96374a;--issuer-soft:#f8e0e4;--issuer-line:#ebc1ca}
 .issuer-tone-2{--issuer:#58692e;--issuer-soft:#ecf0dc;--issuer-line:#d5deb9}
@@ -813,7 +861,6 @@ h1 span{
 .issuer-tone-5{--issuer:#8f4b22;--issuer-soft:#f9e6d8;--issuer-line:#e9cbb5}
 .issuer-tone-6{--issuer:#775075;--issuer-soft:#f2e5f0;--issuer-line:#dec9dc}
 .issuer-tone-7{--issuer:#3f6860;--issuer-soft:#e3f0eb;--issuer-line:#bfd8ce}
-.issuer-tone-8{--issuer:#76533b;--issuer-soft:#f4e9df;--issuer-line:#dfccbc}
 .card .badge.company{background:var(--issuer-soft);color:var(--issuer)}
 .card-actions{gap:10px 16px;flex-wrap:wrap}
 .card-actions .issuer-map-button{padding:10px 13px;border-radius:12px;min-height:40px;background:var(--issuer);color:#fff;font-weight:700;font-size:11px;text-align:center}
@@ -847,6 +894,7 @@ h1 span{
 }
 
 /* Full issuer names remain readable on narrow screens. */
+.selected-issuer{max-width:100%;overflow-wrap:anywhere;white-space:normal}
 .badge.company{line-height:1.5;overflow-wrap:anywhere;max-width:100%}
 .history-meta span{overflow-wrap:anywhere}
 
@@ -931,50 +979,44 @@ h1 span{
 .issuer-selection .section-title-row{display:flex;width:100%}
 .selection-heading{font-size:18px;font-weight:700;line-height:1.4}
 .selection-change{margin-left:auto;white-space:nowrap}
-/* Equal issuer tiles: a name row and a reserved deadline row. */
-#companyChips{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:10px;
-  width:100%;
-  padding:15px 0 8px;
-}
-.selected-issuer-group{display:block;min-width:0}
-.selected-issuer{
-  display:grid;
-  grid-template-rows:20px 20px;
-  align-items:center;
-  justify-items:center;
-  gap:4px;
-  width:100%;
+.issuer-selection .chips{min-height:28px}
+
+/* Issuer chips can be toggled directly; touch devices do not retain desktop hover styling. */
+#companyChips{align-items:flex-end;gap:19px 10px;padding-top:15px}
+.selected-issuer-group{
+  display:inline-flex;
+  flex-direction:row;
+  align-items:flex-start;
+  gap:0;
   min-width:0;
-  height:64px;
+  max-width:100%;
+}
+.selected-issuer-group .selected-issuer{
+  gap:7px;
+  min-width:0;
+  max-width:100%;
   box-sizing:border-box;
-  padding:9px 10px;
-  border:1px solid var(--issuer-line);
-  border-radius:16px;
-  background:var(--issuer-soft);
-  color:var(--issuer);
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.selected-issuer-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+button.selected-issuer{
   font-family:inherit;
-  font-size:13px;
-  line-height:20px;
-  font-weight:400;
-  text-align:center;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-.selected-issuer-name{min-width:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:520px){
-  #companyChips{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-}
-
 button.selected-issuer.is-unselected{background:#f4f4f4;border-color:#d4d4d4;color:#777}
 button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 @media (hover:hover) and (pointer:fine){
   button.selected-issuer:hover{filter:brightness(.96)}
 }
 
-/* Shared deadline badge; issuer tiles place it in their second row. */
+/* Expiry notice sits inline inside its issuer chip. */
 .voucher-deadline-bubble{
   position:static;
   display:inline-flex;
