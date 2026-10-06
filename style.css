@@ -813,6 +813,7 @@ h1 span{
 .issuer-tone-5{--issuer:#8f4b22;--issuer-soft:#f9e6d8;--issuer-line:#e9cbb5}
 .issuer-tone-6{--issuer:#775075;--issuer-soft:#f2e5f0;--issuer-line:#dec9dc}
 .issuer-tone-7{--issuer:#3f6860;--issuer-soft:#e3f0eb;--issuer-line:#bfd8ce}
+.issuer-tone-8{--issuer:#76533b;--issuer-soft:#f4e9df;--issuer-line:#dfccbc}
 .card .badge.company{background:var(--issuer-soft);color:var(--issuer)}
 .card-actions{gap:10px 16px;flex-wrap:wrap}
 .card-actions .issuer-map-button{padding:10px 13px;border-radius:12px;min-height:40px;background:var(--issuer);color:#fff;font-weight:700;font-size:11px;text-align:center}
@@ -846,7 +847,6 @@ h1 span{
 }
 
 /* Full issuer names remain readable on narrow screens. */
-.selected-issuer{max-width:100%;overflow-wrap:anywhere;white-space:normal}
 .badge.company{line-height:1.5;overflow-wrap:anywhere;max-width:100%}
 .history-meta span{overflow-wrap:anywhere}
 
