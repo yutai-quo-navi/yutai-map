@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: "10 5 1 * *"
   push:
+    branches: [main]
     paths:
       - "tools/issuers/royal/scrape.py"
       - ".github/workflows/scrape_royal.yml"

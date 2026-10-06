@@ -71,6 +71,16 @@ for offset in range(0, universe, 200):
         flags = [f for d in row.get('details', []) for f in d.get('flags', []) if f.get('code') == '00003']
         if len(flags) != 1 or flags[0].get('value') is not True:
             raise RuntimeError('Official benefit filter or eligibility flag changed')
+        for key in ('from_date', 'to_date'):
+            if row.get(key):
+                boundary = datetime.fromisoformat(row[key])
+                if (key == 'from_date' and boundary > NOW) or (key == 'to_date' and boundary <= NOW):
+                    excluded_counts['開店前・掲載終了'] += 1
+                    break
+        else:
+            boundary = None
+        if boundary is not None:
+            continue
         code = str(row.get('code', ''))
         sid = 'official:id:' + code
         if not re.fullmatch(r'\d{10}', code) or sid in fresh_by_id:
@@ -84,6 +94,8 @@ for offset in range(0, universe, 200):
         if len(cats) != 1:
             raise RuntimeError('Official category structure changed')
         brand = cats[0]['name']
+        if brand == 'ロイヤルホスト' and not row['name'].startswith('ロイヤルホスト'):
+            brand = 'ロイヤルグループ専門店'
         category = 'other' if brand == 'リッチモンドホテル' else 'cafe' if brand in ('ロイヤルガーデンカフェ','スタンダードコーヒー','カフェクロワッサン') else 'bakery' if brand == 'ミセスエリザベスマフィン' else 'restaurant'
         address = row['address_name'].strip()
         pref = re.match(r'(北海道|東京都|大阪府|京都府|.{2,3}県)', address)
@@ -100,7 +112,7 @@ for offset in range(0, universe, 200):
         brand_counts[brand] += 1
 fresh_stores = list(fresh_by_id.values())
 official_total = len(fresh_stores)
-if official_total != universe or not {'ロイヤルホスト','てんや'} <= set(brand_counts):
+if official_total + sum(excluded_counts.values()) != universe or not {'ロイヤルホスト','てんや'} <= set(brand_counts):
     raise RuntimeError('Incomplete brand coverage')
 
 
