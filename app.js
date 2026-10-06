@@ -157,6 +157,9 @@ async function init(){
     qs('.hero')?.scrollIntoView({behavior:'smooth', block:'start'});
     setTimeout(() => { if(!els.placeSearchPanel.hidden) els.placeInput?.focus(); }, 350);
   });
+  qs('#howtoSearchButton')?.addEventListener('click',()=>{
+    closeNavMenu(); qs('.hero')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
   els.menuButton?.addEventListener('click', (event) => {
     event.stopPropagation();
     const opening = els.navMenu.hidden;

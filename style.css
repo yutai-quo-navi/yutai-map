@@ -1018,3 +1018,16 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 .store-title-row{display:flex;align-items:center;gap:12px;width:100%}
 .store-title-row .store-name{flex:1;min-width:0;margin:0}
 .store-title-row>.voucher-deadline-bubble{flex-shrink:0;align-self:center;margin:0 0 0 auto}
+
+/* Concise illustrated help leads the hamburger menu. */
+.nav-menu{width:min(360px,calc(100vw - 36px));max-height:calc(100dvh - 105px);overflow-y:auto;box-sizing:border-box;padding:10px}
+.menu-howto{padding:10px 10px 16px;margin-bottom:7px;border-bottom:1px solid var(--line);text-align:center;color:var(--text)}
+.menu-howto h2{font-size:15px;margin:0 0 10px}
+.howto-catch{font-size:17px;font-weight:700;line-height:1.5;margin:0}
+.howto-sub{font-size:11px;color:var(--muted);margin:6px 0 0}
+.menu-howto img{display:block;width:100%;height:auto;margin:6px auto;max-height:130px;object-fit:contain}
+.menu-howto ol{list-style:none;counter-reset:howto;padding:0;margin:6px 0 12px;text-align:left;display:grid;gap:6px}
+.menu-howto li{counter-increment:howto;display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:18px;background:var(--surface-soft);font-size:12px}
+.menu-howto li::before{content:counter(howto);display:grid;place-items:center;width:21px;height:21px;flex-shrink:0;border-radius:50%;background:#c37848;color:white;font-size:11px}
+.howto-expiry{font-size:11px;background:#fff3db;padding:9px 5px;border-radius:10px;margin:0 0 10px}
+.nav-menu #howtoSearchButton{width:auto;min-height:35px;padding:8px 25px;background:var(--accent-text);color:white;text-align:center;border-radius:12px;font-size:12px}
