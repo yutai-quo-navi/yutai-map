@@ -861,6 +861,7 @@ h1 span{
 .issuer-tone-5{--issuer:#8f4b22;--issuer-soft:#f9e6d8;--issuer-line:#e9cbb5}
 .issuer-tone-6{--issuer:#775075;--issuer-soft:#f2e5f0;--issuer-line:#dec9dc}
 .issuer-tone-7{--issuer:#3f6860;--issuer-soft:#e3f0eb;--issuer-line:#bfd8ce}
+.issuer-tone-8{--issuer:#496582;--issuer-soft:#e7eef7;--issuer-line:#c6d4e6}
 .card .badge.company{background:var(--issuer-soft);color:var(--issuer)}
 .card-actions{gap:10px 16px;flex-wrap:wrap}
 .card-actions .issuer-map-button{padding:10px 13px;border-radius:12px;min-height:40px;background:var(--issuer);color:#fff;font-weight:700;font-size:11px;text-align:center}
