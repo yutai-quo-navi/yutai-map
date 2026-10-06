@@ -1008,3 +1008,8 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 .voucher-deadline-bubble::after{left:0;bottom:-1.5px;width:9px;height:9px}
 .selected-issuer-group>.voucher-deadline-bubble{right:5px;bottom:calc(100% - 2.5px)}
 .store>.voucher-deadline-bubble{margin-bottom:5px}
+
+/* Quiet CSS-only circular deadline badge. */
+.voucher-deadline-bubble{background:#fff0d4;background-image:none;color:#80521e;border:1px solid #dfbe87;border-radius:50%}
+.voucher-deadline-bubble::after{display:none}
+.voucher-deadline-bubble.is-today{background:#f8dfd4;color:#8b3f2a;border-color:#d6a18c}
