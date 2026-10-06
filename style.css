@@ -964,7 +964,7 @@ h1 span{
 .issuer-selection .section-title-row{display:flex;width:100%}
 .selection-heading{font-size:18px;font-weight:700;line-height:1.4}
 .selection-change{margin-left:auto;white-space:nowrap}
-.issuer-selection:hover{background:var(--surface-soft);box-shadow:0 0 0 12px var(--surface-soft)}
+.issuer-selection:hover{background:transparent;box-shadow:none}
 .issuer-selection:focus-visible{outline:2px solid var(--accent-text);outline-offset:6px}
 .issuer-selection .chips{min-height:28px}
 
