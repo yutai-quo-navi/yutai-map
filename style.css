@@ -1013,3 +1013,8 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 .voucher-deadline-bubble{background:#fff0d4;background-image:none;color:#80521e;border:1px solid #dfbe87;border-radius:50%}
 .voucher-deadline-bubble::after{display:none}
 .voucher-deadline-bubble.is-today{background:#f8dfd4;color:#8b3f2a;border-color:#d6a18c}
+
+/* Keep expiry notice at the far right of the store title row. */
+.store-title-row{display:flex;align-items:center;gap:12px;width:100%}
+.store-title-row .store-name{flex:1;min-width:0;margin:0}
+.store-title-row>.voucher-deadline-bubble{flex-shrink:0;align-self:center;margin:0 0 0 auto}

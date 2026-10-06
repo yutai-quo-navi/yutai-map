@@ -829,7 +829,7 @@ function renderResults(items, radius){
       <div class="card-top">
         <div class="distance">${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
         <div class="store">
-          <h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener">${esc(storeName)}</a></h3>
+          <div class="store-title-row"><h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener">${esc(storeName)}</a></h3></div>
           <p class="store-address">${esc(storeAddress)}</p>
         </div>
       </div>
@@ -846,7 +846,7 @@ function renderResults(items, radius){
         <button class="feedback-link" type="button">情報修正</button>
       </div>`;
     const deadline=deadlineBubble(x.company.id);
-    if(deadline) card.querySelector('.store').insertBefore(deadline,card.querySelector('.store-name'));
+    if(deadline) card.querySelector('.store-title-row').appendChild(deadline);
     const favorite=card.querySelector('.favorite-toggle');
     favorite.dataset.favoriteKey=storeKey(x);
     favorite.addEventListener('click',()=>toggleFavorite(x));
