@@ -71,6 +71,13 @@
       "name": "松屋フーズホールディングス",
       "status": "public",
       "config": "./data/issuers/matsuya/config.json"
+    },
+    {
+      "id": "royal",
+      "code": "8179",
+      "name": "ロイヤルホールディングス",
+      "status": "development",
+      "config": "./data/issuers/royal/config.json"
     }
   ]
 }

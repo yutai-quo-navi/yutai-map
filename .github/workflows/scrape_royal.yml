@@ -1,0 +1,132 @@
+name: Build Royal store DB
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 5 1 * *"
+  push:
+    branches: [main]
+    paths:
+      - "tools/issuers/royal/scrape.py"
+      - ".github/workflows/scrape_royal.yml"
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: official-store-db
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[migration]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Prepare Cloudflare API token
+        env:
+          CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          CF_API_TOKEN="$(printf '%s' "$CF_API_TOKEN_RAW" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$CF_API_TOKEN" || { echo "CF_API_TOKEN is not configured"; exit 1; }
+          echo "::add-mask::$CF_API_TOKEN"
+          printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Install Wrangler
+        run: npm install --no-save wrangler@4
+
+      - name: Restore previous private state from D1
+        run: |
+          rm -f /tmp/raw_*.json /tmp/meta.json
+          for offset in 0 500 1000 1500 2000 2500 3000 3500; do
+            npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT raw_json FROM store_raw WHERE issuer_id='royal' ORDER BY store_id LIMIT 500 OFFSET $offset;" --json > "/tmp/raw_${offset}.json"
+          done
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT current_meta_json FROM issuer_state WHERE issuer_id='royal';" --json > /tmp/meta.json
+          python tools/restore_d1_state.py "royal" '/tmp/raw_*.json' /tmp/meta.json
+
+      - name: Build current snapshot and diff
+        run: python tools/issuers/royal/scrape.py
+
+      - name: Show diff summary
+        run: cat data/issuers/royal/stores/last_diff.md
+
+      - name: Apply D1 schema
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/schema.sql
+
+      - name: Build issuer D1 sync
+        run: python tools/build_d1_issuer_sql.py "royal"
+
+      - name: Sync issuer to private D1
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file="cloudflare/generated/sync_royal.sql"
+
+      - name: Merge public update history
+        run: python tools/build_updates.py
+
+      - name: Remove private working database
+        run: rm -rf data/issuers/royal/stores
+
+      - name: Commit public metadata only
+        env:
+          GH_PUSH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/updates.json
+          :
+          git diff --cached --quiet && exit 0
+          git commit -m "Update ロイヤルホールディングス store changes: $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            auth=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
+            if git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+
+      - name: Notify DB failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] ロイヤルホールディングス 公式データ取得エラー"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="@${GITHUB_REPOSITORY_OWNER}
+
+          ロイヤルホールディングス の公式店舗DB更新で異常を検知しました。
+          公開GitHubには店舗DB本体を保存せず、Cloudflare D1を正本として運用しています。
+
+          - workflow: ${GITHUB_WORKFLOW}
+          - run: ${run_url}
+          - UTC: $(date -u '+%Y-%m-%d %H:%M:%S')"
+          number=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[0].number // empty' 2>/dev/null)
+          if [ -n "${number}" ]; then
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} 再度エラーを検知しました。Run: ${run_url}" || true
+          else
+            gh issue create --repo "${GITHUB_REPOSITORY}" --title "${title}" --body "${body}" >/dev/null 2>&1 || true
+          fi
+
+      - name: Resolve DB failure alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          title="[DB監視] ロイヤルホールディングス 公式データ取得エラー"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          numbers=$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "${title} in:title" --json number --jq '.[].number' 2>/dev/null)
+          for number in ${numbers}; do
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "@${GITHUB_REPOSITORY_OWNER} 公式DB更新が正常復旧しました。Run: ${run_url}" || true
+            gh issue close "${number}" --repo "${GITHUB_REPOSITORY}" --reason completed || true
+          done
