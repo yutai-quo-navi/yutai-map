@@ -135,6 +135,9 @@ async function init(){
     if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
   });
   els.pickerButton.addEventListener('click', openCompanyPicker);
+  qs('.issuer-selection').addEventListener('click', event => {
+    if(!event.target.closest('button')) openCompanyPicker();
+  });
   qs('#companyPickerClose').addEventListener('click', () => els.picker.close());
   els.pickerSearch.addEventListener('input', renderCompanyPicker);
   qs('#companyPickerAll').addEventListener('click', () => {
@@ -258,22 +261,39 @@ function deadlineBubble(issuer){
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
   return bubble;
 }
+function shortIssuerName(name){
+  return name.replace(/・?ホールディングス/g,'…');
+}
+function toggleIssuer(id){
+  if(!visibleCompanyIds.has(id)) return;
+  selected.has(id) ? selected.delete(id) : selected.add(id);
+  resetCategoryFilter();
+  persistSelection(); renderChips(); renderBrandOptions();
+  els.chips.querySelector('[data-issuer="'+id+'"]')?.focus();
+  if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+}
 function renderChips(){
   els.chips.innerHTML = '';
-  const chosen = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id));
-  for(const c of chosen){
+  const available=companies.filter(c=>visibleCompanyIds.has(c.id));
+  for(const c of available){
+    const active=selected.has(c.id);
     const group=document.createElement('span');
     group.className='selected-issuer-group';
-    const bubble=deadlineBubble(c.id);
+    const bubble=active ? deadlineBubble(c.id) : null;
     if(bubble) group.appendChild(bubble);
-    const badge=document.createElement('span');
-    badge.className=`selected-issuer ${issuerTone(c.id)}`;
-    badge.textContent=`✓ ${c.name}`;
+    const badge=document.createElement('button');
+    badge.type='button';
+    badge.dataset.issuer=c.id;
+    badge.className='selected-issuer '+(active ? issuerTone(c.id) : 'is-unselected');
+    badge.setAttribute('aria-pressed',String(active));
+    badge.setAttribute('aria-label',c.name);
+    badge.title=c.name;
+    badge.textContent=(active ? '✓ ' : '')+shortIssuerName(c.name);
+    badge.addEventListener('click',()=>toggleIssuer(c.id));
     group.appendChild(badge);
     els.chips.appendChild(group);
   }
-  if(!chosen.length) els.chips.textContent='使いたい優待を選んでください';
-  qs('#selectionSummary').textContent=`${chosen.length}社 選択中`;
+  qs('#selectionSummary').textContent=available.filter(c=>selected.has(c.id)).length+'社 選択中';
 }
 function refreshDeadlineDisplay(){
   const next=japanDay();

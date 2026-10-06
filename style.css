@@ -977,3 +977,12 @@ h1 span{
 .voucher-deadline-bubble.is-today{background:#ffebe6;color:#9b3825;border-color:#e6aa9c}
 .voucher-deadline-bubble.is-today::after{background:#ffebe6;border-color:#e6aa9c}
 .store>.voucher-deadline-bubble{margin-bottom:10px}
+
+/* Each issuer can be toggled directly while remaining visible. */
+.issuer-selection{cursor:default}
+button.selected-issuer{font-family:inherit;cursor:pointer}
+button.selected-issuer.is-unselected{background:#f4f4f4;border-color:#d4d4d4;color:#777}
+button.selected-issuer:hover{filter:brightness(.96)}
+button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+
+.issuer-selection{cursor:pointer}
