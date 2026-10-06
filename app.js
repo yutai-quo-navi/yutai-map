@@ -259,8 +259,8 @@ function deadlineBubble(issuer){
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
-  const heading=document.createElement('span'); heading.textContent='失効';
-  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days===0 ? '本日' : entry.days+'日前';
+  const heading=document.createElement('span'); heading.textContent='失効まで';
+  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days===0 ? '本日' : entry.days+'日';
   bubble.replaceChildren(heading,count);
   const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
@@ -286,7 +286,6 @@ function renderChips(){
     const group=document.createElement('span');
     group.className='selected-issuer-group';
     const bubble=deadlineBubble(c.id);
-    if(bubble) group.appendChild(bubble);
     const badge=document.createElement('button');
     badge.type='button';
     badge.dataset.issuer=c.id;
@@ -294,7 +293,10 @@ function renderChips(){
     badge.setAttribute('aria-pressed',String(active));
     badge.setAttribute('aria-label',c.name);
     badge.title=c.name;
-    badge.textContent=(active ? '✓ ' : '')+shortIssuerName(c.name);
+    const name=document.createElement('span'); name.className='selected-issuer-name';
+    name.textContent=(active ? '✓ ' : '')+shortIssuerName(c.name);
+    badge.appendChild(name);
+    if(bubble) badge.appendChild(bubble);
     badge.addEventListener('click',()=>toggleIssuer(c.id));
     group.appendChild(badge);
     els.chips.appendChild(group);
