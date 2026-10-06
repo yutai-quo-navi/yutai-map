@@ -252,7 +252,7 @@ async function loadVoucherDeadlines(){
 }
 function deadlineBubble(issuer){
   const entry=nearestDeadline(voucherDeadlines,issuer);
-  if(!entry || entry.days>=30) return null;
+  if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
