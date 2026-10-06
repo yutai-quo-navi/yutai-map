@@ -76,7 +76,7 @@
       "id": "royal",
       "code": "8179",
       "name": "ロイヤルホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/royal/config.json"
     }
   ]

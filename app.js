@@ -239,7 +239,7 @@ function closeNavMenu(){
 
 // Stable issuer colors are shared by summary, picker and Google Maps buttons.
 function issuerTone(id){
-  const fixed = {skylark:0, colowide:1, create:2, monogatari:3, zensho:4, yoshinoya:5, toridoll:6, matsuya:7};
+  const fixed = {skylark:0, colowide:1, create:2, monogatari:3, zensho:4, yoshinoya:5, toridoll:6, matsuya:7, royal:8};
   if(Object.hasOwn(fixed, id)) return `issuer-tone-${fixed[id]}`;
   let hash = 0;
   for(const ch of String(id)) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
