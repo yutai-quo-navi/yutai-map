@@ -256,8 +256,8 @@ function deadlineBubble(issuer){
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
-  const heading=document.createElement('span'); heading.textContent='⚠️失効';
-  const count=document.createElement('strong'); count.textContent=entry.days===0 ? '本日' : entry.days+'日前';
+  const heading=document.createElement('span'); heading.textContent='失効';
+  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days===0 ? '本日' : entry.days+'日前';
   bubble.replaceChildren(heading,count);
   const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
