@@ -959,60 +959,92 @@ h1 span{
 .search-radius select:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
 #currentSearchPanel[hidden]{display:none}
 
-/* The entire issuer summary is one accessible button, including empty space. */
-.issuer-selection{display:block;width:100%;min-width:0;box-sizing:border-box;padding:0 0 8px;margin:0;border:0;border-radius:12px;background:transparent;color:var(--text);font:inherit;text-align:left;cursor:pointer}
+/* Issuer selection: the whole summary remains clickable without a hover/tap fill. */
+.issuer-selection{
+  display:block;
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  padding:0 0 8px;
+  margin:0;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  color:var(--text);
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
 .issuer-selection .section-title-row{display:flex;width:100%}
 .selection-heading{font-size:18px;font-weight:700;line-height:1.4}
 .selection-change{margin-left:auto;white-space:nowrap}
-.issuer-selection:hover{background:transparent;box-shadow:none}
-.issuer-selection:focus-visible{outline:2px solid var(--accent-text);outline-offset:6px}
 .issuer-selection .chips{min-height:28px}
 
-/* Voucher deadlines are supplementary: preserve issuer order and distance sorting. */
-.selected-issuer-group{display:inline-flex;flex-direction:column;align-items:flex-start;gap:7px;max-width:100%}
-.selected-issuer-group .selected-issuer{max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere}
-#companyChips{align-items:flex-end;gap:18px 10px}
-.voucher-deadline-bubble{position:relative;display:inline-block;align-self:flex-start;max-width:100%;box-sizing:border-box;padding:5px 9px;margin-bottom:4px;border:1px solid #e6bd79;border-radius:9px;background:#fff3d9;color:#78501a;font-size:11px;font-weight:600;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
-.voucher-deadline-bubble::after{content:'';position:absolute;left:16px;bottom:-5px;width:7px;height:7px;background:#fff3d9;border-right:1px solid #e6bd79;border-bottom:1px solid #e6bd79;transform:rotate(45deg)}
-.voucher-deadline-bubble.is-today{background:#ffebe6;color:#9b3825;border-color:#e6aa9c}
-.voucher-deadline-bubble.is-today::after{background:#ffebe6;border-color:#e6aa9c}
-.store>.voucher-deadline-bubble{margin-bottom:10px}
-
-/* Each issuer can be toggled directly while remaining visible. */
-.issuer-selection{cursor:default}
-button.selected-issuer{font-family:inherit;cursor:pointer}
+/* Issuer chips can be toggled directly; touch devices do not retain desktop hover styling. */
+#companyChips{align-items:flex-end;gap:19px 10px;padding-top:15px}
+.selected-issuer-group{
+  display:inline-flex;
+  flex-direction:row;
+  align-items:flex-start;
+  gap:0;
+  min-width:0;
+  max-width:100%;
+}
+.selected-issuer-group .selected-issuer{
+  gap:7px;
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.selected-issuer-name{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+button.selected-issuer{
+  font-family:inherit;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
 button.selected-issuer.is-unselected{background:#f4f4f4;border-color:#d4d4d4;color:#777}
-button.selected-issuer:hover{filter:brightness(.96)}
 button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){
+  button.selected-issuer:hover{filter:brightness(.96)}
+}
 
-.issuer-selection{cursor:pointer}
-
-/* Compact round expiry bubbles stay visible for unselected issuers too. */
-#companyChips{gap:38px 10px;padding-top:30px}
-.selected-issuer-group{position:relative}
-.voucher-deadline-bubble{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:52px;min-width:52px;height:52px;padding:5px 3px;border:0;border-radius:50%;background:#dc302c;color:#fff;font-size:10px;line-height:1.2;font-weight:700;overflow-wrap:normal;white-space:nowrap;margin-bottom:0}
-.voucher-deadline-bubble strong{font-size:13px}
-.voucher-deadline-bubble::after{left:9px;bottom:0;width:12px;height:12px;background:#dc302c;border:0;transform:rotate(18deg) skew(-20deg,-20deg)}
-.selected-issuer-group>.voucher-deadline-bubble{position:absolute;right:5px;bottom:calc(100% - 5px);z-index:1}
-.voucher-deadline-bubble.is-today{background:#b91f1b;color:#fff}
-.voucher-deadline-bubble.is-today::after{background:#b91f1b;border:0}
-.store>.voucher-deadline-bubble{margin-bottom:10px}
-
-/* Speech bubble tail protrudes clearly from the lower-left edge. */
-.voucher-deadline-bubble::after{left:0;bottom:-3px;width:18px;height:18px;background:inherit;border:0;clip-path:polygon(45% 0,100% 35%,0 100%);transform:none}
-
-/* Requested half-size expiry bubbles, with regular-weight text. */
-#companyChips{gap:19px 10px;padding-top:15px}
-.voucher-deadline-bubble{width:26px;min-width:26px;height:26px;padding:2.5px 1.5px;gap:.5px;font-size:5px;font-weight:400}
-.voucher-deadline-bubble .deadline-count{font-size:6.5px;font-weight:400}
-.voucher-deadline-bubble::after{left:0;bottom:-1.5px;width:9px;height:9px}
-.selected-issuer-group>.voucher-deadline-bubble{right:5px;bottom:calc(100% - 2.5px)}
-.store>.voucher-deadline-bubble{margin-bottom:5px}
-
-/* Quiet CSS-only circular deadline badge. */
-.voucher-deadline-bubble{background:#fff0d4;background-image:none;color:#80521e;border:1px solid #dfbe87;border-radius:50%}
+/* Expiry notice sits inline inside its issuer chip. */
+.voucher-deadline-bubble{
+  position:static;
+  display:inline-flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  width:auto;
+  min-width:0;
+  height:20px;
+  padding:0 6px;
+  flex-shrink:0;
+  align-self:center;
+  margin:0;
+  border:1px solid #dfaa89;
+  border-radius:999px;
+  background:#fff0e2;
+  background-image:none;
+  color:#953f26;
+  font-size:10px;
+  line-height:1;
+  font-weight:400;
+  white-space:nowrap;
+}
+.voucher-deadline-bubble .deadline-count{font-size:10px;font-weight:400}
 .voucher-deadline-bubble::after{display:none}
-.voucher-deadline-bubble.is-today{background:#f8dfd4;color:#8b3f2a;border-color:#d6a18c}
+.voucher-deadline-bubble.is-today{background:#ffe4dc;color:#9b3025;border-color:#da9a8d}
+.store>.voucher-deadline-bubble{margin-bottom:5px}
 
 /* Keep expiry notice at the far right of the store title row. */
 .store-title-row{display:flex;align-items:center;gap:12px;width:100%}
@@ -1031,12 +1063,3 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 .menu-howto li::before{content:counter(howto);display:grid;place-items:center;width:21px;height:21px;flex-shrink:0;border-radius:50%;background:#c37848;color:white;font-size:11px}
 .howto-expiry{font-size:11px;background:#fff3db;padding:9px 5px;border-radius:10px;margin:0 0 10px}
 .nav-menu #howtoSearchButton{width:auto;min-height:35px;padding:8px 25px;background:var(--accent-text);color:white;text-align:center;border-radius:12px;font-size:12px}
-
-/* Inline expiry labels preserve the issuer chip's vertical spacing. */
-.selected-issuer-group{flex-direction:row;gap:0;min-width:0}
-.selected-issuer-group .selected-issuer{gap:7px;min-width:0}
-.selected-issuer-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.voucher-deadline-bubble{position:static;display:inline-flex;flex-direction:row;gap:2px;width:auto;min-width:0;height:20px;padding:0 6px;flex-shrink:0;align-self:center;margin:0;border:1px solid #dfaa89;border-radius:999px;background:#fff0e2;color:#953f26;font-size:10px;line-height:1;font-weight:400;white-space:nowrap}
-.voucher-deadline-bubble .deadline-count{font-size:10px;font-weight:400}
-.voucher-deadline-bubble.is-today{background:#ffe4dc;color:#9b3025;border-color:#da9a8d}
-.selected-issuer-group>.voucher-deadline-bubble{position:static}
