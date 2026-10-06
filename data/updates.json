@@ -1,8 +1,50 @@
 {
   "version": 1,
-  "generated_at": "2026-10-06T07:38:23+09:00",
-  "event_count": 2,
+  "generated_at": "2026-10-06T12:52:39+09:00",
+  "event_count": 4,
   "events": [
+    {
+      "event_id": "a96149b79da2e5bbe9f2c8830c784962a7849123",
+      "at": "2026-10-06T12:52:26+09:00",
+      "run_date": "2026-10-06",
+      "kind": "changed",
+      "issuer_id": "royal",
+      "issuer_code": "8179",
+      "issuer_name": "ロイヤルホールディングス",
+      "store_id": "official:id:0000000298",
+      "name": "新千歳エアポートレストラン by ROYAL HOST",
+      "address": "北海道千歳市美々 新千歳空港旅客ターミナルビル３Ｆ",
+      "brand_name": "ロイヤルグループ専門店",
+      "changed_fields": [
+        {
+          "key": "brand_name",
+          "label": "ブランド",
+          "before": "ロイヤルホスト",
+          "after": "ロイヤルグループ専門店"
+        }
+      ]
+    },
+    {
+      "event_id": "0d57ef0e6f658792c42f5247b5834014203bbf03",
+      "at": "2026-10-06T12:52:26+09:00",
+      "run_date": "2026-10-06",
+      "kind": "changed",
+      "issuer_id": "royal",
+      "issuer_code": "8179",
+      "issuer_name": "ロイヤルホールディングス",
+      "store_id": "official:id:0000000901",
+      "name": "メロワール　海と大地のめぐみ",
+      "address": "東京都　新宿区新宿3-14-1 伊勢丹新宿店本館７Ｆイートパラダイス",
+      "brand_name": "ロイヤルグループ専門店",
+      "changed_fields": [
+        {
+          "key": "brand_name",
+          "label": "ブランド",
+          "before": "ロイヤルホスト",
+          "after": "ロイヤルグループ専門店"
+        }
+      ]
+    },
     {
       "event_id": "7d980cebfe5f6f365e94d359d870d6776e52b326",
       "at": "2026-10-06T07:34:34+09:00",
@@ -39,4 +81,3 @@
     }
   ]
 }
-
