@@ -13,9 +13,12 @@ const poi = {
   lat:43.053332318, lng:141.445576788
 };
 
-async function search(pois, refs=[reference]){
+async function search(pois, refs=[reference], radius=10000){
   const oldFetch=globalThis.fetch, oldCaches=globalThis.caches;
-  globalThis.fetch=async()=>new Response(JSON.stringify({results:pois}));
+  globalThis.fetch=async(url)=>{
+    assert.equal(new URL(url).searchParams.get('radius'), String(Math.min(radius,30000)));
+    return new Response(JSON.stringify({results:pois}));
+  };
   globalThis.caches={default:{match:async()=>undefined}};
   const permit={limit:async()=>({success:true})};
   const env={API_RATE_LIMITER:permit, SEARCH_RATE_LIMITER:permit, DB:{prepare(sql){return {bind(){return {
@@ -23,11 +26,22 @@ async function search(pois, refs=[reference]){
     all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:refs})
   };}};}}};
   try {
-    const response=await worker.fetch(new Request('https://api.example.com/v1/stores/search?lat=43.055&lng=141.455&radius=10000&issuers=colowide&category=restaurant'),env);
+    const response=await worker.fetch(new Request(`https://api.example.com/v1/stores/search?lat=43.055&lng=141.455&radius=${radius}&issuers=colowide&category=restaurant`),env);
     assert.equal(response.status,200);
     return await response.json();
   } finally {globalThis.fetch=oldFetch; globalThis.caches=oldCaches;}
 }
+
+test('30 km search includes a matched store beyond 10 km, excludes beyond 30 km and keeps the result limit',async()=>{
+  const distant={...poi,lat:43.255,lng:141.455};
+  assert.equal((await search([distant])).count,0);
+  const widened=await search([distant], [reference], 30000);
+  assert.equal(widened.count,1);
+  assert.ok(widened.results[0].distance>10000 && widened.results[0].distance<30000);
+  assert.equal(widened.limit,30);
+  assert.equal((await search([{...distant,lat:43.405}], [reference], 30000)).count,0);
+  assert.equal((await search([{...distant,lat:43.405}], [reference], 50000)).count,0);
+});
 
 test('official brand and complete branch match across an inserted name qualifier and address dash forms',async()=>{
   const data=await search([poi]);

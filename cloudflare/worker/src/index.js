@@ -1,5 +1,5 @@
 const FEATURE_IDS = new Set(['daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
-const MAX_RADIUS = 10000;
+const MAX_RADIUS = 30000;
 const MAX_RESULTS = 30;
 const MAX_CANDIDATES = 600;
 const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
