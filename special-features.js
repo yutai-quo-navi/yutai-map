@@ -15,7 +15,7 @@ function safeUrl(value) {
 export function validateFeature(feature) {
   if (!feature || !/^[a-z0-9-]+$/.test(feature.id) || !feature.title ||
       !feature.issuer?.id || !/^\d{4}$/.test(feature.issuer.code) || !feature.issuer.name ||
-      !['manual', 'scheduled'].includes(feature.updateMode) || !['draft', 'public'].includes(feature.status) ||
+      !['manual', 'scheduled'].includes(feature.updateMode) || !['draft', 'public', 'ended'].includes(feature.status) ||
       !Array.isArray(feature.stores)) throw new Error('Invalid feature');
   if (!Number.isFinite(featureRadius(feature)) || featureRadius(feature) <= 0 || featureRadius(feature) > MAX_FEATURE_RADIUS_METERS)
     throw new Error('Invalid feature radius');
@@ -32,6 +32,9 @@ export function validateFeature(feature) {
     if (hasLat !== hasLng || (hasLat && (!Number.isFinite(store.lat) || !Number.isFinite(store.lng) ||
         Math.abs(store.lat) > 90 || Math.abs(store.lng) > 180))) throw new Error('Invalid coordinates');
   }
+  if (feature.status === 'ended' && (feature.updateMode !== 'manual' ||
+      !validDate(feature.validThrough) || !validDate(feature.checkedOn) || !safeUrl(feature.sourceUrl)))
+    throw new Error('Unverified ended feature');
   if (feature.status === 'public' && (!feature.stores.length || !safeUrl(feature.sourceUrl) ||
       !validDate(feature.checkedOn) || (feature.availability !== 'continuous' &&
       (!validDate(feature.validFrom) || !validDate(feature.validThrough) ||
@@ -42,6 +45,7 @@ export function validateFeature(feature) {
 export function visibleFeatures(features, today, preview = false) {
   return features.map(validateFeature).filter(feature =>
     (feature.status === 'public' && (feature.availability === 'continuous' || (feature.validFrom <= today && today <= feature.validThrough))) ||
+    (feature.status === 'ended' && feature.validThrough < today) ||
     (preview && feature.status === 'draft'));
 }
 function distance(origin, store) {
@@ -66,20 +70,24 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   const currentRadius = feature => selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
-    features = visibleFeatures(features, today(), preview);
-    if (!features.some(feature => feature.id === active?.id)) active = null;
-    root.hidden = !features.length;
+    const displayed = visibleFeatures(features, today(), preview);
+    if (!displayed.some(feature => feature.id === active?.id)) active = null;
+    root.hidden = !displayed.length;
     root.innerHTML = '';
-    if (!features.length) return;
+    if (!displayed.length) return;
     root.innerHTML = '<h2 class="selection-heading">レア優待店 特集</h2><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>';
-    for (const feature of features) {
+    for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
       button.className = 'feature-button';
       button.textContent = feature.shortName || feature.issuer.name;
       button.setAttribute('aria-label', feature.title);
       button.setAttribute('aria-controls', 'specialFeatureResults');
-      const bubble = createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern);
+      const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern);
+      if (feature.status === 'ended') {
+        bubble.className = 'voucher-deadline-bubble'; bubble.textContent = '今回分は終了';
+        bubble.setAttribute('aria-label', `利用期限終了：${feature.validThrough}`);
+      }
       if (bubble) bubble.classList.add('feature-deadline');
       button.setAttribute('aria-pressed', String(active?.id === feature.id));
       button.dataset.feature = feature.id;
@@ -90,7 +98,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const caption = document.createElement('p'); caption.className = 'feature-caption';
       const subtitle = document.createElement('span'); subtitle.textContent = feature.subtitle || '';
       const count = document.createElement('span');
-      count.textContent = feature.stores.length ? `${feature.stores.length}店舗紹介` : '店舗確認中';
+      count.textContent = feature.stores.length ? `${feature.status === 'ended' ? '前回' : ''}${feature.stores.length}店舗紹介` : '店舗確認中';
       caption.append(subtitle, count); item.append(button);
       if (bubble) item.append(bubble);
       item.append(caption);
@@ -105,6 +113,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         select.append(option);
       }
       select.value = String(currentRadius(feature));
+      select.disabled = feature.status === 'ended';
+      if (select.disabled) select.title = '今回分は利用終了のため距離検索を停止しています';
       select.addEventListener('change', () => {
         selectedRadii.set(feature.id, Number(select.value));
         if (active?.id === feature.id) {
@@ -116,19 +126,20 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     }
     root.querySelector('.feature-results').id = 'specialFeatureResults';
     if (!active) return;
-    const origin = getOrigin(), stores = featureStores({...active, radiusMeters:currentRadius(active)}, origin);
+    const ended = active.status === 'ended';
+    const origin = ended ? null : getOrigin(), stores = featureStores({...active, radiusMeters:currentRadius(active)}, origin);
     const output = root.querySelector('.feature-results');
     const label = getCenterLabel();
-    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
+    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${ended ? '前回の対象店舗（利用終了）' : origin ? `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
     if (origin && !stores.length && active.stores.length) output.innerHTML += '<p class="feature-note">この範囲に対象店舗はありません。別の場所を指定してお探しください。</p>';
     if (active.status === 'public') output.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
     const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
-    output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
+    if (!ended) output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
     for (const store of stores) {
       const card = document.createElement('article'); card.className = 'card feature-card';
       const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + ' ' + store.address)}`;
       const sourceUrl = safeUrl(store.sourceUrl || active.sourceUrl);
-      card.innerHTML = `<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${store.distance == null ? '距離未算出' : `${Math.round(store.distance / 1000).toLocaleString('ja-JP')}km・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
+      card.innerHTML = `<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${ended ? '前回の対象店舗（今回分は利用終了）' : store.distance == null ? '距離未算出' : `${Math.round(store.distance / 1000).toLocaleString('ja-JP')}km・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
       output.append(card);
     }
   };

@@ -4,7 +4,8 @@ import {readFileSync} from 'node:fs';
 import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions, loadFeatureData} from '../special-features.js';
 import {nearestDeadline, voucherEntriesFromLedger} from '../expiry.js';
 
-const draft = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
+const ended = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
+const draft = {...ended, status:'draft'};
 const live = () => ({...draft, status:'public', sourceUrl:'https://example.com/official',
   checkedOn:'2026-07-01', validFrom:'2026-07-01', validThrough:'2026-09-30',
   stores:[{...draft.stores[0], verified:true, lat:35.71, lng:139.80}]});
@@ -94,4 +95,14 @@ test('feature deadlines connect to the editable ledger and ignore booking or unc
   const deadline = nearestDeadline(entries,'balnibarbi',new Date('2026-10-07T03:00:00Z'));
   assert.equal(deadline.date,'2026-11-30');
   assert.equal(deadline.days,54);
+});
+
+test('ended Kyoritsu feature remains visible with its 13 historical stores, while drafts remain hidden', () => {
+  validateFeature(ended);
+  assert.equal(ended.status, 'ended');
+  assert.equal(visibleFeatures([ended], '2026-10-07').length, 1);
+  assert.equal(visibleFeatures([ended], '2026-09-30').length, 0);
+  assert.equal(ended.stores.length, 13);
+  assert.throws(() => validateFeature({...ended, validThrough:null}));
+  assert.throws(() => validateFeature({...ended, sourceUrl:null}));
 });

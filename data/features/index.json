@@ -9,14 +9,14 @@
         "code": "9616",
         "name": "共立メンテナンス"
       },
-      "status": "draft",
+      "status": "ended",
       "updateMode": "manual",
       "sourceUrl": "https://www.kyoritsugroup.co.jp/ir/stock/benefits/",
       "sourceDocument": "lunchken.pdf",
       "checkedOn": "2026-10-07",
       "validFrom": null,
       "validThrough": "2026-09-30",
-      "description": "第47期の株主限定ランチ券は2026年9月30日で利用終了。次回の公式案内を確認してから公開します。",
+      "description": "第47期の株主限定ランチ券は2026年9月30日で利用終了しました。以下は前回の対象13店舗です。次回の対象店舗・利用期間は公式案内を確認して更新します。",
       "stores": [
         {
           "id": "kyoritsu-lunch-01",

@@ -900,7 +900,7 @@ h1 span{
 .history-meta span{overflow-wrap:anywhere}
 
 /* Brand search and private, browser-only notes. */
-.special-features{padding:16px 0;border-top:1px solid var(--line)}
+.special-features>.selection-heading{margin:0}
 .special-features[hidden]{display:none}
 .feature-note{font-size:12px;color:var(--muted);line-height:1.7}
 .feature-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px 6px;margin-top:15px;align-items:start}
@@ -912,6 +912,7 @@ h1 span{
 .feature-button[aria-pressed="true"]{background:var(--accent-soft,#fff4e8)}
 .feature-button:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 .feature-results{display:grid;gap:10px;margin-top:12px}
+.feature-results:empty{display:none}
 .feature-conditions{font-size:13px;line-height:1.7;white-space:pre-line}
 .feature-card .store-name{font-weight:400}
 .brand-controls{display:grid;gap:8px;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
