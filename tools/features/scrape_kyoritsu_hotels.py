@@ -77,7 +77,7 @@ class Document(HTMLParser):
 def fetch(url):
     for attempt in range(3):
         try:
-            with urlopen(Request(url, headers={'User-Agent': 'YutaiMap/1.0 (monthly official hotel directory check)'}), timeout=30) as response:
+            with urlopen(Request(url, headers={'User-Agent': 'YutaiMap/1.0 (monthly official hotel directory check)', 'Accept-Language':'ja-JP,ja;q=0.9'}), timeout=30) as response:
                 payload = response.read()
                 if payload.startswith(b'\x1f\x8b'):
                     payload = gzip.decompress(payload)

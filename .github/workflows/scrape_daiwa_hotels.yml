@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - tools/features/scrape_daiwa_hotels.py
+      - tools/features/scrape_kyoritsu_hotels.py
       - data/features/daiwa-hotel-coordinates.json
       - data/features/daiwa-hotel-policy.json
       - tests/test_daiwa_hotels.py
