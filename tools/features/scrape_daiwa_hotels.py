@@ -34,7 +34,7 @@ def verify_policy(document, release_digest):
 
 
 def domestic(address):
-    return bool(re.match(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + '|大阪市)', address))
+    return bool(re.match(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + '|大阪市|京都市)', address))
 
 
 def parse_roy(document, today):
@@ -97,7 +97,7 @@ def parse_lagent(document, today):
 def address_from_detail(document):
     doc = Document(document)
     for node in doc.root.find('address') + doc.root.find('p') + [doc.root]:
-        match = re.search(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + r'|大阪市)[^〒]{1,150}', node.text())
+        match = re.search(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + r'|大阪市|京都市)[^〒]{1,150}', node.text())
         if match:
             address = re.split(r'【|TEL|電話|FAX', match.group())[0].strip()
             return address
@@ -107,11 +107,17 @@ def address_from_detail(document):
 def verify_hotel(hotel, detail_fetch, supplements, today):
     time.sleep(.35)
     document = detail_fetch(hotel['sourceUrl'])
+    access_document = None
     if 'address' not in hotel:
         try:
             hotel['address'] = address_from_detail(document)
-        except ValueError as error:
-            raise ValueError('Missing official address: '+hotel['sourceUrl']) from error
+        except ValueError:
+            access_document = detail_fetch(hotel['sourceUrl']+'access/')
+            try:
+                hotel['address'] = address_from_detail(access_document)
+                hotel['addressSourceUrl'] = hotel['sourceUrl']+'access/'
+            except ValueError as error:
+                raise ValueError('Missing official address: '+hotel['sourceUrl']) from error
     if not domestic(hotel['address']):
         raise ValueError('Unverified domestic address')
     extra = supplements.get(hotel['id'])
@@ -123,7 +129,7 @@ def verify_hotel(hotel, detail_fetch, supplements, today):
             coords = parse_coordinates(document)
         except ValueError:
             try:
-                coords = parse_coordinates(detail_fetch(hotel['sourceUrl']+'access/'))
+                coords = parse_coordinates(access_document if access_document is not None else detail_fetch(hotel['sourceUrl']+'access/'))
             except Exception:
                 if matched:
                     coords = {k:v for k,v in extra.items() if k not in {'name','address','preferSupplement'}}

@@ -17,6 +17,15 @@ class DaiwaTests(unittest.TestCase):
         self.assertEqual(address,'〒554-0031 大阪市此花区桜島1-1-57')
         self.assertTrue(s.domestic(address))
 
+    def test_translated_homepage_uses_japanese_access_address(self):
+        hotel={'id':'lagent-kyotonijo','name':'ラ・ジェント・ホテル京都二条','sourceUrl':'https://lagent.jp/kyotonijo/'}
+        def fetch(url):
+            return '<p>〒602-8156 京都市上京区聚楽町 863-52 TEL : 00</p>'+MAP if url.endswith('access/') else 'Kyoto, Japan'
+        with patch.object(s.time,'sleep'):
+            result=s.verify_hotel(hotel,fetch,{},TODAY)
+        self.assertEqual(result['address'],'〒602-8156 京都市上京区聚楽町 863-52')
+        self.assertEqual(result['lat'],35.61)
+
     def test_policy_changes_fail_closed(self):
         s.verify_policy(POLICY,s.RELEASE_SHA256)
         for policy,digest in [(POLICY,'changed'),(POLICY.replace('ご利用対象外',''),'')]:
