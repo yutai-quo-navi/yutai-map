@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-06",
+  "updated": "2026-10-08",
   "source": "期限DB（Google Sheets）からの確認済みデータ",
   "entries": [
     {
@@ -129,6 +129,16 @@
       "name": "物語コーポレーション",
       "benefit": "株主様ご優待券",
       "date": "2027-09-30",
+      "status": "confirmed",
+      "issue": "対象発行回未登録"
+    },
+    {
+      "id": "3418-2026-09-seed",
+      "issuer": "balnibarbi",
+      "code": "3418",
+      "name": "バルニバービ",
+      "benefit": "株主優待",
+      "date": "2026-09-30",
       "status": "confirmed",
       "issue": "対象発行回未登録"
     }
