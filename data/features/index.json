@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "features": [
+    {
+      "id": "kyoritsu-lunch",
+      "title": "共立メンテナンス・株主限定ランチ",
+      "issuer": {
+        "id": "kyoritsu",
+        "code": "9616",
+        "name": "共立メンテナンス"
+      },
+      "status": "draft",
+      "updateMode": "manual",
+      "sourceUrl": null,
+      "sourceDocument": "lunchken.pdf",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "description": "株主様特別ランチメニュー。資料には9月30日までと記載されていますが対象年は未確認です。",
+      "stores": [
+        {
+          "id": "kyoritsu-lunch-01",
+          "name": "季の庭 浅草店",
+          "address": "東京都台東区浅草2-7-26 御宿 野乃浅草別邸1F",
+          "conditions": "全日11:00〜16:00（L.O.15:30）、年中無休。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-02",
+          "name": "季の庭 ラビスタ東京ベイ豊洲店",
+          "address": "東京都江東区豊洲6-4-40 ラビスタ東京ベイ2F",
+          "conditions": "月〜金11:30〜14:00（L.O.13:30）。日曜・ホテル休館日（不定期）休み。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-03",
+          "name": "季の庭 銀座店",
+          "address": "東京都中央区銀座8-5-21 かわばたビル新館1F",
+          "conditions": "月〜金11:30〜13:30（L.O.13:00）。土曜・日曜・祝日休み。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-04",
+          "name": "季の庭 神田店",
+          "address": "東京都千代田区神田淡路町1-11-3 淡路町MHアネックスビル1F",
+          "conditions": "月〜金11:30〜14:00（L.O.13:30）。土曜・日曜・祝日休み。7〜8月と9月でメニューが異なる。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-05",
+          "name": "お酒 小料理 小鈴",
+          "address": "東京都千代田区神田淡路町1-11-8 淡路町UKビル1F",
+          "conditions": "月〜金11:30〜13:00（L.O.13:30、資料の表記どおり・要確認）。土曜・日曜・祝日休み。7〜8月と9月でメニューが異なる。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-06",
+          "name": "いろは歌 花やしき通り店",
+          "address": "東京都台東区浅草2-7-22",
+          "conditions": "全日11:00〜16:00（L.O.15:30）、年中無休。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-07",
+          "name": "CAFÉ OASIS 中野坂上店",
+          "address": "東京都中野区本町2-48-13 1F",
+          "conditions": "10:00〜14:30（L.O.14:00）、年中無休。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-08",
+          "name": "CAFÉ OASIS 神戸元町店",
+          "address": "兵庫県神戸市中央区栄町通2-5-1 ドーミーイン神戸元町1F",
+          "conditions": "11:30〜14:30（L.O.14:00）。ドーミーイン神戸元町店休館日休み。開始時刻は資料の訂正注記を反映。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-09",
+          "name": "羽衣茶寮 浅草本店",
+          "address": "東京都台東区浅草2-7-26 御宿 野乃浅草別邸B1F",
+          "conditions": "11:30〜16:00（L.O.15:30）。御宿 野乃浅草別邸休館日休み。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-10",
+          "name": "トラットリア・イタリア 文京店",
+          "address": "東京都文京区本駒込2-28-10 文京グリーンコート1F",
+          "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-11",
+          "name": "トラットリア・イタリア 上野店",
+          "address": "東京都台東区上野4-9-6 ナガフジビル本館4F",
+          "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-12",
+          "name": "トラットリア・イタリア 目黒店",
+          "address": "東京都品川区上大崎2-24-1",
+          "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        },
+        {
+          "id": "kyoritsu-lunch-13",
+          "name": "ピッツェリア ポンテチェントロ 佃店",
+          "address": "東京都中央区佃2-1-6 リバーシティM-SQUARE1F",
+          "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
+          "lat": null,
+          "lng": null,
+          "verified": false
+        }
+      ]
+    }
+  ]
+}

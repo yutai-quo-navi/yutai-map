@@ -13,6 +13,12 @@ import edit_expiry
 
 
 class ExpiryTests(unittest.TestCase):
+    def test_manual_feature_issuer_can_use_shared_expiry_ledger(self):
+        rows = self.load([self.row(code='9616', issuer_id='kyoritsu', company_name='共立メンテナンス')])
+        self.assertEqual(rows[0]['issuer_id'], 'kyoritsu')
+        with self.assertRaises(ValueError):
+            self.load([self.row(code='9615', issuer_id='kyoritsu')])
+
     def row(self, **changes):
         r = dict.fromkeys(COLUMNS, '')
         r.update(id='skylark-2026-a', code='3197', company_name='すかいらーく', benefit_name='食事券',

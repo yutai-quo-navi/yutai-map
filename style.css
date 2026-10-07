@@ -900,6 +900,16 @@ h1 span{
 .history-meta span{overflow-wrap:anywhere}
 
 /* Brand search and private, browser-only notes. */
+.special-features{padding:16px 0;border-top:1px solid var(--line)}
+.special-features[hidden]{display:none}
+.feature-note{font-size:12px;color:var(--muted);line-height:1.7}
+.feature-buttons{display:flex;flex-wrap:wrap;gap:8px}
+.feature-button{position:relative;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:18px;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer}
+.feature-button[aria-pressed="true"]{background:var(--accent-soft,#fff4e8)}
+.feature-button:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+.feature-results{display:grid;gap:10px;margin-top:12px}
+.feature-conditions{font-size:13px;line-height:1.7;white-space:pre-line}
+.feature-card .store-name{font-weight:400}
 .brand-controls{display:grid;gap:8px;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
 .brand-controls label{font-size:12px;font-weight:700}
 .brand-controls input,.brand-controls select,.memo-form input,.memo-form select{width:100%;min-width:0;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;font-size:14px;box-sizing:border-box}

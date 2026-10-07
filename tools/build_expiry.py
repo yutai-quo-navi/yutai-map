@@ -39,6 +39,14 @@ def month(value):
 
 def load_master(path, manifest_path=ROOT / 'data/issuers/index.json', allow_legacy=False):
     issuers = {v['id']: v for v in json.loads(manifest_path.read_text())['issuers']}
+    # Manual features share voucher deadlines, but never join store scraping/sync.
+    feature_path = ROOT / 'data/features/index.json'
+    if feature_path.exists():
+        for feature in json.loads(feature_path.read_text())['features']:
+            issuer = feature['issuer']
+            if issuer['id'] in issuers and issuers[issuer['id']]['code'] != issuer['code']:
+                raise ValueError('特集の会社IDと証券コードが不一致')
+            issuers.setdefault(issuer['id'], issuer)
     rows, ids, keys = [], set(), set()
     with Path(path).open(encoding='utf-8-sig', newline='') as handle:
         reader = csv.DictReader(handle)
