@@ -21,7 +21,7 @@ test('manual feature stays hidden after expiry; scheduled feature needs a verifi
   assert.equal(visibleFeatures([draft, remote], '2026-10-07', true).length, 2);
   const dining = data.features.filter(feature => !feature.section || feature.section === 'dining');
   const loaded = await loadFeatureData(dining, async () => new Response(JSON.stringify({id:remote.id, stores:remote.stores, checkedOn:remote.checkedOn})));
-  assert.equal(loaded.length, 2);
+  assert.equal(loaded.length, 1);
   const warned = console.warn; console.warn = () => {};
   try {
     assert.equal((await loadFeatureData(data.features, async () => new Response('', {status:503}))).length, 1);

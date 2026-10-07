@@ -264,34 +264,6 @@
       "displayLast": true
     },
     {
-      "id": "balnibarbi-dining",
-      "title": "バルニバービ・株主優待のお店",
-      "shortName": "バルニバービ",
-      "subtitle": "お食事優待",
-      "issuer": {
-        "id": "balnibarbi",
-        "code": "3418",
-        "name": "バルニバービ"
-      },
-      "status": "public",
-      "updateMode": "scheduled",
-      "radiusMeters": "all",
-      "sourceUrl": "https://ir.balnibarbi.com/shareholders/all_shareholders.php",
-      "checkedOn": null,
-      "validFrom": null,
-      "validThrough": null,
-      "description": "公式に株主優待対応と明記され、住所・位置を確認できた営業中の店舗・施設を紹介しています。利用条件は各施設の公式情報と券面をご確認ください。",
-      "stores": [],
-      "radiusOptionsMeters": [
-        "all",
-        100000,
-        500000,
-        1000000
-      ],
-      "availability": "continuous",
-      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/balnibarbi-dining"
-    },
-    {
       "section": "hotel",
       "issuer": {
         "id": "kyoritsu",

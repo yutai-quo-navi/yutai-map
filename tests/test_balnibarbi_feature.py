@@ -58,6 +58,23 @@ class BalnibarbiFeatureTests(unittest.TestCase):
         self.assertTrue(scraper.inactive('2026年12月1日オープン', TODAY))
         self.assertFalse(scraper.inactive('2026年6月18日オープン', TODAY))
 
+    def test_normal_dining_sync_excludes_hotels_and_preserves_other_issuers(self):
+        snapshot = scraper.build_snapshot(*self.fixture(), today=TODAY)
+        snapshot['stores'] += [{**snapshot['stores'][0], 'id':kind+'-extra'} for kind in ['hotels','facilities','shops']]
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'snapshot.sql'
+            scraper.write_sql(snapshot, output)
+            db = sqlite3.connect(':memory:')
+            db.executescript(output.read_text())
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM stores WHERE issuer_id='balnibarbi'").fetchone()[0], 101)
+            db.execute("INSERT INTO stores (issuer_id,store_id,name,lat,lng,updated_at) VALUES ('royal','keep','keep',35,139,'today')")
+            snapshot['stores'] = snapshot['stores'][1:]
+            scraper.write_sql(snapshot, output)
+            db.executescript(output.read_text())
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM stores WHERE issuer_id='balnibarbi'").fetchone()[0], 100)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM stores WHERE issuer_id='royal'").fetchone()[0], 1)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM stores WHERE store_id LIKE 'hotels-%' OR store_id LIKE 'facilities-%'").fetchone()[0], 0)
+
     def test_upsert_sql_handles_apostrophe_and_replaces_only_feature(self):
         snapshot = scraper.build_snapshot(*self.fixture(), today=TODAY)
         with tempfile.TemporaryDirectory() as directory:

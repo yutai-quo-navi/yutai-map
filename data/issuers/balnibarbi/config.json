@@ -1,0 +1,22 @@
+{
+  "id": "balnibarbi",
+  "code": "3418",
+  "name": "バルニバービ",
+  "fullName": "バルニバービ",
+  "status": "public",
+  "sourceUrl": "https://ir.balnibarbi.com/shareholders/all_shareholders.php",
+  "storeSearchUrl": "https://brands.balnibarbi.com/brands/all/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式の株主優待対応店舗（飲食店・食品販売店）",
+  "note": "宿泊施設・運動施設は外食検索の対象外。",
+  "aliases": [
+    "バルニバービ"
+  ],
+  "excludedNames": [],
+  "categories": {},
+  "searchNames": [
+    "バルニバービ"
+  ],
+  "verified": "2026-10-08",
+  "locationMode": "official_coordinates"
+}

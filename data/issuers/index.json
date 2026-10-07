@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-06",
+  "updated": "2026-10-08",
   "issuers": [
     {
       "id": "skylark",
@@ -78,6 +78,13 @@
       "name": "ロイヤルホールディングス",
       "status": "public",
       "config": "./data/issuers/royal/config.json"
+    },
+    {
+      "id": "balnibarbi",
+      "code": "3418",
+      "name": "バルニバービ",
+      "status": "public",
+      "config": "./data/issuers/balnibarbi/config.json"
     }
   ]
 }

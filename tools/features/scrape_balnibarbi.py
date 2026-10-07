@@ -145,6 +145,19 @@ def write_sql(snapshot, output):
     quote = lambda value: "'" + value.replace("'", "''") + "'"
     sql = 'CREATE TABLE IF NOT EXISTS feature_snapshots (feature_id TEXT PRIMARY KEY, payload_json TEXT NOT NULL, checked_on TEXT NOT NULL);\n'
     sql += 'INSERT INTO feature_snapshots (feature_id,payload_json,checked_on) VALUES (' + ','.join(map(quote, [FEATURE_ID, payload, snapshot['checkedOn']])) + ') ON CONFLICT(feature_id) DO UPDATE SET payload_json=excluded.payload_json, checked_on=excluded.checked_on;\n'
+    # Publish only dining/food retail locations to the normal distance search.
+    # Upsert before removing stale rows so searches never see an empty issuer.
+    sql += (ROOT / 'cloudflare/schema.sql').read_text().split('CREATE TABLE IF NOT EXISTS reference_stores')[0]
+    eligible = "json_extract(value,'$.id') LIKE 'restaurants-%' OR json_extract(value,'$.id') LIKE 'shops-%'"
+    source = "json_each((SELECT payload_json FROM feature_snapshots WHERE feature_id='balnibarbi-dining'),'$.stores')"
+    sql += f"""INSERT INTO stores (issuer_id,store_id,name,address,brand_name,category,lat,lng,official_url,updated_at)
+SELECT 'balnibarbi',json_extract(value,'$.id'),json_extract(value,'$.name'),json_extract(value,'$.address'),json_extract(value,'$.name'),
+CASE WHEN json_extract(value,'$.id') LIKE 'shops-%' THEN 'cafe' ELSE 'restaurant' END,
+json_extract(value,'$.lat'),json_extract(value,'$.lng'),json_extract(value,'$.sourceUrl'),{quote(snapshot['checkedOn'])}
+FROM {source} WHERE {eligible}
+ON CONFLICT(issuer_id,store_id) DO UPDATE SET name=excluded.name,address=excluded.address,brand_name=excluded.brand_name,category=excluded.category,lat=excluded.lat,lng=excluded.lng,official_url=excluded.official_url,updated_at=excluded.updated_at;
+DELETE FROM stores WHERE issuer_id='balnibarbi' AND store_id NOT IN (SELECT json_extract(value,'$.id') FROM {source} WHERE {eligible});
+"""
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(sql, encoding='utf-8')
 
