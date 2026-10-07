@@ -70,8 +70,8 @@ test('100km feature keeps nearby stores without inheriting 3000km or normal radi
 });
 test('each feature has its own dropdown choices and validates its default', () => {
   const features = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features;
-  assert.deepEqual(featureRadiusOptions(features[0]), [500_000,1_000_000,4_000_000]);
-  assert.deepEqual(featureRadiusOptions(features[1]), [100_000,200_000,300_000]);
+  assert.deepEqual(featureRadiusOptions(features[0]), ['all',500_000,1_000_000,1_500_000]);
+  assert.deepEqual(featureRadiusOptions(features[1]), ['all',100_000,500_000,1_000_000]);
   assert.throws(()=>validateFeature({...features[1],radiusMeters:400_000}));
   assert.throws(()=>validateFeature({...features[1],radiusOptionsMeters:[100_000,100_000]}));
 });
@@ -123,4 +123,20 @@ test('all 13 historical lunch locations calculate distance even after voucher ex
   assert.equal(all.length,13);
   assert.ok(all.every(store=>store.distance>10000));
   assert.equal(all.at(-1).id,'kyoritsu-lunch-08');
+});
+
+ test('nationwide default includes every store beyond 4000km and still sorts by distance', () => {
+  const config = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features;
+  assert.ok(config.every(feature => feature.radiusMeters === 'all'));
+  const feature = {...draft, stores:[
+    {...draft.stores[0], id:'far', lat:-33.87, lng:151.21},
+    {...draft.stores[0], id:'near', lat:43.06, lng:141.35},
+    {...draft.stores[0], id:'unknown', lat:null, lng:null}
+  ]};
+  const result = featureStores(feature, {lat:43.06,lng:141.35});
+  assert.deepEqual(result.map(store => store.id), ['near','far','unknown']);
+  assert.ok(result[1].distance > 4000000);
+  assert.equal(featureStores(feature, null).length, 3);
+  assert.deepEqual(featureStores({...feature,radiusMeters:100000}, {lat:43.06,lng:141.35}).map(store=>store.id), ['near']);
+  assert.throws(() => validateFeature({...draft, radiusMeters:'anything'}));
 });
