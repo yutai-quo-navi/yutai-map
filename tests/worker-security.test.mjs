@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import worker from '../cloudflare/worker/src/index.js';
 
 const allowed='https://yutai-quo-navi.github.io';
-const request=(path,options={})=>Object.assign(new Request('https://api.example.com'+path,{headers:{Origin:allowed,'CF-Connecting-IP':'192.0.2.10'},...options}),{cf:{country:'JP'}});
+const request=(path,options={})=>new Request('https://api.example.com'+path,{headers:{Origin:allowed,'CF-Connecting-IP':'192.0.2.10'},...options});
 const permit={limit:async()=>({success:true})};
 const protectedPaths=['/health','/v1/brands?issuers=colowide','/v1/features/balnibarbi-dining','/v1/stores/search?lat=35.68&lng=139.76&issuers=colowide'];
 
@@ -83,22 +83,4 @@ test('search limiter failure also stops DB reads without an unhandled exception'
     assert.equal(response.status,503);
     assert.equal((await response.json()).error,'rate_limit_unavailable');
   }finally{globalThis.caches=old;}
-});
-
-test('only trusted Japanese country metadata admits access; foreign, Tor and unknown requests stop before any limiter or DB read',async()=>{
-  const env={API_RATE_LIMITER:{limit(){assert.fail('Limiter must not be reached');}},DB:{prepare(){assert.fail('DB must not be reached');}}};
-  for(const country of ['US','CN','DE','XX','T1',null,undefined]){
-    for(const path of protectedPaths){
-      const req=request(path,{headers:{'CF-IPCountry':'JP','Origin':allowed}});
-      req.cf={country};
-      const response=await worker.fetch(req,env);
-      assert.equal(response.status,403);
-      assert.equal((await response.json()).error,'country_not_allowed');
-      assert.equal(response.headers.get('Cache-Control'),'no-store');
-    }
-  }
-  const req=request('/health');delete req.cf;
-  assert.equal((await worker.fetch(req,env)).status,403);
-  const preflight=request('/health',{method:'OPTIONS'});preflight.cf={country:'US'};
-  assert.equal((await worker.fetch(preflight,env)).status,403);
 });

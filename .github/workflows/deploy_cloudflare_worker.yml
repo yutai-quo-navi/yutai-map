@@ -7,7 +7,6 @@ on:
     paths:
       - "cloudflare/worker/**"
       - "cloudflare/wrangler.toml"
-      - "tools/verify_worker.py"
       - ".github/workflows/deploy_cloudflare_worker.yml"
   workflow_dispatch:
 
@@ -42,7 +41,23 @@ jobs:
       - name: Deploy Worker
         run: npx wrangler deploy --config cloudflare/wrangler.toml
 
-      - name: Verify public API or country denial and authenticated D1
+      - name: Verify Worker health
         run: |
-          python tools/verify_worker.py
-          python tools/verify_worker.py --issuer colowide
+          for attempt in 1 2 3 4 5; do
+            BODY="$(curl -fsS https://yutai-map-api.yutaisamurai.workers.dev/health || true)"
+            echo "$BODY"
+            if printf '%s' "$BODY" | python -c 'import json,sys; d=json.load(sys.stdin); raise SystemExit(0 if d.get("ok") is True and int(d.get("stores",0)) > 0 and int(d.get("referenceStores",0)) > 0 else 1)'; then
+              break
+            fi
+            if [ "$attempt" = "5" ]; then
+              echo "Worker health check failed"
+              exit 1
+            fi
+            sleep 2
+          done
+
+      - name: Verify Colowide Worker search
+        run: |
+          BODY="$(curl -fsS 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search?lat=35.6812&lng=139.7671&radius=10000&issuers=colowide')"
+          echo "$BODY"
+          printf '%s' "$BODY" | python -c 'import json,sys; d=json.load(sys.stdin); raise SystemExit(0 if int(d.get("count",0)) > 0 else 1)'

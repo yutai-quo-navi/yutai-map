@@ -67,8 +67,23 @@ jobs:
       - name: Sync issuer to private D1
         run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file="cloudflare/generated/sync_matsuya.sql"
 
-      - name: Verify public API or country denial and authenticated D1
-        run: python tools/verify_worker.py --issuer matsuya
+      - name: Verify eligible store search
+        run: |
+          python - <<'PY'
+          import json,urllib.parse,subprocess
+          base='https://yutai-map-api.yutaisamurai.workers.dev'
+          for lat,lng in [(35.6812,139.7671),(43.0618,141.3545)]:
+              q=urllib.parse.urlencode({'lat':lat,'lng':lng,'radius':10000,'issuers':'matsuya'})
+              data=json.loads(subprocess.check_output(['curl','-fsS','--retry','2','--max-time','60',base+'/v1/stores/search?'+q],text=True))
+              assert data['count']>0, 'No eligible Matsuya stores returned'
+              assert all(s['issuer_id']=='matsuya' for s in data['results'])
+              print('Verified Matsuya search:',data['count'],'near',lat,lng)
+          brands=json.loads(subprocess.check_output(['curl','-fsS','--retry','2','--max-time','60',base+'/v1/brands?issuers=matsuya'],text=True))
+          assert len(brands['brands'])>=2
+          assert any(b['name']=='松屋' for b in brands['brands'])
+          assert any(b['name']=='松のや' for b in brands['brands'])
+          print('Eligible brand counts:',[(b['name'],b['count']) for b in brands['brands']])
+          PY
 
       - name: Merge public update history
         run: python tools/build_updates.py

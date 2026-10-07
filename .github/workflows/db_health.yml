@@ -60,7 +60,7 @@ jobs:
         run: python tools/check_d1_health.py /tmp/d1-health.json
 
       - name: Verify Worker health
-        run: python tools/verify_worker.py
+        run: curl -fsS https://yutai-map-api.yutaisamurai.workers.dev/health
 
       - name: Notify health failure
         if: failure()

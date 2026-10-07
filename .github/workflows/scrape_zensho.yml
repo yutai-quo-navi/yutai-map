@@ -92,8 +92,10 @@ jobs:
           assert raw == expected, (expected,raw)
           PY
 
-      - name: Verify public API or country denial and authenticated D1
-        run: python tools/verify_worker.py --issuer zensho
+      - name: Verify Worker search
+        run: |
+          BODY="$(curl -fsS 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search?lat=35.6812&lng=139.7671&radius=10000&issuers=zensho')"
+          printf '%s' "$BODY" | python -c 'import json,sys; d=json.load(sys.stdin); print("Worker results:",d.get("count")); raise SystemExit(0 if int(d.get("count",0)) > 0 else 1)'
 
       - name: Merge public update history
         run: python tools/build_updates.py

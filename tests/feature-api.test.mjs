@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/worker/src/index.js';
 
-const request = path => Object.assign(new Request('https://api.example.com'+path, {headers:{Origin:'https://example.com'}}),{cf:{country:'JP'}});
+const request = path => new Request('https://api.example.com'+path, {headers:{Origin:'https://example.com'}});
 test('feature endpoint returns snapshot with CORS and cache headers, independently of normal radius', async () => {
   const snapshot = {id:'balnibarbi-dining',checkedOn:'2026-10-07',stores:[{id:'remote'}]};
   const env = {API_RATE_LIMITER:{limit:async()=>({success:true})},ALLOWED_ORIGIN:'https://example.com',DB:{prepare(sql) {
