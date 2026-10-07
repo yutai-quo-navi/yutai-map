@@ -68,14 +68,14 @@ export function featureDistanceLabel(meters) {
 }
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
-export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, preview = false, section = 'dining', catalog = null}) {
+export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
   if (!root) return {refresh() {}};
   let active = null, features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
   const selectedRadii = new Map();
   const unit = section === 'hotel' ? '施設' : '店舗';
   const resultsId = `${root.id || 'specialFeature'}Results`;
   const heading = section === 'hotel' ? '宿泊・ホテル優待 特集' : 'レア優待店 特集';
-  const currentRadius = feature => selectedRadii.get(feature.id) ?? featureRadius(feature);
+  const currentRadius = feature => getRadius ? getRadius() : selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
     const displayed = visibleFeatures(features, today(), preview);
@@ -117,24 +117,26 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       caption.append(subtitle, count); item.append(button);
       if (bubble) item.append(bubble);
       item.append(caption);
-      const radiusLabel = document.createElement('label'); radiusLabel.className = 'feature-radius-label';
-      radiusLabel.textContent = '検索範囲';
-      const select = document.createElement('select'); select.className = 'feature-radius';
-      select.dataset.featureRadius = feature.id;
-      select.setAttribute('aria-label', `${feature.shortName || feature.issuer.name}の検索範囲`);
-      for (const radius of featureRadiusOptions(feature)) {
-        const option = document.createElement('option'); option.value = String(radius);
-        option.textContent = radius === 'all' ? `全国・全${unit}` : `${(radius/1000).toLocaleString('ja-JP')} km`;
-        select.append(option);
-      }
-      select.value = String(currentRadius(feature));
-      select.addEventListener('change', () => {
-        selectedRadii.set(feature.id, select.value === 'all' ? 'all' : Number(select.value));
-        if (active?.id === feature.id) {
-          render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
+      if (!getRadius) {
+        const radiusLabel = document.createElement('label'); radiusLabel.className = 'feature-radius-label';
+        radiusLabel.textContent = '検索範囲';
+        const select = document.createElement('select'); select.className = 'feature-radius';
+        select.dataset.featureRadius = feature.id;
+        select.setAttribute('aria-label', `${feature.shortName || feature.issuer.name}の検索範囲`);
+        for (const radius of featureRadiusOptions(feature)) {
+          const option = document.createElement('option'); option.value = String(radius);
+          option.textContent = radius === 'all' ? `全国・全${unit}` : `${(radius/1000).toLocaleString('ja-JP')} km`;
+          select.append(option);
         }
-      });
-      radiusLabel.append(select); item.append(radiusLabel);
+        select.value = String(currentRadius(feature));
+        select.addEventListener('change', () => {
+          selectedRadii.set(feature.id, select.value === 'all' ? 'all' : Number(select.value));
+          if (active?.id === feature.id) {
+            render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
+          }
+        });
+        radiusLabel.append(select); item.append(radiusLabel);
+      }
       root.querySelector('.feature-buttons').append(item);
     }
     root.querySelector('.feature-results').id = resultsId;

@@ -1,6 +1,7 @@
 import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-benefit-tabs';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261007-benefit-tabs';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-shared-radius';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261008-shared-radius';
+import {initSearchRadius} from './search-radius.js?v=20261008-shared-radius';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -84,12 +85,19 @@ const savedFavorites = readJSON('yutai-favorites', []);
 let favorites = Array.isArray(savedFavorites) ? savedFavorites.filter(x => x && typeof x.key==='string' && typeof x.name==='string').slice(0,500) : [];
 const savedMemos = readJSON('yutai-memos', []);
 let memos = Array.isArray(savedMemos) ? savedMemos.filter(x => x && typeof x.id==='string' && typeof x.issuer==='string' && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,200) : [];
-els.radius.value = readSetting('yutai-radius') || '3000';
+let activeBenefit = 'dining';
+const searchRadius = initSearchRadius(els.radius, {read: readSetting, write: writeSetting});
 
 init();
 
 async function init(){
-  initBenefitTabs();
+  initBenefitTabs({onChange(section) {
+    activeBenefit = section;
+    searchRadius.setSection(section);
+    els.results.closest('.results-section').hidden = section === 'hotel';
+    specialFeatures.refresh();
+    if (section === 'dining' && lastResults.length) renderFilteredResults(Number(els.radius.value));
+  }});
   try {
     const manifest = await fetch('./data/issuers/index.json', {cache:'no-store'}).then(r => r.json());
     const dev = new URLSearchParams(location.search).get('dev');
@@ -125,6 +133,7 @@ async function init(){
     ].map(([selector, section]) => initSpecialFeatures({
       root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
       getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin,
+      getRadius: () => searchRadius.value('hotel'),
       createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
       getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
       preview: dev === 'features' || dev === 'all'
@@ -146,8 +155,9 @@ async function init(){
     suggestTimer = setTimeout(loadPlaceSuggestions, 220);
   });
   els.radius.addEventListener('change', () => {
-    writeSetting('yutai-radius', els.radius.value);
-    if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+    searchRadius.remember();
+    if (activeBenefit === 'hotel') specialFeatures.refresh();
+    else if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
   });
   els.pickerButton.addEventListener('click', openCompanyPicker);
   qs('.issuer-selection').addEventListener('click', event => {
@@ -556,6 +566,11 @@ async function searchNearby(pos, centerLabel='現在地'){
   lastPosition = pos;
   lastCenterLabel = centerLabel;
   specialFeatures.refresh();
+  if (activeBenefit === 'hotel') {
+    els.locate.disabled = false;
+    setStatus(`${centerLabel}を検索地点にしました`);
+    return;
+  }
   const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
   const targets = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id) && (!brand || brand.issuer_id===c.id));
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }

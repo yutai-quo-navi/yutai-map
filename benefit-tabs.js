@@ -1,5 +1,5 @@
 // Panels stay mounted: switching categories never resets their selection or search state.
-export function initBenefitTabs() {
+export function initBenefitTabs({onChange = () => {}} = {}) {
   const root = document.getElementById('benefitSelection');
   const tabs = [...root.querySelectorAll('[role="tab"]:not(:disabled)')];
   const select = tab => {
@@ -9,6 +9,7 @@ export function initBenefitTabs() {
       item.tabIndex = active ? 0 : -1;
       document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
     }
+    onChange(tab.id === 'hotelTab' ? 'hotel' : 'dining');
   };
   for (const tab of tabs) {
     tab.addEventListener('click', () => select(tab));
