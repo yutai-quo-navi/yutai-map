@@ -1,0 +1,16 @@
+{
+  "checkedOn": "2026-10-08",
+  "sourceUrl": "https://www.daiwahouse.co.jp/ir/yutai/",
+  "releaseUrl": "https://www.daiwahouse.co.jp/about/release/house/pdf/release_20260213-3.pdf",
+  "releaseSha256": "7d19f09b4e07c26973cc39e066e349898f5c77bf3853ad54dc2d7668c3958967",
+  "excludedLagent": [
+    "hakodate-ekimae",
+    "sapporo-odori"
+  ],
+  "groups": [
+    "ダイワロイネットホテルズ",
+    "ラ・ジェント",
+    "ホテル日航大分 オアシスタワー"
+  ],
+  "reviewMode": "公式IR・2026年度しおり・2026年2月13日発表を手動確認。月次は対象ホテル一覧と住所・座標を確認。優待制度変更は別途手動確認。"
+}

@@ -137,9 +137,15 @@ def verify_hotel(hotel, detail_fetch, supplements, today):
             'eligibilitySourceUrl':RELEASE if hotel['id']=='nikko-oita' else IR}
 
 
-def build_snapshot(ir, roy, lagent, digest, detail_fetch=fetch, today=None, supplements=None):
+def build_snapshot(ir, roy, lagent, digest, detail_fetch=fetch, today=None, supplements=None, reviewed_policy=None):
     today = today or datetime.now(ZoneInfo('Asia/Tokyo')).date()
-    verify_policy(ir, digest)
+    if reviewed_policy is None:
+        verify_policy(ir, digest)
+    elif (reviewed_policy.get('sourceUrl') != IR or reviewed_policy.get('releaseUrl') != RELEASE
+          or reviewed_policy.get('releaseSha256') != RELEASE_SHA256
+          or set(reviewed_policy.get('excludedLagent', [])) != EXCLUDED_LAGENT
+          or reviewed_policy.get('checkedOn') != '2026-10-08'):
+        raise ValueError('Reviewed eligibility policy changed; manual review required')
     hotels = parse_roy(roy, today) + parse_lagent(lagent, today)
     hotels.append({'id':'nikko-oita','name':'ホテル日航大分 オアシスタワー',
                    'sourceUrl':'https://www.nikko-oita.oasistower.co.jp/',
@@ -156,10 +162,11 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT/'cloudflare/generated/sync_daiwa_hotels.sql')
     parser.add_argument('--previous-counts', type=Path)
     args = parser.parse_args()
-    with urlopen(Request(RELEASE, headers={'User-Agent':'Mozilla/5.0 (compatible; YutaiMap/1.0)', 'Accept':'application/pdf', 'Referer':IR}), timeout=30) as response:
-        digest = hashlib.sha256(response.read()).hexdigest()
+    # Eligibility was reviewed against the official IR, guide and release.
+    # Its host rejects CI downloads; monthly checks cover live hotel directories.
+    policy = json.loads((ROOT/'data/features/daiwa-hotel-policy.json').read_text())
     supplements = json.loads((ROOT/'data/features/daiwa-hotel-coordinates.json').read_text())
-    snapshot = build_snapshot(fetch(IR), fetch(ROY), fetch(LAGENT), digest, supplements=supplements)
+    snapshot = build_snapshot('', fetch(ROY), fetch(LAGENT), '', supplements=supplements, reviewed_policy=policy)
     if args.previous_counts:
         groups = json.loads(args.previous_counts.read_text())
         previous = {r['feature_id']:r['count'] for group in groups for r in group.get('results', [])}
