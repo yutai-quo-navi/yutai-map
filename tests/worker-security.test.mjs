@@ -5,7 +5,8 @@ import worker from '../cloudflare/worker/src/index.js';
 const allowed='https://yutai-quo-navi.github.io';
 const request=(path,options={})=>new Request('https://api.example.com'+path,{headers:{Origin:allowed,'CF-Connecting-IP':'192.0.2.10'},...options});
 const permit={limit:async()=>({success:true})};
-const protectedPaths=['/health','/v1/brands?issuers=colowide','/v1/features/balnibarbi-dining','/v1/stores/search?lat=35.68&lng=139.76&issuers=colowide'];
+const protectedPaths=['/health','/v1/brands?issuers=colowide','/v1/features/balnibarbi-dining','/v1/stores/search?lat=35.68&lng=139.76&issuers=colowide',
+  '/v1/features/kyoritsu-hotel-discount','/v1/features/kyoritsu-resort-plan'];
 
 test('every database endpoint stops a limited IP before any DB read',async()=>{
   for(const path of protectedPaths){

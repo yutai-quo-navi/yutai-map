@@ -290,6 +290,68 @@
       ],
       "availability": "continuous",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/balnibarbi-dining"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "kyoritsu",
+        "code": "9616",
+        "name": "共立メンテナンス"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.kyoritsugroup.co.jp/ir/stock/benefits/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "kyoritsu-hotel-discount",
+      "title": "共立メンテナンス・株主様ご優待割引電子チケット",
+      "shortName": "共立メンテ（割引券）",
+      "subtitle": "宿泊代の割引",
+      "voucherName": "株主様ご優待割引電子チケット",
+      "deadlineBenefitPattern": "ご優待割引",
+      "description": "共立リゾート・ドーミーイン・御宿 野乃・対象の提携ホテルを紹介。宿泊代への利用は現地払い・現地決済が必要です。事前決済は対象外。空室・料金は公式サイトでご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/kyoritsu-hotel-discount"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "kyoritsu",
+        "code": "9616",
+        "name": "共立メンテナンス"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.kyoritsugroup.co.jp/ir/stock/benefits/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "kyoritsu-resort-plan",
+      "title": "共立メンテナンス・株主様リゾートホテルご優待電子チケット",
+      "shortName": "共立メンテ（リゾート優待）",
+      "subtitle": "優待プランで宿泊",
+      "voucherName": "株主様リゾートホテルご優待電子チケット",
+      "deadlineBenefitPattern": "リゾートホテルご優待",
+      "description": "共立リゾートの優待プラン対象ホテルを紹介。専用サイトまたは株主様専用電話から事前予約が必要です。ドーミーイン・御宿 野乃は対象外。空室・優待料金は公式予約窓口でご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/kyoritsu-resort-plan"
     }
   ]
 }

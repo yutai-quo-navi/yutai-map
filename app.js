@@ -1,5 +1,5 @@
 import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures} from './special-features.js?v=20261007-feature-order';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-hotel-features';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -117,12 +117,16 @@ async function init(){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
     await loadVoucherDeadlines();
-    initSpecialFeatures({
-      root: qs('#specialFeatures'), getOrigin: () => lastPosition,
-      getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin, createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
+    const featureCatalog = loadFeatureCatalog();
+    Promise.all([
+      ['#specialFeatures', 'dining'], ['#hotelFeatures', 'hotel']
+    ].map(([selector, section]) => initSpecialFeatures({
+      root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
+      getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin,
+      createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
       getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
       preview: dev === 'features' || dev === 'all'
-    }).then(controller => { specialFeatures = controller; });
+    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }}; });
     persistSelection();
     renderChips();
     renderCategoryFilters();

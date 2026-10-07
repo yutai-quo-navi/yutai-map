@@ -68,10 +68,13 @@ export function featureDistanceLabel(meters) {
 }
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
-export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, preview = false}) {
+export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, preview = false, section = 'dining', catalog = null}) {
   if (!root) return {refresh() {}};
   let active = null, features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
   const selectedRadii = new Map();
+  const unit = section === 'hotel' ? '施設' : '店舗';
+  const resultsId = `${root.id || 'specialFeature'}Results`;
+  const heading = section === 'hotel' ? '宿泊・ホテル優待 特集' : 'レア優待店 特集';
   const currentRadius = feature => selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
@@ -80,14 +83,14 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.hidden = !displayed.length;
     root.innerHTML = '';
     if (!displayed.length) return;
-    root.innerHTML = '<h2 class="selection-heading">レア優待店 特集</h2><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>';
+    root.innerHTML = `<h2 class="selection-heading">${heading}</h2><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
       button.className = 'feature-button';
       button.textContent = feature.shortName || feature.issuer.name;
       button.setAttribute('aria-label', feature.title);
-      button.setAttribute('aria-controls', 'specialFeatureResults');
+      button.setAttribute('aria-controls', resultsId);
       const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern);
       if (feature.status === 'ended') {
         bubble.className = 'voucher-deadline-bubble'; bubble.textContent = '今回分は終了';
@@ -108,7 +111,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       const caption = document.createElement('p'); caption.className = 'feature-caption';
       const subtitle = document.createElement('span'); subtitle.textContent = feature.subtitle || '';
       const count = document.createElement('span');
-      count.textContent = feature.stores.length ? `${feature.status === 'ended' ? '前回' : ''}${feature.stores.length}店舗紹介` : '店舗確認中';
+      count.textContent = feature.stores.length ? `${feature.status === 'ended' ? '前回' : ''}${feature.stores.length}${unit}紹介` : `${unit}確認中`;
       caption.append(subtitle, count); item.append(button);
       if (bubble) item.append(bubble);
       item.append(caption);
@@ -119,7 +122,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       select.setAttribute('aria-label', `${feature.shortName || feature.issuer.name}の検索範囲`);
       for (const radius of featureRadiusOptions(feature)) {
         const option = document.createElement('option'); option.value = String(radius);
-        option.textContent = radius === 'all' ? '全国・全店舗' : `${(radius/1000).toLocaleString('ja-JP')} km`;
+        option.textContent = radius === 'all' ? `全国・全${unit}` : `${(radius/1000).toLocaleString('ja-JP')} km`;
         select.append(option);
       }
       select.value = String(currentRadius(feature));
@@ -132,7 +135,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       radiusLabel.append(select); item.append(radiusLabel);
       root.querySelector('.feature-buttons').append(item);
     }
-    root.querySelector('.feature-results').id = 'specialFeatureResults';
+    root.querySelector('.feature-results').id = resultsId;
     if (!active) return;
     const ended = active.status === 'ended';
     const nationwide = currentRadius(active) === 'all';
@@ -143,9 +146,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       return;
     }
     const label = getCenterLabel();
-    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${nationwide ? '全国の対象店舗' : `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : '全国の対象店舗・掲載順（検索地点を指定すると距離を表示して近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
-    if (origin && !stores.length && active.stores.length) output.innerHTML += '<p class="feature-note">この範囲に対象店舗はありません。別の場所を指定してお探しください。</p>';
+    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? `下書き・利用期間と対象${unit}は未確認。` : ''}${esc(active.description)}<br>${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${stores.length}件表示・全${active.stores.length}${unit}</p>`;
+    if (origin && !stores.length && active.stores.length) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。別の場所を指定してお探しください。</p>`;
     if (active.status === 'public') output.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
+    if (active.voucherName) output.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
     const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
     if (!ended) output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
     for (const store of stores) {
@@ -157,14 +161,19 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     }
   };
   try {
-    const response = await fetch('./data/features/index.json', {cache:'no-store'});
-    if (!response.ok) throw new Error('Feature data unavailable');
-    const data = await response.json();
-    features = await loadFeatureData(data.features); render();
+    features = (await (catalog || loadFeatureCatalog())).filter(feature => (feature.section || 'dining') === section);
+    render();
   } catch (error) {
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
   return {refresh() { if (getOrigin() !== failedOrigin) originUnavailable = false; render(); }};
+}
+
+export async function loadFeatureCatalog(fetcher = fetch) {
+  const response = await fetcher('./data/features/index.json', {cache:'no-store'});
+  if (!response.ok) throw new Error('Feature data unavailable');
+  const data = await response.json();
+  return loadFeatureData(data.features, fetcher);
 }
 
 // One unavailable remote feature must not hide other verified features.

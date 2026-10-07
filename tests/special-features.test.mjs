@@ -19,13 +19,27 @@ test('manual feature stays hidden after expiry; scheduled feature needs a verifi
   validateFeature(remote);
   assert.equal(visibleFeatures([draft, remote], '2026-10-07').length, 1);
   assert.equal(visibleFeatures([draft, remote], '2026-10-07', true).length, 2);
-  const loaded = await loadFeatureData(data.features, async () => new Response(JSON.stringify({id:remote.id, stores:remote.stores, checkedOn:remote.checkedOn})));
+  const dining = data.features.filter(feature => !feature.section || feature.section === 'dining');
+  const loaded = await loadFeatureData(dining, async () => new Response(JSON.stringify({id:remote.id, stores:remote.stores, checkedOn:remote.checkedOn})));
   assert.equal(loaded.length, 2);
   const warned = console.warn; console.warn = () => {};
   try {
     assert.equal((await loadFeatureData(data.features, async () => new Response('', {status:503}))).length, 1);
     assert.equal((await loadFeatureData(data.features, async () => new Response(JSON.stringify({id:'wrong'})))).length, 1);
   } finally { console.warn = warned; }
+});
+
+test('hotel voucher deadlines match their own voucher type and never the lunch coupon', () => {
+  const hotels = JSON.parse(readFileSync(new URL('../data/features/index.json',import.meta.url))).features.filter(feature=>feature.section==='hotel');
+  assert.equal(hotels.length,2);
+  const entries = voucherEntriesFromLedger(JSON.parse(readFileSync(new URL('../data/expiry.json',import.meta.url))).entries);
+  const now = new Date('2026-10-07T03:00:00Z');
+  for (const hotel of hotels) {
+    const deadline=nearestDeadline(entries,hotel.issuer.id,now,hotel.deadlineBenefitPattern);
+    assert.equal(deadline.date,'2027-07-31');
+    assert.equal(deadline.benefit,hotel.voucherName);
+    assert.equal(nearestDeadline([{issuer:'kyoritsu',status:'confirmed',date:'2026-10-31',benefit:'株主お食事（ランチ）券'}],hotel.issuer.id,now,hotel.deadlineBenefitPattern),null);
+  }
 });
 test('publication requires year-specific dates, verified coordinates and a safe source', () => {
   assert.throws(() => validateFeature({...draft, status:'public'}));

@@ -1,3 +1,4 @@
+const FEATURE_IDS = new Set(['balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 10000;
 const MAX_RESULTS = 30;
 const MAX_CANDIDATES = 600;
@@ -22,7 +23,7 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405, cors);
 
-    const databasePath = ['/health','/v1/brands','/v1/stores/search','/v1/features/balnibarbi-dining'].includes(url.pathname);
+    const databasePath = ['/health','/v1/brands','/v1/stores/search'].includes(url.pathname) || FEATURE_IDS.has(url.pathname.replace(/^\/v1\/features\//, ''));
     if (databasePath) {
       const limited = await enforceApiRateLimit(env, request, cors);
       if (limited) return limited;
@@ -44,7 +45,7 @@ export default {
 
     if (url.pathname.startsWith('/v1/features/')) {
       const id = url.pathname.slice('/v1/features/'.length);
-      if (!['balnibarbi-dining'].includes(id)) return json({error:'not_found'},404,cors);
+      if (!FEATURE_IDS.has(id)) return json({error:'not_found'},404,cors);
       try {
         const row = await env.DB.prepare('SELECT payload_json FROM feature_snapshots WHERE feature_id = ?').bind(id).first();
         if (!row) return json({error:'feature_unavailable'},503,cors);

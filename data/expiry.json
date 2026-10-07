@@ -1578,6 +1578,30 @@
       "emoji": "",
       "verification_method": "official",
       "expiry_year": 2027
+    },
+    {
+      "id": "9616-2027-07-resort",
+      "code": "9616",
+      "company_name": "共立メンテナンス",
+      "benefit_name": "株主様リゾートホテルご優待電子チケット",
+      "issue": "2026年3月末基準・2026年7月発送分",
+      "expiry_date": "2027-07-31",
+      "research_month": "2027-07",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "共立リゾート"
+      ],
+      "source_url": "https://www.kyoritsugroup.co.jp/ir/stock/benefits/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-07",
+      "status": "confirmed",
+      "notes": "公式制度確認：2026年3月末基準・7月発送分は翌年7月31日まで。優待プランの事前予約が必要。ドーミーイン・御宿 野乃は対象外。",
+      "issuer_id": "kyoritsu",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
     }
   ]
 }

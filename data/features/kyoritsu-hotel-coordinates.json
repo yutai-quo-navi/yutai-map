@@ -1,0 +1,220 @@
+{
+  "resort-sara": {
+    "name": "月の宿 紗ら",
+    "address": "〒250-0311 神奈川県足柄下郡箱根町湯本588-1",
+    "lat": 35.229213767904255,
+    "lng": 139.09834142415366,
+    "licenses": [
+      "Apache-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "",
+    "poiName": "箱根湯本温泉 月の宿 紗ら",
+    "poiAddress": "神奈川県箱根町湯本588-1"
+  },
+  "resort-kikuya": {
+    "name": "湯回廊 菊屋",
+    "address": "〒410-2416 静岡県伊豆市修善寺874-1",
+    "lat": 34.971068,
+    "lng": 138.929905,
+    "licenses": [
+      "CDLA-Permissive-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "ホテル内の施設と同じ住所の位置を使用しています。",
+    "poiName": "修善寺温泉　湯回廊　菊屋　ドリンクパントリー",
+    "poiAddress": "静岡県伊豆市修善寺８７４－１"
+  },
+  "resort-ikyu": {
+    "name": "いにしえの宿 伊久",
+    "address": "〒516-0023 三重県伊勢市宇治館町字岩井田山679-2",
+    "lat": 34.46192029243902,
+    "lng": 136.72767210642252,
+    "licenses": [
+      "Apache-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "",
+    "poiName": "いにしえの宿伊久",
+    "poiAddress": "三重県宇治館町字岩井田山679-2"
+  },
+  "resort-shirahama_kaisyu": {
+    "name": "浜千鳥の湯 海舟",
+    "address": "〒649-2211 和歌山県西牟婁郡白浜町1698-1",
+    "lat": 33.678139,
+    "lng": 135.348189,
+    "licenses": [
+      "CDLA-Permissive-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "ホテル内の施設と同じ住所の位置を使用しています。",
+    "poiName": "白浜温泉 浜千鳥の湯 海舟 食事処 潮さい 海ほたる",
+    "poiAddress": "和歌山県西牟婁郡白浜町 1698-1"
+  },
+  "partner-www.tenger.jp": {
+    "name": "モンゴリアビレッジ テンゲル",
+    "address": "〒325-0302 栃木県那須郡那須町大字高久丙1577-9",
+    "lat": 37.06280486,
+    "lng": 140.02935233,
+    "licenses": [
+      "CDLA-Permissive-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "",
+    "poiName": "モンゴリア ビレッジ テンゲル",
+    "poiAddress": "栃木県那須郡那須町高久丙1577-9"
+  },
+  "partner-dormy-karuizawa.jp": {
+    "name": "ドーミー倶楽部軽井沢",
+    "address": "〒389-0111 長野県北佐久郡軽井沢町千ヶ滝中区482",
+    "lat": 36.369166,
+    "lng": 138.584827,
+    "licenses": [
+      "CDLA-Permissive-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "ホテル内の施設と同じ住所の位置を使用しています。",
+    "poiName": "ドーミー倶楽部　軽井沢",
+    "poiAddress": "長野県北佐久郡軽井沢町千ヶ滝中区４８２"
+  },
+  "dormy-hakata": {
+    "name": "天然温泉 御笠の湯 ドーミーイン博多祇園",
+    "address": "福岡県福岡市博多区冷泉町1-12",
+    "lat": 33.593642,
+    "lng": 130.412894,
+    "licenses": [
+      "CC BY 4.0",
+      "CDLA-Permissive-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）",
+      "福岡市 福岡市　飲食店営業等営業許可施設一覧"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "公式地図の中心位置を補正し、同じ住所の施設位置を使用しています。",
+    "preferSupplement": true,
+    "poiName": "ドーミーイン博多祇園",
+    "poiAddress": "福岡県福岡市博多区冷泉町１番１２号"
+  },
+  "dormy-premium_nagasaki": {
+    "name": "天然温泉 鶴港の湯 ドーミーインPREMIUM長崎駅前",
+    "address": "長崎県長崎市五島町2-29",
+    "lat": 32.75011184,
+    "lng": 129.8729632,
+    "licenses": [
+      "CDLA-Permissive-2.0",
+      "Creative Commons Attribution 4.0 International"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "長崎市 食品等営業許可・届出一覧（全許可・届出一覧）（長崎市）"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "公式地図の中心位置を補正し、同じ住所の施設位置を使用しています。",
+    "preferSupplement": true,
+    "poiName": "天然温泉　鶴港の湯　ドーミーインPREMIUM長崎駅前",
+    "poiAddress": "長崎県長崎市五島町２番２９号"
+  },
+  "dormy-nagasaki": {
+    "name": "出島の湯 ドーミーイン長崎新地中華街",
+    "address": "長崎県長崎市銅座町7-24",
+    "lat": 32.742193,
+    "lng": 129.876319,
+    "licenses": [
+      "Creative Commons Attribution 4.0 International",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "厚生労働省 食品衛生申請等システム（オープンデータ）",
+      "長崎市 食品等営業許可・届出一覧（全許可・届出一覧）（長崎市）"
+    ],
+    "coordinateSource": "OpenPOI API",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "coordinateNote": "公式地図の中心位置を補正し、同じ住所の施設位置を使用しています。",
+    "preferSupplement": true,
+    "poiName": "出島の湯　ドーミーイン長崎新地中華街",
+    "poiAddress": "長崎県長崎市銅座町7番24号"
+  },
+  "dormy-hakatacanal": {
+    "name": "天然温泉 袖湊の湯 ドーミーインPREMIUM博多・キャナルシティ前",
+    "address": "福岡県福岡市博多区祇園町9-1",
+    "lat": 33.5906255,
+    "lng": 130.4122855,
+    "licenses": [
+      "Apache-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ],
+    "coordinateSource": "OpenPOI",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "poiName": "ドーミーインＰＲＥＭＩＵＭ博多・キャナルシティ前",
+    "poiAddress": "福岡県福岡市博多区祇園町９番１号",
+    "preferSupplement": true,
+    "coordinateNote": "公式地図の共通中心位置を、ホテル名・住所を照合したOpenPOIの施設位置で補正しています。"
+  },
+  "resort-kadensho": {
+    "name": "京都 嵐山温泉 花伝抄",
+    "address": "〒616-0003 京都府京都市西京区嵐山西一川町5-4",
+    "lat": 35.01063128625267,
+    "lng": 135.68069015818023,
+    "licenses": [
+      "Apache-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)"
+    ],
+    "coordinateSource": "OpenPOI",
+    "coordinateCheckedOn": "2026-10-07",
+    "coordinateMatch": "name-and-address",
+    "poiName": "京都嵐山温泉 花伝抄",
+    "poiAddress": "京都府京都市西京区嵐山西一川町5-4",
+    "coordinateNote": "ホテル名・住所を照合したOpenPOIの施設位置を使用しています。"
+  }
+}

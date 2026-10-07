@@ -20,3 +20,13 @@ test('feature endpoint rejects unknown datasets and survives missing D1 data', a
   assert.equal((await worker.fetch(request('/v1/features/private-dataset'),env)).status,404);
   assert.equal((await worker.fetch(request('/v1/features/balnibarbi-dining'),env)).status,503);
 });
+test('hotel voucher endpoints bind distinct dataset IDs and retain rate limiting', async () => {
+  for (const id of ['kyoritsu-hotel-discount','kyoritsu-resort-plan']) {
+    let limited = 0;
+    const env = {API_RATE_LIMITER:{limit:async()=>{limited++;return {success:true};}},DB:{prepare(){return {
+      bind(actual) {assert.equal(actual,id);return {first:async()=>({payload_json:JSON.stringify({id,stores:[]})})};}
+    };}}};
+    const response=await worker.fetch(request('/v1/features/'+id),env);
+    assert.equal(response.status,200);assert.equal((await response.json()).id,id);assert.equal(limited,1);
+  }
+});
