@@ -46,4 +46,4 @@ jobs:
         run: python tools/check_d1_health.py /tmp/d1-health.json
 
       - name: Verify Worker
-        run: curl -fsS https://yutai-map-api.yutaisamurai.workers.dev/health
+        run: python tools/verify_worker.py

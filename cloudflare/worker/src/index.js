@@ -13,6 +13,8 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const cors = corsHeaders(env, request);
+    if (request.cf?.country !== 'JP')
+      return json({error:'country_not_allowed',message:'このサービスは日本国内からのアクセスに限り利用できます。'},403,cors);
 
     const origin = request.headers.get('Origin');
     if (origin && env.ALLOWED_ORIGIN && env.ALLOWED_ORIGIN !== '*' && origin !== env.ALLOWED_ORIGIN)
