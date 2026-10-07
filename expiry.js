@@ -21,6 +21,12 @@ export function nearestDeadline(entries, issuer, now = new Date(), benefitPatter
 export function deadlineLabel(entry) {
   return entry.days===0 ? '⚠️本日失効' : '⚠️失効'+entry.days+'日前';
 }
+export function latestExpiredDeadline(entries, issuer, now = new Date()) {
+  return entries.filter(entry => entry.issuer === issuer && entry.status === 'confirmed')
+    .map(entry => ({...entry, days:deadlineDays(entry.date, now)}))
+    .filter(entry => entry.days !== null && entry.days < 0)
+    .sort((a,b) => b.date.localeCompare(a.date))[0] || null;
+}
 
 // Public expiry ledger; does not request location or store data.
 export function japanDate(now = new Date()) {

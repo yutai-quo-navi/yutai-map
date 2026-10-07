@@ -68,9 +68,16 @@ export function featureDistanceLabel(meters) {
 }
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
+// Merge voucher-specific results into one list ordered from the same search origin.
+export function featureSearchResults(features, origin, getRadius = featureRadius) {
+  return features.flatMap(feature => featureStores({...feature, radiusMeters:getRadius(feature)}, origin)
+    .map(store => ({feature, store})))
+    .sort((a,b) => (a.store.distance ?? Infinity) - (b.store.distance ?? Infinity));
+}
+
 export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
   if (!root) return {refresh() {}};
-  let active = null, features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
+  let active = null, showAll = false, features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
   const selectedRadii = new Map();
   const unit = section === 'hotel' ? '施設' : '店舗';
   const resultsId = `${root.id || 'specialFeature'}Results`;
@@ -84,7 +91,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.innerHTML = '';
     if (!displayed.length) return;
     const integrated = root.hasAttribute('data-tab-panel');
-    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary">${active ? 1 : 0}社 選択中</span><button type="button" class="text-button selection-change">選択・変更</button></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
+    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary">${showAll ? 'すべての宿泊優待' : `${active ? 1 : 0}件 選択中`}</span><button type="button" class="text-button selection-change">選択・変更</button></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
     if (integrated) root.querySelector('.selection-change').addEventListener('click', () => root.querySelector('.feature-button')?.focus());
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
@@ -99,12 +106,12 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
         bubble.setAttribute('aria-label', `利用期限終了：${feature.validThrough}`);
       }
       if (bubble) bubble.classList.add('feature-deadline');
-      button.setAttribute('aria-pressed', String(active?.id === feature.id));
+      button.setAttribute('aria-pressed', String(showAll || active?.id === feature.id));
       button.dataset.feature = feature.id;
       button.addEventListener('click', async () => {
         if (resolvingOrigin) return;
-        if (active?.id === feature.id) { active = null; render(); return; }
-        active = feature; resolvingOrigin = true; originUnavailable = false; render();
+        if (active?.id === feature.id) { active = null; showAll = false; render(); return; }
+        showAll = false; active = feature; resolvingOrigin = true; originUnavailable = false; render();
         try { if (ensureOrigin) originUnavailable = !(await ensureOrigin()); }
         catch (error) { originUnavailable = true; console.warn('特集の検索地点を取得できませんでした', error); }
         finally { failedOrigin = originUnavailable ? getOrigin() : null; resolvingOrigin = false; render(); }
@@ -140,33 +147,38 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       root.querySelector('.feature-buttons').append(item);
     }
     root.querySelector('.feature-results').id = resultsId;
-    if (!active) return;
-    const ended = active.status === 'ended';
-    const nationwide = currentRadius(active) === 'all';
-    const origin = originUnavailable ? null : getOrigin(), stores = featureStores({...active, radiusMeters:currentRadius(active)}, origin);
+    const chosen = showAll ? displayed : active ? [active] : [];
+    if (!chosen.length) return;
+    const nationwide = chosen.every(feature => currentRadius(feature) === 'all');
+    const origin = originUnavailable ? null : getOrigin();
+    const matches = featureSearchResults(chosen, origin, currentRadius);
     const output = root.querySelector('.feature-results');
     if (resolvingOrigin || (!nationwide && (originUnavailable || !origin))) {
       output.innerHTML = `<p class="feature-note">${resolvingOrigin ? '検索地点を確認しています…' : '距離を表示するには、現在地の利用を許可するか、場所を指定してください。'}</p>`;
       return;
     }
     const label = getCenterLabel();
-    const details = document.createElement("div");
-    const info = section === "hotel" ? details : output;
-    output.innerHTML = `<p class="feature-note">${section === "hotel" ? "" : `${active.status === 'draft' ? `下書き・利用期間と対象${unit}は未確認。` : ''}${esc(active.description)}<br>`}${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${stores.length}件表示・全${active.stores.length}${unit}</p>`;
-    if (origin && !stores.length && active.stores.length) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。別の場所を指定してお探しください。</p>`;
-    if (section === 'hotel') info.innerHTML = `<p class="feature-note">${esc(active.description)}</p>`;
-    if (active.status === 'public') info.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
-    if (active.voucherName) info.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
-    const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
-    if (!ended) info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
-    for (const store of stores) {
+    const details = document.createElement('div');
+    const total = chosen.reduce((sum, feature) => sum + feature.stores.length, 0);
+    output.innerHTML = `<p class="feature-note">${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(chosen[0])/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${matches.length}件表示・全${total}${unit}</p>`;
+    if (origin && !matches.length && total) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。検索範囲を広げるか、別の場所を指定してください。</p>`;
+    for (const active of chosen) {
+      const info = document.createElement('div');
+      if (section === 'hotel') info.innerHTML = `<p class="feature-note">${esc(active.description)}</p>`;
+      if (active.status === 'public') info.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
+      if (active.voucherName) info.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
+      const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
+      if (active.status !== 'ended') info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
+      details.append(info);
+    }
+    for (const {feature: active, store} of matches) {
       const card = document.createElement('article'); card.className = 'card feature-card';
       const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + ' ' + store.address)}`;
       const sourceUrl = safeUrl(store.sourceUrl || active.sourceUrl);
-      card.innerHTML = `<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${store.distance == null ? '距離未確認'  : `${featureDistanceLabel(store.distance)}・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.coordinateNote ? `<p class="feature-note">${esc(store.coordinateNote)}</p>` : ''}${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
+      card.innerHTML = `${chosen.length > 1 ? `<p class="feature-note">${esc(active.shortName || active.issuer.name)}／${esc(active.voucherName || active.title)}</p>` : ''}<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${store.distance == null ? '距離未確認'  : `${featureDistanceLabel(store.distance)}・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.coordinateNote ? `<p class="feature-note">${esc(store.coordinateNote)}</p>` : ''}${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
       output.append(card);
     }
-    if (section === "hotel") output.append(details);
+    output.append(details);
   };
   try {
     features = (await (catalog || loadFeatureCatalog())).filter(feature => (feature.section || 'dining') === section);
@@ -174,7 +186,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
   } catch (error) {
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
-  return {refresh() { if (getOrigin() !== failedOrigin) originUnavailable = false; render(); }};
+  return {
+    refresh() { if (getOrigin() !== failedOrigin) originUnavailable = false; render(); },
+    search() { if (!active) showAll = true; originUnavailable = !getOrigin(); render(); }
+  };
 }
 
 export async function loadFeatureCatalog(fetcher = fetch) {

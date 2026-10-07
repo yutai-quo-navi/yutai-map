@@ -1,7 +1,7 @@
-import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-shared-radius';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261008-shared-radius';
-import {initSearchRadius} from './search-radius.js?v=20261008-shared-radius';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-search';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-search';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-search';
+import {initSearchRadius} from './search-radius.js?v=20261008-hotel-search';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -51,7 +51,8 @@ const els = {
 let companies = [];
 let voucherDeadlines = [];
 let deadlineDay = japanDay();
-let specialFeatures = {refresh() {}};
+let specialFeatures = {refresh() {}, search() {}};
+let specialFeaturesReady = Promise.resolve();
 let featureVoucherDeadlines = [];
 let draftSelection = new Set();
 let pickerCompanies = [];
@@ -128,7 +129,7 @@ async function init(){
     }
     await loadVoucherDeadlines();
     const featureCatalog = loadFeatureCatalog();
-    Promise.all([
+    specialFeaturesReady = Promise.all([
       ['#hotelFeatures', 'hotel']
     ].map(([selector, section]) => initSpecialFeatures({
       root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
@@ -137,7 +138,7 @@ async function init(){
       createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
       getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
       preview: dev === 'features' || dev === 'all'
-    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }}; });
+    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, search() { controllers.forEach(controller => controller.search()); }}; });
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -290,13 +291,14 @@ function featureDeadline(issuer, pattern){
   return nearestDeadline([...entries.values()], issuer, new Date(), pattern);
 }
 function deadlineBubble(issuer, pattern, feature = false){
-  const entry=feature ? featureDeadline(issuer, pattern) : nearestDeadline(voucherDeadlines, issuer);
+  const entry=(feature ? featureDeadline(issuer, pattern) : nearestDeadline(voucherDeadlines, issuer)) ||
+    (!feature && companies.find(company => company.id === issuer)?.showExpiredDeadline ? latestExpiredDeadline(voucherDeadlines, issuer) : null);
   if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
-  const heading=document.createElement('span'); heading.textContent='失効まで';
-  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days===0 ? '本日' : entry.days+'日';
+  const heading=document.createElement('span'); heading.textContent=entry.days < 0 ? '期限切れ' : '失効まで';
+  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days < 0 ? `${Number(entry.date.slice(5,7))}/${Number(entry.date.slice(8))}までの分` : entry.days===0 ? '本日' : entry.days+'日';
   bubble.replaceChildren(heading,count);
   const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
@@ -567,6 +569,8 @@ async function searchNearby(pos, centerLabel='現在地'){
   lastCenterLabel = centerLabel;
   specialFeatures.refresh();
   if (activeBenefit === 'hotel') {
+    await specialFeaturesReady;
+    specialFeatures.search();
     els.locate.disabled = false;
     setStatus(`${centerLabel}を検索地点にしました`);
     return;

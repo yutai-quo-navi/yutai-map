@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions, loadFeatureData, featureDistanceLabel} from '../special-features.js';
+import {validateFeature, visibleFeatures, featureStores, featureSearchResults, featureRadiusOptions, loadFeatureData, featureDistanceLabel} from '../special-features.js';
 import {nearestDeadline, voucherEntriesFromLedger} from '../expiry.js';
 
 const ended = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
@@ -9,6 +9,15 @@ const draft = {...ended, status:'draft'};
 const live = () => ({...draft, status:'public', sourceUrl:'https://example.com/official',
   checkedOn:'2026-07-01', validFrom:'2026-07-01', validThrough:'2026-09-30',
   stores:[{...draft.stores[0], verified:true, lat:35.71, lng:139.80}]});
+
+test('all hotel vouchers share a range and merge results by distance while retaining voucher identity', () => {
+  const features=[{id:'a',stores:[{id:'far',lat:43.3,lng:141.35}]}, {id:'b',stores:[{id:'near',lat:43.061,lng:141.35}]}];
+  const origin={lat:43.06,lng:141.35};
+  const all=featureSearchResults(features,origin,()=> 'all');
+  assert.deepEqual(all.map(match=>match.store.id),['near','far']);
+  assert.deepEqual(all.map(match=>match.feature.id),['b','a']);
+  assert.deepEqual(featureSearchResults(features,origin,()=>10000).map(match=>match.store.id),['near']);
+});
 
 test('manual feature stays hidden after expiry; scheduled feature needs a verified snapshot', async () => {
   const data = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url)));

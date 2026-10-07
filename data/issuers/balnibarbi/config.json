@@ -4,6 +4,7 @@
   "name": "バルニバービ",
   "fullName": "バルニバービ",
   "status": "public",
+  "showExpiredDeadline": true,
   "sourceUrl": "https://ir.balnibarbi.com/shareholders/all_shareholders.php",
   "storeSearchUrl": "https://brands.balnibarbi.com/brands/all/",
   "matchingMode": "official_store_filter",
