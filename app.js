@@ -1,5 +1,5 @@
 import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures} from './special-features.js?v=20261007-feature-panels';
+import {initSpecialFeatures} from './special-features.js?v=20261007-feature-distance';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -119,7 +119,7 @@ async function init(){
     await loadVoucherDeadlines();
     initSpecialFeatures({
       root: qs('#specialFeatures'), getOrigin: () => lastPosition,
-      getCenterLabel: () => lastCenterLabel, createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
+      getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin, createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
       getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
       preview: dev === 'features' || dev === 'all'
     }).then(controller => { specialFeatures = controller; });
@@ -442,7 +442,7 @@ function renderPlaceSuggestions(items){
   els.placeSuggestions.hidden = !els.placeSuggestions.children.length;
 }
 
-async function submitPlaceSearch(e){
+async function submitPlaceSearch(e, {search = true} = {}){
   e.preventDefault();
   const q = els.placeInput.value.trim();
   if(!q) return;
@@ -456,12 +456,12 @@ async function submitPlaceSearch(e){
     let pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
     if(pick){
       els.placeSuggestions.hidden = true;
-      return searchNearby({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label);
+      return applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search);
     }
     const s = (data.suggestions || [])[0];
     if(s && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lng))){
       els.placeSuggestions.hidden = true;
-      return searchNearby({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q);
+      return applySearchOrigin({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q, search);
     }
     showError('場所を特定できませんでした。地名・駅名・施設名を少し詳しく入力してください。');
     setStatus('場所を特定できませんでした');
@@ -472,7 +472,25 @@ async function submitPlaceSearch(e){
   }
 }
 
-async function requestLocation(){
+function applySearchOrigin(pos, label, search){
+  lastPosition = pos; lastCenterLabel = label;
+  specialFeatures.refresh();
+  if (search) return searchNearby(pos, label);
+  setStatus(`${label}を検索地点にしました`);
+  return pos;
+}
+async function ensureFeatureOrigin(){
+  if (!els.placeSearchPanel.hidden) {
+    const q = els.placeInput.value.trim();
+    if (!q) { els.placeInput.focus(); return null; }
+    if (lastPosition && normalize(q) === normalize(lastCenterLabel)) return lastPosition;
+    return submitPlaceSearch({preventDefault() {}}, {search:false});
+  }
+  if (lastPosition && lastCenterLabel === '現在地') return lastPosition;
+  return requestLocation({search:false});
+}
+
+async function requestLocation({search = true} = {}){
   if(!navigator.geolocation){
     showError('このブラウザでは現在地取得に対応していません。');
     return;
@@ -491,11 +509,12 @@ async function requestLocation(){
     permissionState = 'Safariでは取得不可';
   }
 
-  navigator.geolocation.getCurrentPosition(
+  return new Promise(resolve => navigator.geolocation.getCurrentPosition(
     p => {
-      lastPosition = {lat:p.coords.latitude, lng:p.coords.longitude};
-      lastCenterLabel = '現在地';
-      searchNearby(lastPosition, lastCenterLabel);
+      const pos = {lat:p.coords.latitude, lng:p.coords.longitude};
+      applySearchOrigin(pos, '現在地', search);
+      if (!search) els.locate.disabled = false;
+      resolve(pos);
     },
     err => {
       els.locate.disabled = false;
@@ -520,9 +539,10 @@ async function requestLocation(){
 
       showError(`${base}<br><small>${detail}</small>`);
       setStatus('現在地は保存していません');
+      resolve(null);
     },
     {enableHighAccuracy:true, timeout:15000, maximumAge:60000}
-  );
+  ));
 }
 
 async function searchNearby(pos, centerLabel='現在地'){

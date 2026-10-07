@@ -15,3 +15,5 @@
 ## 出典
 
 [出典: OpenPOI API](https://openpoiapi.com/attribution.html)
+
+[位置情報のライセンス・出典](data/features/NOTICE.txt) ／ [Apache License 2.0](data/features/LICENSE-Apache-2.0.txt)

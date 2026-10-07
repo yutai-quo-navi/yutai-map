@@ -23,117 +23,232 @@
           "name": "季の庭 浅草店",
           "address": "東京都台東区浅草2-7-26 御宿 野乃浅草別邸1F",
           "conditions": "全日11:00〜16:00（L.O.15:30）、年中無休。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.715088,
+          "lng": 139.795197,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CC BY 4.0"
+          ],
+          "attributions": [
+            "東京都台東区食品衛生営業施設一覧"
+          ]
         },
         {
           "id": "kyoritsu-lunch-02",
           "name": "季の庭 ラビスタ東京ベイ豊洲店",
           "address": "東京都江東区豊洲6-4-40 ラビスタ東京ベイ2F",
           "conditions": "月〜金11:30〜14:00（L.O.13:30）。日曜・ホテル休館日（不定期）休み。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.64658347,
+          "lng": 139.78387656,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "same-building",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ],
+          "coordinateNote": "入居先のラビスタ東京ベイの位置を使用しています。"
         },
         {
           "id": "kyoritsu-lunch-03",
           "name": "季の庭 銀座店",
           "address": "東京都中央区銀座8-5-21 かわばたビル新館1F",
           "conditions": "月〜金11:30〜13:30（L.O.13:00）。土曜・日曜・祝日休み。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.66886658,
+          "lng": 139.76011767,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ]
         },
         {
           "id": "kyoritsu-lunch-04",
           "name": "季の庭 神田店",
           "address": "東京都千代田区神田淡路町1-11-3 淡路町MHアネックスビル1F",
           "conditions": "月〜金11:30〜14:00（L.O.13:30）。土曜・日曜・祝日休み。7〜8月と9月でメニューが異なる。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.69633337,
+          "lng": 139.76637892,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ]
         },
         {
           "id": "kyoritsu-lunch-05",
           "name": "お酒 小料理 小鈴",
           "address": "東京都千代田区神田淡路町1-11-8 淡路町UKビル1F",
           "conditions": "月〜金11:30〜13:00（L.O.13:30、資料の表記どおり・要確認）。土曜・日曜・祝日休み。7〜8月と9月でメニューが異なる。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.696358717235306,
+          "lng": 139.76625618248724,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "Apache-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)"
+          ]
         },
         {
           "id": "kyoritsu-lunch-06",
           "name": "いろは歌 花やしき通り店",
           "address": "東京都台東区浅草2-7-22",
           "conditions": "全日11:00〜16:00（L.O.15:30）、年中無休。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.715176,
+          "lng": 139.794525,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CC BY 4.0"
+          ],
+          "attributions": [
+            "東京都台東区食品衛生営業施設一覧"
+          ]
         },
         {
           "id": "kyoritsu-lunch-07",
           "name": "CAFÉ OASIS 中野坂上店",
           "address": "東京都中野区本町2-48-13 1F",
           "conditions": "10:00〜14:30（L.O.14:00）、年中無休。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.69699029,
+          "lng": 139.68114666,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ]
         },
         {
           "id": "kyoritsu-lunch-08",
           "name": "CAFÉ OASIS 神戸元町店",
           "address": "兵庫県神戸市中央区栄町通2-5-1 ドーミーイン神戸元町1F",
           "conditions": "11:30〜14:30（L.O.14:00）。ドーミーイン神戸元町店休館日休み。開始時刻は資料の訂正注記を反映。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 34.68754948391775,
+          "lng": 135.18533697619822,
+          "verified": true,
+          "coordinateSource": "https://dormy-hotels.com/dormyinn/hotels/kobemotomachi/access/",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "same-building",
+          "coordinateNote": "入居先のドーミーイン神戸元町の公式地図の位置を使用しています。"
         },
         {
           "id": "kyoritsu-lunch-09",
           "name": "羽衣茶寮 浅草本店",
           "address": "東京都台東区浅草2-7-26 御宿 野乃浅草別邸B1F",
           "conditions": "11:30〜16:00（L.O.15:30）。御宿 野乃浅草別邸休館日休み。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.715088,
+          "lng": 139.795197,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CC BY 4.0"
+          ],
+          "attributions": [
+            "東京都台東区食品衛生営業施設一覧"
+          ]
         },
         {
           "id": "kyoritsu-lunch-10",
           "name": "トラットリア・イタリア 文京店",
           "address": "東京都文京区本駒込2-28-10 文京グリーンコート1F",
           "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.73067716253281,
+          "lng": 139.7473875379419,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "Apache-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org / Copyright 2024 Foursquare Labs, Inc. (https://opensource.foursquare.com/places-notice-txt/)"
+          ]
         },
         {
           "id": "kyoritsu-lunch-11",
           "name": "トラットリア・イタリア 上野店",
           "address": "東京都台東区上野4-9-6 ナガフジビル本館4F",
           "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.710175,
+          "lng": 139.773865,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CC BY 4.0",
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org",
+            "東京都台東区食品衛生営業施設一覧"
+          ]
         },
         {
           "id": "kyoritsu-lunch-12",
           "name": "トラットリア・イタリア 目黒店",
           "address": "東京都品川区上大崎2-24-1",
           "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.63595154,
+          "lng": 139.71388684,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ]
         },
         {
           "id": "kyoritsu-lunch-13",
           "name": "ピッツェリア ポンテチェントロ 佃店",
           "address": "東京都中央区佃2-1-6 リバーシティM-SQUARE1F",
           "conditions": "平日のランチタイム限定。月〜金11:30〜16:00（L.O.16:00）。定休日なし。",
-          "lat": null,
-          "lng": null,
-          "verified": false
+          "lat": 35.66934307,
+          "lng": 139.7852107,
+          "verified": true,
+          "coordinateSource": "OpenPOI API",
+          "coordinateCheckedOn": "2026-10-07",
+          "coordinateMatch": "name-and-address",
+          "licenses": [
+            "CDLA-Permissive-2.0"
+          ],
+          "attributions": [
+            "Overture Maps Foundation, overturemaps.org"
+          ]
         }
       ],
       "shortName": "共立メンテ",

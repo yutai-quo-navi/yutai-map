@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions, loadFeatureData} from '../special-features.js';
+import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions, loadFeatureData, featureDistanceLabel} from '../special-features.js';
 import {nearestDeadline, voucherEntriesFromLedger} from '../expiry.js';
 
 const ended = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
@@ -105,4 +105,22 @@ test('ended Kyoritsu feature remains visible with its 13 historical stores, whil
   assert.equal(ended.stores.length, 13);
   assert.throws(() => validateFeature({...ended, validThrough:null}));
   assert.throws(() => validateFeature({...ended, sourceUrl:null}));
+});
+
+test('short distances retain metres and unknown positions never count as inside a radius', () => {
+  assert.equal(featureDistanceLabel(380), '380m');
+  assert.equal(featureDistanceLabel(1234), '1.2km');
+  const feature={...draft, radiusMeters:100000, stores:[{...draft.stores[0],id:'unknown',lat:null,lng:null}]};
+  assert.equal(featureStores(feature,{lat:35.68,lng:139.76}).length,0);
+});
+
+test('all 13 historical lunch locations calculate distance even after voucher expiry', () => {
+  const origin={lat:43.06,lng:141.35};
+  assert.equal(ended.stores.filter(store=>Number.isFinite(store.lat)&&Number.isFinite(store.lng)).length,13);
+  assert.equal(featureStores({...ended,radiusMeters:500000},origin).length,0);
+  assert.equal(featureStores({...ended,radiusMeters:1000000},origin).length,12);
+  const all=featureStores({...ended,radiusMeters:4000000},origin);
+  assert.equal(all.length,13);
+  assert.ok(all.every(store=>store.distance>10000));
+  assert.equal(all.at(-1).id,'kyoritsu-lunch-08');
 });

@@ -60,7 +60,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_*.py'
           node --test tests/expiry.test.mjs
           node --test tests/sheets-editor.test.mjs
-          node --test tests/special-features.test.mjs tests/feature-api.test.mjs
+          node --test tests/special-features.test.mjs tests/feature-api.test.mjs tests/feature-origin.test.mjs
           node --input-type=module --check < app.js
           python tools/build_expiry.py --check
       - name: Downloadable X drafts and previous-year candidates
