@@ -1,7 +1,7 @@
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-multi';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-multi';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-multi';
-import {initSearchRadius} from './search-radius.js?v=20261008-hotel-multi';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-multi2';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-multi2';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-multi2';
+import {initSearchRadius} from './search-radius.js?v=20261008-hotel-multi2';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -299,7 +299,7 @@ function deadlineBubble(issuer, pattern, feature = false){
   bubble.textContent=deadlineLabel(entry);
   const heading=document.createElement('span'); heading.textContent=entry.days < 0 ? '失効' : '失効まで';
   const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days < 0 ? `${Number(entry.date.slice(5,7))}/${Number(entry.date.slice(8))}までの分` : entry.days===0 ? '本日' : entry.days+'日';
-  bubble.replaceChildren(heading,count);
+  bubble.replaceChildren(...(entry.days < 0 ? [heading] : [heading,count]));
   const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
