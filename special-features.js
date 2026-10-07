@@ -77,8 +77,9 @@ export function featureSearchResults(features, origin, getRadius = featureRadius
 
 export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
   if (!root) return {refresh() {}};
-  let active = null, showAll = false, features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
+  let features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
   const selectedRadii = new Map();
+  const selectedFeatures = new Set();
   const unit = section === 'hotel' ? '施設' : '店舗';
   const resultsId = `${root.id || 'specialFeature'}Results`;
   const heading = section === 'hotel' ? '宿泊・ホテル優待 特集' : 'レア優待店 特集';
@@ -86,12 +87,13 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
     const displayed = visibleFeatures(features, today(), preview);
-    if (!displayed.some(feature => feature.id === active?.id)) active = null;
+    const available = new Set(displayed.map(feature => feature.id));
+    for (const id of selectedFeatures) if (!available.has(id)) selectedFeatures.delete(id);
     root.hidden = !displayed.length;
     root.innerHTML = '';
     if (!displayed.length) return;
     const integrated = root.hasAttribute('data-tab-panel');
-    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary">${showAll ? 'すべての宿泊優待' : `${active ? 1 : 0}件 選択中`}</span><button type="button" class="text-button selection-change">選択・変更</button></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
+    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary">${selectedFeatures.size}件 選択中</span><button type="button" class="text-button selection-change">選択・変更</button></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
     if (integrated) root.querySelector('.selection-change').addEventListener('click', () => root.querySelector('.feature-button')?.focus());
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
@@ -106,12 +108,12 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
         bubble.setAttribute('aria-label', `利用期限終了：${feature.validThrough}`);
       }
       if (bubble) bubble.classList.add('feature-deadline');
-      button.setAttribute('aria-pressed', String(showAll || active?.id === feature.id));
+      button.setAttribute('aria-pressed', String(selectedFeatures.has(feature.id)));
       button.dataset.feature = feature.id;
       button.addEventListener('click', async () => {
         if (resolvingOrigin) return;
-        if (active?.id === feature.id) { active = null; showAll = false; render(); return; }
-        showAll = false; active = feature; resolvingOrigin = true; originUnavailable = false; render();
+        if (selectedFeatures.has(feature.id)) { selectedFeatures.delete(feature.id); render(); return; }
+        selectedFeatures.add(feature.id); resolvingOrigin = true; originUnavailable = false; render();
         try { if (ensureOrigin) originUnavailable = !(await ensureOrigin()); }
         catch (error) { originUnavailable = true; console.warn('特集の検索地点を取得できませんでした', error); }
         finally { failedOrigin = originUnavailable ? getOrigin() : null; resolvingOrigin = false; render(); }
@@ -138,7 +140,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
         select.value = String(currentRadius(feature));
         select.addEventListener('change', () => {
           selectedRadii.set(feature.id, select.value === 'all' ? 'all' : Number(select.value));
-          if (active?.id === feature.id) {
+          if (selectedFeatures.has(feature.id)) {
             render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
           }
         });
@@ -147,7 +149,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       root.querySelector('.feature-buttons').append(item);
     }
     root.querySelector('.feature-results').id = resultsId;
-    const chosen = showAll ? displayed : active ? [active] : [];
+    const chosen = displayed.filter(feature => selectedFeatures.has(feature.id));
     if (!chosen.length) return;
     const nationwide = chosen.every(feature => currentRadius(feature) === 'all');
     const origin = originUnavailable ? null : getOrigin();
@@ -188,7 +190,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
   }
   return {
     refresh() { if (getOrigin() !== failedOrigin) originUnavailable = false; render(); },
-    search() { if (!active) showAll = true; originUnavailable = !getOrigin(); render(); }
+    search() {
+      if (!selectedFeatures.size) visibleFeatures(features, today(), preview).forEach(feature => selectedFeatures.add(feature.id));
+      originUnavailable = !getOrigin(); render();
+    }
   };
 }
 

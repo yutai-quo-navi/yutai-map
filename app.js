@@ -1,7 +1,7 @@
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-search';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-search';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-search';
-import {initSearchRadius} from './search-radius.js?v=20261008-hotel-search';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-multi';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-multi';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-multi';
+import {initSearchRadius} from './search-radius.js?v=20261008-hotel-multi';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
