@@ -1264,6 +1264,30 @@
       "expiry_year": 2026
     },
     {
+      "id": "9024-2026-11-free-pair",
+      "code": "9024",
+      "company_name": "西武ホールディングス",
+      "benefit_name": "西武プリンスホテルズ＆リゾーツ 無料ペア宿泊券（1泊）",
+      "issue": "2026年5月発送分",
+      "expiry_date": "2026-11-30",
+      "research_month": "2026-11",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "プリンスホテル等"
+      ],
+      "source_url": "https://www.seibuholdings.co.jp/assets/pdf/benefit_20260909_2.pdf",
+      "secondary_source_url": "https://www.seibuholdings.co.jp/ir/stock/benefit/",
+      "checked_on": "2026-10-08",
+      "status": "confirmed",
+      "notes": "公式対象施設PDF確認。施設・部屋により1・2・4枚必要。適用除外日あり。",
+      "issuer_id": "seibu",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2026
+    },
+    {
       "id": "3198-2026-11-1",
       "code": "3198",
       "company_name": "SFPホールディングス",
@@ -1531,6 +1555,30 @@
       "search_brand": "",
       "emoji": "🍽️",
       "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
+      "id": "7458-2027-02-1",
+      "code": "7458",
+      "company_name": "第一興商",
+      "benefit_name": "株主ご優待券",
+      "issue": "2026年3月末基準・2026年6月送付分",
+      "expiry_date": "2027-02-28",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [
+        "DKダイニング"
+      ],
+      "source_url": "https://www.dkkaraoke.co.jp/stockinfo/shareholdercoupon.html",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-08",
+      "status": "confirmed",
+      "notes": "公式確認：2026年6月送付分から有効期間8か月。外食対象店舗を検索に登録。",
+      "issuer_id": "daiichikosho",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
       "expiry_year": 2027
     },
     {

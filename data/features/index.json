@@ -295,6 +295,37 @@
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/daiwa-house-hotels"
     },
     {
+      "id": "seibu-free-hotels",
+      "section": "hotel",
+      "issuer": {
+        "id": "seibu",
+        "code": "9024",
+        "name": "西武ホールディングス"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000,
+        1500000
+      ],
+      "sourceUrl": "https://www.seibuholdings.co.jp/ir/stock/benefit/",
+      "checkedOn": null,
+      "validFrom": "2026-05-13",
+      "validThrough": "2026-11-30",
+      "stores": [],
+      "title": "西武HD・無料ペア宿泊券",
+      "shortName": "西武HD",
+      "subtitle": "無料ペア宿泊券",
+      "voucherName": "西武プリンスホテルズ＆リゾーツ 無料ペア宿泊券（1泊）",
+      "deadlineBenefitPattern": "無料ペア宿泊",
+      "description": "対象のプリンスホテル等で、無料ペア宿泊券（1泊）を利用できます。施設・部屋により1・2・4枚必要。株主優待乗車証から交換する券です。適用除外日・空室制限あり。入湯税等は別途必要な場合があります。予約前に対象部屋・条件を公式でご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/seibu-free-hotels"
+    },
+    {
       "section": "hotel",
       "issuer": {
         "id": "kyoritsu",

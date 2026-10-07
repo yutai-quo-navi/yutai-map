@@ -4,7 +4,7 @@
     "code": "9024",
     "name": "西武ホールディングス"
   },
-  "status": "preparing",
+  "status": "public",
   "checkedOn": "2026-10-08",
   "benefit": "西武プリンスホテルズ＆リゾーツ 無料ペア宿泊券（1泊）",
   "validFrom": "2026-05-13",
@@ -14,11 +14,7 @@
   "eligibilitySourceUrl": "https://www.seibuholdings.co.jp/assets/pdf/benefit_20260909_2.pdf",
   "eligibilitySha256": "f5d7aa618498730d9605153accca10ae8b801459ef2fcf4cbdba22f2e03efbb0",
   "conditions": "電車全線パス・電車バス全線パスと交換した宿泊券が対象。片道きっぷや交換前の乗車証では宿泊不可。ホテル・部屋タイプにより1枚・2枚・4枚必要。除外日・空室制限あり。入湯税等が別途必要な場合あり。1,000円共通割引券とは別の特典。",
-  "nextSteps": [
-    "対象ホテルの公式住所と座標を照合",
-    "月1回の対象ホテル確認を組み込む",
-    "期限表の無料ペア宿泊券を紐づけて公開"
-  ],
+  "nextSteps": [],
   "hotels": [
     {
       "name": "札幌プリンスホテル",
@@ -29,7 +25,8 @@
           "excludedDates": "6/12、7/25～7/27、8/29、9/19・９/20、 10/18、10/30・10/31、11/1、11/21",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/sapporo/"
     },
     {
       "name": "釧路プリンスホテル",
@@ -40,7 +37,8 @@
           "excludedDates": "8/11～8/16、9/12",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kushiro/"
     },
     {
       "name": "屈斜路プリンスホテル",
@@ -51,7 +49,8 @@
           "excludedDates": "7/18・7/19、8/1～8/15、9/18～9/22、 10/10・10/11、11/2、11/5、 11/23～11/30",
           "notes": "入湯税別 11/23～11/30は冬季クローズ期間"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kussharo/"
     },
     {
       "name": "新富良野プリンスホテル",
@@ -62,7 +61,8 @@
           "excludedDates": "6/28、7/7～7/11、7/18・7/19、9/20・ 9/21、11/1～11/26",
           "notes": "入湯税別 11/1～11/26はクローズ期間"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/newfurano/"
     },
     {
       "name": "函館大沼プリンスホテル",
@@ -73,7 +73,8 @@
           "excludedDates": "7/18・7/19、8/8～8/15、9/19～９/22",
           "notes": "入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/hakodate/"
     },
     {
       "name": "十和田プリンスホテル",
@@ -84,7 +85,8 @@
           "excludedDates": "7/18・7/19、8/1～8/15、9/19～９/22、 10/10～10/31、11/23～11/30",
           "notes": "入湯税別 11/23～11/30は冬季クローズ期間"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/towada/"
     },
     {
       "name": "雫石プリンスホテル",
@@ -95,7 +97,8 @@
           "excludedDates": "8/3～8/6、8/29、9/19～９/21",
           "notes": "入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/shizukuishi/"
     },
     {
       "name": "苗場プリンスホテル",
@@ -106,7 +109,8 @@
           "excludedDates": "休前日、5/31～6/30、7/20～8/3、11/8～ 11/30",
           "notes": "入湯税別 ※６号館のみの営業"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/naeba/"
     },
     {
       "name": "軽井沢プリンスホテル イースト",
@@ -117,7 +121,8 @@
           "excludedDates": "休前日、7/17～8/29、９/19～9/22、11/1、 11/29・11/30",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/karuizawa-east/"
     },
     {
       "name": "軽井沢プリンスホテル ウエスト",
@@ -128,7 +133,8 @@
           "excludedDates": "休前日、7/17～8/29、９/19～9/22、11/1、 11/29・11/30",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/karuizawa-west/"
     },
     {
       "name": "軽井沢 浅間プリンスホテル",
@@ -139,7 +145,8 @@
           "excludedDates": "休前日、7/17～8/29、9/19～9/22、11/1",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/asama/"
     },
     {
       "name": "嬬恋プリンスホテル",
@@ -150,7 +157,8 @@
           "excludedDates": "7/18・7/19、8/8～8/16、9/19～9/22、 10/10・10/11、11/21～11/30",
           "notes": "全室禁煙、入湯税別 11/21～11/30は冬季クローズ期間"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/tsumagoi/"
     },
     {
       "name": "万座プリンスホテル",
@@ -161,7 +169,8 @@
           "excludedDates": "7/18・7/19、8/8～8/16、9/19～9/22、 10/10・10/11、11/21～11/30",
           "notes": "入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/manza/"
     },
     {
       "name": "万座高原ホテル",
@@ -172,7 +181,8 @@
           "excludedDates": "7/18・7/19、8/8～8/16、9/19～9/22、 10/10・10/11、11/21～11/30",
           "notes": "入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/manza-kogen/"
     },
     {
       "name": "東京プリンスホテル",
@@ -183,7 +193,8 @@
           "excludedDates": "10/29",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/tokyo/"
     },
     {
       "name": "品川プリンスホテル",
@@ -194,7 +205,8 @@
           "excludedDates": "7/18、8/13～8/15、 9/19～9/22、10/10、11/21",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/shinagawa/"
     },
     {
       "name": "新宿プリンスホテル",
@@ -205,7 +217,8 @@
           "excludedDates": "5/17、5/20～5/24、5/30・5/31、9/19～ 9/21 、 10/3 、 10/10 ・ 10/11 、 10/17 、 10/24、10/31、11/7、11/14、11/21・ 11/22、11/28",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/shinjuku/"
     },
     {
       "name": "サンシャインシティ プリンスホテル",
@@ -216,7 +229,8 @@
           "excludedDates": "除外日なし",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/sunshine/"
     },
     {
       "name": "川越プリンスホテル",
@@ -227,7 +241,8 @@
           "excludedDates": "9/19～9/22、10/17・10/18",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kawagoe/"
     },
     {
       "name": "新横浜プリンスホテル",
@@ -238,7 +253,8 @@
           "excludedDates": "除外日なし",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/shinyokohama/"
     },
     {
       "name": "箱根湯の花プリンスホテル",
@@ -249,7 +265,8 @@
           "excludedDates": "休前日、8/8～8/２２",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/yunohana/"
     },
     {
       "name": "箱根仙石原プリンスホテル",
@@ -260,7 +277,8 @@
           "excludedDates": "休前日、8/8～8/24",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/hakone-sengokuhara/"
     },
     {
       "name": "大磯プリンスホテル",
@@ -271,7 +289,8 @@
           "excludedDates": "休前日、7/18～8/30",
           "notes": "全館禁煙、入湯税別 スパは別料金となります。 12才未満のお子さまは3F温泉フロア のみのご利用になれます（4F スパ施設 はご利用になれません）。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/oiso/"
     },
     {
       "name": "鎌倉プリンスホテル",
@@ -282,7 +301,8 @@
           "excludedDates": "休前日、8/8～8/15、9/19～9/22",
           "notes": "全館禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kamakura/"
     },
     {
       "name": "下田プリンスホテル",
@@ -293,7 +313,8 @@
           "excludedDates": "8/1～8/23",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/shimoda/"
     },
     {
       "name": "名古屋プリンスホテル スカイタワー",
@@ -304,7 +325,8 @@
           "excludedDates": "休前日、8/8～8/16、9/10～10/4、10/9～ 10/26、11/23",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/nagoya/"
     },
     {
       "name": "びわ湖大津プリンスホテル",
@@ -315,7 +337,8 @@
           "excludedDates": "5/22、7/11・7/12、8/6～８/16、 9/19～９/22、10/10・10/11、 11/21・11/22、11/28",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/otsu/"
     },
     {
       "name": "福岡プリンスホテル ももち浜",
@@ -326,7 +349,8 @@
           "excludedDates": "7/18・7/19、8/8～8/15、9/19～9/22、 10/10 ・ 10/11 、 10/31 、 11/1 ・ 11/2 、 11/14・11/15、11/21・11/22",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/momochihama/"
     },
     {
       "name": "日南海岸南郷プリンスホテル",
@@ -337,7 +361,8 @@
           "excludedDates": "7/18～7/20、8/8～8/16、8/22、9/5・ 9/6、9/19～９/22",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/nango/"
     },
     {
       "name": "沖縄プリンスホテル オーシャンビューぎのわん",
@@ -348,7 +373,8 @@
           "excludedDates": "7/13～７/19、８/8～８/15、9/19～９/22、 10/10・10/11、11/7",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/ginowan/"
     },
     {
       "name": "中国割烹旅館 掬水亭",
@@ -359,7 +385,9 @@
           "excludedDates": "休前日、5/2～5/5、7/17～8/29、9/19～ 9/22、11/21・11/22",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kikusuitei/",
+      "accessUrl": "https://www.princehotels.co.jp/kikusuitei/access/"
     },
     {
       "name": "ホテルシーパラダイスイン",
@@ -370,7 +398,9 @@
           "excludedDates": "7/18・7/19、8/1～8/16、8/22、8/29 9/19～9/22、10/10・10/11、11/21・ 11/22",
           "notes": "全室禁煙 ファミリールームは４ベッドとなります。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.seaparadise.co.jp/hotel/",
+      "accessUrl": "https://www.seaparadise.co.jp/hotel/access/"
     },
     {
       "name": "ザ・プリンス 軽井沢",
@@ -387,7 +417,8 @@
           "excludedDates": "休前日、7/17～8/29、９/19～9/22、 11/1、11/29・11/30",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/the_prince_karuizawa/"
     },
     {
       "name": "ザ・プリンス パークタワー東京",
@@ -404,7 +435,8 @@
           "excludedDates": "7/18・7/19、8/8～8/15、9/19～９ /22、10/1０～10/14、11/21・11/22",
           "notes": ""
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/parktower/"
     },
     {
       "name": "ザ・プリンス さくらタワー東京",
@@ -421,7 +453,8 @@
           "excludedDates": "7/18、8/13～8/15、9/19～9/22、 10/10、11/21",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/sakuratower/"
     },
     {
       "name": "ザ・プリンス 箱根芦ノ湖",
@@ -438,7 +471,8 @@
           "excludedDates": "休前日、7/18・７/19、8/2・８/3、8/8 ～ 8/15 、 9/19 ～ ９ /22 、 10/10 ・ 10/11、11/21・11/22",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/the_prince_hakone/"
     },
     {
       "name": "ザ・プリンス 京都宝ヶ池",
@@ -455,7 +489,8 @@
           "excludedDates": "9/19～9/21、10/10・10/11、11/21 ～11/30",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kyoto/"
     },
     {
       "name": "川奈ホテル",
@@ -466,7 +501,8 @@
           "excludedDates": "７/18・７/19、8/8～8/14、 ９/１９～９/22、１０/１０・１０/１１、 11/21・11/22",
           "notes": "全室禁煙、入湯税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kawana/"
     },
     {
       "name": "グランドプリンスホテル高輪",
@@ -483,7 +519,8 @@
           "excludedDates": "7/18、8/13～8/15、9/19～9/22、 10/10、11/21",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/takanawa/"
     },
     {
       "name": "グランドプリンスホテル新高輪",
@@ -500,7 +537,8 @@
           "excludedDates": "7/18、8/13～8/15、 9/19～9/22、10/10、11/21",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/newtakanawa/"
     },
     {
       "name": "グランドプリンスホテル大阪ベイ",
@@ -517,7 +555,8 @@
           "excludedDates": "9/19～９/22",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/osakabay/"
     },
     {
       "name": "グランドプリンスホテル広島",
@@ -534,7 +573,8 @@
           "excludedDates": "7/18・7/19、7/25、8/8～8/15、 8/22、9/19～9/22、9/26、10/10・ 10/11、11/21・11/22、11/28",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/hiroshima/"
     },
     {
       "name": "プリンス バケーション クラブ 軽井沢浅間",
@@ -545,7 +585,10 @@
           "excludedDates": "休前日、7/17～8/29、９/19～9/22、 11/1",
           "notes": "全室禁煙、入湯税別 ※予約は宿泊日より1ヵ月前 から受付いたします。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princevacationclub.com/lineup/asama/",
+      "locationSourceUrl": "https://www.princevacationclub.com/member/hotel/asama/",
+      "accessUrl": "https://www.princevacationclub.com/member/hotel/asama/access/"
     },
     {
       "name": "ザ・プリンスギャラリー 東京紀尾井町",
@@ -556,7 +599,8 @@
           "excludedDates": "なし",
           "notes": "全室禁煙"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/kioicho/"
     },
     {
       "name": "ザ・プリンス ヴィラ軽井沢",
@@ -567,7 +611,8 @@
           "excludedDates": "休前日、7/17～8/29、 ９/19～9/22、11/1、11/29・11/30",
           "notes": "全室禁煙 2 泊よりご予約を承っておりま す。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/karuizawa-villa/"
     },
     {
       "name": "高輪 花香路",
@@ -578,7 +623,8 @@
           "excludedDates": "7/18、8/13～8/15、 9/19～9/22、10/10、11/21",
           "notes": "全室禁煙、宿泊税別"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/hanakohro/"
     },
     {
       "name": "プリンス バケーション クラブ ヴィラ軽井沢",
@@ -589,7 +635,10 @@
           "excludedDates": "休前日、5/2～5/5、7/17～8/29、 ９/19～9/22、11/1",
           "notes": "全室禁煙、入湯税別 ※予約は宿泊日より1ヵ月前から 受付いたします。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princevacationclub.com/lineup/villa/",
+      "locationSourceUrl": "https://www.princevacationclub.com/member/hotel/villa/",
+      "accessUrl": "https://www.princevacationclub.com/member/hotel/villa/access/"
     },
     {
       "name": "プリンス バケーション クラブ 三養荘",
@@ -600,7 +649,10 @@
           "excludedDates": "休前日、8/8～8/15、9/18～9/27、 11/20～11/30",
           "notes": "全室禁煙、入湯税別 ※お食事はお食事処にてご提供 いたします（5 日前までに要予 約）。予約は宿泊日より 1 ヵ月前 から受付いたします。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princevacationclub.com/lineup/sanyo-so/",
+      "locationSourceUrl": "https://www.princevacationclub.com/member/hotel/sanyo-so/",
+      "accessUrl": "https://www.princevacationclub.com/member/hotel/sanyo-so/access/"
     },
     {
       "name": "伊豆長岡温泉 三養荘",
@@ -611,7 +663,8 @@
           "excludedDates": "休前日、8/8～8/15、9/18～9/27、 11/20～11/30",
           "notes": "全室禁煙、入湯税別 ※お食事はお食事処にてご提供 いたします（5 日前までに要予 約）。予約は宿泊日より 1 ヵ月前 から受付いたします。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/sanyo-so/"
     },
     {
       "name": "芦ノ湖畔蛸川温泉 龍宮殿",
@@ -622,7 +675,9 @@
           "excludedDates": "休前日、6/23、7/11、8/2・８/3、8/8 ～8/16、9/18～9/27、11/18～ 11/27",
           "notes": "全室禁煙、入湯税別 ※お食事はお食事処にてご提供 いたします（5 日前までに要予 約）。予約は宿泊日より 1 ヵ月前 から受付いたします。"
         }
-      ]
+      ],
+      "sourceUrl": "https://www.princehotels.co.jp/ryuguden/"
     }
-  ]
+  ],
+  "coordinateNotes": "基本は公式アクセス地図。画像地図のみの施設は、公式住所と一致する補助座標を照合。軽井沢浅間・三養荘の会員施設は同じホテル・旅館敷地の地図の位置を距離の目安として利用。"
 }

@@ -1,0 +1,100 @@
+name: Build Daiichi Kosho store DB
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 5 1 * *"
+  push:
+    branches: [main]
+    paths:
+      - "tools/issuers/daiichikosho/scrape.py"
+      - "data/issuers/daiichikosho/config.json"
+      - "tools/issuers/daiichikosho/store_parser.py"
+      - "tools/features/scrape_kyoritsu_hotels.py"
+      - "tests/test_daiichikosho.py"
+      - ".github/workflows/scrape_daiichikosho.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-store-db
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[migration]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12.14"
+
+      - name: Verify store parser
+        run: python -m unittest discover -s tests -p 'test_daiichikosho.py'
+
+      - name: Prepare Cloudflare API token
+        env:
+          CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          CF_API_TOKEN="$(printf '%s' "$CF_API_TOKEN_RAW" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$CF_API_TOKEN" || { echo "CF_API_TOKEN is not configured"; exit 1; }
+          echo "::add-mask::$CF_API_TOKEN"
+          printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
+
+      - name: Install Wrangler
+        run: npm install --no-save wrangler@4
+
+      - name: Restore previous private state from D1
+        run: |
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT raw_json FROM store_raw WHERE issuer_id='daiichikosho' ORDER BY store_id LIMIT 500;" --json > /tmp/raw_0.json
+          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT current_meta_json FROM issuer_state WHERE issuer_id='daiichikosho';" --json > /tmp/meta.json
+          python tools/restore_d1_state.py "daiichikosho" '/tmp/raw_0.json' /tmp/meta.json
+
+      - name: Build current snapshot and diff
+        run: python tools/issuers/daiichikosho/scrape.py
+
+      - name: Show diff summary
+        run: cat data/issuers/daiichikosho/stores/last_diff.md
+
+      - name: Apply D1 schema
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/schema.sql
+
+      - name: Build issuer D1 sync
+        run: python tools/build_d1_issuer_sql.py "daiichikosho"
+
+      - name: Sync issuer to private D1
+        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file="cloudflare/generated/sync_daiichikosho.sql"
+
+      - name: Merge public update history
+        run: python tools/build_updates.py
+
+      - name: Remove private working database
+        run: rm -rf data/issuers/daiichikosho/stores
+
+      - name: Commit public metadata only
+        env:
+          GH_PUSH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/updates.json
+          :
+          git diff --cached --quiet && exit 0
+          git commit -m "Update 第一興商 store changes: $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            auth=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
+            if git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
+

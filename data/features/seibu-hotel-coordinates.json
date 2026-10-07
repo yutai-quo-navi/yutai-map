@@ -1,0 +1,50 @@
+{
+  "プリンス バケーション クラブ 軽井沢浅間": {
+    "address": "長野県北佐久郡軽井沢町大字発地字馬越1399番100",
+    "officialLocationUrl": "https://www.princevacationclub.com/member/hotel/asama/",
+    "lat": 36.3018021,
+    "lng": 138.6442262,
+    "mapLink": "https://goo.gl/maps/jFYk64DQEDKAnz4y6",
+    "coordinateSource": "公式アクセス地図（同じホテル敷地）",
+    "coordinateSourceUrl": "https://goo.gl/maps/jFYk64DQEDKAnz4y6",
+    "coordinateNote": "距離は同じホテル敷地の公式アクセス地図の位置を使った目安です。"
+  },
+  "プリンス バケーション クラブ ヴィラ軽井沢": {
+    "address": "長野県北佐久郡軽井沢町大字発地字馬越1399番100",
+    "officialLocationUrl": "https://www.princevacationclub.com/member/hotel/villa/",
+    "lat": 36.30104617,
+    "lng": 138.64527514,
+    "mapLink": "https://goo.gl/maps/jFYk64DQEDKAnz4y6",
+    "coordinateSource": "OpenPOI API",
+    "coordinateSourceUrl": "https://api.openpoiapi.com/v1/search",
+    "coordinateMatch": "name-and-address",
+    "licenses": [
+      "CDLA-Permissive-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org"
+    ]
+  },
+  "プリンス バケーション クラブ 三養荘": {
+    "address": "静岡県伊豆の国市墹之上字谷戸洞270番1外",
+    "officialLocationUrl": "https://www.princevacationclub.com/member/hotel/sanyo-so/",
+    "lat": 35.039041,
+    "lng": 138.934285,
+    "mapLink": "https://goo.gl/maps/UboAe9kn9avfoqVw6",
+    "coordinateSource": "公式アクセス地図（同じ旅館敷地）",
+    "coordinateSourceUrl": "https://goo.gl/maps/UboAe9kn9avfoqVw6",
+    "coordinateNote": "距離は同じ旅館敷地の公式アクセス地図の位置を使った目安です。"
+  },
+  "ホテルシーパラダイスイン": {
+    "address": "〒236-0006 神奈川県横浜市金沢区八景島",
+    "officialLocationUrl": "https://www.seaparadise.co.jp/hotel/",
+    "lat": 35.3341614,
+    "lng": 139.6468758,
+    "coordinateSource": "Yahoo!マップ（施設名・住所・電話番号を照合）",
+    "coordinateSourceUrl": "https://map.yahoo.co.jp/v3/place/3JpV7Fz-Xf-",
+    "coordinateMatch": "name-address-and-phone",
+    "attributions": [
+      "Yahoo!マップ"
+    ]
+  }
+}

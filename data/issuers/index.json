@@ -85,6 +85,13 @@
       "name": "バルニバービ",
       "status": "public",
       "config": "./data/issuers/balnibarbi/config.json"
+    },
+    {
+      "id": "daiichikosho",
+      "code": "7458",
+      "name": "第一興商",
+      "status": "public",
+      "config": "./data/issuers/daiichikosho/config.json"
     }
   ]
 }

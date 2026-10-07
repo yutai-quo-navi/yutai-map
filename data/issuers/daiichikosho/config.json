@@ -1,0 +1,55 @@
+{
+  "id": "daiichikosho",
+  "code": "7458",
+  "name": "第一興商",
+  "fullName": "第一興商",
+  "status": "public",
+  "sourceUrl": "https://www.dkkaraoke.co.jp/stockinfo/shareholdercoupon.html",
+  "storeSearchUrl": "https://dkdining.com/search/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式DKダイニング店舗一覧（飲食店）",
+  "note": "第一興商の株主ご優待券が使えるDKダイニングの飲食店舗。カラオケルームは含みません。",
+  "aliases": [
+    "楽蔵",
+    "ウメ子の家",
+    "じぶんどき",
+    "蒸しと酒 みちる",
+    "REGALO",
+    "CELTS",
+    "KITCHEN",
+    "京町しずく",
+    "鮮や一夜",
+    "びすとろ家",
+    "大衆食堂 あまつ",
+    "ハイボールバー"
+  ],
+  "excludedNames": [],
+  "categories": {},
+  "searchNames": [
+    "第一興商",
+    "DKダイニング"
+  ],
+  "verified": "2026-10-08",
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/daiichikosho/stores/current.json",
+  "health": {
+    "minStores": 120,
+    "maxStores": 250,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "dkdining.com"
+    ],
+    "maxAdded": 60,
+    "maxRemoved": 40,
+    "maxChanged": 100,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
+}
