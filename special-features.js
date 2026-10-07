@@ -1,5 +1,6 @@
 // Manually maintained features are independent of regular issuer search/sync.
 export const FEATURE_RADIUS_METERS = 3_000_000;
+export function featureRadius(feature) { return feature.radiusMeters ?? FEATURE_RADIUS_METERS; }
 
 function validDate(value) {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) &&
@@ -14,6 +15,8 @@ export function validateFeature(feature) {
       !feature.issuer?.id || !/^\d{4}$/.test(feature.issuer.code) || !feature.issuer.name ||
       feature.updateMode !== 'manual' || !['draft', 'public'].includes(feature.status) ||
       !Array.isArray(feature.stores)) throw new Error('Invalid manual feature');
+  if (!Number.isFinite(featureRadius(feature)) || featureRadius(feature) <= 0 || featureRadius(feature) > FEATURE_RADIUS_METERS)
+    throw new Error('Invalid feature radius');
   const ids = new Set();
   for (const store of feature.stores) {
     if (!store.id || ids.has(store.id) || !store.name || !store.address || !store.conditions)
@@ -44,7 +47,7 @@ function distance(origin, store) {
 }
 export function featureStores(feature, origin) {
   return feature.stores.map(store => ({...store, distance: distance(origin, store)}))
-    .filter(store => store.distance == null || store.distance <= FEATURE_RADIUS_METERS)
+    .filter(store => store.distance == null || store.distance <= featureRadius(feature))
     .sort((a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity));
 }
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -59,27 +62,39 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     root.hidden = !features.length;
     root.innerHTML = '';
     if (!features.length) return;
-    root.innerHTML = '<h2 class="selection-heading">レア優待店 特集</h2><p class="feature-note">近隣検索とは別に、全国の対象店舗を表示します。</p><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>';
+    root.innerHTML = '<h2 class="selection-heading">レア優待店 特集</h2><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>';
     for (const feature of features) {
+      const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
       button.className = 'feature-button';
-      button.textContent = `${feature.title}（${feature.stores.length}店舗）`;
+      button.textContent = feature.shortName || feature.issuer.name;
+      button.setAttribute('aria-label', feature.title);
+      button.setAttribute('aria-controls', 'specialFeatureResults');
       const bubble = createDeadlineBubble(feature.issuer.id);
-      if (bubble) button.append(bubble);
+      if (bubble) bubble.classList.add('feature-deadline');
       button.setAttribute('aria-pressed', String(active?.id === feature.id));
       button.dataset.feature = feature.id;
       button.addEventListener('click', () => {
         active = active?.id === feature.id ? null : feature; render();
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
-      root.querySelector('.feature-buttons').append(button);
+      const caption = document.createElement('p'); caption.className = 'feature-caption';
+      const subtitle = document.createElement('span'); subtitle.textContent = feature.subtitle || '';
+      const count = document.createElement('span');
+      count.textContent = feature.stores.length ? `${feature.stores.length}店舗紹介` : '店舗確認中';
+      caption.append(subtitle, count); item.append(button);
+      if (bubble) item.append(bubble);
+      item.append(caption);
+      root.querySelector('.feature-buttons').append(item);
     }
+    root.querySelector('.feature-results').id = 'specialFeatureResults';
     if (!active) return;
     const origin = getOrigin(), stores = featureStores(active, origin);
     const output = root.querySelector('.feature-results');
     const label = getCenterLabel();
-    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から3,000km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
-    if (active.status === 'public') output.innerHTML += `<p class="feature-note">利用期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／確認日：${esc(active.checkedOn)}</p>`;
+    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から${(featureRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
+    if (origin && !stores.length && active.stores.length) output.innerHTML += '<p class="feature-note">この範囲に対象店舗はありません。別の場所を指定してお探しください。</p>';
+    if (active.status === 'public') output.innerHTML += `<p class="feature-note">特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／確認日：${esc(active.checkedOn)}</p>`;
     const deadline = getDeadline(active.issuer.id);
     output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
     for (const store of stores) {

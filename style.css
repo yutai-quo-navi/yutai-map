@@ -903,8 +903,10 @@ h1 span{
 .special-features{padding:16px 0;border-top:1px solid var(--line)}
 .special-features[hidden]{display:none}
 .feature-note{font-size:12px;color:var(--muted);line-height:1.7}
-.feature-buttons{display:flex;flex-wrap:wrap;gap:8px}
-.feature-button{position:relative;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:18px;padding:10px 14px;font:inherit;font-size:13px;cursor:pointer}
+.feature-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px 6px;margin-top:15px;align-items:start}
+.feature-item{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
+.feature-caption{display:flex;flex-direction:column;gap:1px;margin:5px 0 0;font-size:11px;color:var(--muted);line-height:1.6}
+.feature-button{position:relative;max-width:100%;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:18px;padding:6px 8px;font:inherit;font-size:12px;overflow-wrap:anywhere;cursor:pointer;min-height:34px}
 .feature-button[aria-pressed="true"]{background:var(--accent-soft,#fff4e8)}
 .feature-button:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 .feature-results{display:grid;gap:10px;margin-top:12px}
@@ -1054,6 +1056,8 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 }
 .voucher-deadline-bubble .deadline-count{font-size:10px;font-weight:400}
 .voucher-deadline-bubble::after{display:none}
+.feature-item>.feature-deadline{position:relative;margin-top:6px;border-radius:7px;height:auto;min-height:20px;padding:2px 4px;max-width:100%;box-sizing:border-box;flex-wrap:wrap;font-size:10px}
+.feature-item>.feature-deadline::after{display:block;content:'';position:absolute;top:-4px;left:calc(50% - 3px);width:6px;height:6px;transform:rotate(45deg);background:inherit;border-left:1px solid #dfaa89;border-top:1px solid #dfaa89}
 .voucher-deadline-bubble.is-today{background:#ffe4dc;color:#9b3025;border-color:#da9a8d}
 .store>.voucher-deadline-bubble{margin-bottom:5px}
 

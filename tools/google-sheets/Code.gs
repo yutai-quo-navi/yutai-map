@@ -5,7 +5,7 @@ var HEADERS = ['管理ID','証券コード','会社名','優待名称','期限�
 var CSV_FIELDS = ['id','code','company_name','benefit_name','issue','expiry_date','research_month','expiry_type','category','brands','source_url','secondary_source_url','checked_on','status','notes','issuer_id','search_brand','emoji','verification_method'];
 var CATEGORIES = {dining:'外食・飲食系',shopping:'買物・割引系',leisure:'サービス・レジャー系',catalog:'カタログ・申込期限',other:'その他'};
 var TYPES = ['利用期限','申込期限','登録期限','予約期限','ポイント失効','交換期限','受取期限'];
-var ISSUERS = {skylark:'3197',colowide:'7616',create:'3387',zensho:'7550',toridoll:'3397',foodlife:'3563',yoshinoya:'9861',mcd:'2702',monogatari:'3097',kyoritsu:'9616'};
+var ISSUERS = {skylark:'3197',colowide:'7616',create:'3387',zensho:'7550',toridoll:'3397',foodlife:'3563',yoshinoya:'9861',mcd:'2702',monogatari:'3097',kyoritsu:'9616',balnibarbi:'3418'};
 
 function onOpen() { SpreadsheetApp.getUi().createMenu('優待期限').addItem('編集画面を開く','openEditor').addToUi(); }
 function openEditor() { SpreadsheetApp.getUi().showModelessDialog(HtmlService.createHtmlOutputFromFile('Editor').setWidth(1200).setHeight(780),'優待期限の編集'); }

@@ -14,7 +14,7 @@ test('all manual drafts validate but remain hidden without preview', () => {
   data.features.forEach(validateFeature);
   assert.equal(draft.stores.length, 13);
   assert.equal(visibleFeatures(data.features, '2026-10-07').length, 0);
-  assert.equal(visibleFeatures(data.features, '2026-10-07', true).length, 1);
+  assert.equal(visibleFeatures(data.features, '2026-10-07', true).length, 2);
 });
 test('publication requires year-specific dates, verified coordinates and a safe source', () => {
   assert.throws(() => validateFeature({...draft, status:'public'}));
@@ -45,4 +45,15 @@ test('multiple features share issuer voucher countdown, independently of lunch d
     assert.equal(deadline.days, 60);
     assert.equal(deadline.date, '2026-09-30');
   }
+});
+test('100km feature keeps nearby stores without inheriting 3000km or normal radius', () => {
+  const store = draft.stores[0];
+  const feature = {...draft, radiusMeters:100_000, stores:[
+    {...store, id:'near', lat:35.75, lng:139.8},
+    {...store, id:'far', lat:34.68, lng:135.18}
+  ]};
+  assert.deepEqual(featureStores(feature,{lat:35.71,lng:139.8}).map(s=>s.id), ['near']);
+  assert.equal(featureStores({...feature,radiusMeters:3_000_000},{lat:35.71,lng:139.8}).length, 2);
+  assert.throws(()=>validateFeature({...feature,radiusMeters:-1}));
+  assert.throws(()=>validateFeature({...feature,radiusMeters:Infinity}));
 });

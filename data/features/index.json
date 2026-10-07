@@ -135,7 +135,30 @@
           "lng": null,
           "verified": false
         }
-      ]
+      ],
+      "shortName": "共立メンテ",
+      "subtitle": "株主ランチ",
+      "radiusMeters": 3000000
+    },
+    {
+      "id": "balnibarbi-dining",
+      "title": "バルニバービ・株主優待のお店",
+      "shortName": "バルニバービ",
+      "subtitle": "お食事優待",
+      "issuer": {
+        "id": "balnibarbi",
+        "code": "3418",
+        "name": "バルニバービ"
+      },
+      "status": "draft",
+      "updateMode": "manual",
+      "radiusMeters": 100000,
+      "sourceUrl": "https://ir.balnibarbi.com/shareholders/all_shareholders.php",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "description": "公式掲載施設から優待対象外・営業前・期間限定営業を確認して登録します。公式の126施設表示を優待対象店舗数と同一視しません。",
+      "stores": []
     }
   ]
 }
