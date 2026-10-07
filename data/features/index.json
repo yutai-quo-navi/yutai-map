@@ -260,7 +260,8 @@
         1000000,
         1500000
       ],
-      "deadlineBenefitPattern": "ランチ|お食事"
+      "deadlineBenefitPattern": "ランチ|お食事",
+      "displayLast": true
     },
     {
       "id": "balnibarbi-dining",

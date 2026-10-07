@@ -47,7 +47,8 @@ export function visibleFeatures(features, today, preview = false) {
   return features.map(validateFeature).filter(feature =>
     (feature.status === 'public' && (feature.availability === 'continuous' || (feature.validFrom <= today && today <= feature.validThrough))) ||
     (feature.status === 'ended' && feature.validThrough < today) ||
-    (preview && feature.status === 'draft'));
+    (preview && feature.status === 'draft'))
+    .sort((a, b) => Number(Boolean(a.displayLast)) - Number(Boolean(b.displayLast)));
 }
 function distance(origin, store) {
   if (!origin || !Number.isFinite(origin.lat) || !Number.isFinite(origin.lng) ||
