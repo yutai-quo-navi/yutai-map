@@ -313,7 +313,7 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
 function matchReferenceStore(p, refs){
   const poiName = normalize(p.name || '');
   const rawPoiAddress = p.address || [p.prefecture,p.city].filter(Boolean).join('');
-  const poiAddress = normalize(rawPoiAddress);
+  const poiAddress = normalizeAddress(rawPoiAddress);
   const poiPhone = String(p.phone || p.tel || '').replace(/\D/g,'');
   const poiPrefecture = japanesePrefecture(rawPoiAddress || p.prefecture || '');
 
@@ -322,7 +322,7 @@ function matchReferenceStore(p, refs){
 
   for (const ref of refs) {
     const officialName = ref.name_norm || normalize(ref.name || '');
-    const officialAddress = ref.address_norm || normalize(ref.address || '');
+    const officialAddress = normalizeAddress(ref.address || ref.address_norm || '');
     const officialPhone = ref.phone_norm || String(ref.phone || '').replace(/\D/g,'');
     const officialPrefecture = japanesePrefecture(ref.address || '');
 
@@ -335,6 +335,7 @@ function matchReferenceStore(p, refs){
       if (poiName === officialName) nameScore = 100;
       else if (poiName.length >= 8 && officialName.includes(poiName)) nameScore = 60;
       else if (officialName.length >= 8 && poiName.includes(officialName)) nameScore = 60;
+      else if (containsOfficialBrandAndBranch(poiName, officialName, ref.brand_name)) nameScore = 55;
     }
 
     let addressScore = 0;
@@ -347,7 +348,8 @@ function matchReferenceStore(p, refs){
     const acceptable =
       phoneExact ||
       nameScore === 100 ||
-      (nameScore >= 60 && addressScore >= 35);
+      (nameScore >= 60 && addressScore >= 35) ||
+      (nameScore === 55 && addressScore === 60);
 
     if (!acceptable) continue;
 
@@ -359,6 +361,20 @@ function matchReferenceStore(p, refs){
   }
 
   return best;
+}
+
+function containsOfficialBrandAndBranch(poiName, officialName, brandName){
+  const brand = normalize(brandName || '');
+  if (!brand || !officialName.startsWith(brand)) return false;
+  const branch = officialName.slice(brand.length);
+  if (branch.length < 3) return false;
+  const brandIndex = poiName.indexOf(brand);
+  return brandIndex >= 0 && poiName.indexOf(branch, brandIndex + brand.length) >= 0;
+}
+
+function normalizeAddress(value){
+  // Official pages and POI sources use different Unicode forms for address separators.
+  return normalize(String(value || '').replace(/[−﹣－]/g, '-'));
 }
 
 function japanesePrefecture(value){
