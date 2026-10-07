@@ -1,0 +1,97 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions, loadFeatureData} from '../special-features.js';
+import {nearestDeadline, voucherEntriesFromLedger} from '../expiry.js';
+
+const draft = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
+const live = () => ({...draft, status:'public', sourceUrl:'https://example.com/official',
+  checkedOn:'2026-07-01', validFrom:'2026-07-01', validThrough:'2026-09-30',
+  stores:[{...draft.stores[0], verified:true, lat:35.71, lng:139.80}]});
+
+test('manual feature stays hidden after expiry; scheduled feature needs a verified snapshot', async () => {
+  const data = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url)));
+  validateFeature(draft);
+  assert.equal(draft.stores.length, 13);
+  assert.equal(visibleFeatures([draft], '2026-10-07').length, 0);
+  const remote = {...live(), ...data.features[1], stores:live().stores, checkedOn:'2026-10-07'};
+  validateFeature(remote);
+  assert.equal(visibleFeatures([draft, remote], '2026-10-07').length, 1);
+  assert.equal(visibleFeatures([draft, remote], '2026-10-07', true).length, 2);
+  const loaded = await loadFeatureData(data.features, async () => new Response(JSON.stringify({id:remote.id, stores:remote.stores, checkedOn:remote.checkedOn})));
+  assert.equal(loaded.length, 2);
+  const warned = console.warn; console.warn = () => {};
+  try {
+    assert.equal((await loadFeatureData(data.features, async () => new Response('', {status:503}))).length, 1);
+    assert.equal((await loadFeatureData(data.features, async () => new Response(JSON.stringify({id:'wrong'})))).length, 1);
+  } finally { console.warn = warned; }
+});
+test('publication requires year-specific dates, verified coordinates and a safe source', () => {
+  assert.throws(() => validateFeature({...draft, status:'public'}));
+  const feature = live(); validateFeature(feature);
+  for (const changes of [{sourceUrl:'javascript:alert(1)'}, {validThrough:'2026-09-31'},
+    {validFrom:'2027-07-01'}, {checkedOn:null}, {updateMode:'unknown'}]) {
+    assert.throws(() => validateFeature({...feature, ...changes}));
+  }
+  assert.equal(visibleFeatures([feature], '2026-09-30').length, 1);
+  assert.equal(visibleFeatures([feature], '2026-10-01').length, 0);
+});
+test('Sapporo includes Tokyo and Kobe beyond normal radius and sorts nearby first', () => {
+  const feature = {...draft, stores:[
+    {...draft.stores[7], lat:34.68, lng:135.18},
+    {...draft.stores[0], lat:35.71, lng:139.80}
+  ]};
+  const result = featureStores(feature, {lat:43.06, lng:141.35});
+  assert.equal(result.length, 2);
+  assert.equal(result[0].id, draft.stores[0].id);
+  assert.ok(result[0].distance > 10_000);
+  assert.deepEqual(featureStores(draft, null).map(s => s.id), draft.stores.map(s => s.id));
+});
+test('multiple features share issuer voucher countdown, independently of lunch dates', () => {
+  const features = [live(), {...live(), id:'kyoritsu-other', validThrough:'2026-08-31'}];
+  const entries = [{issuer:'kyoritsu', date:'2026-09-30', status:'confirmed', issue:'test voucher'}];
+  for (const feature of features) {
+    const deadline = nearestDeadline(entries, feature.issuer.id, new Date('2026-08-01T03:00:00Z'));
+    assert.equal(deadline.days, 60);
+    assert.equal(deadline.date, '2026-09-30');
+  }
+});
+test('100km feature keeps nearby stores without inheriting 3000km or normal radius', () => {
+  const store = draft.stores[0];
+  const feature = {...draft, radiusMeters:100_000, stores:[
+    {...store, id:'near', lat:35.75, lng:139.8},
+    {...store, id:'far', lat:34.68, lng:135.18}
+  ]};
+  assert.deepEqual(featureStores(feature,{lat:35.71,lng:139.8}).map(s=>s.id), ['near']);
+  assert.equal(featureStores({...feature,radiusMeters:3_000_000},{lat:35.71,lng:139.8}).length, 2);
+  assert.throws(()=>validateFeature({...feature,radiusMeters:-1}));
+  assert.throws(()=>validateFeature({...feature,radiusMeters:Infinity}));
+});
+test('each feature has its own dropdown choices and validates its default', () => {
+  const features = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features;
+  assert.deepEqual(featureRadiusOptions(features[0]), [500_000,1_000_000,4_000_000]);
+  assert.deepEqual(featureRadiusOptions(features[1]), [100_000,200_000,300_000]);
+  assert.throws(()=>validateFeature({...features[1],radiusMeters:400_000}));
+  assert.throws(()=>validateFeature({...features[1],radiusOptionsMeters:[100_000,100_000]}));
+});
+
+test('lunch deadline excludes unrelated Kyoritsu discount coupons', () => {
+  const entries = [
+    {issuer:'kyoritsu', date:'2026-08-31', status:'confirmed', benefit:'株主優待割引券'},
+    {issuer:'kyoritsu', date:'2026-09-30', status:'confirmed', benefit:'株主お食事（ランチ）券'}
+  ];
+  const now = new Date('2026-08-01T03:00:00Z');
+  assert.equal(nearestDeadline(entries,'kyoritsu',now,draft.deadlineBenefitPattern).date,'2026-09-30');
+  assert.equal(nearestDeadline(entries,'kyoritsu',now).date,'2026-08-31');
+});
+
+test('feature deadlines connect to the editable ledger and ignore booking or unconfirmed dates', () => {
+  const row = {id:'3418-current',issuer_id:'balnibarbi',code:'3418',company_name:'バルニバービ',
+    benefit_name:'電子優待券',expiry_type:'利用期限',status:'confirmed',expiry_date:'2026-11-30',issue:'2026年発行分'};
+  const entries = voucherEntriesFromLedger([row,{...row,id:'booking',expiry_type:'予約期限'},
+    {...row,id:'unconfirmed',status:'checking'},{...row,id:'month-only',expiry_date:''}]);
+  assert.equal(entries.length, 1);
+  const deadline = nearestDeadline(entries,'balnibarbi',new Date('2026-10-07T03:00:00Z'));
+  assert.equal(deadline.date,'2026-11-30');
+  assert.equal(deadline.days,54);
+});

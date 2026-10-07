@@ -1,4 +1,5 @@
-import {nearestDeadline, deadlineLabel, japanDay} from './expiry.js?v=20261006-round1';
+import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
+import {initSpecialFeatures} from './special-features.js?v=20261007-features';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -48,6 +49,8 @@ const els = {
 let companies = [];
 let voucherDeadlines = [];
 let deadlineDay = japanDay();
+let specialFeatures = {refresh() {}};
+let featureVoucherDeadlines = [];
 let draftSelection = new Set();
 let pickerCompanies = [];
 let lastPosition = null;
@@ -114,6 +117,12 @@ async function init(){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
     await loadVoucherDeadlines();
+    initSpecialFeatures({
+      root: qs('#specialFeatures'), getOrigin: () => lastPosition,
+      getCenterLabel: () => lastCenterLabel, createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
+      getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
+      preview: dev === 'features' || dev === 'all'
+    }).then(controller => { specialFeatures = controller; });
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -252,9 +261,20 @@ async function loadVoucherDeadlines(){
     const data=await response.json();
     voucherDeadlines=Array.isArray(data.entries) ? data.entries.filter(e=>e && typeof e.issuer==='string' && typeof e.date==='string') : [];
   } catch(error) { voucherDeadlines=[]; console.warn('優待期限データを読み込めませんでした',error); }
+  try {
+    const response = await fetch('./data/expiry.json', {cache:'no-store'});
+    if (!response.ok) throw new Error('Expiry ledger unavailable');
+    const ledger = await response.json();
+    featureVoucherDeadlines = voucherEntriesFromLedger(ledger.entries || []);
+  } catch(error) { featureVoucherDeadlines=[]; console.warn('特集の優待期限を読み込めませんでした',error); }
 }
-function deadlineBubble(issuer){
-  const entry=nearestDeadline(voucherDeadlines,issuer);
+function featureDeadline(issuer, pattern){
+  const entries = new Map(voucherDeadlines.map(entry => [entry.id, entry]));
+  for (const entry of featureVoucherDeadlines) entries.set(entry.id, entry);
+  return nearestDeadline([...entries.values()], issuer, new Date(), pattern);
+}
+function deadlineBubble(issuer, pattern, feature = false){
+  const entry=feature ? featureDeadline(issuer, pattern) : nearestDeadline(voucherDeadlines, issuer);
   if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
@@ -312,6 +332,7 @@ function refreshDeadlineDisplay(){
   const next=japanDay();
   if(next===deadlineDay) return;
   deadlineDay=next; renderChips();
+  specialFeatures.refresh();
   if(lastResults.length) renderFilteredResults(Number(els.radius.value));
 }
 document.addEventListener('visibilitychange',()=>{if(!document.hidden) refreshDeadlineDisplay();});
@@ -508,6 +529,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   if(searching){ pendingSearch={pos,centerLabel}; return; }
   lastPosition = pos;
   lastCenterLabel = centerLabel;
+  specialFeatures.refresh();
   const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
   const targets = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id) && (!brand || brand.issuer_id===c.id));
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
@@ -1240,4 +1262,3 @@ function renderMemos(){
     els.memoList.appendChild(card);
   }
 }
-
