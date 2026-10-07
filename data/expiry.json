@@ -1556,6 +1556,28 @@
       "emoji": "🛒",
       "verification_method": "user",
       "expiry_year": 2027
+    },
+    {
+      "id": "9616-2027-07-discount",
+      "code": "9616",
+      "company_name": "共立メンテナンス",
+      "benefit_name": "株主様ご優待割引電子チケット",
+      "issue": "2026年3月末基準・2026年7月発送分",
+      "expiry_date": "2027-07-31",
+      "research_month": "2027-07",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "https://www.kyoritsugroup.co.jp/ir/stock/benefits/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-07",
+      "status": "confirmed",
+      "notes": "2026-10-07 ユーザー情報：2027年7月31日期限の券が到着済み。公式制度確認。株主お食事（ランチ）券とは別券。",
+      "issuer_id": "kyoritsu",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
     }
   ]
 }

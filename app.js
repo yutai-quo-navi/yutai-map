@@ -591,7 +591,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   } catch(e){
     console.error(e);
     if(e?.code === 'RATE_LIMIT'){
-      showError('短時間に検索が集中しています。10分ほど待ってから再度お試しください。');
+      showError(e.message || '短時間に検索が集中しています。1分ほど待ってから再度お試しください。');
       setStatus('検索回数が上限に達しました');
     }else{
       showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
@@ -641,7 +641,7 @@ async function queryD1StoreApi(targets, pos, radius){
   if(res.status === 429){
     let data = {};
     try { data = await res.json(); } catch {}
-    const error = new Error(data.message || '短時間に検索が集中しています。10分ほど待ってから再度お試しください。');
+    const error = new Error(data.message || '短時間に検索が集中しています。1分ほど待ってから再度お試しください。');
     error.code = 'RATE_LIMIT';
     throw error;
   }

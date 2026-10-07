@@ -4,7 +4,7 @@ const MAX_CANDIDATES = 600;
 const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
 const OPENPOI_ALIAS_CHUNK = 14;
 const OPENPOI_LIMIT = 200;
-const SEARCH_LOCK_SECONDS = 600;
+const SEARCH_LOCK_SECONDS = 60;
 const API_RETRY_SECONDS = 60;
 const OPENPOI_TIMEOUT_MS = 8000;
 const MAX_REQUEST_URL_LENGTH = 2048;
@@ -146,7 +146,7 @@ async function enforceSearchRateLimit(env, request, cors){
   if (locked) {
     return json({
       error: 'rate_limited',
-      message: '短時間に検索が集中しています。10分ほど待ってから再度お試しください。',
+      message: '短時間に検索が集中しています。1分ほど待ってから再度お試しください。',
       retry_after: SEARCH_LOCK_SECONDS
     }, 429, {
       ...cors,
@@ -164,7 +164,7 @@ async function enforceSearchRateLimit(env, request, cors){
 
   return json({
     error: 'rate_limited',
-    message: '短時間に検索が集中しています。10分ほど待ってから再度お試しください。',
+    message: '短時間に検索が集中しています。1分ほど待ってから再度お試しください。',
     retry_after: SEARCH_LOCK_SECONDS
   }, 429, {
     ...cors,

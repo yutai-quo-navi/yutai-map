@@ -50,8 +50,8 @@ test('existing search limit remains a separate guard and prevents upstream queri
     const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:{limit:async()=>({success:false})},DB:{prepare(){assert.fail('DB must not be reached');}}};
     const response=await worker.fetch(request(protectedPaths[3]),env);
     assert.equal(response.status,429);
-    assert.equal(response.headers.get('Retry-After'),'600');
-    assert.equal((await response.json()).retry_after,600);
+    assert.equal(response.headers.get('Retry-After'),'60');
+    assert.equal((await response.json()).retry_after,60);
   }finally{globalThis.caches=old;}
 });
 test('reference matching uses a fixed upstream destination and a timeout signal',async()=>{
