@@ -253,7 +253,7 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
     .all();
   if (!refs.length) return [];
 
-  const aliasChunks = chunk(brand ? [brand] : aliases, OPENPOI_ALIAS_CHUNK);
+  const aliasChunks = referenceAliasChunks(brand ? [brand] : aliases);
   const responses = await Promise.allSettled(aliasChunks.map(async group => {
     const params = new URLSearchParams({
       q: group.join(' '),
@@ -370,6 +370,16 @@ function containsOfficialBrandAndBranch(poiName, officialName, brandName){
   if (branch.length < 3) return false;
   const brandIndex = poiName.indexOf(brand);
   return brandIndex >= 0 && poiName.indexOf(branch, brandIndex + brand.length) >= 0;
+}
+
+function referenceAliasChunks(aliases){
+  // OpenPOI searches names AND addresses with space-separated OR terms. A place
+  // name (e.g. the brand 北海道) can fill the candidate limit with unrelated POIs.
+  // Keep broad terms in their own requests so they cannot hide other brands.
+  const unique = [...new Map(aliases.map(alias => [normalize(alias), alias])).values()];
+  const broad = unique.filter(alias => japanesePrefecture(alias) === alias || /\s/.test(alias));
+  const specific = unique.filter(alias => !broad.includes(alias));
+  return [...chunk(specific, OPENPOI_ALIAS_CHUNK), ...broad.map(alias => [alias])];
 }
 
 function normalizeAddress(value){

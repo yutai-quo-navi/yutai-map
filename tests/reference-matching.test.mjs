@@ -64,3 +64,30 @@ test('same brand at a different branch cannot displace the correct official stor
   const data=await search([poi],[other,reference]);
   assert.deepEqual(data.results.map(s=>s.store_id),[reference.store_id]);
 });
+
+test('a geographic brand cannot fill the shared candidate limit and hide La Pausa',async()=>{
+  const oldFetch=globalThis.fetch, oldCaches=globalThis.caches;
+  globalThis.caches={default:{match:async()=>undefined}};
+  const queries=[];
+  const unrelated=Array.from({length:200},(_,i)=>({...poi,name:'無関係な施設'+i}));
+  globalThis.fetch=async(url)=>{
+    const q=new URL(url).searchParams.get('q');
+    queries.push(q);
+    return new Response(JSON.stringify({results:q.includes('北海道')?unrelated:[poi]}));
+  };
+  const permit={limit:async()=>({success:true})};
+  const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
+    first:async()=>({aliases_json:JSON.stringify(['甘太郎','北海道','ラパウザ','ウルフギャング・パック','ウルフギャング･パック'])}),
+    all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:[reference]})
+  };}};}}};
+  try {
+    const response=await worker.fetch(new Request('https://api.example.com/v1/stores/search?lat=43.06&lng=141.48&radius=10000&issuers=colowide'),env);
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.deepEqual(data.results.map(s=>s.store_id),[reference.store_id]);
+    assert.ok(queries.includes('北海道'));
+    assert.ok(queries.some(q=>q.includes('ラパウザ')&&!q.includes('北海道')));
+    assert.equal(queries.length,2);
+    assert.equal(queries.filter(q=>q.includes('ウルフギャング')).length,1);
+  } finally {globalThis.fetch=oldFetch;globalThis.caches=oldCaches;}
+});
