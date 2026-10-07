@@ -1,4 +1,4 @@
-// Manually maintained features are independent of regular issuer search/sync.
+// Feature search uses independent radii and either manual or scheduled data.
 export const FEATURE_RADIUS_METERS = 3_000_000;
 const MAX_FEATURE_RADIUS_METERS = 4_000_000;
 export function featureRadius(feature) { return feature.radiusMeters ?? FEATURE_RADIUS_METERS; }
@@ -15,8 +15,8 @@ function safeUrl(value) {
 export function validateFeature(feature) {
   if (!feature || !/^[a-z0-9-]+$/.test(feature.id) || !feature.title ||
       !feature.issuer?.id || !/^\d{4}$/.test(feature.issuer.code) || !feature.issuer.name ||
-      feature.updateMode !== 'manual' || !['draft', 'public'].includes(feature.status) ||
-      !Array.isArray(feature.stores)) throw new Error('Invalid manual feature');
+      !['manual', 'scheduled'].includes(feature.updateMode) || !['draft', 'public'].includes(feature.status) ||
+      !Array.isArray(feature.stores)) throw new Error('Invalid feature');
   if (!Number.isFinite(featureRadius(feature)) || featureRadius(feature) <= 0 || featureRadius(feature) > MAX_FEATURE_RADIUS_METERS)
     throw new Error('Invalid feature radius');
   const radii = featureRadiusOptions(feature);
@@ -33,14 +33,15 @@ export function validateFeature(feature) {
         Math.abs(store.lat) > 90 || Math.abs(store.lng) > 180))) throw new Error('Invalid coordinates');
   }
   if (feature.status === 'public' && (!feature.stores.length || !safeUrl(feature.sourceUrl) ||
-      !validDate(feature.checkedOn) || !validDate(feature.validFrom) || !validDate(feature.validThrough) ||
-      feature.validFrom > feature.validThrough || feature.checkedOn > feature.validThrough ||
+      !validDate(feature.checkedOn) || (feature.availability !== 'continuous' &&
+      (!validDate(feature.validFrom) || !validDate(feature.validThrough) ||
+      feature.validFrom > feature.validThrough || feature.checkedOn > feature.validThrough)) ||
       feature.stores.some(store => store.verified !== true || store.lat == null))) throw new Error('Unverified public feature');
   return feature;
 }
 export function visibleFeatures(features, today, preview = false) {
   return features.map(validateFeature).filter(feature =>
-    (feature.status === 'public' && feature.validFrom <= today && today <= feature.validThrough) ||
+    (feature.status === 'public' && (feature.availability === 'continuous' || (feature.validFrom <= today && today <= feature.validThrough))) ||
     (preview && feature.status === 'draft'));
 }
 function distance(origin, store) {
@@ -78,7 +79,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       button.textContent = feature.shortName || feature.issuer.name;
       button.setAttribute('aria-label', feature.title);
       button.setAttribute('aria-controls', 'specialFeatureResults');
-      const bubble = createDeadlineBubble(feature.issuer.id);
+      const bubble = createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern);
       if (bubble) bubble.classList.add('feature-deadline');
       button.setAttribute('aria-pressed', String(active?.id === feature.id));
       button.dataset.feature = feature.id;
@@ -120,8 +121,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     const label = getCenterLabel();
     output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
     if (origin && !stores.length && active.stores.length) output.innerHTML += '<p class="feature-note">この範囲に対象店舗はありません。別の場所を指定してお探しください。</p>';
-    if (active.status === 'public') output.innerHTML += `<p class="feature-note">特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／確認日：${esc(active.checkedOn)}</p>`;
-    const deadline = getDeadline(active.issuer.id);
+    if (active.status === 'public') output.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
+    const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
     output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
     for (const store of stores) {
       const card = document.createElement('article'); card.className = 'card feature-card';
@@ -135,9 +136,27 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     const response = await fetch('./data/features/index.json', {cache:'no-store'});
     if (!response.ok) throw new Error('Feature data unavailable');
     const data = await response.json();
-    features = data.features; render();
+    features = await loadFeatureData(data.features); render();
   } catch (error) {
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
   return {refresh: render};
+}
+
+// One unavailable remote feature must not hide other verified features.
+export async function loadFeatureData(configs, fetcher = fetch) {
+  const results = await Promise.allSettled(configs.map(async config => {
+    if (config.updateMode !== 'scheduled') return validateFeature(config);
+    if (!safeUrl(config.storeDataUrl)) throw new Error('Invalid feature data URL');
+    const response = await fetcher(config.storeDataUrl, {signal:AbortSignal.timeout(10000)});
+    if (!response.ok) throw new Error('Feature snapshot unavailable');
+    const snapshot = await response.json();
+    if (snapshot.id !== config.id) throw new Error('Feature snapshot mismatch');
+    return validateFeature({...config, stores:snapshot.stores, checkedOn:snapshot.checkedOn});
+  }));
+  return results.flatMap(result => {
+    if (result.status === 'fulfilled') return [result.value];
+    console.warn('特集データを読み込めませんでした', result.reason);
+    return [];
+  });
 }

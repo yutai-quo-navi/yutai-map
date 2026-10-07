@@ -12,8 +12,8 @@ export function deadlineDays(date, now = new Date()) {
   const [ty,tm,td] = japanDay(now).split('-').map(Number);
   return Math.round((stamp-Date.UTC(ty,tm-1,td))/86400000);
 }
-export function nearestDeadline(entries, issuer, now = new Date()) {
-  return entries.filter(e=>e.issuer===issuer && e.status==='confirmed')
+export function nearestDeadline(entries, issuer, now = new Date(), benefitPattern = null) {
+  return entries.filter(e=>e.issuer===issuer && e.status==='confirmed' && (!benefitPattern || new RegExp(benefitPattern).test(e.benefit || '')))
     .map(e=>({...e,days:deadlineDays(e.date,now)}))
     .filter(e=>e.days!==null && e.days>=0 && (!e.expires_at || Date.parse(e.expires_at)>now.getTime()))
     .sort((a,b)=>a.date.localeCompare(b.date))[0] || null;
@@ -39,4 +39,14 @@ export function deadlineState(days) {
   if(days < 0) return {label:'期限終了', tone:'expired'};
   if(days === 0) return {label:'🚨 本日まで', tone:'today'};
   return {label:`${days <= 3 ? '🔥 ' : days <= 7 ? '⚠️ ' : ''}あと${days}日`, tone:days <= 3 ? 'urgent' : days <= 7 ? 'soon' : 'normal'};
+}
+
+// Feature vouchers read the same editable expiry ledger as the expiry page.
+export function voucherEntriesFromLedger(entries) {
+  return entries.filter(entry => entry.issuer_id && entry.expiry_type === '利用期限' &&
+    entry.status === 'confirmed' && entry.expiry_date).map(entry => ({
+      id:entry.id, issuer:entry.issuer_id, code:entry.code, name:entry.company_name,
+      benefit:entry.benefit_name, date:entry.expiry_date, status:entry.status,
+      issue:entry.issue || '対象発行回未登録'
+    }));
 }

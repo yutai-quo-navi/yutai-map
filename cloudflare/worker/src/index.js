@@ -28,6 +28,16 @@ export default {
       }
     }
 
+    if (url.pathname.startsWith('/v1/features/')) {
+      const id = url.pathname.slice('/v1/features/'.length);
+      if (!['balnibarbi-dining'].includes(id)) return json({error:'not_found'},404,cors);
+      try {
+        const row = await env.DB.prepare('SELECT payload_json FROM feature_snapshots WHERE feature_id = ?').bind(id).first();
+        if (!row) return json({error:'feature_unavailable'},503,cors);
+        return json(JSON.parse(row.payload_json),200,{...cors,'Cache-Control':'public, max-age=300'});
+      } catch { return json({error:'feature_unavailable'},503,cors); }
+    }
+
     if (url.pathname === '/v1/brands') {
       const ids=parseIssuers(url.searchParams.get('issuers'));
       if(!ids.length) return json({brands:[]},200,cors);

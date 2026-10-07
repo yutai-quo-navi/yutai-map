@@ -51,3 +51,9 @@ CREATE TABLE IF NOT EXISTS issuer_state (
   current_meta_json TEXT NOT NULL DEFAULT '{}',
   updated_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS feature_snapshots (
+  feature_id TEXT PRIMARY KEY,
+  payload_json TEXT NOT NULL,
+  checked_on TEXT NOT NULL
+);
