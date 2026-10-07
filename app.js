@@ -1,7 +1,7 @@
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-hotel-multi2';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-hotel-multi2';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261008-hotel-multi2';
-import {initSearchRadius} from './search-radius.js?v=20261008-hotel-multi2';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-latest-expiry';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-latest-expiry';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261008-latest-expiry';
+import {initSearchRadius} from './search-radius.js?v=20261008-latest-expiry';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -285,14 +285,15 @@ async function loadVoucherDeadlines(){
     featureVoucherDeadlines = voucherEntriesFromLedger(ledger.entries || []);
   } catch(error) { featureVoucherDeadlines=[]; console.warn('特集の優待期限を読み込めませんでした',error); }
 }
+function allVoucherDeadlines(){
+  return [...voucherDeadlines, ...featureVoucherDeadlines];
+}
 function featureDeadline(issuer, pattern){
-  const entries = new Map(voucherDeadlines.map(entry => [entry.id, entry]));
-  for (const entry of featureVoucherDeadlines) entries.set(entry.id, entry);
-  return nearestDeadline([...entries.values()], issuer, new Date(), pattern);
+  return nearestDeadline(allVoucherDeadlines(), issuer, new Date(), pattern);
 }
 function deadlineBubble(issuer, pattern, feature = false){
-  const entry=(feature ? featureDeadline(issuer, pattern) : nearestDeadline(voucherDeadlines, issuer)) ||
-    (!feature && companies.find(company => company.id === issuer)?.showExpiredDeadline ? latestExpiredDeadline(voucherDeadlines, issuer) : null);
+  const entry=(feature ? featureDeadline(issuer, pattern) : nearestDeadline(allVoucherDeadlines(), issuer)) ||
+    (!feature && companies.find(company => company.id === issuer)?.showExpiredDeadline ? latestExpiredDeadline(allVoucherDeadlines(), issuer) : null);
   if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');

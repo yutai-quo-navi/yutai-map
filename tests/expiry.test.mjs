@@ -1,6 +1,16 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {japanDate, daysRemaining, monthEntries, deadlineState} from '../expiry.js';
+import {japanDate, daysRemaining, monthEntries, deadlineState, nearestDeadline, latestExpiredDeadline} from '../expiry.js';
+
+test('latest confirmed expiry wins duplicates and a new valid voucher replaces expired status', () => {
+  const now=new Date('2026-10-08T00:00:00Z');
+  const old={id:'voucher',issuer:'balnibarbi',date:'2026-09-30',status:'confirmed',benefit:'食事券'};
+  const entries=[old,{...old,date:'2027-03-31'},{...old,id:'new',date:'2027-09-30'},
+    {...old,date:'2028-09-30',status:'checking'}, {...old,date:'2029-09-30',benefit:'別の券'}];
+  assert.equal(nearestDeadline([old],'balnibarbi',now),null);
+  assert.equal(latestExpiredDeadline([old],'balnibarbi',now).date,'2026-09-30');
+  assert.equal(nearestDeadline(entries,'balnibarbi',now,'食事券').date,'2027-09-30');
+});
 
 test('Japan calendar changes at 15:00 UTC irrespective of host timezone', () => {
   assert.equal(japanDate(new Date('2026-09-30T14:59:59Z')), '2026-09-30');

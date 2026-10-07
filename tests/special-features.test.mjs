@@ -106,7 +106,7 @@ test('lunch deadline excludes unrelated Kyoritsu discount coupons', () => {
   ];
   const now = new Date('2026-08-01T03:00:00Z');
   assert.equal(nearestDeadline(entries,'kyoritsu',now,draft.deadlineBenefitPattern).date,'2026-09-30');
-  assert.equal(nearestDeadline(entries,'kyoritsu',now).date,'2026-08-31');
+  assert.equal(nearestDeadline(entries,'kyoritsu',now).date,'2026-09-30');
 });
 
 test('feature deadlines connect to the editable ledger and ignore booking or unconfirmed dates', () => {

@@ -13,10 +13,11 @@ export function deadlineDays(date, now = new Date()) {
   return Math.round((stamp-Date.UTC(ty,tm-1,td))/86400000);
 }
 export function nearestDeadline(entries, issuer, now = new Date(), benefitPattern = null) {
+  // Reissued or duplicate voucher records prefer the latest confirmed expiry.
   return entries.filter(e=>e.issuer===issuer && e.status==='confirmed' && (!benefitPattern || new RegExp(benefitPattern).test(e.benefit || '')))
     .map(e=>({...e,days:deadlineDays(e.date,now)}))
     .filter(e=>e.days!==null && e.days>=0 && (!e.expires_at || Date.parse(e.expires_at)>now.getTime()))
-    .sort((a,b)=>a.date.localeCompare(b.date))[0] || null;
+    .sort((a,b)=>b.date.localeCompare(a.date))[0] || null;
 }
 export function deadlineLabel(entry) {
   return entry.days===0 ? '⚠️本日失効' : '⚠️失効'+entry.days+'日前';
