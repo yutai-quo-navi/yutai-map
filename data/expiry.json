@@ -1534,6 +1534,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "1925-2027-06-common",
+      "code": "1925",
+      "company_name": "大和ハウス工業",
+      "benefit_name": "株主優待 共通商品券",
+      "issue": "2026年3月末基準・2026年6月発送分",
+      "expiry_date": "2027-06-30",
+      "research_month": "2027-06",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "ダイワロイネットホテルズ、ラ・ジェント・ホテル、ホテル日航大分 オアシスタワー"
+      ],
+      "source_url": "https://www.daiwahouse.co.jp/ir/yutai/pdf/guide_1.pdf",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-08",
+      "status": "confirmed",
+      "notes": "2026年度公式しおりで2027年6月30日までと確認。券面・予約条件をご確認ください。",
+      "issuer_id": "daiwa-house",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "417a-2027-06-1",
       "code": "417A",
       "company_name": "ブルーゾーンホールディングス",

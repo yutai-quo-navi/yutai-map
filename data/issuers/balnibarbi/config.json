@@ -18,5 +18,10 @@
     "バルニバービ"
   ],
   "verified": "2026-10-08",
-  "locationMode": "official_coordinates"
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 60,
+    "maxStores": 200,
+    "maxAgeDays": 40
+  }
 }

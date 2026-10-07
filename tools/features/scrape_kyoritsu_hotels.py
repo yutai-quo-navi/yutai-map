@@ -269,12 +269,14 @@ def validate_previous(snapshots, previous):
             raise ValueError('Hotel count fell over 20%; keeping previous snapshots')
 
 
-def write_sql(snapshots, output):
+def write_sql(snapshots, output, batch_id="kyoritsu-hotels"):
+    if not re.fullmatch(r"[a-z0-9-]+", batch_id):
+        raise ValueError("Invalid feature staging batch")
     quote = lambda value: "'" + value.replace("'", "''") + "'"
     statements = [
         'CREATE TABLE IF NOT EXISTS feature_snapshots (feature_id TEXT PRIMARY KEY, payload_json TEXT NOT NULL, checked_on TEXT NOT NULL);',
         'CREATE TABLE IF NOT EXISTS feature_snapshot_staging (batch_id TEXT NOT NULL, feature_id TEXT NOT NULL, checked_on TEXT NOT NULL, store_order INTEGER NOT NULL, store_json TEXT NOT NULL, PRIMARY KEY(batch_id,feature_id,store_order));',
-        "DELETE FROM feature_snapshot_staging WHERE batch_id='kyoritsu-hotels';"
+        f"DELETE FROM feature_snapshot_staging WHERE batch_id='{batch_id}';"
     ]
     # D1 limits each SQL statement to 100 KB. Stage small rows, then publish
     # both completed datasets in one short statement so readers never see half.
@@ -283,15 +285,15 @@ def write_sql(snapshots, output):
     for snapshot in snapshots:
         for i, store in enumerate(snapshot['stores']):
             payload = json.dumps(store, ensure_ascii=False, separators=(',', ':'))
-            row = '(' + ','.join([quote('kyoritsu-hotels'), quote(snapshot['id']), quote(snapshot['checkedOn']), str(i), quote(payload)]) + ')'
+            row = '(' + ','.join([quote(batch_id), quote(snapshot['id']), quote(snapshot['checkedOn']), str(i), quote(payload)]) + ')'
             if len((prefix + ','.join(values + [row])).encode('utf-8')) > 60_000:
                 statements.append(prefix + ','.join(values) + ';')
                 values = []
             values.append(row)
     if values:
         statements.append(prefix + ','.join(values) + ';')
-    statements.append("INSERT INTO feature_snapshots (feature_id,payload_json,checked_on) SELECT feature_id,json_object('id',feature_id,'checkedOn',checked_on,'stores',json_group_array(json(store_json))),checked_on FROM (SELECT * FROM feature_snapshot_staging WHERE batch_id='kyoritsu-hotels' ORDER BY feature_id,store_order) GROUP BY feature_id,checked_on ON CONFLICT(feature_id) DO UPDATE SET payload_json=excluded.payload_json,checked_on=excluded.checked_on;")
-    statements.append("DELETE FROM feature_snapshot_staging WHERE batch_id='kyoritsu-hotels';")
+    statements.append(f"INSERT INTO feature_snapshots (feature_id,payload_json,checked_on) SELECT feature_id,json_object('id',feature_id,'checkedOn',checked_on,'stores',json_group_array(json(store_json))),checked_on FROM (SELECT * FROM feature_snapshot_staging WHERE batch_id='{batch_id}' ORDER BY feature_id,store_order) GROUP BY feature_id,checked_on ON CONFLICT(feature_id) DO UPDATE SET payload_json=excluded.payload_json,checked_on=excluded.checked_on;")
+    statements.append(f"DELETE FROM feature_snapshot_staging WHERE batch_id='{batch_id}';")
     if any(len(statement.encode('utf-8')) >= 100_000 for statement in statements):
         raise ValueError('Hotel SQL exceeds D1 statement limit')
     output.parent.mkdir(parents=True, exist_ok=True)

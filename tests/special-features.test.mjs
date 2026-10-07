@@ -31,12 +31,12 @@ test('manual feature stays hidden after expiry; scheduled feature needs a verifi
 
 test('hotel voucher deadlines match their own voucher type and never the lunch coupon', () => {
   const hotels = JSON.parse(readFileSync(new URL('../data/features/index.json',import.meta.url))).features.filter(feature=>feature.section==='hotel');
-  assert.equal(hotels.length,2);
+  assert.equal(hotels.length,3);
   const entries = voucherEntriesFromLedger(JSON.parse(readFileSync(new URL('../data/expiry.json',import.meta.url))).entries);
   const now = new Date('2026-10-07T03:00:00Z');
   for (const hotel of hotels) {
     const deadline=nearestDeadline(entries,hotel.issuer.id,now,hotel.deadlineBenefitPattern);
-    assert.equal(deadline.date,'2027-07-31');
+    assert.equal(deadline.date,hotel.issuer.id === 'daiwa-house' ? '2027-06-30' : '2027-07-31');
     assert.equal(deadline.benefit,hotel.voucherName);
     assert.equal(nearestDeadline([{issuer:'kyoritsu',status:'confirmed',date:'2026-10-31',benefit:'株主お食事（ランチ）券'}],hotel.issuer.id,now,hotel.deadlineBenefitPattern),null);
   }

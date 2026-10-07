@@ -147,7 +147,7 @@ def write_sql(snapshot, output):
     sql += 'INSERT INTO feature_snapshots (feature_id,payload_json,checked_on) VALUES (' + ','.join(map(quote, [FEATURE_ID, payload, snapshot['checkedOn']])) + ') ON CONFLICT(feature_id) DO UPDATE SET payload_json=excluded.payload_json, checked_on=excluded.checked_on;\n'
     # Publish only dining/food retail locations to the normal distance search.
     # Upsert before removing stale rows so searches never see an empty issuer.
-    sql += (ROOT / 'cloudflare/schema.sql').read_text().split('CREATE TABLE IF NOT EXISTS reference_stores')[0]
+    sql += (ROOT / 'cloudflare/schema.sql').read_text()
     eligible = "json_extract(value,'$.id') LIKE 'restaurants-%' OR json_extract(value,'$.id') LIKE 'shops-%'"
     source = "json_each((SELECT payload_json FROM feature_snapshots WHERE feature_id='balnibarbi-dining'),'$.stores')"
     sql += f"""INSERT INTO stores (issuer_id,store_id,name,address,brand_name,category,lat,lng,official_url,updated_at)
@@ -157,6 +157,14 @@ json_extract(value,'$.lat'),json_extract(value,'$.lng'),json_extract(value,'$.so
 FROM {source} WHERE {eligible}
 ON CONFLICT(issuer_id,store_id) DO UPDATE SET name=excluded.name,address=excluded.address,brand_name=excluded.brand_name,category=excluded.category,lat=excluded.lat,lng=excluded.lng,official_url=excluded.official_url,updated_at=excluded.updated_at;
 DELETE FROM stores WHERE issuer_id='balnibarbi' AND store_id NOT IN (SELECT json_extract(value,'$.id') FROM {source} WHERE {eligible});
+"""
+    sql += f"""INSERT INTO store_raw (issuer_id,store_id,raw_json)
+SELECT 'balnibarbi',json_extract(value,'$.id'),value FROM {source} WHERE {eligible}
+ON CONFLICT(issuer_id,store_id) DO UPDATE SET raw_json=excluded.raw_json;
+DELETE FROM store_raw WHERE issuer_id='balnibarbi' AND store_id NOT IN (SELECT store_id FROM stores WHERE issuer_id='balnibarbi');
+INSERT INTO issuer_state (issuer_id,current_meta_json,updated_at)
+VALUES ('balnibarbi','{{}}',{quote(snapshot['checkedOn'])})
+ON CONFLICT(issuer_id) DO UPDATE SET current_meta_json=excluded.current_meta_json,updated_at=excluded.updated_at;
 """
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(sql, encoding='utf-8')

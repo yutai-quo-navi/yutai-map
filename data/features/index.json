@@ -266,6 +266,37 @@
     {
       "section": "hotel",
       "issuer": {
+        "id": "daiwa-house",
+        "code": "1925",
+        "name": "大和ハウス工業"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.daiwahouse.co.jp/ir/yutai/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "daiwa-house-hotels",
+      "title": "大和ハウス工業・株主優待 共通商品券",
+      "shortName": "大和ハウス工業",
+      "subtitle": "共通商品券で宿泊",
+      "voucherName": "株主優待 共通商品券",
+      "deadlineBenefitPattern": "共通商品券",
+      "description": "ダイワロイネットホテルズ・対象のラ・ジェント・ホテル・ホテル日航大分 オアシスタワーを紹介。現地払いで共通商品券を利用できます。1,000円単位で、おつりは出ません。不足額は別途お支払いください。札幌大通・函館駅前のラ・ジェント・ステイは対象外。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/daiwa-house-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
         "id": "kyoritsu",
         "code": "9616",
         "name": "共立メンテナンス"
