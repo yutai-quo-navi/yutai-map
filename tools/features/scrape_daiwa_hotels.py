@@ -34,7 +34,7 @@ def verify_policy(document, release_digest):
 
 
 def domestic(address):
-    return bool(re.match(r'〒\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + ')', address))
+    return bool(re.match(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + '|大阪市)', address))
 
 
 def parse_roy(document, today):
@@ -96,8 +96,8 @@ def parse_lagent(document, today):
 
 def address_from_detail(document):
     doc = Document(document)
-    for node in doc.root.find('address') + doc.root.find('p'):
-        match = re.search(r'〒\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + r')[^〒]+', node.text())
+    for node in doc.root.find('address') + doc.root.find('p') + [doc.root]:
+        match = re.search(r'〒\s*\d{3}-\d{4}\s*(?:' + '|'.join(PREFECTURES) + r'|大阪市)[^〒]{1,150}', node.text())
         if match:
             address = re.split(r'【|TEL|電話|FAX', match.group())[0].strip()
             return address
@@ -108,7 +108,10 @@ def verify_hotel(hotel, detail_fetch, supplements, today):
     time.sleep(.35)
     document = detail_fetch(hotel['sourceUrl'])
     if 'address' not in hotel:
-        hotel['address'] = address_from_detail(document)
+        try:
+            hotel['address'] = address_from_detail(document)
+        except ValueError as error:
+            raise ValueError('Missing official address: '+hotel['sourceUrl']) from error
     if not domestic(hotel['address']):
         raise ValueError('Unverified domestic address')
     extra = supplements.get(hotel['id'])

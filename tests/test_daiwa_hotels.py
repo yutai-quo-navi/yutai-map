@@ -12,6 +12,11 @@ def roy(alias,address='〒100-0001 東京都千代田区1-1',extra=''):
 def lagent(alias):
     return f'<li><p class="c-txt-l">ホテル{alias}</p><a href="https://lagent.jp/{alias}/">ホテルサイト</a></li>'
 class DaiwaTests(unittest.TestCase):
+    def test_official_city_only_address_and_nested_markup(self):
+        address=s.address_from_detail('<div><span>〒554-0031 大阪市此花区桜島1-1-57</span> TEL : 06-4804-1771</div>')
+        self.assertEqual(address,'〒554-0031 大阪市此花区桜島1-1-57')
+        self.assertTrue(s.domestic(address))
+
     def test_policy_changes_fail_closed(self):
         s.verify_policy(POLICY,s.RELEASE_SHA256)
         for policy,digest in [(POLICY,'changed'),(POLICY.replace('ご利用対象外',''),'')]:
