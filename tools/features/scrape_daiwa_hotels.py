@@ -156,7 +156,7 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT/'cloudflare/generated/sync_daiwa_hotels.sql')
     parser.add_argument('--previous-counts', type=Path)
     args = parser.parse_args()
-    with urlopen(Request(RELEASE, headers={'User-Agent':'YutaiMap/1.0 (monthly hotel directory check)'}), timeout=30) as response:
+    with urlopen(Request(RELEASE, headers={'User-Agent':'Mozilla/5.0 (compatible; YutaiMap/1.0)', 'Accept':'application/pdf', 'Referer':IR}), timeout=30) as response:
         digest = hashlib.sha256(response.read()).hexdigest()
     supplements = json.loads((ROOT/'data/features/daiwa-hotel-coordinates.json').read_text())
     snapshot = build_snapshot(fetch(IR), fetch(ROY), fetch(LAGENT), digest, supplements=supplements)
