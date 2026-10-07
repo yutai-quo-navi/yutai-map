@@ -121,7 +121,7 @@ async function init(){
     await loadVoucherDeadlines();
     const featureCatalog = loadFeatureCatalog();
     Promise.all([
-      ['#specialFeatures', 'dining'], ['#hotelFeatures', 'hotel']
+      ['#hotelFeatures', 'hotel']
     ].map(([selector, section]) => initSpecialFeatures({
       root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
       getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin,
