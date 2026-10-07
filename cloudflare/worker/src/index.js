@@ -5,14 +5,28 @@ const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
 const OPENPOI_ALIAS_CHUNK = 14;
 const OPENPOI_LIMIT = 200;
 const SEARCH_LOCK_SECONDS = 600;
+const API_RETRY_SECONDS = 60;
+const OPENPOI_TIMEOUT_MS = 8000;
+const MAX_REQUEST_URL_LENGTH = 2048;
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const cors = corsHeaders(env, request);
 
+    const origin = request.headers.get('Origin');
+    if (origin && env.ALLOWED_ORIGIN && env.ALLOWED_ORIGIN !== '*' && origin !== env.ALLOWED_ORIGIN)
+      return json({error:'origin_not_allowed'},403,cors);
+    if (request.url.length > MAX_REQUEST_URL_LENGTH) return json({error:'request_too_long'},414,cors);
+
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405, cors);
+
+    const databasePath = ['/health','/v1/brands','/v1/stores/search','/v1/features/balnibarbi-dining'].includes(url.pathname);
+    if (databasePath) {
+      const limited = await enforceApiRateLimit(env, request, cors);
+      if (limited) return limited;
+    }
 
     if (url.pathname === '/health') {
       try {
@@ -53,8 +67,10 @@ export default {
 
     if (url.pathname !== '/v1/stores/search') return json({ error: 'not_found' }, 404, cors);
 
-    const lat = Number(url.searchParams.get('lat'));
-    const lng = Number(url.searchParams.get('lng'));
+    const rawLat = url.searchParams.get('lat'), rawLng = url.searchParams.get('lng');
+    if (!rawLat?.trim() || !rawLng?.trim()) return json({error:'invalid_coordinates'},400,cors);
+    const lat = Number(rawLat);
+    const lng = Number(rawLng);
     const radius = Math.min(Number(url.searchParams.get('radius') || 3000), MAX_RADIUS);
     const issuers = parseIssuers(url.searchParams.get('issuers'));
     const brand=(url.searchParams.get('brand') || '').trim().slice(0,200);
@@ -68,8 +84,10 @@ export default {
       return json({ error: 'invalid_radius' }, 400, cors);
     if (!issuers.length) return json({ results: [], count: 0 }, 200, cors);
 
-    const rateLimited = await enforceSearchRateLimit(env, request, cors);
-    if (rateLimited) return rateLimited;
+    try {
+      const rateLimited = await enforceSearchRateLimit(env, request, cors);
+      if (rateLimited) return rateLimited;
+    } catch { return json({error:'rate_limit_unavailable'},503,cors); }
 
     try {
       const referenceIssuers = await findReferenceIssuers(env, issuers);
@@ -102,8 +120,20 @@ export default {
   }
 };
 
+async function enforceApiRateLimit(env, request, cors){
+  if (!env.API_RATE_LIMITER) return json({error:'rate_limit_unavailable'},503,cors);
+  try {
+    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+    const {success} = await env.API_RATE_LIMITER.limit({key:ip});
+    if (success) return null;
+    return json({error:'rate_limited',message:'短時間にアクセスが集中しています。少し待ってから再度お試しください。',retry_after:API_RETRY_SECONDS},429,{
+      ...cors,'Retry-After':String(API_RETRY_SECONDS),'Cache-Control':'no-store'
+    });
+  } catch { return json({error:'rate_limit_unavailable'},503,cors); }
+}
+
 async function enforceSearchRateLimit(env, request, cors){
-  if (!env.SEARCH_RATE_LIMITER) return null;
+  if (!env.SEARCH_RATE_LIMITER) return json({error:'rate_limit_unavailable'},503,cors);
 
   const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
   const lockUrl = new URL(request.url);
@@ -231,6 +261,7 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
       limit: String(OPENPOI_LIMIT)
     });
     const res = await fetch(`${OPENPOI_API}?${params}`, {
+      signal: AbortSignal.timeout(OPENPOI_TIMEOUT_MS),
       headers: { 'Accept': 'application/json' }
     });
     if (!res.ok) throw new Error(`OpenPOI ${res.status}`);
@@ -391,7 +422,7 @@ function corsHeaders(env, request){
 function json(body,status,headers){
   return new Response(JSON.stringify(body),{
     status,
-    headers:{'Content-Type':'application/json; charset=utf-8',...headers}
+    headers:{'Content-Type':'application/json; charset=utf-8','X-Content-Type-Options':'nosniff','Cache-Control':'no-store',...headers}
   });
 }
 

@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
+      - name: Verify API security guards before deployment
+        run: node --test tests/worker-security.test.mjs tests/feature-api.test.mjs
+
       - name: Prepare Cloudflare API token
         env:
           CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}

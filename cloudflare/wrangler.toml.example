@@ -1,12 +1,28 @@
 name = "yutai-map-api"
 main = "worker/src/index.js"
 compatibility_date = "2026-10-01"
+workers_dev = true
 
 [[d1_databases]]
 binding = "DB"
 database_name = "yutai-map"
 database_id = "4540cbaa-3214-4111-9c7a-11e18fd067db"
 
-# Production: restrict this to the actual GitHub Pages/custom-domain origin.
 [vars]
-ALLOWED_ORIGIN = "*"
+ALLOWED_ORIGIN = "https://yutai-quo-navi.github.io"
+
+[[ratelimits]]
+name = "SEARCH_RATE_LIMITER"
+namespace_id = "1001"
+
+[ratelimits.simple]
+limit = 10
+period = 60
+
+[[ratelimits]]
+name = "API_RATE_LIMITER"
+namespace_id = "1002"
+
+[ratelimits.simple]
+limit = 60
+period = 60
