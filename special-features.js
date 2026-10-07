@@ -1,4 +1,5 @@
 // Feature search uses independent radii and either manual or scheduled data.
+import {decorateSection} from './section-order.js?v=20261007-section-order';
 export const FEATURE_RADIUS_METERS = 3_000_000;
 const MAX_FEATURE_RADIUS_METERS = 4_000_000;
 const validRadius = radius => radius === 'all' || (Number.isFinite(radius) && radius > 0 && radius <= MAX_FEATURE_RADIUS_METERS);
@@ -84,6 +85,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.innerHTML = '';
     if (!displayed.length) return;
     root.innerHTML = `<h2 class="selection-heading">${heading}</h2><div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
+    decorateSection(root);
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';

@@ -1,5 +1,6 @@
 import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-hotel-notes-bottom';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-section-order';
+import {initSectionOrder} from './section-order.js?v=20261007-section-order';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -88,6 +89,7 @@ els.radius.value = readSetting('yutai-radius') || '3000';
 init();
 
 async function init(){
+  initSectionOrder(document.querySelector('main'));
   try {
     const manifest = await fetch('./data/issuers/index.json', {cache:'no-store'}).then(r => r.json());
     const dev = new URLSearchParams(location.search).get('dev');
