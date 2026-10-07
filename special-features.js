@@ -1,6 +1,8 @@
 // Manually maintained features are independent of regular issuer search/sync.
 export const FEATURE_RADIUS_METERS = 3_000_000;
+const MAX_FEATURE_RADIUS_METERS = 4_000_000;
 export function featureRadius(feature) { return feature.radiusMeters ?? FEATURE_RADIUS_METERS; }
+export function featureRadiusOptions(feature) { return feature.radiusOptionsMeters ?? [featureRadius(feature)]; }
 
 function validDate(value) {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) &&
@@ -15,8 +17,12 @@ export function validateFeature(feature) {
       !feature.issuer?.id || !/^\d{4}$/.test(feature.issuer.code) || !feature.issuer.name ||
       feature.updateMode !== 'manual' || !['draft', 'public'].includes(feature.status) ||
       !Array.isArray(feature.stores)) throw new Error('Invalid manual feature');
-  if (!Number.isFinite(featureRadius(feature)) || featureRadius(feature) <= 0 || featureRadius(feature) > FEATURE_RADIUS_METERS)
+  if (!Number.isFinite(featureRadius(feature)) || featureRadius(feature) <= 0 || featureRadius(feature) > MAX_FEATURE_RADIUS_METERS)
     throw new Error('Invalid feature radius');
+  const radii = featureRadiusOptions(feature);
+  if (!Array.isArray(radii) || !radii.includes(featureRadius(feature)) ||
+      new Set(radii).size !== radii.length || radii.some(radius => !Number.isFinite(radius) || radius <= 0 || radius > MAX_FEATURE_RADIUS_METERS))
+    throw new Error('Invalid feature radius options');
   const ids = new Set();
   for (const store of feature.stores) {
     if (!store.id || ids.has(store.id) || !store.name || !store.address || !store.conditions)
@@ -55,6 +61,8 @@ const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;'
 export async function initSpecialFeatures({root, getOrigin, getCenterLabel, createDeadlineBubble, getDeadline, preview = false}) {
   if (!root) return {refresh() {}};
   let active = null, features = [];
+  const selectedRadii = new Map();
+  const currentRadius = feature => selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
     features = visibleFeatures(features, today(), preview);
@@ -85,14 +93,32 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       caption.append(subtitle, count); item.append(button);
       if (bubble) item.append(bubble);
       item.append(caption);
+      const radiusLabel = document.createElement('label'); radiusLabel.className = 'feature-radius-label';
+      radiusLabel.textContent = '検索範囲';
+      const select = document.createElement('select'); select.className = 'feature-radius';
+      select.dataset.featureRadius = feature.id;
+      select.setAttribute('aria-label', `${feature.shortName || feature.issuer.name}の検索範囲`);
+      for (const radius of featureRadiusOptions(feature)) {
+        const option = document.createElement('option'); option.value = String(radius);
+        option.textContent = `${(radius/1000).toLocaleString('ja-JP')} km`;
+        select.append(option);
+      }
+      select.value = String(currentRadius(feature));
+      select.addEventListener('change', () => {
+        selectedRadii.set(feature.id, Number(select.value));
+        if (active?.id === feature.id) {
+          render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
+        }
+      });
+      radiusLabel.append(select); item.append(radiusLabel);
       root.querySelector('.feature-buttons').append(item);
     }
     root.querySelector('.feature-results').id = 'specialFeatureResults';
     if (!active) return;
-    const origin = getOrigin(), stores = featureStores(active, origin);
+    const origin = getOrigin(), stores = featureStores({...active, radiusMeters:currentRadius(active)}, origin);
     const output = root.querySelector('.feature-results');
     const label = getCenterLabel();
-    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から${(featureRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
+    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? '下書き・利用期間と対象店舗は未確認。' : ''}${esc(active.description)}<br>${origin ? `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内・距離が分かる店舗から近い順` : '全国の対象店舗・掲載順（検索地点を指定すると近い順）'}／${stores.length}件表示・全${active.stores.length}店舗</p>`;
     if (origin && !stores.length && active.stores.length) output.innerHTML += '<p class="feature-note">この範囲に対象店舗はありません。別の場所を指定してお探しください。</p>';
     if (active.status === 'public') output.innerHTML += `<p class="feature-note">特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／確認日：${esc(active.checkedOn)}</p>`;
     const deadline = getDeadline(active.issuer.id);

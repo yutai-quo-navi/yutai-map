@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {validateFeature, visibleFeatures, featureStores} from '../special-features.js';
+import {validateFeature, visibleFeatures, featureStores, featureRadiusOptions} from '../special-features.js';
 import {nearestDeadline} from '../expiry.js';
 
 const draft = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features[0];
@@ -56,4 +56,11 @@ test('100km feature keeps nearby stores without inheriting 3000km or normal radi
   assert.equal(featureStores({...feature,radiusMeters:3_000_000},{lat:35.71,lng:139.8}).length, 2);
   assert.throws(()=>validateFeature({...feature,radiusMeters:-1}));
   assert.throws(()=>validateFeature({...feature,radiusMeters:Infinity}));
+});
+test('each feature has its own dropdown choices and validates its default', () => {
+  const features = JSON.parse(readFileSync(new URL('../data/features/index.json', import.meta.url))).features;
+  assert.deepEqual(featureRadiusOptions(features[0]), [500_000,1_000_000,4_000_000]);
+  assert.deepEqual(featureRadiusOptions(features[1]), [100_000,200_000,300_000]);
+  assert.throws(()=>validateFeature({...features[1],radiusMeters:400_000}));
+  assert.throws(()=>validateFeature({...features[1],radiusOptionsMeters:[100_000,100_000]}));
 });

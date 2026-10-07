@@ -138,7 +138,12 @@
       ],
       "shortName": "共立メンテ",
       "subtitle": "株主ランチ",
-      "radiusMeters": 3000000
+      "radiusMeters": 4000000,
+      "radiusOptionsMeters": [
+        500000,
+        1000000,
+        4000000
+      ]
     },
     {
       "id": "balnibarbi-dining",
@@ -158,7 +163,12 @@
       "validFrom": null,
       "validThrough": null,
       "description": "公式掲載施設から優待対象外・営業前・期間限定営業を確認して登録します。公式の126施設表示を優待対象店舗数と同一視しません。",
-      "stores": []
+      "stores": [],
+      "radiusOptionsMeters": [
+        100000,
+        200000,
+        300000
+      ]
     }
   ]
 }
