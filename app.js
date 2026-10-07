@@ -1,5 +1,5 @@
 import {nearestDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261007-features';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-hotel-features';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261007-hotel-notes-bottom';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';

@@ -146,12 +146,15 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       return;
     }
     const label = getCenterLabel();
-    output.innerHTML = `<p class="feature-note">${active.status === 'draft' ? `下書き・利用期間と対象${unit}は未確認。` : ''}${esc(active.description)}<br>${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${stores.length}件表示・全${active.stores.length}${unit}</p>`;
+    const details = document.createElement("div");
+    const info = section === "hotel" ? details : output;
+    output.innerHTML = `<p class="feature-note">${section === "hotel" ? "" : `${active.status === 'draft' ? `下書き・利用期間と対象${unit}は未確認。` : ''}${esc(active.description)}<br>`}${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(active)/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${stores.length}件表示・全${active.stores.length}${unit}</p>`;
     if (origin && !stores.length && active.stores.length) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。別の場所を指定してお探しください。</p>`;
-    if (active.status === 'public') output.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
-    if (active.voucherName) output.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
+    if (section === 'hotel') info.innerHTML = `<p class="feature-note">${esc(active.description)}</p>`;
+    if (active.status === 'public') info.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
+    if (active.voucherName) info.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
     const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
-    if (!ended) output.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
+    if (!ended) info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
     for (const store of stores) {
       const card = document.createElement('article'); card.className = 'card feature-card';
       const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + ' ' + store.address)}`;
@@ -159,6 +162,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       card.innerHTML = `<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${store.distance == null ? '距離未確認'  : `${featureDistanceLabel(store.distance)}・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.coordinateNote ? `<p class="feature-note">${esc(store.coordinateNote)}</p>` : ''}${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
       output.append(card);
     }
+    if (section === "hotel") output.append(details);
   };
   try {
     features = (await (catalog || loadFeatureCatalog())).filter(feature => (feature.section || 'dining') === section);
