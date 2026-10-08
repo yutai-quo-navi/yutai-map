@@ -1630,6 +1630,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "5261-2027-07-1",
+      "code": "5261",
+      "company_name": "リソルホールディングス",
+      "benefit_name": "RESOLファミリー商品券",
+      "issue": "2026年3月末基準・2026年7月送付分",
+      "expiry_date": "2027-07-31",
+      "research_month": "2027-07",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "ホテルリソル等"
+      ],
+      "source_url": "https://www.resol.jp/ir/kabunushi/2026/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-08",
+      "status": "confirmed",
+      "notes": "利用期間2026年8月1日〜2027年7月31日。株主カード必須。公式直接予約。",
+      "issuer_id": "resol",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "9616-2027-07-discount",
       "code": "9616",
       "company_name": "共立メンテナンス",

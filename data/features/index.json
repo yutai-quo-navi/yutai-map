@@ -386,6 +386,37 @@
       "deadlineBenefitPattern": "リゾートホテルご優待",
       "description": "共立リゾートの優待プラン対象ホテルを紹介。専用サイトまたは株主様専用電話から事前予約が必要です。ドーミーイン・御宿 野乃は対象外。空室・優待料金は公式予約窓口でご確認ください。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/kyoritsu-resort-plan"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "resol",
+        "code": "5261",
+        "name": "リソルホールディングス"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.resol.jp/ir/kabunushi/2026/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "resol-hotels",
+      "title": "リソルHD・RESOLファミリー商品券",
+      "shortName": "リソルHD",
+      "subtitle": "ファミリー商品券",
+      "voucherName": "RESOLファミリー商品券",
+      "deadlineBenefitPattern": "ファミリー商品券",
+      "description": "ホテルリソル・リソルトリニティ等と対象リゾートを紹介。RESOLファミリー商品券と有効期間内の株主カードが必要です。公式サイト・電話から直接予約し、現地で精算してください。他社予約サイトは対象外。1日1精算・最大50枚（発行枚数まで）。おつりは出ません。不足額・入湯税等は別途支払い。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/resol-hotels"
     }
   ]
 }

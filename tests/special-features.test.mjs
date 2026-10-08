@@ -40,7 +40,7 @@ test('manual feature stays hidden after expiry; scheduled feature needs a verifi
 
 test('hotel voucher deadlines match their own voucher type and never the lunch coupon', () => {
   const hotels = JSON.parse(readFileSync(new URL('../data/features/index.json',import.meta.url))).features.filter(feature=>feature.section==='hotel');
-  assert.equal(hotels.length,4);
+  assert.equal(hotels.length,5);
   const entries = voucherEntriesFromLedger(JSON.parse(readFileSync(new URL('../data/expiry.json',import.meta.url))).entries);
   const now = new Date('2026-10-07T03:00:00Z');
   for (const hotel of hotels) {

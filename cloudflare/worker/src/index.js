@@ -1,6 +1,6 @@
 export {SearchCounter} from './search-counter.js';
 
-const FEATURE_IDS = new Set(['seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
+const FEATURE_IDS = new Set(['resol-hotels','seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 30000;
 const MAX_RESULTS = 30;
 const MAX_CANDIDATES = 600;
