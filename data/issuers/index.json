@@ -113,6 +113,13 @@
       "name": "アークランズ",
       "status": "public",
       "config": "./data/issuers/arclands/config.json"
+    },
+    {
+      "id": "kineya",
+      "code": "9850",
+      "name": "グルメ杵屋",
+      "status": "development",
+      "config": "./data/issuers/kineya/config.json"
     }
   ]
 }

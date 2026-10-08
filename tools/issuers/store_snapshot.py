@@ -39,6 +39,10 @@ def write_snapshot(issuer, rows, metadata):
             before, after = Counter(r[field] for r in old.values()), Counter(r[field] for r in current.values())
             if any(count >= health.get('minGroupSize', 10) and after[group] < count * .5 for group, count in before.items()):
                 raise ValueError(f'{issuer}: group coverage dropped: {field}')
+    old_coordinates = sum('lat' in r for r in old.values())
+    new_coordinates = sum('lat' in r for r in current.values())
+    if old_coordinates and new_coordinates < old_coordinates * .8:
+        raise ValueError(f'{issuer}: official coordinate coverage dropped; preserve D1')
     for sid, row in current.items():
         row.update(first_seen=old.get(sid, {}).get('first_seen') or run_date, last_seen=run_date, status='active')
     snapshot = {**metadata, 'generated_at': stamp, 'eligible_count': len(current),
