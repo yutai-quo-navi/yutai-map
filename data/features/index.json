@@ -448,6 +448,37 @@
       "deadlineBenefitPattern": "ご優待割引券",
       "description": "日和ホテル・たびのホテルなどの対象ホテルを紹介。ホテルへ電話で予約、または公式サイトで現地決済の予約後に電話し、優待券利用を事前にお伝えください。券の株主様情報欄への記入が必要です。他社予約サイトは対象外。おつりは出ません。不足額・入湯税・宿泊税等は別途支払い。売買された券は利用できません。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/sunfrontier-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "tosei",
+        "code": "8923",
+        "name": "トーセイ"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.toseicorp.co.jp/ir/individual/incentive/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "tosei-hotels",
+      "title": "トーセイ・ホテル宿泊割引券",
+      "shortName": "トーセイ",
+      "subtitle": "宿泊割引券で宿泊",
+      "voucherName": "ホテル宿泊割引券",
+      "deadlineBenefitPattern": "宿泊割引券",
+      "description": "ココネ各ホテルとホテル＆セミナー幕張を紹介。公式サイトまたは電話で直接予約し、現地決済を選んでください。利用前にホテルへお問い合わせください。1枚3,000円・使用枚数の制限なし。おつりは出ません。不足額は別途支払い。他社予約サイトや他の優待券・割引券との併用は対象外。株主以外の方も利用できます。千葉中央は対象外。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/tosei-hotels"
     }
   ]
 }

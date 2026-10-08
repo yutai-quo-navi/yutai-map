@@ -1582,6 +1582,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "8923-2027-02-1",
+      "code": "8923",
+      "company_name": "トーセイ",
+      "benefit_name": "ホテル宿泊割引券",
+      "issue": "2025年11月末基準・2026年2月送付分",
+      "expiry_date": "2027-02-28",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "トーセイホテル ココネ・ホテル＆セミナー幕張"
+      ],
+      "source_url": "https://www.toseicorp.co.jp/ir/individual/incentive/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "利用期間2026年3月1日〜2027年2月28日。宿泊利用日が基準。公式直接予約・現地決済。千葉中央は対象外。",
+      "issuer_id": "tosei",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "1925-2027-06-common",
       "code": "1925",
       "company_name": "大和ハウス工業",
