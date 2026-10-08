@@ -1654,6 +1654,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "8125-2027-05-1",
+      "code": "8125",
+      "company_name": "ワキタ",
+      "benefit_name": "ホテルコルディア利用券（電子チケット）",
+      "issue": "2026年6月1日利用開始分",
+      "expiry_date": "2027-05-31",
+      "research_month": "2027-05",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "ホテルコルディア大阪・ホテルコルディア大阪本町"
+      ],
+      "source_url": "https://www.wakita.co.jp/ir/share_information/return/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "2026年6月1日～2027年5月31日の宿泊分。公式ページの2026年電子化案内を優先（同ページFAQには旧年度の期限も残存）。公式サイトでウェブ予約または電話予約、現地払い限定。事前カード決済・外部予約サイト経由・航空券／新幹線セット予約は対象外。",
+      "issuer_id": "wakita",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "1925-2027-06-common",
       "code": "1925",
       "company_name": "大和ハウス工業",

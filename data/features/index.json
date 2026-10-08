@@ -572,6 +572,37 @@
       "deadlineBenefitPattern": "ご優待宿泊券|ご優待券",
       "description": "ご優待宿泊券を宿泊料金に利用できます。公式サイトまたは電話で直接予約し、優待券利用をお伝えください。公式サイトでは現地精算を選択してください。外部予約サイト・旅行代理店経由は対象外。券の裏面に氏名を記入し、精算時に提出してください。複数枚同時利用可、おつりは出ません。他キャンペーン・クーポン券との併用不可。予約状況により利用できない場合があります。アジュール竹芝の宴会場は対象外。施設ごとの条件・券面を予約前にご確認ください。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/tkp-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "wakita",
+        "code": "8125",
+        "name": "ワキタ"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.wakita.co.jp/ir/share_information/return/",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "wakita-hotels",
+      "title": "ワキタ・ホテルコルディア利用券（電子チケット）",
+      "shortName": "ワキタ",
+      "subtitle": "株主優待券で宿泊",
+      "voucherName": "ホテルコルディア利用券（電子チケット）",
+      "deadlineBenefitPattern": "ホテルコルディア利用券|株主優待電子チケット",
+      "description": "ホテル公式サイトでウェブ予約、または直接電話予約ができます。必ず「現地払い（現地決済）」を選び、ホテルで電子優待券を提示して精算してください。事前のクレジットカード決済では優待券を利用できません。外部の宿泊予約サイト・旅行会社経由、航空券・新幹線とのセット予約は対象外。期限は予約日ではなく宿泊日が基準です。電子チケットのスクリーンショット・写真・コピーは不可。2027年1月に館内工事の臨時休業予定あり（大阪：1月18日正午～23日正午、本町：1月11日正午～16日正午）。予約前にホテル公式情報をご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/wakita-hotels"
     }
   ]
 }
