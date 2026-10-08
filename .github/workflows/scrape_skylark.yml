@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "0 4 1 * *"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/skylark/scrape.py"
       - ".github/workflows/scrape_skylark.yml"

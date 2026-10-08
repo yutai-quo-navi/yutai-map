@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "30 4 1 * *"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/create/scrape.py"
       - "data/issuers/create/brand_aliases.json"

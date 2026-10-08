@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "15 4 1 * *"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/yoshinoya/scrape.py"
       - ".github/workflows/scrape_yoshinoya.yml"

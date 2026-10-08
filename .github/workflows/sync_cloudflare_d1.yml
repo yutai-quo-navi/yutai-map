@@ -2,9 +2,6 @@ name: Check Cloudflare D1 store DB
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - security/pin-wrangler-20261008
 
 permissions:
   contents: read

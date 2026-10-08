@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "55 4 1 * *"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/matsuya/scrape.py"
       - ".github/workflows/scrape_matsuya.yml"

@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "35 4 1 * *"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/toridoll/scrape.py"
       - ".github/workflows/scrape_toridoll.yml"

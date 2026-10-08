@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "20 4 * * 1"
   push:
+    branches:
+      - main
     paths:
       - "tools/issuers/zensho/scrape.py"
       - "data/issuers/zensho/config.json"
