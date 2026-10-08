@@ -26,6 +26,14 @@ jobs:
       - name: Verify API security guards before deployment
         run: node --test tests/worker-security.test.mjs tests/feature-api.test.mjs tests/reference-matching.test.mjs
 
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24.19.0"
+          package-manager-cache: false
+
+      - name: Install locked Wrangler
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
       - name: Prepare Cloudflare API token
         env:
           CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
@@ -34,9 +42,6 @@ jobs:
           test -n "$CF_API_TOKEN" || { echo "CF_API_TOKEN is not configured"; exit 1; }
           echo "::add-mask::$CF_API_TOKEN"
           printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
-
-      - name: Install Wrangler
-        run: npm install --no-save wrangler@4
 
       - name: Deploy Worker
         run: npx wrangler deploy --config cloudflare/wrangler.toml
