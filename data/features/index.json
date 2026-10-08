@@ -510,6 +510,37 @@
       "deadlineBenefitPattern": "ご優待割引券",
       "description": "コンフォート系・グリーンズホテルズの対象ホテルを紹介。1枚1,000円・1室1泊5,000円分まで。ホテルでの現地決済が必要です。事前決済・旅行会社や予約サイト側への支払いは対象外。おつりは出ません。不足額は別途支払い。連泊分の合算はできません。予約前にホテルへ利用条件をご確認ください。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/greens-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "wealth",
+        "code": "3772",
+        "name": "ウェルス・マネジメント"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.wealth-mngt.com/ir/return.html",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "wealth-hotels",
+      "title": "ウェルス・マネジメント・株主様ご優待券",
+      "shortName": "ウェルス・マネジメント",
+      "subtitle": "株主優待券で宿泊",
+      "voucherName": "株主様ご優待券",
+      "deadlineBenefitPattern": "ご優待券|株主優待券",
+      "description": "札幌・京都・大阪の対象8ホテルを紹介。公式サイト・電話・Eメールから直接予約し、優待利用を事前にお伝えください。現地決済が必要です。事前決済・外部予約サイト・他の割引券や特典との併用は対象外。有効期間内の券は複数枚利用可。残額は現金・クレジットカードで支払い。他の商品券・金券は併用不可。株主本人または家族の利用を想定し、転売・譲渡目的の行為は禁止されています。期限は発行回ごとに券面をご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/wealth-hotels"
     }
   ]
 }

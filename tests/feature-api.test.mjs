@@ -21,7 +21,7 @@ test('feature endpoint rejects unknown datasets and survives missing D1 data', a
   assert.equal((await worker.fetch(request('/v1/features/balnibarbi-dining'),env)).status,503);
 });
 test('hotel voucher endpoints bind distinct dataset IDs and retain rate limiting', async () => {
-  for (const id of ['greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels','daiwa-house-hotels','kyoritsu-hotel-discount','kyoritsu-resort-plan']) {
+  for (const id of ['wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels','daiwa-house-hotels','kyoritsu-hotel-discount','kyoritsu-resort-plan']) {
     let limited = 0;
     const env = {API_RATE_LIMITER:{limit:async()=>{limited++;return {success:true};}},DB:{prepare(){return {
       bind(actual) {assert.equal(actual,id);return {first:async()=>({payload_json:JSON.stringify({id,stores:[]})})};}
