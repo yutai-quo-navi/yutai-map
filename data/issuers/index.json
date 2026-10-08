@@ -111,7 +111,7 @@
       "id": "arclands",
       "code": "9842",
       "name": "アークランズ",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/arclands/config.json"
     }
   ]
