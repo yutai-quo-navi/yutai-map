@@ -16,7 +16,7 @@ name = "SEARCH_RATE_LIMITER"
 namespace_id = "1001"
 
 [ratelimits.simple]
-limit = 4
+limit = 10
 period = 60
 
 [[ratelimits]]

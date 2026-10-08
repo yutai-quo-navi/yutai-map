@@ -113,15 +113,15 @@ const syntheticAliases=(count,prefix='brand')=>Array.from({length:count},(_,i)=>
 const emptyUpstream=()=>new Response(JSON.stringify({results:[]}));
 const referenceRequest=(issuers='colowide',options={})=>request(`/v1/stores/search?lat=35.681236&lng=139.767125&radius=10000&issuers=${issuers}`,options);
 
-test('the configured four-per-minute guard blocks the fifth search for both manual clients and bots',async()=>{
+test('the configured ten-per-minute guard blocks the eleventh search for both manual clients and bots',async()=>{
   const config=readFileSync(new URL('../cloudflare/wrangler.toml',import.meta.url),'utf8');
   const searchConfig=config.split('name = "SEARCH_RATE_LIMITER"')[1].split('[[ratelimits]]')[0];
-  assert.match(searchConfig,/limit = 4\b/);
+  assert.match(searchConfig,/limit = 10\b/);
   assert.match(searchConfig,/period = 60\b/);
   let limiterCalls=0;
-  const limiter={limit:async({key})=>{assert.equal(key,'192.0.2.10');return {success:++limiterCalls<=4};}};
+  const limiter={limit:async({key})=>{assert.equal(key,'192.0.2.10');return {success:++limiterCalls<=10};}};
   await withReferenceFixture({colowide:['Target']},emptyUpstream,async({env,calls,dbReads})=>{
-    for(let i=0;i<4;i++){
+    for(let i=0;i<10;i++){
       const response=await worker.fetch(referenceRequest('colowide',{headers:{'CF-Connecting-IP':'192.0.2.10','User-Agent':i%2?'audit-bot':'Mozilla/5.0'}}),env);
       assert.equal(response.status,200);
     }
@@ -133,9 +133,9 @@ test('the configured four-per-minute guard blocks the fifth search for both manu
       assert.equal(response.headers.get('Cache-Control'),'no-store');
       assert.match((await response.json()).message,/しばらくお待ちください/);
       assert.equal(dbReads.length,reads);
-      assert.equal(calls.length,4);
+      assert.equal(calls.length,10);
     }
-    assert.equal(limiterCalls,5,'the cached lock blocks the sixth search before another limiter call');
+    assert.equal(limiterCalls,11,'the cached lock blocks the twelfth search before another limiter call');
   },limiter);
 });
 
@@ -188,14 +188,14 @@ function counterStorage(){
     transactionSync:fn=>fn(),async setAlarm(time){this.alarmTime=time;},async deleteAll(){values.clear();this.alarmTime=null;}};
 }
 
-test('the shared counter permits four concurrent requests and keeps the limit after object recreation',async()=>{
+test('the shared counter permits ten concurrent requests and keeps the limit after object recreation',async()=>{
   const storage=counterStorage();
   const counter=new SearchCounter({storage});
-  const replies=await Promise.all(Array.from({length:10},()=>counter.fetch().then(r=>r.json())));
-  assert.equal(replies.filter(r=>r.success).length,4);
+  const replies=await Promise.all(Array.from({length:16},()=>counter.fetch().then(r=>r.json())));
+  assert.equal(replies.filter(r=>r.success).length,10);
   assert.equal(replies.filter(r=>!r.success).length,6);
   assert.equal((await (await new SearchCounter({storage}).fetch()).json()).success,false);
-  assert.equal(storage.values.get('times').length,4);
+  assert.equal(storage.values.get('times').length,10);
 });
 
 test('the shared counter uses a rolling minute across clock boundaries and expires its data',async()=>{
@@ -204,7 +204,7 @@ test('the shared counter uses a rolling minute across clock boundaries and expir
   Date.now=()=>now;
   const storage=counterStorage(),counter=new SearchCounter({storage});
   try{
-    for(let i=0;i<4;i++) assert.equal((await (await counter.fetch()).json()).success,true);
+    for(let i=0;i<10;i++) assert.equal((await (await counter.fetch()).json()).success,true);
     for(now of [60_001,118_999]) assert.equal((await (await counter.fetch()).json()).success,false);
     await counter.alarm();
     assert.equal(storage.values.size,1);

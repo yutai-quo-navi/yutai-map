@@ -1,7 +1,7 @@
 const WINDOW_MS = 60_000;
-const MAX_SEARCHES = 4;
+const MAX_SEARCHES = 10;
 
-// Each object belongs to one IP-derived identifier; it stores only four times.
+// Each object belongs to one IP-derived identifier; it stores at most ten timestamps.
 export class SearchCounter {
   constructor(ctx){ this.ctx = ctx; }
 
