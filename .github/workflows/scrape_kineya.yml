@@ -63,7 +63,7 @@ jobs:
           npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT current_meta_json FROM issuer_state WHERE issuer_id='kineya';" --json > /tmp/meta.json
           python tools/restore_d1_state.py "kineya" '/tmp/raw_0.json' /tmp/meta.json
 
-      - name: Build current snapshot and diff
+      - name: Build complete official voucher snapshot and diff
         run: python tools/issuers/kineya/scrape.py
 
       - name: Show diff summary
