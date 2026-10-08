@@ -97,7 +97,7 @@
       "id": "fujio",
       "code": "2752",
       "name": "フジオフードグループ本社",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/fujio/config.json"
     }
   ]
