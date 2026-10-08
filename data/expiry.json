@@ -1558,6 +1558,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "3479-2027-02-1",
+      "code": "3479",
+      "company_name": "TKP",
+      "benefit_name": "ご優待宿泊券",
+      "issue": "2026年2月末基準・2026年贈呈分",
+      "expiry_date": "2027-02-28",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "レクトーレ・ISHINOYA・アジュール竹芝・TKPサンライフホテル等"
+      ],
+      "source_url": "https://www.tkp.jp/ir/stock/benefit.html",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "公式に2027年2月28日までと明記。公式サイトまたは電話で直接予約・現地精算。複数枚利用可、おつりなし。外部予約サイト・旅行代理店経由、他キャンペーン・クーポン券との併用不可。",
+      "issuer_id": "tkp",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "7458-2027-02-1",
       "code": "7458",
       "company_name": "第一興商",

@@ -541,6 +541,37 @@
       "deadlineBenefitPattern": "ご優待券|株主優待券",
       "description": "札幌・京都・大阪の対象8ホテルを紹介。公式サイト・電話・Eメールから直接予約し、優待利用を事前にお伝えください。現地決済が必要です。事前決済・外部予約サイト・他の割引券や特典との併用は対象外。有効期間内の券は複数枚利用可。残額は現金・クレジットカードで支払い。他の商品券・金券は併用不可。株主本人または家族の利用を想定し、転売・譲渡目的の行為は禁止されています。期限は発行回ごとに券面をご確認ください。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/wealth-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "tkp",
+        "code": "3479",
+        "name": "TKP"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.tkp.jp/ir/stock/benefit.html",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "tkp-hotels",
+      "title": "TKP・ご優待宿泊券",
+      "shortName": "TKP",
+      "subtitle": "株主優待券で宿泊",
+      "voucherName": "ご優待宿泊券",
+      "deadlineBenefitPattern": "ご優待宿泊券|ご優待券",
+      "description": "ご優待宿泊券を宿泊料金に利用できます。公式サイトまたは電話で直接予約し、優待券利用をお伝えください。公式サイトでは現地精算を選択してください。外部予約サイト・旅行代理店経由は対象外。券の裏面に氏名を記入し、精算時に提出してください。複数枚同時利用可、おつりは出ません。他キャンペーン・クーポン券との併用不可。予約状況により利用できない場合があります。アジュール竹芝の宴会場は対象外。施設ごとの条件・券面を予約前にご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/tkp-hotels"
     }
   ]
 }
