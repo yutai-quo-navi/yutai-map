@@ -14,7 +14,7 @@ const poi = {
   lat:43.053332318, lng:141.445576788
 };
 
-async function search(pois, refs=[reference], radius=10000){
+async function search(pois, refs=[reference], radius=10000, origin={lat:43.055,lng:141.455}){
   const oldFetch=globalThis.fetch, oldCaches=globalThis.caches;
   globalThis.fetch=async(url)=>{
     assert.equal(new URL(url).searchParams.get('radius'), String(Math.min(radius,30000)));
@@ -27,7 +27,7 @@ async function search(pois, refs=[reference], radius=10000){
     all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:refs})
   };}};}}};
   try {
-    const response=await worker.fetch(new Request(`https://api.example.com/v1/stores/search?lat=43.055&lng=141.455&radius=${radius}&issuers=colowide&category=restaurant`),env);
+    const response=await worker.fetch(new Request(`https://api.example.com/v1/stores/search?lat=${origin.lat}&lng=${origin.lng}&radius=${radius}&issuers=colowide&category=restaurant`),env);
     assert.equal(response.status,200);
     return await response.json();
   } finally {globalThis.fetch=oldFetch; globalThis.caches=oldCaches;}
@@ -129,4 +129,17 @@ test('one issuer returns both official coordinates and matched references with c
     assert.equal(data.category_counts.restaurant,2);
     assert.equal(data.category_counts.all,2);
   }finally{globalThis.fetch=oldFetch;globalThis.caches=oldCaches;}
+});
+
+
+test('bilingual official names and optional aza names match the complete branch and street number',async()=>{
+  const ref={issuer_id:'colowide',store_id:'official:id:24913',name:'かっぱ寿司 ゆめモール柳川店 Kappa Sushi Yume Mall Yanagawa',address:'福岡県柳川市三橋町蒲船津字西ノ内277-3',brand_name:'かっぱ寿司',category:'restaurant'};
+  const candidate={name:'かっぱ寿司　ゆめモール柳川店',address:'福岡県柳川市三橋町蒲船津277-3',lat:33.168543,lng:130.424889};
+  const origin={lat:33.165,lng:130.42};
+  const found=await search([candidate],[ref],30000,origin);
+  assert.equal(found.count,1);
+  assert.equal(found.results[0].store_id,ref.store_id);
+  for(const change of [{address:'福岡県柳川市三橋町蒲船津277-4'},{address:'福岡県柳川市'},{name:'かっぱ寿司 八女店'}]){
+    assert.equal((await search([{...candidate,...change}],[ref],30000,origin)).count,0);
+  }
 });

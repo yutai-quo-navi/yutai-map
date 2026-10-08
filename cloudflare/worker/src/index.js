@@ -363,6 +363,7 @@ function matchReferenceStore(p, refs){
       if (poiName === officialName) nameScore = 100;
       else if (poiName.length >= 8 && officialName.includes(poiName)) nameScore = 60;
       else if (officialName.length >= 8 && poiName.includes(officialName)) nameScore = 60;
+      else if (poiName === normalize(String(ref.name || '').match(/^(.+?店)\s+[A-Za-z]/)?.[1] || '')) nameScore = 60;
       else if (containsOfficialBrandAndBranch(poiName, officialName, ref.brand_name)) nameScore = 55;
     }
 
@@ -412,7 +413,7 @@ function referenceAliasChunks(aliases){
 
 function normalizeAddress(value){
   // Official pages and POI sources use different Unicode forms for address separators.
-  return normalize(String(value || '').replace(/[−﹣－]/g, '-'));
+  return normalize(String(value || '').normalize('NFKC').replace(/[−﹣－]/g, '-').replace(/大字/g, '').replace(/字[^0-9\s]+(?=[0-9])/g, ''));
 }
 
 function japanesePrefecture(value){
