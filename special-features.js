@@ -78,9 +78,9 @@ export function featureSearchResults(features, origin, getRadius = featureRadius
     .sort((a,b) => (a.store.distance ?? Infinity) - (b.store.distance ?? Infinity));
 }
 
-export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensureOrigin, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
-  if (!root) return {refresh() {}};
-  let features = [], resolvingOrigin = false, originUnavailable = false, failedOrigin = null;
+export async function initSpecialFeatures({root, getOrigin, getCenterLabel, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
+  if (!root) return {refresh() {}, search() {}, invalidate() {}};
+  let features = [], hasSearched = false, originUnavailable = false;
   const selectedRadii = new Map();
   const selectedFeatures = new Set();
   const unit = section === 'hotel' ? '施設' : '店舗';
@@ -123,13 +123,9 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       if (bubble) bubble.classList.add('feature-deadline');
       button.setAttribute('aria-pressed', String(selectedFeatures.has(feature.id)));
       button.dataset.feature = feature.id;
-      button.addEventListener('click', async () => {
-        if (resolvingOrigin) return;
-        if (selectedFeatures.has(feature.id)) { selectedFeatures.delete(feature.id); render(); return; }
-        selectedFeatures.add(feature.id); resolvingOrigin = true; originUnavailable = false; render();
-        try { if (ensureOrigin) originUnavailable = !(await ensureOrigin()); }
-        catch (error) { originUnavailable = true; console.warn('特集の検索地点を取得できませんでした', error); }
-        finally { failedOrigin = originUnavailable ? getOrigin() : null; resolvingOrigin = false; render(); }
+      button.addEventListener('click', () => {
+        selectedFeatures.has(feature.id) ? selectedFeatures.delete(feature.id) : selectedFeatures.add(feature.id);
+        hasSearched = false; render();
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
       const detail = document.createElement('span'); detail.className = 'benefit-choice-detail';
@@ -158,6 +154,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
         select.value = String(currentRadius(feature));
         select.addEventListener('change', () => {
           selectedRadii.set(feature.id, select.value === 'all' ? 'all' : Number(select.value));
+          hasSearched = false;
           if (selectedFeatures.has(feature.id)) {
             render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
           }
@@ -169,12 +166,16 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.querySelector('.feature-results').id = resultsId;
     const chosen = displayed.filter(feature => selectedFeatures.has(feature.id));
     if (!chosen.length) return;
+    if (!hasSearched) {
+      root.querySelector('.feature-results').innerHTML = '<p class="feature-note">条件を選んで「現在地から探す」または「この場所で探す」を押してください</p>';
+      return;
+    }
     const nationwide = chosen.every(feature => currentRadius(feature) === 'all');
     const origin = originUnavailable ? null : getOrigin();
     const matches = featureSearchResults(chosen, origin, currentRadius);
     const output = root.querySelector('.feature-results');
-    if (resolvingOrigin || (!nationwide && (originUnavailable || !origin))) {
-      output.innerHTML = `<p class="feature-note">${resolvingOrigin ? '検索地点を確認しています…' : '距離を表示するには、現在地の利用を許可するか、場所を指定してください。'}</p>`;
+    if (!nationwide && (originUnavailable || !origin)) {
+      output.innerHTML = '<p class="feature-note">距離を表示するには、現在地の利用を許可するか、場所を指定してください。</p>';
       return;
     }
     const label = getCenterLabel();
@@ -208,10 +209,11 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
   return {
-    refresh() { if (getOrigin() !== failedOrigin) originUnavailable = false; render(); },
+    refresh() { render(); },
+    invalidate() { hasSearched = false; render(); },
     search() {
       if (!selectedFeatures.size) visibleFeatures(features, today(), preview).forEach(feature => selectedFeatures.add(feature.id));
-      originUnavailable = !getOrigin(); render();
+      originUnavailable = !getOrigin(); hasSearched = true; render();
     }
   };
 }

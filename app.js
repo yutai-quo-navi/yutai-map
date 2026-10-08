@@ -1,5 +1,5 @@
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-benefit-order';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-explicit-search';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 const API = 'https://api.openpoiapi.com/v1/search';
@@ -51,7 +51,8 @@ const els = {
 let companies = [];
 let voucherDeadlines = [];
 let deadlineDay = japanDay();
-let specialFeatures = {refresh() {}, search() {}};
+let specialFeatures = {refresh() {}, search() {}, invalidate() {}};
+let diningSearchRevision = 0;
 let specialFeaturesReady = Promise.resolve();
 let featureVoucherDeadlines = [];
 let featureApplicationDeadlines = [];
@@ -134,12 +135,12 @@ async function init(){
       ['#hotelFeatures', 'hotel']
     ].map(([selector, section]) => initSpecialFeatures({
       root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
-      getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin,
+      getCenterLabel: () => lastCenterLabel,
       getRadius: () => searchRadius.value('hotel'),
       createDeadlineBubble: (issuer, pattern, type) => deadlineBubble(issuer, pattern, true, type),
       getDeadline: (issuer, pattern, type) => featureDeadline(issuer, pattern, type),
       preview: dev === 'features' || dev === 'all'
-    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, search() { controllers.forEach(controller => controller.search()); }}; });
+    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, search() { controllers.forEach(controller => controller.search()); }, invalidate() { controllers.forEach(controller => controller.invalidate()); }}; });
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -158,8 +159,8 @@ async function init(){
   });
   els.radius.addEventListener('change', () => {
     searchRadius.remember();
-    if (activeBenefit === 'hotel') specialFeatures.refresh();
-    else if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+    if (activeBenefit === 'hotel') specialFeatures.invalidate();
+    else invalidateDiningSearch();
   });
   els.pickerButton.addEventListener('click', openCompanyPicker);
   qs('.issuer-selection').addEventListener('click', event => {
@@ -177,7 +178,7 @@ async function init(){
     selected.clear(); draftSelection.forEach(id => selected.add(id));
     resetCategoryFilter();
     persistSelection(); renderChips(); renderBrandOptions(); els.picker.close();
-    if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
+    invalidateDiningSearch();
   });
   els.headerSearchButton?.addEventListener('click', () => {
     closeNavMenu();
@@ -323,7 +324,15 @@ function toggleIssuer(id){
   resetCategoryFilter();
   persistSelection(); renderChips(); renderBrandOptions();
   els.chips.querySelector('[data-issuer="'+id+'"]')?.focus();
-  if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+  invalidateDiningSearch();
+}
+function invalidateDiningSearch(){
+  diningSearchRevision++;
+  lastResults = []; categoryCounts = null;
+  els.count.textContent = '';
+  els.results.className = 'results empty-state';
+  els.results.textContent = '条件を選んで「現在地から探す」または「この場所で探す」を押してください';
+  renderCategoryFilters();
 }
 function renderChips(){
   els.chips.innerHTML = '';
@@ -473,7 +482,7 @@ function renderPlaceSuggestions(items){
     b.addEventListener('click', () => {
       els.placeInput.value = item.label;
       els.placeSuggestions.hidden = true;
-      searchNearby({lat:item.lat,lng:item.lng}, item.label);
+      applySearchOrigin({lat:item.lat,lng:item.lng}, item.label, false);
     });
     els.placeSuggestions.appendChild(b);
   }
@@ -484,6 +493,7 @@ async function submitPlaceSearch(e, {search = true} = {}){
   e.preventDefault();
   const q = els.placeInput.value.trim();
   if(!q) return;
+  if (lastPosition && normalize(q) === normalize(lastCenterLabel)) return applySearchOrigin(lastPosition, lastCenterLabel, search);
   setStatus('場所を探しています…');
   try{
     const params = new URLSearchParams({q, limit:'8', fields:'minimal'});
@@ -512,22 +522,12 @@ async function submitPlaceSearch(e, {search = true} = {}){
 
 function applySearchOrigin(pos, label, search){
   lastPosition = pos; lastCenterLabel = label;
-  specialFeatures.refresh();
   if (search) return searchNearby(pos, label);
+  invalidateDiningSearch();
+  specialFeatures.invalidate();
   setStatus(`${label}を検索地点にしました`);
   return pos;
 }
-async function ensureFeatureOrigin(){
-  if (!els.placeSearchPanel.hidden) {
-    const q = els.placeInput.value.trim();
-    if (!q) { els.placeInput.focus(); return null; }
-    if (lastPosition && normalize(q) === normalize(lastCenterLabel)) return lastPosition;
-    return submitPlaceSearch({preventDefault() {}}, {search:false});
-  }
-  if (lastPosition && lastCenterLabel === '現在地') return lastPosition;
-  return requestLocation({search:false});
-}
-
 async function requestLocation({search = true} = {}){
   if(!navigator.geolocation){
     showError('このブラウザでは現在地取得に対応していません。');
@@ -601,6 +601,7 @@ async function searchNearby(pos, centerLabel='現在地'){
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
   searching = true; els.locate.disabled = true;
+  const revision = diningSearchRevision;
   categoryCounts=null; renderCategoryFilters();
   els.count.textContent = '';
   els.results.className='results';
@@ -618,6 +619,7 @@ async function searchNearby(pos, centerLabel='現在地'){
     const d1Results=d1Groups.flatMap(g=>g.results);
     const batches = openPoiTargets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
+    if (revision !== diningSearchRevision) return;
     const raw = [
       ...d1Results,
       ...responses.filter(r => r.status==='fulfilled').flatMap(r => r.value)
@@ -636,6 +638,7 @@ async function searchNearby(pos, centerLabel='現在地'){
     setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
   } catch(e){
     console.error(e);
+    if (revision !== diningSearchRevision) return;
     if(e?.code === 'RATE_LIMIT'){
       showError(e.message || '短時間に検索が集中しています。しばらくお待ちください。');
       setStatus('検索回数が上限に達しました');
@@ -889,8 +892,7 @@ function renderCategoryFilters(){
       activeCategory=id;
       writeSetting('yutai-category',id);
       renderCategoryFilters();
-      if(lastPosition) searchNearby(lastPosition, lastCenterLabel);
-      else if(lastResults.length) renderFilteredResults(Number(els.radius.value));
+      invalidateDiningSearch();
     });
     els.categoryFilters.appendChild(b);
   }
@@ -908,10 +910,10 @@ function renderResults(items, radius){
   if(!items.length){
     els.results.className='results empty-state';
     const restricted=activeCategory!=='all' || activeBrand;
-    els.results.innerHTML=`<p>${radius/1000}km以内では<br>${activeCategory!=='all' ? `「${esc(categoryLabels[activeCategory])}」の条件に一致する店舗がありません` : '対象店舗を見つけられませんでした'}</p>${restricted ? '<button type="button" class="category-filter" id="clearResultFilters">絞り込みを解除して探す</button>' : ''}`;
+    els.results.innerHTML=`<p>${radius/1000}km以内では<br>${activeCategory!=='all' ? `「${esc(categoryLabels[activeCategory])}」の条件に一致する店舗がありません` : '対象店舗を見つけられませんでした'}</p>${restricted ? '<button type="button" class="category-filter" id="clearResultFilters">絞り込みを解除</button>' : ''}`;
     qs('#clearResultFilters')?.addEventListener('click',()=>{
       activeBrand=''; writeSetting('yutai-brand',''); els.brandSearch.value=''; renderBrandOptions(); resetCategoryFilter();
-      if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+      invalidateDiningSearch();
     });
     return;
   }
@@ -1210,7 +1212,7 @@ function chooseBrand(key, preserveQuery=false){
   if(!preserveQuery) els.brandSearch.value='';
   brandCandidateLimit=12;
   renderBrandOptions(); hideBrandSuggestions(); resetCategoryFilter();
-  if(lastPosition) searchNearby(lastPosition,lastCenterLabel);
+  invalidateDiningSearch();
 }
 function renderBrandOptions(show=false){
   const available=brandCatalog;
@@ -1324,7 +1326,8 @@ function renderMemos(){
       selected.clear(); selected.add(m.issuer); activeBrand=''; els.brandSearch.value=''; activeCategory='all';
       writeSetting('yutai-brand',''); writeSetting('yutai-category','all'); persistSelection(); renderChips(); renderBrandOptions(); renderCategoryFilters();
       els.memo.close(); qs('.hero').scrollIntoView({behavior:'smooth',block:'start'});
-      if(lastPosition) searchNearby(lastPosition,lastCenterLabel); else setStatus('検索する場所を指定するか、現在地から探してください');
+      invalidateDiningSearch();
+      setStatus('優待を選択しました。「現在地から探す」または「この場所で探す」を押してください');
     });
     els.memoList.appendChild(card);
   }
