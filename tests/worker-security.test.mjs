@@ -1,10 +1,12 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import worker from '../cloudflare/worker/src/index.js';
+import {readFileSync} from 'node:fs';
+import worker, {SearchCounter} from '../cloudflare/worker/src/index.js';
 
 const allowed='https://yutai-quo-navi.github.io';
 const request=(path,options={})=>new Request('https://api.example.com'+path,{headers:{Origin:allowed,'CF-Connecting-IP':'192.0.2.10'},...options});
 const permit={limit:async()=>({success:true})};
+const counterPermit={idFromName:ip=>ip,get:()=>({fetch:async()=>Response.json({success:true})})};
 const protectedPaths=['/health','/v1/brands?issuers=colowide','/v1/features/balnibarbi-dining','/v1/stores/search?lat=35.68&lng=139.76&issuers=colowide',
   '/v1/features/kyoritsu-hotel-discount','/v1/features/kyoritsu-resort-plan','/v1/features/daiwa-house-hotels'];
 
@@ -48,7 +50,7 @@ test('existing search limit remains a separate guard and prevents upstream queri
   const old=globalThis.caches;
   globalThis.caches={default:{match:async()=>undefined,put:async()=>{}}};
   try{
-    const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:{limit:async()=>({success:false})},DB:{prepare(){assert.fail('DB must not be reached');}}};
+    const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:{limit:async()=>({success:false})},DB:{prepare(){assert.fail('DB must not be reached');}}};
     const response=await worker.fetch(request(protectedPaths[3]),env);
     assert.equal(response.status,429);
     assert.equal(response.headers.get('Retry-After'),'60');
@@ -65,7 +67,7 @@ test('reference matching uses a fixed upstream destination and a timeout signal'
     fetched=true;
     return new Response(JSON.stringify({results:[]}));
   };
-  const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
+  const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:'["店舗"]'}),
     all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:[{store_id:'test',name:'店舗'}]})
   };}};}}};
@@ -79,9 +81,153 @@ test('search limiter failure also stops DB reads without an unhandled exception'
   const old=globalThis.caches;
   globalThis.caches={default:{match:async()=>undefined}};
   try{
-    const response=await worker.fetch(request(protectedPaths[3]),{API_RATE_LIMITER:permit,
+    const response=await worker.fetch(request(protectedPaths[3]),{API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,
       SEARCH_RATE_LIMITER:{limit:async()=>{throw new Error('offline');}},DB:{prepare(){assert.fail('DB must not be reached');}}});
     assert.equal(response.status,503);
     assert.equal((await response.json()).error,'rate_limit_unavailable');
   }finally{globalThis.caches=old;}
+});
+
+async function withReferenceFixture(aliasGroups, upstream, check, searchLimiter=permit){
+  const oldFetch=globalThis.fetch, oldCache=globalThis.caches, oldError=console.error;
+  const locks=new Map(), calls=[], dbReads=[];
+  globalThis.caches={default:{match:async key=>locks.get(key.url),put:async(key,value)=>{locks.set(key.url,value);}}};
+  globalThis.fetch=async(url,options)=>{calls.push({url,options});return upstream(url,options,calls.length);};
+  console.error=()=>{};
+  const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:searchLimiter,DB:{prepare(sql){
+    dbReads.push(sql);
+    return {args:[],bind(...args){this.args=args;return this;},
+      async first(){return {aliases_json:JSON.stringify(aliasGroups[this.args[0]] || [])};},
+      async all(){return {results:sql.includes('SELECT DISTINCT')
+        ? Object.keys(aliasGroups).filter(id=>this.args.includes(id)).map(issuer_id=>({issuer_id}))
+        : sql.includes('FROM reference_stores\n')
+          ? [{issuer_id:this.args[0],store_id:'target',name:'Target Store',address:'東京都千代田区',brand_name:'Target',category:'restaurant'}]
+          : []};}
+    };
+  }}};
+  try{await check({env,calls,dbReads});}
+  finally{globalThis.fetch=oldFetch;globalThis.caches=oldCache;console.error=oldError;}
+}
+
+const syntheticAliases=(count,prefix='brand')=>Array.from({length:count},(_,i)=>`${prefix}${i}`);
+const emptyUpstream=()=>new Response(JSON.stringify({results:[]}));
+const referenceRequest=(issuers='colowide',options={})=>request(`/v1/stores/search?lat=35.681236&lng=139.767125&radius=10000&issuers=${issuers}`,options);
+
+test('the configured four-per-minute guard blocks the fifth search for both manual clients and bots',async()=>{
+  const config=readFileSync(new URL('../cloudflare/wrangler.toml',import.meta.url),'utf8');
+  const searchConfig=config.split('name = "SEARCH_RATE_LIMITER"')[1].split('[[ratelimits]]')[0];
+  assert.match(searchConfig,/limit = 4\b/);
+  assert.match(searchConfig,/period = 60\b/);
+  let limiterCalls=0;
+  const limiter={limit:async({key})=>{assert.equal(key,'192.0.2.10');return {success:++limiterCalls<=4};}};
+  await withReferenceFixture({colowide:['Target']},emptyUpstream,async({env,calls,dbReads})=>{
+    for(let i=0;i<4;i++){
+      const response=await worker.fetch(referenceRequest('colowide',{headers:{'CF-Connecting-IP':'192.0.2.10','User-Agent':i%2?'audit-bot':'Mozilla/5.0'}}),env);
+      assert.equal(response.status,200);
+    }
+    const reads=dbReads.length;
+    for(const agent of ['audit-bot','Mozilla/5.0']){
+      const response=await worker.fetch(referenceRequest('colowide',{headers:{'CF-Connecting-IP':'192.0.2.10','User-Agent':agent}}),env);
+      assert.equal(response.status,429);
+      assert.equal(response.headers.get('Retry-After'),'60');
+      assert.equal(response.headers.get('Cache-Control'),'no-store');
+      assert.match((await response.json()).message,/しばらくお待ちください/);
+      assert.equal(dbReads.length,reads);
+      assert.equal(calls.length,4);
+    }
+    assert.equal(limiterCalls,5,'the cached lock blocks the sixth search before another limiter call');
+  },limiter);
+});
+
+test('the OpenPOI budget applies to all selected issuers and accepts its boundary',async()=>{
+  await withReferenceFixture({colowide:syntheticAliases(280),other:syntheticAliases(280,'other')},emptyUpstream,async({env,calls})=>{
+    assert.equal((await worker.fetch(referenceRequest('colowide,other'),env)).status,200);
+    assert.equal(calls.length,40);
+    for(const {url,options} of calls){
+      assert.equal(new URL(url).origin,'https://api.openpoiapi.com');
+      assert.equal(options.redirect,'error');
+      assert.ok(options.signal instanceof AbortSignal);
+    }
+  });
+});
+
+test('an oversized aggregate OpenPOI plan stops before making any upstream request',async()=>{
+  await withReferenceFixture({colowide:syntheticAliases(294),other:syntheticAliases(280,'other')},emptyUpstream,async({env,calls})=>{
+    const response=await worker.fetch(referenceRequest('colowide,other'),env);
+    assert.equal(response.status,502);
+    assert.deepEqual(await response.json(),{error:'search_failed'});
+    assert.equal(calls.length,0);
+  });
+});
+
+test('upstream outages, redirects and malformed replies return failure without retry or false zero results',async()=>{
+  for(const upstream of [()=>new Response('',{status:429}),()=>{throw new TypeError('redirect refused');},()=>new Response('{}')]){
+    await withReferenceFixture({colowide:['Target']},upstream,async({env,calls})=>{
+      const response=await worker.fetch(referenceRequest(),env);
+      assert.equal(response.status,502);
+      assert.deepEqual(await response.json(),{error:'search_failed'});
+      assert.equal(calls.length,1);
+    });
+  }
+});
+
+test('valid empty replies and partial upstream failures retain their existing behavior',async()=>{
+  await withReferenceFixture({colowide:syntheticAliases(15)},(_url,_options,call)=>call===1
+    ? new Response('',{status:503})
+    : new Response(JSON.stringify({results:[{name:'Target Store',address:'東京都千代田区',lat:35.681236,lng:139.767125}]})),async({env,calls})=>{
+      const response=await worker.fetch(referenceRequest(),env);
+      assert.equal(response.status,200);
+      assert.equal((await response.json()).count,1);
+      assert.equal(calls.length,2);
+  });
+});
+
+function counterStorage(){
+  const values=new Map();
+  return {values,alarmTime:null,kv:{get:key=>structuredClone(values.get(key)),put:(key,value)=>values.set(key,structuredClone(value))},
+    transactionSync:fn=>fn(),async setAlarm(time){this.alarmTime=time;},async deleteAll(){values.clear();this.alarmTime=null;}};
+}
+
+test('the shared counter permits four concurrent requests and keeps the limit after object recreation',async()=>{
+  const storage=counterStorage();
+  const counter=new SearchCounter({storage});
+  const replies=await Promise.all(Array.from({length:10},()=>counter.fetch().then(r=>r.json())));
+  assert.equal(replies.filter(r=>r.success).length,4);
+  assert.equal(replies.filter(r=>!r.success).length,6);
+  assert.equal((await (await new SearchCounter({storage}).fetch()).json()).success,false);
+  assert.equal(storage.values.get('times').length,4);
+});
+
+test('the shared counter uses a rolling minute across clock boundaries and expires its data',async()=>{
+  const oldNow=Date.now;
+  let now=59_000;
+  Date.now=()=>now;
+  const storage=counterStorage(),counter=new SearchCounter({storage});
+  try{
+    for(let i=0;i<4;i++) assert.equal((await (await counter.fetch()).json()).success,true);
+    for(now of [60_001,118_999]) assert.equal((await (await counter.fetch()).json()).success,false);
+    await counter.alarm();
+    assert.equal(storage.values.size,1);
+    assert.equal(storage.alarmTime,119_000);
+    now=119_000;
+    await counter.alarm();
+    assert.equal(storage.values.size,0);
+    assert.equal((await (await counter.fetch()).json()).success,true);
+  }finally{Date.now=oldNow;}
+});
+
+test('a shared-counter rejection or outage stops searches before SQL and never falls back to unlimited access',async()=>{
+  const oldCache=globalThis.caches;
+  globalThis.caches={default:{match:async()=>undefined,put:async()=>{}}};
+  try{
+    const db={prepare(){assert.fail('shared counter must stop SQL');}};
+    for(const [counter,status] of [[undefined,503],
+      [{idFromName:ip=>ip,get:()=>({fetch:async()=>Response.json({success:false})})},429],
+      [{idFromName:ip=>ip,get:()=>({fetch:async()=>new Response('',{status:503})})},503],
+      [{idFromName:ip=>ip,get:()=>({fetch:async()=>{throw new Error('unavailable');}})},503]]){
+      const response=await worker.fetch(referenceRequest(),{API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:permit,SEARCH_COUNTER:counter,DB:db});
+      assert.equal(response.status,status);
+      if(status===429) assert.match((await response.json()).message,/しばらくお待ちください/);
+    }
+  }finally{globalThis.caches=oldCache;}
 });

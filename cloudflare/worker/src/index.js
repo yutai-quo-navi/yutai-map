@@ -1,3 +1,5 @@
+export {SearchCounter} from './search-counter.js';
+
 const FEATURE_IDS = new Set(['seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 30000;
 const MAX_RESULTS = 30;
@@ -5,6 +7,7 @@ const MAX_CANDIDATES = 600;
 const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
 const OPENPOI_ALIAS_CHUNK = 14;
 const OPENPOI_LIMIT = 200;
+const OPENPOI_MAX_REQUESTS = 40;
 const SEARCH_LOCK_SECONDS = 60;
 const API_RETRY_SECONDS = 60;
 const OPENPOI_TIMEOUT_MS = 8000;
@@ -94,11 +97,16 @@ export default {
       const referenceIssuers = await findReferenceIssuers(env, issuers);
       const referenceSet = new Set(referenceIssuers);
       const geoIssuers = issuers.filter(id => !referenceSet.has(id));
+      const referenceSearches = (await Promise.all(referenceIssuers.map(id =>
+        prepareReferenceSearch(env, id, '', brand)
+      ))).filter(Boolean);
+      const upstreamRequests = referenceSearches.reduce((total, search) => total + search.aliasChunks.length, 0);
+      if (upstreamRequests > OPENPOI_MAX_REQUESTS) throw new Error('OpenPOI request budget exceeded');
 
       const [geoResults, referenceResults, geoCounts] = await Promise.all([
         searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand),
-        Promise.all(referenceIssuers.map(id =>
-          searchReferenceIssuer(env, id, lat, lng, radius, '', brand)
+        Promise.all(referenceSearches.map(search =>
+          searchReferenceIssuer(search, lat, lng, radius)
         )).then(groups => groups.flat()),
         countGeoCategories(env, geoIssuers, lat, lng, radius, brand)
       ]);
@@ -134,7 +142,7 @@ async function enforceApiRateLimit(env, request, cors){
 }
 
 async function enforceSearchRateLimit(env, request, cors){
-  if (!env.SEARCH_RATE_LIMITER) return json({error:'rate_limit_unavailable'},503,cors);
+  if (!env.SEARCH_RATE_LIMITER || !env.SEARCH_COUNTER) return json({error:'rate_limit_unavailable'},503,cors);
 
   const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
   const lockUrl = new URL(request.url);
@@ -147,7 +155,7 @@ async function enforceSearchRateLimit(env, request, cors){
   if (locked) {
     return json({
       error: 'rate_limited',
-      message: '短時間に検索が集中しています。1分ほど待ってから再度お試しください。',
+      message: '短時間に検索が集中しています。しばらくお待ちください。',
       retry_after: SEARCH_LOCK_SECONDS
     }, 429, {
       ...cors,
@@ -157,7 +165,16 @@ async function enforceSearchRateLimit(env, request, cors){
   }
 
   const { success } = await env.SEARCH_RATE_LIMITER.limit({ key: ip });
-  if (success) return null;
+  if (success) {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+    const key = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2,'0')).join('');
+    const id = env.SEARCH_COUNTER.idFromName(key);
+    const response = await env.SEARCH_COUNTER.get(id).fetch('https://search-counter.internal/');
+    if (!response.ok) throw new Error('Search counter unavailable');
+    const result = await response.json();
+    if (result.success === true) return null;
+    if (result.success !== false) throw new Error('Invalid search counter response');
+  }
 
   await cache.put(lockKey, new Response('locked', {
     headers: { 'Cache-Control': `public, max-age=${SEARCH_LOCK_SECONDS}` }
@@ -165,7 +182,7 @@ async function enforceSearchRateLimit(env, request, cors){
 
   return json({
     error: 'rate_limited',
-    message: '短時間に検索が集中しています。1分ほど待ってから再度お試しください。',
+    message: '短時間に検索が集中しています。しばらくお待ちください。',
     retry_after: SEARCH_LOCK_SECONDS
   }, 429, {
     ...cors,
@@ -231,7 +248,7 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category, brand){
     .slice(0, MAX_RESULTS);
 }
 
-async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, brand){
+async function prepareReferenceSearch(env, issuer, category, brand){
   const cfg = await env.DB.prepare(
     'SELECT aliases_json FROM issuer_search_config WHERE issuer_id = ?'
   ).bind(issuer).first();
@@ -239,7 +256,7 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
   let aliases = [];
   try { aliases = JSON.parse(cfg?.aliases_json || '[]'); } catch {}
   aliases = aliases.map(x => String(x || '').trim()).filter(Boolean);
-  if (!aliases.length) return [];
+  if (!aliases.length) return null;
 
   const refSql = `SELECT issuer_id, store_id, name, address, phone,
       name_norm, address_norm, phone_norm, brand_name, category, official_url
@@ -251,9 +268,13 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
   const { results: refs = [] } = await env.DB.prepare(refSql)
     .bind(issuer, ...(category ? [category] : []), ...(brand ? [brand] : []))
     .all();
-  if (!refs.length) return [];
+  if (!refs.length) return null;
 
   const aliasChunks = referenceAliasChunks(brand ? [brand] : aliases);
+  return {issuer, refs, aliasChunks};
+}
+
+async function searchReferenceIssuer({issuer, refs, aliasChunks}, lat, lng, radius){
   const responses = await Promise.allSettled(aliasChunks.map(async group => {
     const params = new URLSearchParams({
       q: group.join(' '),
@@ -263,12 +284,18 @@ async function searchReferenceIssuer(env, issuer, lat, lng, radius, category, br
     });
     const res = await fetch(`${OPENPOI_API}?${params}`, {
       signal: AbortSignal.timeout(OPENPOI_TIMEOUT_MS),
+      redirect: 'error',
       headers: { 'Accept': 'application/json' }
     });
-    if (!res.ok) throw new Error(`OpenPOI ${res.status}`);
+    if (!res.ok) {
+      await res.body?.cancel();
+      throw new Error(`OpenPOI ${res.status}`);
+    }
     const data = await res.json();
-    return Array.isArray(data.results) ? data.results : [];
+    if (!Array.isArray(data.results)) throw new Error('Invalid OpenPOI response');
+    return data.results.slice(0, OPENPOI_LIMIT);
   }));
+  if (responses.every(response => response.status === 'rejected')) throw new Error('OpenPOI unavailable');
 
   const candidates = dedupePois(
     responses

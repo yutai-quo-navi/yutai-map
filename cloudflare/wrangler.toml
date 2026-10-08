@@ -26,3 +26,11 @@ namespace_id = "1002"
 [ratelimits.simple]
 limit = 60
 period = 60
+
+[[durable_objects.bindings]]
+name = "SEARCH_COUNTER"
+class_name = "SearchCounter"
+
+[[migrations]]
+tag = "search-counter-v1"
+new_sqlite_classes = ["SearchCounter"]

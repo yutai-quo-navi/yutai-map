@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/worker/src/index.js';
+const counterPermit={idFromName:ip=>ip,get:()=>({fetch:async()=>Response.json({success:true})})};
 
 const reference = {
   issuer_id:'colowide', store_id:'official:id:26486',
@@ -21,7 +22,7 @@ async function search(pois, refs=[reference], radius=10000){
   };
   globalThis.caches={default:{match:async()=>undefined}};
   const permit={limit:async()=>({success:true})};
-  const env={API_RATE_LIMITER:permit, SEARCH_RATE_LIMITER:permit, DB:{prepare(sql){return {bind(){return {
+  const env={API_RATE_LIMITER:permit, SEARCH_COUNTER:counterPermit, SEARCH_RATE_LIMITER:permit, DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:'["ラパウザ"]'}),
     all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:refs})
   };}};}}};
@@ -90,7 +91,7 @@ test('a geographic brand cannot fill the shared candidate limit and hide La Paus
     return new Response(JSON.stringify({results:q.includes('北海道')?unrelated:[poi]}));
   };
   const permit={limit:async()=>({success:true})};
-  const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
+  const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:JSON.stringify(['甘太郎','北海道','ラパウザ','ウルフギャング・パック','ウルフギャング･パック'])}),
     all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:[reference]})
   };}};}}};
