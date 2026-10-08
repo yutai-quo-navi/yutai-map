@@ -118,7 +118,7 @@
       "id": "kineya",
       "code": "9850",
       "name": "グルメ杵屋",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/kineya/config.json"
     }
   ]

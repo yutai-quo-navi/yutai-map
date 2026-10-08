@@ -1288,6 +1288,31 @@
       "expiry_year": 2026
     },
     {
+      "id": "arkland-old-2026-11-1",
+      "code": "9842",
+      "company_name": "アークランズ",
+      "benefit_name": "かつや等の優待券",
+      "issue": "2026年2月末基準・2026年5月発送分",
+      "expiry_date": "2026-11-30",
+      "research_month": "2026-11",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [
+        "かつや",
+        "からやま"
+      ],
+      "source_url": "https://www.arclands.co.jp/ja/ir/stock/yuutai/main/01/teaserItems1/0/link/tenpo_2025-10.pdf",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "2026年2月末基準分は2026年11月30日まで。公式優待案内で確認。",
+      "issuer_id": "arclands",
+      "search_brand": "",
+      "emoji": "🐷",
+      "verification_method": "official",
+      "expiry_year": 2026
+    },
+    {
       "id": "3198-2026-11-1",
       "code": "3198",
       "company_name": "SFPホールディングス",
