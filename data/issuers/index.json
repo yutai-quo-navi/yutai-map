@@ -106,6 +106,13 @@
       "name": "SRSホールディングス",
       "status": "public",
       "config": "./data/issuers/srs/config.json"
+    },
+    {
+      "id": "arclands",
+      "code": "9842",
+      "name": "アークランズ",
+      "status": "development",
+      "config": "./data/issuers/arclands/config.json"
     }
   ]
 }

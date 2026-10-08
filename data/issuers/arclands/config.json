@@ -1,0 +1,80 @@
+{
+  "id": "arclands",
+  "code": "9842",
+  "name": "アークランズ",
+  "fullName": "アークランズ",
+  "status": "development",
+  "sourceUrl": "https://www.arclands.co.jp/ja/ir/stock/yuutai.ht",
+  "storeSearchUrl": "https://shop.arclandservice.co.jp/ae-shop/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式店舗検索の株主優待券使用不可フラグで除外",
+  "note": "かつや・からやまなどの優待対象飲食店。券売機店等の利用不可店・海外店舗を除外。持帰り限定店は店舗名に明記。",
+  "aliases": [
+    "かつや",
+    "たれとん",
+    "からやま",
+    "からあげ縁",
+    "からあげ・とり弁 縁",
+    "Cento per Cento",
+    "camp express",
+    "ごちとん",
+    "東京たらこスパゲティ",
+    "天丼はま田",
+    "スンドゥブ 中山豆腐店",
+    "マンゴツリー東京",
+    "マンゴツリーカフェ",
+    "マンゴツリーキッチン",
+    "DANCING CRAB",
+    "天ぷら 魚新",
+    "東京とろろそば",
+    "肉めし 岡もと"
+  ],
+  "excludedNames": [],
+  "categories": {
+    "かつや": "restaurant",
+    "たれとん": "restaurant",
+    "からやま": "restaurant",
+    "からあげ縁": "restaurant",
+    "からあげ・とり弁 縁": "restaurant",
+    "Cento per Cento": "cafe",
+    "camp express": "restaurant",
+    "ごちとん": "restaurant",
+    "東京たらこスパゲティ": "restaurant",
+    "天丼はま田": "restaurant",
+    "スンドゥブ 中山豆腐店": "restaurant",
+    "マンゴツリー東京": "restaurant",
+    "マンゴツリーカフェ": "restaurant",
+    "マンゴツリーキッチン": "restaurant",
+    "DANCING CRAB": "restaurant",
+    "天ぷら 魚新": "restaurant",
+    "東京とろろそば": "restaurant",
+    "肉めし 岡もと": "restaurant"
+  },
+  "searchNames": [
+    "アークランズ",
+    "アークランドサービス"
+  ],
+  "verified": "2026-10-09",
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/arclands/stores/current.json",
+  "health": {
+    "minStores": 600,
+    "maxStores": 1200,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "shop.arclandservice.co.jp"
+    ],
+    "maxAdded": 90,
+    "maxRemoved": 90,
+    "maxChanged": 180,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
+}
