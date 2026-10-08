@@ -99,6 +99,13 @@
       "name": "フジオフードグループ本社",
       "status": "public",
       "config": "./data/issuers/fujio/config.json"
+    },
+    {
+      "id": "srs",
+      "code": "8163",
+      "name": "SRSホールディングス",
+      "status": "development",
+      "config": "./data/issuers/srs/config.json"
     }
   ]
 }
