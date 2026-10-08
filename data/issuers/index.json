@@ -104,7 +104,7 @@
       "id": "srs",
       "code": "8163",
       "name": "SRSホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/srs/config.json"
     }
   ]
