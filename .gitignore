@@ -2,3 +2,5 @@ data/issuers/*/stores/
 cloudflare/generated/
 __pycache__/
 *.py[cod]
+node_modules/
+.wrangler/
