@@ -603,6 +603,38 @@
       "deadlineBenefitPattern": "ホテルコルディア利用券|株主優待電子チケット",
       "description": "ホテル公式サイトでウェブ予約、または直接電話予約ができます。必ず「現地払い（現地決済）」を選び、ホテルで電子優待券を提示して精算してください。事前のクレジットカード決済では優待券を利用できません。外部の宿泊予約サイト・旅行会社経由、航空券・新幹線とのセット予約は対象外。期限は予約日ではなく宿泊日が基準です。電子チケットのスクリーンショット・写真・コピーは不可。2027年1月に館内工事の臨時休業予定あり（大阪：1月18日正午～23日正午、本町：1月11日正午～16日正午）。予約前にホテル公式情報をご確認ください。",
       "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/wakita-hotels"
+    },
+    {
+      "section": "hotel",
+      "issuer": {
+        "id": "vision",
+        "code": "9416",
+        "name": "ビジョン"
+      },
+      "status": "public",
+      "updateMode": "scheduled",
+      "radiusMeters": "all",
+      "radiusOptionsMeters": [
+        "all",
+        100000,
+        500000,
+        1000000
+      ],
+      "sourceUrl": "https://www.vision-net.co.jp/stocks",
+      "checkedOn": null,
+      "validFrom": null,
+      "validThrough": null,
+      "availability": "continuous",
+      "stores": [],
+      "id": "vision-hotels",
+      "title": "ビジョン・株主優待券（クーポンコード）",
+      "shortName": "ビジョン",
+      "subtitle": "株主優待券で宿泊",
+      "voucherName": "株主優待券（クーポンコード）",
+      "deadlineBenefitPattern": "株主優待券",
+      "description": "山中湖・霧島の対象2施設を紹介。株主様専用ダイヤル0120-390-388（9:00～18:00）での電話予約が必要です。一般の公式ウェブ予約・外部予約サイト経由は対象外。クーポンコードを用意し、予約前に券の発行回をご確認ください。1室1泊あたり宿泊費を最大29,000円分割引。食事などのオプション・入湯税は対象外。同年中に発行された券のみ併用可、他の割引・金券との併用不可。2026年3月送付分：申込期限2027年3月31日、宿泊は2027年6月20日分まで。2026年9月送付分：申込期限2027年9月30日、宿泊は2027年12月20日分まで。宿泊期限の日を含む連泊も利用可能。画面の期限は最新の発行回の申込期限です。お手持ちの券面をご確認ください。",
+      "storeDataUrl": "https://yutai-map-api.yutaisamurai.workers.dev/v1/features/vision-hotels",
+      "deadlineExpiryType": "申込期限"
     }
   ]
 }

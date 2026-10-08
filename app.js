@@ -1,7 +1,7 @@
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261008-latest-expiry';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261008-latest-expiry';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261008-latest-expiry';
-import {initSearchRadius} from './search-radius.js?v=20261008-latest-expiry';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261009-vision';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-vision';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261009-vision';
+import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -54,6 +54,7 @@ let deadlineDay = japanDay();
 let specialFeatures = {refresh() {}, search() {}};
 let specialFeaturesReady = Promise.resolve();
 let featureVoucherDeadlines = [];
+let featureApplicationDeadlines = [];
 let draftSelection = new Set();
 let pickerCompanies = [];
 let lastPosition = null;
@@ -135,8 +136,8 @@ async function init(){
       root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
       getCenterLabel: () => lastCenterLabel, ensureOrigin: ensureFeatureOrigin,
       getRadius: () => searchRadius.value('hotel'),
-      createDeadlineBubble: (issuer, pattern) => deadlineBubble(issuer, pattern, true),
-      getDeadline: (issuer, pattern) => featureDeadline(issuer, pattern),
+      createDeadlineBubble: (issuer, pattern, type) => deadlineBubble(issuer, pattern, true, type),
+      getDeadline: (issuer, pattern, type) => featureDeadline(issuer, pattern, type),
       preview: dev === 'features' || dev === 'all'
     }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, search() { controllers.forEach(controller => controller.search()); }}; });
     persistSelection();
@@ -283,25 +284,27 @@ async function loadVoucherDeadlines(){
     if (!response.ok) throw new Error('Expiry ledger unavailable');
     const ledger = await response.json();
     featureVoucherDeadlines = voucherEntriesFromLedger(ledger.entries || []);
-  } catch(error) { featureVoucherDeadlines=[]; console.warn('特集の優待期限を読み込めませんでした',error); }
+    featureApplicationDeadlines = voucherEntriesFromLedger(ledger.entries || [], '申込期限');
+  } catch(error) { featureVoucherDeadlines=[]; featureApplicationDeadlines=[]; console.warn('特集の優待期限を読み込めませんでした',error); }
 }
 function allVoucherDeadlines(){
   return [...voucherDeadlines, ...featureVoucherDeadlines];
 }
-function featureDeadline(issuer, pattern){
-  return nearestDeadline(allVoucherDeadlines(), issuer, new Date(), pattern);
+function featureDeadline(issuer, pattern, expiryType = '利用期限'){
+  const entries = expiryType === '申込期限' ? featureApplicationDeadlines : allVoucherDeadlines();
+  return nearestDeadline(entries, issuer, new Date(), pattern);
 }
-function deadlineBubble(issuer, pattern, feature = false){
-  const entry=(feature ? featureDeadline(issuer, pattern) : nearestDeadline(allVoucherDeadlines(), issuer)) ||
+function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用期限'){
+  const entry=(feature ? featureDeadline(issuer, pattern, expiryType) : nearestDeadline(allVoucherDeadlines(), issuer)) ||
     (!feature && companies.find(company => company.id === issuer)?.showExpiredDeadline ? latestExpiredDeadline(allVoucherDeadlines(), issuer) : null);
   if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
-  const heading=document.createElement('span'); heading.textContent=entry.days < 0 ? '失効' : '失効まで';
+  const heading=document.createElement('span'); heading.textContent=entry.days < 0 ? '失効' : expiryType === '申込期限' ? '申込まで' : '失効まで';
   const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days < 0 ? `${Number(entry.date.slice(5,7))}/${Number(entry.date.slice(8))}までの分` : entry.days===0 ? '本日' : entry.days+'日';
   bubble.replaceChildren(...(entry.days < 0 ? [heading] : [heading,count]));
-  const detail='使用期限：'+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
+  const detail=(expiryType === '申込期限' ? '申込期限：' : '使用期限：')+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
   return bubble;

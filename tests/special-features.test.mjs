@@ -10,6 +10,18 @@ const live = () => ({...draft, status:'public', sourceUrl:'https://example.com/o
   checkedOn:'2026-07-01', validFrom:'2026-07-01', validThrough:'2026-09-30',
   stores:[{...draft.stores[0], verified:true, lat:35.71, lng:139.80}]});
 
+test('Vision uses the latest confirmed application deadline, independently of lodging dates', () => {
+  const row={issuer_id:'vision',status:'confirmed',benefit_name:'株主優待券（クーポンコード）'};
+  const ledger=[{...row,expiry_type:'申込期限',expiry_date:'2027-03-31'},
+    {...row,expiry_type:'申込期限',expiry_date:'2027-09-30'},
+    {...row,expiry_type:'利用期限',expiry_date:'2027-12-20'},
+    {...row,expiry_type:'申込期限',expiry_date:'2028-09-30',status:'checking'}];
+  const now=new Date('2026-10-09T03:00:00Z');
+  assert.equal(nearestDeadline(voucherEntriesFromLedger(ledger,'申込期限'),'vision',now).date,'2027-09-30');
+  assert.equal(nearestDeadline(voucherEntriesFromLedger(ledger),'vision',now).date,'2027-12-20');
+  assert.throws(()=>validateFeature({...live(),deadlineExpiryType:'予約期限'}));
+});
+
 test('all hotel vouchers share a range and merge results by distance while retaining voucher identity', () => {
   const features=[{id:'a',stores:[{id:'far',lat:43.3,lng:141.35}]}, {id:'b',stores:[{id:'near',lat:43.061,lng:141.35}]}];
   const origin={lat:43.06,lng:141.35};
@@ -40,12 +52,13 @@ test('manual feature stays hidden after expiry; scheduled feature needs a verifi
 
 test('hotel voucher deadlines match their own voucher type and never the lunch coupon', () => {
   const hotels = JSON.parse(readFileSync(new URL('../data/features/index.json',import.meta.url))).features.filter(feature=>feature.section==='hotel');
-  assert.equal(hotels.length,11);
-  const entries = voucherEntriesFromLedger(JSON.parse(readFileSync(new URL('../data/expiry.json',import.meta.url))).entries);
+  assert.equal(hotels.length,12);
+  const ledger = JSON.parse(readFileSync(new URL('../data/expiry.json',import.meta.url))).entries;
   const now = new Date('2026-10-07T03:00:00Z');
   for (const hotel of hotels) {
+    const entries = voucherEntriesFromLedger(ledger,hotel.deadlineExpiryType);
     const deadline=nearestDeadline(entries,hotel.issuer.id,now,hotel.deadlineBenefitPattern);
-    assert.equal(deadline.date,hotel.issuer.id === 'wakita' ? '2027-05-31' : hotel.issuer.id === 'wealth' ? '2027-08-31' : hotel.issuer.id === 'greens' ? '2027-03-31' : ['tosei','tkp'].includes(hotel.issuer.id) ? '2027-02-28' : ['daiwa-house','sunfrontier'].includes(hotel.issuer.id) ? '2027-06-30' : hotel.issuer.id === 'seibu' ? '2026-11-30' : '2027-07-31');
+    assert.equal(deadline.date,hotel.issuer.id === 'vision' ? '2027-09-30' : hotel.issuer.id === 'wakita' ? '2027-05-31' : hotel.issuer.id === 'wealth' ? '2027-08-31' : hotel.issuer.id === 'greens' ? '2027-03-31' : ['tosei','tkp'].includes(hotel.issuer.id) ? '2027-02-28' : ['daiwa-house','sunfrontier'].includes(hotel.issuer.id) ? '2027-06-30' : hotel.issuer.id === 'seibu' ? '2026-11-30' : '2027-07-31');
     assert.equal(deadline.benefit,hotel.voucherName);
     assert.equal(nearestDeadline([{issuer:'kyoritsu',status:'confirmed',date:'2026-10-31',benefit:'株主お食事（ランチ）券'}],hotel.issuer.id,now,hotel.deadlineBenefitPattern),null);
   }

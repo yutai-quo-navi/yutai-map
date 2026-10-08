@@ -49,8 +49,8 @@ export function deadlineState(days) {
 }
 
 // Feature vouchers read the same editable expiry ledger as the expiry page.
-export function voucherEntriesFromLedger(entries) {
-  return entries.filter(entry => entry.issuer_id && entry.expiry_type === '利用期限' &&
+export function voucherEntriesFromLedger(entries, expiryType = '利用期限') {
+  return entries.filter(entry => entry.issuer_id && entry.expiry_type === expiryType &&
     entry.status === 'confirmed' && entry.expiry_date).map(entry => ({
       id:entry.id, issuer:entry.issuer_id, code:entry.code, name:entry.company_name,
       benefit:entry.benefit_name, date:entry.expiry_date, status:entry.status,

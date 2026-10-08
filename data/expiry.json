@@ -1654,6 +1654,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "9416-2027-03-booking",
+      "code": "9416",
+      "company_name": "ビジョン",
+      "benefit_name": "株主優待券（クーポンコード）",
+      "issue": "2025年12月末基準・2026年3月送付分",
+      "expiry_date": "2027-03-31",
+      "research_month": "2027-03",
+      "expiry_type": "申込期限",
+      "category": "leisure",
+      "brands": [
+        "ビジョングランピングリゾート山中湖・美肌の湯こしかの温泉"
+      ],
+      "source_url": "https://www.vision-net.co.jp/stocks",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "宿泊期限は2027-06-20宿泊分まで（当日を含む連泊可）。申込期限とは異なる。株主専用ダイヤルで電話予約。1室1泊あたり最大29,000円分割引。食事などのオプション・入湯税は対象外。同年発行券のみ併用可。",
+      "issuer_id": "vision",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "8125-2027-05-1",
       "code": "8125",
       "company_name": "ワキタ",
@@ -1838,6 +1862,30 @@
       "status": "confirmed",
       "notes": "発行会社の優待券面画像に2027年8月31日の記載を確認（金券ショップ掲載画像）。公式サイトには期限の明記なし。発行回は推定しない。手持ち券面を確認。複数枚利用可・直接予約・現地決済。",
       "issuer_id": "wealth",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
+      "id": "9416-2027-09-booking",
+      "code": "9416",
+      "company_name": "ビジョン",
+      "benefit_name": "株主優待券（クーポンコード）",
+      "issue": "2026年6月末基準・2026年9月送付分",
+      "expiry_date": "2027-09-30",
+      "research_month": "2027-09",
+      "expiry_type": "申込期限",
+      "category": "leisure",
+      "brands": [
+        "ビジョングランピングリゾート山中湖・美肌の湯こしかの温泉"
+      ],
+      "source_url": "https://www.vision-net.co.jp/stocks",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-09",
+      "status": "confirmed",
+      "notes": "宿泊期限は2027-12-20宿泊分まで（当日を含む連泊可）。申込期限とは異なる。株主専用ダイヤルで電話予約。1室1泊あたり最大29,000円分割引。食事などのオプション・入湯税は対象外。同年発行券のみ併用可。",
+      "issuer_id": "vision",
       "search_brand": "",
       "emoji": "",
       "verification_method": "official",

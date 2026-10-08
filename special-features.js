@@ -20,6 +20,8 @@ export function validateFeature(feature) {
       !Array.isArray(feature.stores)) throw new Error('Invalid feature');
   if (!validRadius(featureRadius(feature)))
     throw new Error('Invalid feature radius');
+  if (feature.deadlineExpiryType && !['利用期限', '申込期限'].includes(feature.deadlineExpiryType))
+    throw new Error('Invalid feature deadline type');
   const radii = featureRadiusOptions(feature);
   if (!Array.isArray(radii) || !radii.includes(featureRadius(feature)) ||
       new Set(radii).size !== radii.length || radii.some(radius => !validRadius(radius)))
@@ -102,7 +104,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       button.textContent = feature.shortName || feature.issuer.name;
       button.setAttribute('aria-label', feature.title);
       button.setAttribute('aria-controls', resultsId);
-      const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern);
+      const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType);
       if (feature.status === 'ended') {
         bubble.className = 'voucher-deadline-bubble'; bubble.textContent = '今回分は終了';
         bubble.setAttribute('aria-label', `利用期限終了：${feature.validThrough}`);
@@ -169,8 +171,9 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       if (section === 'hotel') info.innerHTML = `<p class="feature-note">${esc(active.description)}</p>`;
       if (active.status === 'public') info.innerHTML += `<p class="feature-note">${active.availability === 'continuous' ? '' : `特典提供期間：${esc(active.validFrom)}〜${esc(active.validThrough)}／`}確認日：${esc(active.checkedOn)}</p>`;
       if (active.voucherName) info.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
-      const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern);
-      if (active.status !== 'ended') info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の利用期限：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : '優待券の利用期限は、お手持ちの券面をご確認ください。'}</p>`;
+      const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern, active.deadlineExpiryType);
+      const deadlineType = active.deadlineExpiryType || '利用期限';
+      if (active.status !== 'ended') info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の${esc(deadlineType)}：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : `優待券の${esc(deadlineType)}は、お手持ちの券面をご確認ください。`}</p>`;
       details.append(info);
     }
     for (const {feature: active, store} of matches) {
