@@ -1,0 +1,59 @@
+name: Update Sun Frontier hotel benefits
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 1 * *'
+  push:
+    branches: [main]
+    paths:
+      - tools/features/scrape_sunfrontier_hotels.py
+      - tools/features/scrape_kyoritsu_hotels.py
+      - tools/features/scrape_seibu_hotels.py
+      - tools/features/scrape_daiwa_hotels.py
+      - data/features/sunfrontier-hotel-coordinates.json
+      - tests/test_sunfrontier_hotels.py
+      - .github/workflows/scrape_sunfrontier_hotels.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sunfrontier-hotel-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12.14'
+      - name: Verify hotel scraper
+        run: python -m unittest discover -s tests -p 'test_sunfrontier_hotels.py'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24.19.0"
+          package-manager-cache: false
+
+      - name: Install locked Wrangler
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Prepare Cloudflare API token
+        env:
+          CF_API_TOKEN_RAW: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          CF_API_TOKEN="$(printf '%s' "$CF_API_TOKEN_RAW" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+          test -n "$CF_API_TOKEN" || { echo 'CF_API_TOKEN is not configured'; exit 1; }
+          echo "::add-mask::$CF_API_TOKEN"
+          printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
+      - name: Prepare feature table
+        run: npx wrangler d1 execute '4540cbaa-3214-4111-9c7a-11e18fd067db' --remote --command 'CREATE TABLE IF NOT EXISTS feature_snapshots (feature_id TEXT PRIMARY KEY, payload_json TEXT NOT NULL, checked_on TEXT NOT NULL);'
+      - name: Read previous hotel counts
+        run: npx wrangler d1 execute '4540cbaa-3214-4111-9c7a-11e18fd067db' --remote --command "SELECT feature_id,json_array_length(payload_json,'$.stores') AS count FROM feature_snapshots WHERE feature_id IN ('sunfrontier-hotels');" --json > /tmp/hotel-counts.json
+      - name: Check live hotel directories under reviewed eligibility
+        run: python tools/features/scrape_sunfrontier_hotels.py --previous-counts /tmp/hotel-counts.json
+      - name: Save verified hotel dataset
+        run: npx wrangler d1 execute '4540cbaa-3214-4111-9c7a-11e18fd067db' --remote --file=cloudflare/generated/sync_sunfrontier_hotels.sql

@@ -1,0 +1,104 @@
+{
+  "HOTEL OOSADO": {
+    "address": "〒952-1583 新潟県佐渡市相川鹿伏 288-2",
+    "officialLocationUrl": "https://hotel-oosado.jp/",
+    "mapLink": "https://goo.gl/maps/KxhczXTjih2BcGRV8",
+    "lat": 38.0214598,
+    "lng": 138.2251768,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://goo.gl/maps/KxhczXTjih2BcGRV8"
+  },
+  "四条河原町温泉 空庭テラス京都 別邸": {
+    "address": "〒600-8022 京都府京都市下京区 河原町通四条下る  2丁目稲荷町 324番地",
+    "officialLocationUrl": "https://shijo-bettei.jp/access/",
+    "mapLink": "https://goo.gl/maps/qZ9mV3p9ngpJLqSd7",
+    "lat": 35.0025037,
+    "lng": 135.7698173,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://goo.gl/maps/qZ9mV3p9ngpJLqSd7"
+  },
+  "四条河原町温泉 空庭テラス京都": {
+    "address": "〒600-8022 京都府京都市下京区 河原町通四条下る  2丁目稲荷町324番地",
+    "officialLocationUrl": "https://soraniwa-hotel.jp/access/",
+    "mapLink": "https://goo.gl/maps/my4fi47g5vgjnvka8",
+    "lat": 35.0025776,
+    "lng": 135.769592,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://goo.gl/maps/my4fi47g5vgjnvka8"
+  },
+  "オリエンタルヒルズ沖縄": {
+    "address": "〒904-0404 沖縄県国頭郡恩納村瀬良垣79-1",
+    "officialLocationUrl": "https://or-okinawa.com/access/",
+    "mapLink": "https://maps.app.goo.gl/o6xJmvtepndQBQor7",
+    "lat": 26.5045202,
+    "lng": 127.8776372,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://maps.app.goo.gl/o6xJmvtepndQBQor7"
+  },
+  "STITCH HOTEL KYOTO": {
+    "address": "京都府京都市下京区西石垣通り四条下ル斎藤町119",
+    "officialLocationUrl": "https://stitch-hotel.jp/",
+    "mapLink": "https://maps.app.goo.gl/reuptvpeSC9SBoxR8",
+    "lat": 35.0032823,
+    "lng": 135.7707041,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://maps.app.goo.gl/reuptvpeSC9SBoxR8"
+  },
+  "HIYORI RESIDENCE KYOTO KAMOGAWA": {
+    "address": "〒605-0909京都府京都市東山区鍵屋町485",
+    "officialLocationUrl": "https://kyoto-kamogawa.hiyori-hotel.jp/",
+    "mapLink": "https://maps.app.goo.gl/HHbCDXtgvKq46jb19",
+    "lat": 34.9924714,
+    "lng": 135.7681137,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://maps.app.goo.gl/HHbCDXtgvKq46jb19"
+  },
+  "たびのホテルlit松本": {
+    "address": "〒390-0815 長野県松本市深志1-4-5",
+    "officialLocationUrl": "https://matsumoto.tabino-hotel.jp/",
+    "lat": 36.228678,
+    "lng": 137.967133,
+    "coordinateSource": "OpenPOI API",
+    "coordinateSourceUrl": "https://api.openpoiapi.com/v1/search",
+    "coordinateMatch": "name-and-address",
+    "licenses": [
+      "CDLA-Permissive-2.0",
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org",
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ]
+  },
+  "たびのホテル阿蘇熊本空港": {
+    "address": "〒869-1235 熊本県菊池郡大津町室1473-5",
+    "officialLocationUrl": "https://aso-kumamoto.tabino-hotel.jp/",
+    "lat": 32.892363,
+    "lng": 130.853645,
+    "coordinateSource": "OpenPOI API",
+    "coordinateSourceUrl": "https://api.openpoiapi.com/v1/search",
+    "coordinateMatch": "same-building",
+    "licenses": [
+      "公共データ利用規約（第1.0版, PDL1.0）"
+    ],
+    "attributions": [
+      "厚生労働省 食品衛生申請等システム（オープンデータ）"
+    ],
+    "coordinateNote": "距離はホテル内1階のレストラン「たびMON」の位置を使った目安です。"
+  },
+  "たびのホテルlit宮古島": {
+    "address": "〒906-0012 沖縄県宮古島市平良西里596",
+    "officialLocationUrl": "https://miyakojima.tabino-hotel.jp/",
+    "lat": 24.801146419766344,
+    "lng": 125.28379831294147,
+    "coordinateSource": "OpenPOI API",
+    "coordinateSourceUrl": "https://api.openpoiapi.com/v1/search",
+    "coordinateMatch": "name-and-address",
+    "licenses": [
+      "CDLA-Permissive-2.0"
+    ],
+    "attributions": [
+      "Overture Maps Foundation, overturemaps.org"
+    ]
+  }
+}

@@ -1630,6 +1630,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "8934-2027-06-1",
+      "code": "8934",
+      "company_name": "サンフロンティア不動産",
+      "benefit_name": "株主様ご優待割引券",
+      "issue": "2026年3月末基準・2026年6月送付分",
+      "expiry_date": "2027-06-30",
+      "research_month": "2027-06",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [
+        "日和ホテル・たびのホテル等"
+      ],
+      "source_url": "https://www.sunfrt.co.jp/ir/stock_information/shareholder_benefits/",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-08",
+      "status": "confirmed",
+      "notes": "利用期間2026年7月1日〜2027年6月30日。公式予約＋電話連絡、現地決済、株主情報記入必須。",
+      "issuer_id": "sunfrontier",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "official",
+      "expiry_year": 2027
+    },
+    {
       "id": "5261-2027-07-1",
       "code": "5261",
       "company_name": "リソルホールディングス",
