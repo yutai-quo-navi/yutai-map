@@ -284,7 +284,8 @@ async function searchReferenceIssuer({issuer, refs, aliasChunks}, lat, lng, radi
     });
     const res = await fetch(`${OPENPOI_API}?${params}`, {
       signal: AbortSignal.timeout(OPENPOI_TIMEOUT_MS),
-      redirect: 'error',
+      // Return redirects without following them; the non-2xx guard below rejects them.
+      redirect: 'manual',
       headers: { 'Accept': 'application/json' }
     });
     if (!res.ok) {

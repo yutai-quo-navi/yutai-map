@@ -145,7 +145,7 @@ test('the OpenPOI budget applies to all selected issuers and accepts its boundar
     assert.equal(calls.length,40);
     for(const {url,options} of calls){
       assert.equal(new URL(url).origin,'https://api.openpoiapi.com');
-      assert.equal(options.redirect,'error');
+      assert.equal(options.redirect,'manual');
       assert.ok(options.signal instanceof AbortSignal);
     }
   });
