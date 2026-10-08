@@ -95,8 +95,8 @@ export default {
 
     try {
       const referenceIssuers = await findReferenceIssuers(env, issuers);
-      const referenceSet = new Set(referenceIssuers);
-      const geoIssuers = issuers.filter(id => !referenceSet.has(id));
+      // One issuer can have both official coordinates and unlocated references.
+      const geoIssuers = issuers;
       const referenceSearches = (await Promise.all(referenceIssuers.map(id =>
         prepareReferenceSearch(env, id, '', brand)
       ))).filter(Boolean);

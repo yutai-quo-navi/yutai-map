@@ -106,3 +106,27 @@ test('a geographic brand cannot fill the shared candidate limit and hide La Paus
     assert.equal(queries.filter(q=>q.includes('ウルフギャング')).length,1);
   } finally {globalThis.fetch=oldFetch;globalThis.caches=oldCaches;}
 });
+
+test('one issuer returns both official coordinates and matched references with correct counts',async()=>{
+  const oldFetch=globalThis.fetch, oldCaches=globalThis.caches;
+  globalThis.caches={default:{match:async()=>undefined}};
+  const located={...reference,issuer_id:'fujio',store_id:'located',name:'公式座標店',lat:43.055,lng:141.456};
+  const ref={...reference,issuer_id:'fujio'};
+  globalThis.fetch=async()=>Response.json({results:[poi]});
+  const permit={limit:async()=>({success:true})};
+  const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(...args){
+    if(sql.includes('FROM stores')) assert.ok(args.includes('fujio'),'mixed issuer must be searched in the coordinate table');
+    return {first:async()=>({aliases_json:'["ラパウザ"]'}),all:async()=>({results:
+      sql.includes('SELECT DISTINCT') ? [{issuer_id:'fujio'}] :
+      sql.includes('FROM reference_stores') ? [ref] :
+      sql.includes('FROM stores') ? [located] : []})};
+  }};}}};
+  try{
+    const response=await worker.fetch(new Request('https://api.example.com/v1/stores/search?lat=43.055&lng=141.455&radius=10000&issuers=fujio'),env);
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.deepEqual(new Set(data.results.map(s=>s.store_id)),new Set(['located',ref.store_id]));
+    assert.equal(data.category_counts.restaurant,2);
+    assert.equal(data.category_counts.all,2);
+  }finally{globalThis.fetch=oldFetch;globalThis.caches=oldCaches;}
+});

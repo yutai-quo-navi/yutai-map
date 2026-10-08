@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-08",
+  "updated": "2026-10-09",
   "issuers": [
     {
       "id": "skylark",
@@ -92,6 +92,13 @@
       "name": "第一興商",
       "status": "public",
       "config": "./data/issuers/daiichikosho/config.json"
+    },
+    {
+      "id": "fujio",
+      "code": "2752",
+      "name": "フジオフードグループ本社",
+      "status": "development",
+      "config": "./data/issuers/fujio/config.json"
     }
   ]
 }
