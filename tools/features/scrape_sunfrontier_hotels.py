@@ -83,7 +83,15 @@ def parse_hotels(document, today):
     return list(hotels.values())
 
 
-def hotel_address(document):
+def hotel_address(document, hotel=None):
+    document = re.sub(r'<(?:rt|rp)\b[^>]*>.*?</(?:rt|rp)>','',document,flags=re.I|re.S)
+    # Villa's check-in guidance also lists the separate lit hotel. Its own
+    # contact footer identifies the Villa address, rather than the first address.
+    if hotel and urlparse(hotel['sourceUrl']).hostname == 'villa-miyakojima.tabino-hotel.jp':
+        footers = Document(document).root.find('footer')
+        own = [n for n in footers if re.sub(r'\s+','',hotel['name']) in re.sub(r'\s+','',n.text())]
+        if len(own) != 1:raise ValueError('Unverified Villa contact footer')
+        document = '<p>'+html.escape(own[0].text())+'</p>'
     doc = Document(document)
     try:
         address = address_from_detail(document)
@@ -97,6 +105,8 @@ def hotel_address(document):
         elif japanese:address = japanese[0]
         else:raise
     address = re.split(r'Google Maps|\b(?:TEL|FAX|Phone)\b|\s+\d+-\d+ [A-Za-z]',address,flags=re.I)[0].strip().rstrip('：:')
+    address = re.split(r'\s+0\d{1,4}-\d{1,4}-\d{3,4}|\[\s*google\s*map\s*\]',address,flags=re.I)[0].strip()
+    address = re.split(r'マップコード\s*[：:]',address)[0].strip()
     address = re.sub(r'（\s*[ぁ-ん ]+\s*）','',address)
     address = address.replace('京都市','京都府京都市',1) if re.match(r'〒\s*\d{3}-\d{4}\s*京都市',address) else address
     return address
@@ -143,7 +153,7 @@ def verify_hotel(hotel, today, detail_fetch=fetch):
     for url in dict.fromkeys(candidates):
         page = document if url == home else detail_fetch(url)
         if not address:
-            try:address = hotel_address(page); address_url = url
+            try:address = hotel_address(page,hotel); address_url = url
             except ValueError:pass
         if not coordinates:
             try:coordinates = hotel_coordinates(page,hotel); location_url = url

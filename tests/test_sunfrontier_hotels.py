@@ -38,10 +38,20 @@ class SunFrontierTests(unittest.TestCase):
         self.assertEqual(hotel_coordinates(doc,hotel)['lat'],43.165702)
         self.assertEqual(hotel_address('<address>〒061-3213 石狩市花川北3条1丁目7 TEL: 0133-77-7607</address>'),
                          '〒061-3213 北海道石狩市花川北3条1丁目7')
+        self.assertEqual(hotel_address('<address>〒039-3212 青森県上北郡六ヶ所村 <ruby>尾駮<rt>おぶち</rt></ruby> <ruby>家ノ前<rt>いえのまえ</rt></ruby> 58-9 0175-73-7855 お問い合わせ</address>'),
+                         '〒039-3212 青森県上北郡六ヶ所村 尾駮 家ノ前 58-9')
+        self.assertEqual(hotel_address('<address>〒952-0003 新潟県佐渡市椿697 [ google map ]</address>'),
+                         '〒952-0003 新潟県佐渡市椿697')
 
     def test_unverified_location_or_changed_rules_cannot_replace_snapshot(self):
         hotel={'id':'test','name':'静楓亭','sourceUrl':'https://seifutei.jp/'}
         with self.assertRaises(ValueError):verify_hotel(hotel,date(2026,10,8),lambda _: '<p>〒969-3101 福島県耶麻郡猪苗代町1</p>')
         with self.assertRaises(ValueError):verify_policy('株主様ご優待割引券')
+
+    def test_villa_uses_own_contact_address_instead_of_checkin_hotel(self):
+        hotel={'name':'たびのホテルVilla宮古島','sourceUrl':'https://villa-miyakojima.tabino-hotel.jp/'}
+        document='<p>〒906-0012 沖縄県宮古島市平良西里596 たびのホテルlit宮古島</p><footer>たびのホテル Villa 宮古島<p>〒906-0015 沖縄県宮古島市平良久貝244-1 Phone: 0980-75-3100</p></footer>'
+        self.assertEqual(hotel_address(document,hotel),'〒906-0015 沖縄県宮古島市平良久貝244-1')
+        with self.assertRaises(ValueError):hotel_address(document.replace('Villa','lit'),hotel)
 
 if __name__=='__main__':unittest.main()
