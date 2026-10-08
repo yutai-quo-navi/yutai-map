@@ -12,6 +12,7 @@ on:
       - tools/features/scrape_seibu_hotels.py
       - tools/features/scrape_daiwa_hotels.py
       - tests/test_wealth_hotels.py
+      - data/features/wealth-hotel-coordinates.json
       - .github/workflows/scrape_wealth_hotels.yml
 
 permissions:

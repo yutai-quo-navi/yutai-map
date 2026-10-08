@@ -1,0 +1,22 @@
+{
+  "https://www.sixsenses.com/jp/hotels-resorts/asia-the-pacific/japan/kyoto/": {
+    "name": "シックスセンシズ 京都",
+    "address": "京都府京都市東山区妙法院前側町431",
+    "lat": 34.9911642,
+    "lng": 135.7742085,
+    "coordinateSource": "公式アクセス地図",
+    "coordinateSourceUrl": "https://www.sixsenses.com/jp/hotels-resorts/asia-the-pacific/japan/kyoto/destination/how-to-get-there/",
+    "coordinateCheckedOn": "2026-10-09",
+    "coordinateNote": "ホテル公式情報で確認済みの位置を使用。月次確認では発行会社の対象ホテル・住所と照合しています。"
+  },
+  "https://www.ihg.com/holidayinn/hotels/jp/ja/sapporo/ctsop/hoteldetail": {
+    "name": "ホリデイ・イン&スイーツ札幌大通公園",
+    "address": "北海道札幌市中央区南2条西8-6-1",
+    "lat": 43.05665,
+    "lng": 141.34559,
+    "coordinateSource": "ホテル公式構造化データ",
+    "coordinateSourceUrl": "https://www.ihg.com/holidayinn/hotels/jp/ja/sapporo/ctsop/hoteldetail",
+    "coordinateCheckedOn": "2026-10-09",
+    "coordinateNote": "ホテル公式情報で確認済みの位置を使用。月次確認では発行会社の対象ホテル・住所と照合しています。"
+  }
+}

@@ -1,6 +1,7 @@
 import sys
 import unittest
 import json
+from urllib.error import HTTPError
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools/features'))
 from scrape_wealth_hotels import PROPERTIES, parse_hotels, embedded_coordinates, resolved_map_coordinates, verify_hotel, verify_policy
@@ -46,5 +47,17 @@ class WealthHotelsTest(unittest.TestCase):
         terms=['ホテル宿泊のほか','株主ご本人様またはご家族様','転売や譲渡を目的とした行為は禁止','複数枚同時にお使いいただけます','有効期間内であれば同時','現金またはクレジットカード','他の商品券、金券などは併用できません','適用除外日はございません','必ず「現地決済」をお選びください','事前決済でご予約された場合、株主優待は適用対象外','他の割引券・特典との併用','旅行代理店や外部予約サイトを経由したご予約ではご利用いただけません']
         html='<p>'+' '.join(terms)+'</p>';verify_policy(html)
         with self.assertRaises(ValueError):verify_policy(html.replace('有効期間内であれば同時',''))
+
+    def test_blocked_property_keeps_reviewed_point_and_real_check_date(self):
+        url='https://www.ihg.com/holidayinn/hotels/jp/ja/sapporo/ctsop/hoteldetail'
+        hotel={'sourceUrl':url,'name':'ホリデイ・イン&スイーツ札幌大通公園','address':'北海道札幌市中央区南2条西8-6-1'}
+        row={**hotel,'lat':43.05665,'lng':141.34559,'coordinateCheckedOn':'2026-10-09'}
+        def blocked(_):raise HTTPError(url,403,'Forbidden',{},None)
+        result=verify_hotel(hotel,'2026-11-01',blocked,{url:row})
+        self.assertEqual(result['coordinateCheckedOn'],'2026-10-09')
+        for changed in [{**hotel,'address':'北海道札幌市中央区別住所'}, {**hotel,'name':'別ホテル'}]:
+            with self.assertRaises(HTTPError):verify_hotel(changed,'2026-11-01',blocked,{url:row})
+        def unavailable(_):raise HTTPError(url,502,'Bad Gateway',{},None)
+        with self.assertRaises(HTTPError):verify_hotel(hotel,'2026-11-01',unavailable,{url:row})
 
 if __name__=='__main__':unittest.main()

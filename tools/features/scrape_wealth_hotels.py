@@ -12,6 +12,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs, unquote_plus
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 from zoneinfo import ZoneInfo
 from scrape_kyoritsu_hotels import ROOT, Document, PREFECTURES, fetch as live_fetch, validate_previous, write_sql
 from scrape_seibu_hotels import official_coordinates
@@ -19,6 +20,7 @@ from scrape_seibu_hotels import official_coordinates
 FEATURE = 'wealth-hotels'
 IR = 'https://www.wealth-mngt.com/ir/return.html'
 FAQ = 'https://www.wealth-mngt.com/ir/faq.html'
+SUPPLEMENTS = ROOT/'data/features/wealth-hotel-coordinates.json'
 # Exact issuer-listed properties. New destinations require a reviewed location
 # adapter before publishing; unknown rows never silently disappear.
 PROPERTIES = {
@@ -129,7 +131,7 @@ def resolved_map_coordinates(destination):
     return {'lat':lat,'lng':lng,'coordinateSource':'公式アクセス地図'}
 
 
-def verify_hotel(hotel,today,detail_fetch=fetch):
+def verify_hotel_live(hotel,today,detail_fetch):
     identity,url = PROPERTIES[hotel['sourceUrl']];url = url or hotel['sourceUrl']
     document = detail_fetch(url);heads = Document(document).root.find('head')
     titles = heads[0].find('title') if len(heads) == 1 else []
@@ -146,6 +148,23 @@ def verify_hotel(hotel,today,detail_fetch=fetch):
     if not(math.isfinite(coords['lat']) and math.isfinite(coords['lng']) and 20<=coords['lat']<=46 and 122<=coords['lng']<=154):
         raise ValueError('Invalid domestic hotel coordinates')
     return {**hotel,**coords,'coordinateSourceUrl':url,'verified':True,'coordinateCheckedOn':today,'conditions':CONDITIONS}
+
+
+def verify_hotel(hotel,today,detail_fetch=fetch,supplements=None):
+    try:return verify_hotel_live(hotel,today,detail_fetch)
+    except HTTPError as error:
+        # Some hotel chains reject the GitHub runner. Do not bypass them or
+        # overwrite a previously checked location with a guessed geocode.
+        if error.code != 403:raise
+        rows = supplements if supplements is not None else json.loads(SUPPLEMENTS.read_text())
+        row = rows.get(hotel['sourceUrl'])
+        if not row or row['name'] != hotel['name'] or row['address'] != hotel['address']:raise
+        if not(math.isfinite(row['lat']) and math.isfinite(row['lng']) and 20<=row['lat']<=46 and 122<=row['lng']<=154):
+            raise ValueError('Invalid reviewed fallback coordinates')
+        coords = {k:v for k,v in row.items() if k not in {'name','address'}}
+        # Keep the actual coordinate check date, distinct from this month's
+        # successful issuer eligibility/address check.
+        return {**hotel,**coords,'verified':True,'conditions':CONDITIONS}
 
 
 def main():
