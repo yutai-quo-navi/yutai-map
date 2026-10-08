@@ -1049,9 +1049,9 @@ h1 span{
 }
 .benefit-choice-name{min-width:0;white-space:normal;overflow-wrap:anywhere}
 .benefit-choice-heading,.benefit-choice-detail{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;max-width:100%;min-width:0}
+.benefit-choice-heading{gap:0}
 .benefit-choice-status{font-size:11px;color:inherit}
-.benefit-choice-count{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:#f7f4f0;color:var(--muted);font-size:11px;white-space:nowrap}
-.benefit-choice[aria-pressed="true"] .benefit-choice-count{border-color:#ce9aab;background:#fff9fb;color:#843f55}
+.benefit-choice-count{display:inline-block;color:inherit;font-size:inherit;white-space:nowrap}
 .benefit-choice .voucher-deadline-bubble{height:auto;min-height:0;padding:0;align-self:flex-start;justify-content:flex-start;border:0;border-radius:0;background:transparent;color:#98502d;font-size:11px;line-height:1.6}
 .benefit-choice .voucher-deadline-bubble .deadline-count{font-size:inherit}
 .benefit-choice .voucher-deadline-bubble::after{display:none}
@@ -1061,7 +1061,6 @@ h1 span{
   .benefit-choice{padding:9px 12px}
   .feature-item{max-width:calc((100% - 8px)/2)}
   .feature-button .benefit-choice-heading{display:block}
-  .feature-button .benefit-choice-count{margin-left:6px}
 }
 
 /* Expiry notice sits inline inside its issuer chip. */

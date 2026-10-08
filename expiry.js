@@ -1,4 +1,11 @@
 // Shared voucher deadlines use Japanese calendar days, independently of device timezone.
+// Active deadlines first, then undated benefits; expired benefits stay last.
+export function compareBenefitPriority(a, b) {
+  const rank = item => item.ended || item.days < 0 ? 2 : Number.isFinite(item.days) ? 0 : 1;
+  return rank(a) - rank(b) ||
+    (rank(a) === 0 ? a.days - b.days : 0) ||
+    (b.count || 0) - (a.count || 0);
+}
 export function japanDay(now = new Date()) {
   const parts = new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
   const get = type => parts.find(p => p.type === type).value;

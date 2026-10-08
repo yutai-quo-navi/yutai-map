@@ -1,4 +1,5 @@
 // Feature search uses independent radii and either manual or scheduled data.
+import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
 export const FEATURE_RADIUS_METERS = 3_000_000;
 const MAX_FEATURE_RADIUS_METERS = 4_000_000;
 const validRadius = radius => radius === 'all' || (Number.isFinite(radius) && radius > 0 && radius <= MAX_FEATURE_RADIUS_METERS);
@@ -88,7 +89,13 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
   const currentRadius = feature => getRadius ? getRadius() : selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
-    const displayed = visibleFeatures(features, today(), preview);
+    const displayed = visibleFeatures(features, today(), preview)
+      .map(feature => ({feature, priority:{
+        days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
+        ended:feature.status === 'ended', count:feature.stores.length
+      }}))
+      .sort((a,b) => compareBenefitPriority(a.priority, b.priority))
+      .map(item => item.feature);
     const available = new Set(displayed.map(feature => feature.id));
     for (const id of selectedFeatures) if (!available.has(id)) selectedFeatures.delete(id);
     root.hidden = !displayed.length;
@@ -104,7 +111,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
       const name = document.createElement('span'); name.className = 'benefit-choice-name';
       name.textContent = feature.shortName || feature.issuer.name;
       const count = document.createElement('span'); count.className = 'benefit-choice-count';
-      count.textContent = `(${feature.stores.length}件)`;
+      count.textContent = `（${feature.stores.length}件）`;
       nameRow.append(name, count); button.append(nameRow);
       button.setAttribute('aria-label', `${feature.title}、${feature.stores.length}${unit}${feature.subtitle ? '、'+feature.subtitle : ''}`);
       button.setAttribute('aria-controls', resultsId);

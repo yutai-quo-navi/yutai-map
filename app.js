@@ -1,5 +1,5 @@
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261009-vision';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-selection-cards';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-benefit-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 const API = 'https://api.openpoiapi.com/v1/search';
@@ -327,7 +327,19 @@ function toggleIssuer(id){
 }
 function renderChips(){
   els.chips.innerHTML = '';
-  const available=companies.filter(c=>visibleCompanyIds.has(c.id));
+  const counts = new Map();
+  for (const brand of brandCatalog) counts.set(brand.issuer_id, (counts.get(brand.issuer_id) || 0) + (Number(brand.count) || 0));
+  const entries = allVoucherDeadlines();
+  const now = new Date();
+  const priority = company => ({
+    days: (nearestDeadline(entries, company.id, now) ||
+      (company.showExpiredDeadline ? latestExpiredDeadline(entries, company.id, now) : null))?.days,
+    count: counts.get(company.id) ?? company.officialStores.length
+  });
+  const available=companies.filter(c=>visibleCompanyIds.has(c.id))
+    .map(company => ({company, priority:priority(company)}))
+    .sort((a,b) => compareBenefitPriority(a.priority, b.priority))
+    .map(item => item.company);
   for(const c of available){
     const active=selected.has(c.id);
     const group=document.createElement('span');
@@ -1126,6 +1138,7 @@ async function loadBrandCatalog(){
     }));
     if(request!==brandRequest) return;
     brandCatalog=groups.flat().filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
+    renderChips();
     syncTypedBrand(); renderBrandOptions();
   } catch {
     els.brandSearch.disabled=true;
