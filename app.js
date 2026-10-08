@@ -1,6 +1,6 @@
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger} from './expiry.js?v=20261009-vision';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-vision';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261009-vision';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-selection-cards';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
@@ -95,8 +95,8 @@ init();
 async function init(){
   initBenefitTabs({onChange(section) {
     activeBenefit = section;
-    searchRadius.setSection(section);
-    els.results.closest('.results-section').hidden = section === 'hotel';
+    if (section !== 'expiry') searchRadius.setSection(section);
+    els.results.closest('.results-section').hidden = section !== 'dining';
     specialFeatures.refresh();
     if (section === 'dining' && lastResults.length) renderFilteredResults(Number(els.radius.value));
   }});
@@ -301,9 +301,9 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   const bubble=document.createElement('span');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
-  const heading=document.createElement('span'); heading.textContent=entry.days < 0 ? '失効' : expiryType === '申込期限' ? '申込まで' : '失効まで';
-  const count=document.createElement('span'); count.className='deadline-count'; count.textContent=entry.days < 0 ? `${Number(entry.date.slice(5,7))}/${Number(entry.date.slice(8))}までの分` : entry.days===0 ? '本日' : entry.days+'日';
-  bubble.replaceChildren(...(entry.days < 0 ? [heading] : [heading,count]));
+  const count=document.createElement('span'); count.className='deadline-count';
+  count.textContent=entry.days < 0 ? '失効' : entry.days===0 ? (expiryType === '申込期限' ? '本日申込期限' : '本日失効') : entry.days+'日で'+(expiryType === '申込期限' ? '申込期限' : '失効');
+  bubble.replaceChildren(count);
   const detail=(expiryType === '申込期限' ? '申込期限：' : '使用期限：')+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
   bubble.setAttribute('aria-label',bubble.textContent+'。'+detail);
@@ -336,14 +336,18 @@ function renderChips(){
     const badge=document.createElement('button');
     badge.type='button';
     badge.dataset.issuer=c.id;
-    badge.className='selected-issuer '+(active ? issuerTone(c.id) : 'is-unselected');
+    badge.className='selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
     badge.setAttribute('aria-pressed',String(active));
     badge.setAttribute('aria-label',c.name);
     badge.title=c.name;
-    const name=document.createElement('span'); name.className='selected-issuer-name';
-    name.textContent=(active ? '✓ ' : '')+shortIssuerName(c);
+    const name=document.createElement('span'); name.className='selected-issuer-name benefit-choice-name';
+    name.textContent=shortIssuerName(c);
     badge.appendChild(name);
     if(bubble) badge.appendChild(bubble);
+    else if(active) {
+      const state=document.createElement('span'); state.className='benefit-choice-status';
+      state.textContent='選択中'; badge.appendChild(state);
+    }
     badge.addEventListener('click',()=>toggleIssuer(c.id));
     group.appendChild(badge);
     els.chips.appendChild(group);
@@ -568,6 +572,7 @@ async function requestLocation({search = true} = {}){
 }
 
 async function searchNearby(pos, centerLabel='現在地'){
+  if (activeBenefit === 'expiry') { els.locate.disabled=false; setStatus(''); return; }
   if(searching){ pendingSearch={pos,centerLabel}; return; }
   lastPosition = pos;
   lastCenterLabel = centerLabel;

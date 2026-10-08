@@ -9,7 +9,7 @@ export function initBenefitTabs({onChange = () => {}} = {}) {
       item.tabIndex = active ? 0 : -1;
       document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
     }
-    onChange(tab.id === 'hotelTab' ? 'hotel' : 'dining');
+    onChange({diningTab:'dining', hotelTab:'hotel', expiryTab:'expiry'}[tab.id]);
   };
   for (const tab of tabs) {
     tab.addEventListener('click', () => select(tab));

@@ -1,5 +1,5 @@
 :root{
-  --bg:#fff8ea;
+  --bg:#fffcf5;
   --surface:#ffffff;
   --surface-soft:#fff7eb;
   --surface-strong:#f7ecd9;
@@ -249,24 +249,21 @@ h1 span{
 .place-suggestion:last-child{border-bottom:0}
 .place-suggestion small{color:var(--muted);font-size:10px}
 
-/* Raised tabs share a white face with the panel, matching reference A. */
-.benefit-window{margin-bottom:22px}
-.benefit-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;padding:0 12px;align-items:end;position:relative;z-index:1}
-.benefit-tab{position:relative;min-width:0;margin:0;padding:13px 5px 12px;border:1px solid var(--line);border-bottom:0;border-radius:19px 19px 0 0;background:#f5f3f0;color:var(--muted);font-size:15px;font-weight:500;line-height:1.5;cursor:pointer}
-.benefit-tab[aria-selected="true"]{background:#fff;color:var(--accent-text);padding-top:17px;margin-bottom:-1px;padding-bottom:13px;border-color:var(--accent-border)}
-.benefit-tab[aria-selected="true"]::before{content:"";position:absolute;inset:7px 7px 0;border-radius:13px 13px 0 0;background:linear-gradient(#fff7eb,#fff);z-index:-1}
-.benefit-tab[aria-selected="true"]{isolation:isolate}
-.benefit-tab:disabled{color:#9b9289;cursor:default}
-.benefit-body{padding:15px 18px 18px;border:1px solid var(--accent-border);border-radius:22px;background:#fff}
-.benefit-body .section-title-row,.benefit-selection-meta{display:flex;align-items:center;gap:10px;padding-bottom:9px;border-bottom:1px solid #eee9e3}
-.benefit-body .selection-summary{margin-left:0;font-size:13px;font-weight:400}
-.benefit-body .selection-change{min-height:34px;font-size:13px;font-weight:500}
-@media(max-width:480px){
-  .benefit-tabs{padding:0 9px;gap:2px}
-  .benefit-tab{font-size:13px;padding:10px 3px 9px;border-radius:16px 16px 0 0}
-  .benefit-tab span{display:block}
-  .benefit-tab[aria-selected="true"]{padding-top:14px;padding-bottom:10px}
-  .benefit-body{padding:12px 13px 16px;border-radius:18px}
+/* Tabs and choices share one uninterrupted white surface. */
+.benefit-window{margin-bottom:22px;border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+.benefit-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:8px 10px 0;border-bottom:1px solid var(--line)}
+.benefit-tab{position:relative;min-width:0;margin:0;padding:14px 5px;min-height:48px;border:0;border-radius:0;background:transparent;color:var(--muted);font-size:15px;font-weight:400;line-height:1.5;cursor:pointer;white-space:nowrap}
+.benefit-tab[aria-selected="true"]{color:var(--accent-text);font-weight:500}
+.benefit-tab[aria-selected="true"]::after{content:"";position:absolute;left:20px;right:20px;bottom:-1px;height:2px;border-radius:2px;background:var(--accent-text)}
+.benefit-body{padding:20px 22px 22px}
+.benefit-body .section-title-row,.benefit-selection-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.benefit-body .selection-summary{margin-left:0;font-size:12px;font-weight:400;color:#843f55}
+.selection-hint{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
+#expiryPanel{min-height:76px}
+@media(max-width:520px){
+  .benefit-tab{font-size:13px;padding:12px 3px}
+  .benefit-tab[aria-selected="true"]::after{left:12px;right:12px}
+  .benefit-body{padding:16px 14px 18px}
 }
 
 /* Benefit selector */
@@ -871,7 +868,6 @@ h1 span{
 .controls .section-title-row{flex-wrap:wrap;gap:8px}
 .controls .text-button{margin-left:auto;min-height:44px;color:var(--accent-text);font-weight:700}
 .chips{display:flex;flex-wrap:wrap;gap:7px;font-size:12px;color:var(--muted)}
-.selected-issuer{display:inline-flex;align-items:center;border-radius:999px;padding:7px 10px;border:1px solid var(--issuer-line);background:var(--issuer-soft);color:var(--issuer);font-size:11px;line-height:1.4;font-weight:700}
 .selected-more{align-self:center;color:var(--muted);font-size:11px;font-weight:700}
 .issuer-tone-0{--issuer:#a34427;--issuer-soft:#fbe5dc;--issuer-line:#edd0c1}
 .issuer-tone-1{--issuer:#96374a;--issuer-soft:#f8e0e4;--issuer-line:#ebc1ca}
@@ -915,7 +911,6 @@ h1 span{
 }
 
 /* Full issuer names remain readable on narrow screens. */
-.selected-issuer{max-width:100%;overflow-wrap:anywhere;white-space:normal}
 .badge.company{line-height:1.5;overflow-wrap:anywhere;max-width:100%}
 .history-meta span{overflow-wrap:anywhere}
 
@@ -924,20 +919,17 @@ h1 span{
 .special-features[hidden]{display:none}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .feature-note{font-size:12px;color:var(--muted);line-height:1.7}
-.feature-buttons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px 6px;margin-top:15px;align-items:start}
-.feature-item{display:flex;flex-direction:column;align-items:center;text-align:center;min-width:0}
-.feature-caption{display:flex;flex-direction:column;gap:1px;margin:5px 0 0;font-size:11px;color:var(--muted);line-height:1.6}
+.feature-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:0;align-items:flex-start}
+.feature-item{display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0;max-width:100%}
+.feature-caption{margin:0;font-size:11px;color:var(--muted);line-height:1.6}
 .feature-radius-label{display:flex;flex-direction:column;gap:3px;margin-top:7px;max-width:100%;font-size:10px;color:var(--muted)}
 .feature-radius{max-width:100%;min-width:0;min-height:34px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text);font:inherit;font-size:12px;padding:4px 3px}
-.feature-button{position:relative;max-width:100%;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:18px;padding:6px 8px;font:inherit;font-size:12px;overflow-wrap:anywhere;cursor:pointer;min-height:34px}
-.feature-button[aria-pressed="true"]{background:var(--accent-soft,#fff4e8)}
-.feature-button:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 .feature-results{display:grid;gap:10px;margin-top:12px}
 .feature-results:empty{display:none}
 .feature-conditions{font-size:13px;line-height:1.7;white-space:pre-line}
 .feature-card .store-name{font-weight:400}
 .brand-controls{display:grid;gap:8px;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
-.brand-controls label{font-size:12px;font-weight:700}
+.brand-controls label{font-size:12px;font-weight:400;color:var(--muted)}
 .brand-controls input,.brand-controls select,.memo-form input,.memo-form select{width:100%;min-width:0;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;font-size:14px;box-sizing:border-box}
 .personal-tools{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 12px;margin:18px 0 22px}
 .personal-tools-caption{flex-basis:100%;margin:0;font-size:11px;color:var(--muted);font-weight:400}
@@ -971,7 +963,7 @@ h1 span{
 .brand-input-row{display:flex;align-items:center;gap:8px}
 .brand-input-row input{flex:1}
 .brand-input-row button{flex:none;font-size:12px}
-.brand-selection{margin:0;font-size:13px;font-weight:700;color:var(--text);overflow-wrap:anywhere}
+.brand-selection{margin:0;font-size:12px;font-weight:400;color:var(--muted);overflow-wrap:anywhere}
 .brand-help{margin:0;font-size:12px;line-height:1.5;color:var(--muted)}
 .brand-help:empty{display:none}
 .brand-suggestions{max-height:300px;overflow:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
@@ -1018,8 +1010,8 @@ h1 span{
 .selection-change{margin-left:auto;white-space:nowrap}
 .issuer-selection .chips{min-height:28px}
 
-/* Issuer chips can be toggled directly; touch devices do not retain desktop hover styling. */
-#companyChips{align-items:flex-end;gap:19px 10px;padding-top:15px}
+/* Content-sized cards use the same selection states for dining and hotels. */
+#companyChips{align-items:flex-start;gap:10px;padding-top:0}
 .selected-issuer-group{
   display:inline-flex;
   flex-direction:row;
@@ -1028,29 +1020,48 @@ h1 span{
   min-width:0;
   max-width:100%;
 }
-.selected-issuer-group .selected-issuer{
-  gap:7px;
+.benefit-choice{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:3px;
   min-width:0;
   max-width:100%;
-  box-sizing:border-box;
-  white-space:normal;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--surface);
+  color:var(--text);
+  font:inherit;
+  font-size:14px;
+  line-height:1.5;
+  font-weight:400;
+  text-align:left;
   overflow-wrap:anywhere;
-}
-.selected-issuer-name{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-button.selected-issuer{
-  font-family:inherit;
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
-button.selected-issuer.is-unselected{background:#f4f4f4;border-color:#d4d4d4;color:#777}
-button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
-@media (hover:hover) and (pointer:fine){
-  button.selected-issuer:hover{filter:brightness(.96)}
+.benefit-choice[aria-pressed="true"]{
+  background:var(--issuer-soft,#f8e6e9);
+  border-color:var(--issuer-line,#ce9aab);
+  color:var(--issuer,#843f55);
+}
+.benefit-choice-name{min-width:0;white-space:normal;overflow-wrap:anywhere}
+.benefit-choice-heading,.benefit-choice-detail{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;max-width:100%;min-width:0}
+.benefit-choice-status{font-size:11px;color:inherit}
+.benefit-choice-count{display:inline-block;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:#f7f4f0;color:var(--muted);font-size:11px;white-space:nowrap}
+.benefit-choice[aria-pressed="true"] .benefit-choice-count{border-color:#ce9aab;background:#fff9fb;color:#843f55}
+.benefit-choice .voucher-deadline-bubble{height:auto;min-height:0;padding:0;align-self:flex-start;justify-content:flex-start;border:0;border-radius:0;background:transparent;color:#98502d;font-size:11px;line-height:1.6}
+.benefit-choice .voucher-deadline-bubble .deadline-count{font-size:inherit}
+.benefit-choice .voucher-deadline-bubble::after{display:none}
+.benefit-choice:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
+@media(max-width:520px){
+  #companyChips,.feature-buttons{gap:8px}
+  .benefit-choice{padding:9px 12px}
+  .feature-item{max-width:calc((100% - 8px)/2)}
+  .feature-button .benefit-choice-heading{display:block}
+  .feature-button .benefit-choice-count{margin-left:6px}
 }
 
 /* Expiry notice sits inline inside its issuer chip. */
@@ -1080,8 +1091,6 @@ button.selected-issuer:focus-visible{outline:2px solid var(--accent-text);outlin
 }
 .voucher-deadline-bubble .deadline-count{font-size:10px;font-weight:400}
 .voucher-deadline-bubble::after{display:none}
-.feature-item>.feature-deadline{position:relative;margin-top:6px;border-radius:7px;height:auto;min-height:20px;padding:2px 4px;max-width:100%;box-sizing:border-box;flex-wrap:wrap;font-size:10px}
-.feature-item>.feature-deadline::after{display:block;content:'';position:absolute;top:-4px;left:calc(50% - 3px);width:6px;height:6px;transform:rotate(45deg);background:inherit;border-left:1px solid #dfaa89;border-top:1px solid #dfaa89}
 .voucher-deadline-bubble.is-today{background:#ffe4dc;color:#9b3025;border-color:#da9a8d}
 .store>.voucher-deadline-bubble{margin-bottom:5px}
 

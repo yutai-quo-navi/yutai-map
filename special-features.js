@@ -95,14 +95,18 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
     root.innerHTML = '';
     if (!displayed.length) return;
     const integrated = root.hasAttribute('data-tab-panel');
-    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary">${selectedFeatures.size}件 選択中</span><button type="button" class="text-button selection-change">選択・変更</button></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
-    if (integrated) root.querySelector('.selection-change').addEventListener('click', () => root.querySelector('.feature-button')?.focus());
+    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary" aria-live="polite">${selectedFeatures.size}件 選択中</span><span class="selection-hint">複数選択できます</span></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
-      button.className = 'feature-button';
-      button.textContent = feature.shortName || feature.issuer.name;
-      button.setAttribute('aria-label', feature.title);
+      button.className = 'feature-button benefit-choice';
+      const nameRow = document.createElement('span'); nameRow.className = 'benefit-choice-heading';
+      const name = document.createElement('span'); name.className = 'benefit-choice-name';
+      name.textContent = feature.shortName || feature.issuer.name;
+      const count = document.createElement('span'); count.className = 'benefit-choice-count';
+      count.textContent = `(${feature.stores.length}件)`;
+      nameRow.append(name, count); button.append(nameRow);
+      button.setAttribute('aria-label', `${feature.title}、${feature.stores.length}${unit}${feature.subtitle ? '、'+feature.subtitle : ''}`);
       button.setAttribute('aria-controls', resultsId);
       const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType);
       if (feature.status === 'ended') {
@@ -121,13 +125,18 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, ensu
         finally { failedOrigin = originUnavailable ? getOrigin() : null; resolvingOrigin = false; render(); }
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
-      const caption = document.createElement('p'); caption.className = 'feature-caption';
-      const subtitle = document.createElement('span'); subtitle.textContent = feature.subtitle || '';
-      const count = document.createElement('span');
-      count.textContent = feature.stores.length ? `${feature.status === 'ended' ? '前回' : ''}${feature.stores.length}${unit}紹介` : `${unit}確認中`;
-      caption.append(subtitle, count); item.append(button);
-      if (bubble) item.append(bubble);
-      item.append(caption);
+      const detail = document.createElement('span'); detail.className = 'benefit-choice-detail';
+      if (feature.subtitle) {
+        const subtitle = document.createElement('span'); subtitle.className = 'feature-caption';
+        subtitle.textContent = feature.subtitle; detail.append(subtitle);
+      }
+      if (bubble) detail.append(bubble);
+      else if (selectedFeatures.has(feature.id)) {
+        const state = document.createElement('span'); state.className = 'benefit-choice-status';
+        state.textContent = '選択中'; detail.append(state);
+      }
+      if (detail.childElementCount) button.append(detail);
+      item.append(button);
       if (!getRadius) {
         const radiusLabel = document.createElement('label'); radiusLabel.className = 'feature-radius-label';
         radiusLabel.textContent = '検索範囲';
