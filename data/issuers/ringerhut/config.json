@@ -1,0 +1,56 @@
+{
+  "id": "ringerhut",
+  "code": "8200",
+  "name": "リンガーハット",
+  "fullName": "株式会社リンガーハット",
+  "status": "public",
+  "sourceUrl": "https://www.ringerhut.co.jp/ir/investor/stocks_compliment.php",
+  "storeSearchUrl": "https://shop.ringerhut.jp/all/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "国内の公式店舗一覧に掲載された営業中のリンガーハット・濵かつ・長崎卓袱浜勝",
+  "note": "国内3ブランドで株主優待ポイントを利用可能。閉店・休業・開店前の店舗を除外。",
+  "aliases": [
+    "リンガーハット",
+    "濵かつ",
+    "浜かつ",
+    "浜勝",
+    "長崎卓袱浜勝"
+  ],
+  "excludedNames": [],
+  "categories": {
+    "リンガーハット": "restaurant",
+    "濵かつ": "restaurant",
+    "長崎卓袱浜勝": "restaurant"
+  },
+  "searchNames": [
+    "リンガーハット",
+    "濵かつ",
+    "浜かつ",
+    "浜勝",
+    "長崎卓袱浜勝"
+  ],
+  "verified": "2026-10-10",
+  "locationMode": "worker_reference",
+  "storeDataPath": "./data/issuers/ringerhut/stores/current.json",
+  "health": {
+    "minStores": 500,
+    "maxStores": 800,
+    "maxAgeDays": 40,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "shop.ringerhut.jp",
+      "shop.hamakatsu.jp",
+      "www.sippoku.jp"
+    ],
+    "maxAdded": 120,
+    "maxRemoved": 100,
+    "maxChanged": 150,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
+}

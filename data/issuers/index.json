@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-09",
+  "updated": "2026-10-10",
   "issuers": [
     {
       "id": "skylark",
@@ -134,6 +134,13 @@
       "name": "チムニー",
       "status": "public",
       "config": "./data/issuers/chimney/config.json"
+    },
+    {
+      "id": "ringerhut",
+      "code": "8200",
+      "name": "リンガーハット",
+      "status": "public",
+      "config": "./data/issuers/ringerhut/config.json"
     }
   ]
 }
