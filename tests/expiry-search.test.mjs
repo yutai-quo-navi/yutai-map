@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {upcomingExpiries,expiryGroup,cleanExpirySettings,dueExpiryAlerts,parseHoldings,cleanAlertDays} from '../expiry-search.js';
+import {upcomingExpiries,expiryGroup,cleanExpirySettings,dueExpiryAlerts,parseHoldings,cleanAlertDays,splitExpiryDisplay} from '../expiry-search.js';
 const now=new Date('2026-10-08T15:00:00Z');
 const row=(id,date,extra={})=>({id,code:'0001',company_name:'会社',benefit_name:'優待',expiry_date:date,status:'confirmed',category:'dining',...extra});
 test('60 day window includes today and last day, unregistered issuers, but excludes expired and unconfirmed records',()=> {
@@ -69,4 +69,14 @@ test('code-only paste supports comma, spaces, full-width input, and unseparated 
  // Portfolio/account amounts must not be blindly split into purported ticker codes.
  assert.equal(parseHoldings('残高 80162914556A',entries).matches.length,0);
  assert.equal(parseHoldings('価格 2914 株数 100',entries).matches.length,0);
+});
+
+
+test('first screen shows the next 30 days and puts day 31 onward behind further viewing',()=>{
+ const start=new Date('2026-10-08T15:00:00Z'); // 2026-10-09 JST
+ const entries=[row('soon','2026-10-16'),row('day30','2026-11-08'),row('day31','2026-11-09'),row('day32','2026-11-10')];
+ const {near,usual,far}=splitExpiryDisplay(entries,start);
+ assert.deepEqual(near.map(e=>e.id),['soon']);
+ assert.deepEqual(usual.map(e=>e.id),['day30']);
+ assert.deepEqual(far.map(e=>e.id),['day31','day32']);
 });

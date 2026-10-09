@@ -23,6 +23,15 @@ export function upcomingExpiries(entries, now = new Date(), windowDays = 60) {
       /^\d{4}-\d{2}$/.test(entry.research_month || '') && entry.research_month>=today.slice(0,7) && entry.research_month<=endDay.slice(0,7)))
     .sort((a,b)=>(a.expiry_date || a.research_month+'-99').localeCompare(b.expiry_date || b.research_month+'-99') || a.code.localeCompare(b.code));
 }
+// Keep the first screen limited to the next 30 days; later dates are opt-in.
+export function splitExpiryDisplay(entries, now=new Date(), windowDays=30) {
+  const near=entries.filter(e=>e.expiry_date && deadlineDays(e.expiry_date,now)<=7);
+  const boundary=japanDay(new Date(now.getTime()+windowDays*86400000)).slice(0,7);
+  const usual=entries.filter(e=>!near.includes(e) &&
+    (e.expiry_date ? deadlineDays(e.expiry_date,now)<=windowDays : e.research_month<=boundary));
+  const far=entries.filter(e=>!near.includes(e) && !usual.includes(e));
+  return {near,usual,far};
+}
 export function cleanExpirySettings(value) {
   const clean={};
   if (!value || typeof value!=='object' || Array.isArray(value)) return clean;
@@ -104,9 +113,7 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     if(!loaded){root.innerHTML='<p class="expiry-note">期限情報を読み込んでいます…</p>';return;}
     const all=eligible();
     const visible=all.filter(e=>(!ownedOnly||settings[e.id]?.owned)&&normalize(`${e.code} ${e.company_name} ${e.benefit_name} ${(e.brands||[]).join(' ')}`).includes(normalize(query)));
-    const near=visible.filter(e=>e.expiry_date&&deadlineDays(e.expiry_date,now())<=7);
-    const usual=visible.filter(e=>!near.includes(e)&&(!e.expiry_date?e.research_month<=japanDay(new Date(now().getTime()+60*86400000)).slice(0,7):deadlineDays(e.expiry_date,now())<=60));
-    const far=visible.filter(e=>!near.includes(e)&&!usual.includes(e));
+    const {near,usual,far}=splitExpiryDisplay(visible,now());
     const owned=all.filter(e=>settings[e.id]?.owned).length;
     root.innerHTML=`<div class="expiry-heading"><h2>失効検索</h2><p>優待の期限を、ひと目で。</p></div>
       <div class="expiry-register"><span>銘柄コードだけでも、まとめて登録。</span><button type="button" id="expiryBulkToggle" aria-expanded="${bulkOpen}" aria-controls="expiryBulk">まとめて登録</button></div>
@@ -114,7 +121,7 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
       <div class="expiry-common"><p>「持ってる」を選ぶと、期限前にお知らせ。</p><fieldset><legend>お知らせする日</legend><div class="expiry-day-options">${[3,2,1,0].map(day=>`<label><input type="checkbox" data-alert-day="${day}" ${alertDays.includes(day)?'checked':''}><span>${day===0?'当日':day+'日前'}</span></label>`).join('')}</div></fieldset><p class="expiry-note">このサイトを開いたときにお知らせします。${alertDays.length?'':'通知日は選択されていません。'}</p></div>
       <div class="expiry-view-tabs"><button type="button" data-view="all" aria-pressed="${!ownedOnly}">すべて</button><button type="button" data-view="owned" aria-pressed="${ownedOnly}">持ってる ${owned}</button></div>
       <label class="expiry-search-label"><span class="visually-hidden">銘柄・優待名から探す</span><input type="search" id="expiryKeyword" autocomplete="off" placeholder="銘柄名・コード・優待名で絞り込み" value="${esc(query)}"></label><p class="expiry-save-status" role="status">${esc(message)}</p>
-      <div class="expiry-groups">${failed?'<p>期限情報を読み込めませんでした。ページを再読み込みしてください。</p>':groupHTML('あと7日以内',near)+EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,usual.filter(e=>expiryGroup(e)===key))).join('')+(far.length?`<details class="expiry-future" ${farOpen?'open':''}><summary>もっと先の期限を見る（61日以降・${far.length}件）</summary>${EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,far.filter(e=>expiryGroup(e)===key))).join('')}</details>`:'')+(!visible.length?'<p class="expiry-note">'+(ownedOnly?'「持ってる」を選ぶと、ここに表示されます。':'条件に合う期限情報はありません。')+'</p>':'')}</div><p class="expiry-note expiry-storage-note">選択はこのブラウザに保存されます。期限を過ぎた優待は自動で表示から外れます。</p>`;
+      <div class="expiry-groups">${failed?'<p>期限情報を読み込めませんでした。ページを再読み込みしてください。</p>':groupHTML('あと7日以内',near)+EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,usual.filter(e=>expiryGroup(e)===key))).join('')+(far.length?`<div class="expiry-future"><button id="expiryFutureToggle" class="expiry-more-button" type="button" aria-expanded="${farOpen}" aria-controls="expiryFutureItems">${farOpen?'閉じる':`さらに見る（31日以降・${far.length}件）`}</button><div id="expiryFutureItems" ${farOpen?'':'hidden'}>${EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,far.filter(e=>expiryGroup(e)===key))).join('')}</div></div>`:'')+(!visible.length?'<p class="expiry-note">'+(ownedOnly?'「持ってる」を選ぶと、ここに表示されます。':'条件に合う期限情報はありません。')+'</p>':'')}</div><p class="expiry-note expiry-storage-note">選択はこのブラウザに保存されます。期限を過ぎた優待は自動で表示から外れます。</p>`;
     root.querySelector('#expiryBulkToggle').onclick=()=>{bulkOpen=!bulkOpen;if(!bulkOpen){paste='';parsed=null;}render();if(bulkOpen)root.querySelector('#expiryPaste').focus();};
     root.querySelector('#expiryPaste').oninput=e=>{paste=e.target.value;parsed=null;root.querySelector('#expiryParseResult').replaceChildren();};
     root.querySelector('#expiryParse').onclick=()=>{parsed=parseHoldings(paste,entries);render();};
@@ -138,7 +145,7 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     root.querySelectorAll('[data-view]').forEach(button=>button.onclick=()=>{ownedOnly=button.dataset.view==='owned';render();root.querySelector(`[data-view="${ownedOnly?'owned':'all'}"]`).focus();});
     const filter=event=>{query=event.target.value;if(event.isComposing)return;render();root.querySelector('#expiryKeyword').focus();};
     root.querySelector('#expiryKeyword').addEventListener('input',filter);root.querySelector('#expiryKeyword').addEventListener('compositionend',filter);
-    root.querySelector('.expiry-future')?.addEventListener('toggle',event=>{farOpen=event.target.open;});
+    root.querySelector('#expiryFutureToggle')?.addEventListener('click',()=>{farOpen=!farOpen;render();root.querySelector('#expiryFutureToggle')?.focus();});
   };
   render();
   return {setEntries(value){entries=Array.isArray(value)?value:[];loaded=true;failed=false;render();renderAlerts();},fail(){loaded=true;failed=true;render();},refresh(){render();renderAlerts();},storageChanged(key){if(key===null||key===STORAGE_KEY||key===ALERT_DAYS_KEY){settings=cleanExpirySettings(read(STORAGE_KEY,{}));alertDays=cleanAlertDays(read(ALERT_DAYS_KEY,null));render();renderAlerts();}}};
