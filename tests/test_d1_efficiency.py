@@ -87,3 +87,28 @@ class PaginationAndScope(unittest.TestCase):
         validate("DELETE FROM stores WHERE issuer_id='a' AND store_id='o''hare;店';\nINSERT INTO issuer_state (issuer_id,current_meta_json,updated_at) VALUES ('a','{}','now') ON CONFLICT(issuer_id) DO UPDATE SET current_meta_json=excluded.current_meta_json,updated_at=excluded.updated_at;", 'a')
         for sql in ["DELETE FROM stores;", "DELETE FROM stores WHERE issuer_id='b' AND store_id='x';", "DROP TABLE stores;", "INSERT INTO issuer_state (issuer_id,current_meta_json,updated_at) VALUES ('a', (SELECT raw_json FROM store_raw),'now') ON CONFLICT(issuer_id) DO UPDATE SET updated_at=excluded.updated_at;"]:
             with self.assertRaises(ValueError): validate(sql,'a')
+
+
+class DeploymentRecovery(unittest.TestCase):
+    def test_quota_reset_waits_without_database_polling(self):
+        import datetime as dt
+        from types import SimpleNamespace
+        from apply_d1_migrations import apply
+        calls, waits = [], []
+        def run(*args, **kwargs):
+            calls.append(args)
+            return SimpleNamespace(returncode=1 if len(calls)==1 else 0, stdout='', stderr='daily row read limit [code: 7500]' if len(calls)==1 else '')
+        apply(run=run, sleep=waits.append, now=lambda:dt.datetime(2026,10,9,23,59,50,tzinfo=dt.timezone.utc))
+        self.assertEqual(len(calls),2)
+        self.assertEqual(sum(waits),30)
+        self.assertTrue(all(w<=60 for w in waits))
+
+    def test_other_failure_and_early_day_quota_fail_without_waiting(self):
+        import datetime as dt
+        from types import SimpleNamespace
+        from apply_d1_migrations import apply
+        for message in ['syntax error', 'daily row read limit [code: 7500]']:
+            waits=[]
+            with self.assertRaises(RuntimeError):
+                apply(run=lambda *a,**k:SimpleNamespace(returncode=1,stdout='',stderr=message),sleep=waits.append,now=lambda:dt.datetime(2026,10,9,1,0,tzinfo=dt.timezone.utc))
+            self.assertEqual(waits,[])

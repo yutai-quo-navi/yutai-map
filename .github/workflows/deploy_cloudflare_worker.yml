@@ -9,6 +9,7 @@ on:
       - "cloudflare/wrangler.toml"
       - "cloudflare/migrations/**"
       - ".github/workflows/deploy_cloudflare_worker.yml"
+      - "tools/apply_d1_migrations.py"
   workflow_dispatch:
 
 permissions:
@@ -21,6 +22,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
@@ -48,7 +50,7 @@ jobs:
           printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
 
       - name: Apply additive D1 migrations before Worker rollout
-        run: npx wrangler d1 migrations apply yutai-map --remote --config cloudflare/wrangler.toml
+        run: python tools/apply_d1_migrations.py
 
       - name: Deploy Worker
         run: npx wrangler deploy --config cloudflare/wrangler.toml
