@@ -3,6 +3,7 @@ import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucher
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
+import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc1';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -692,6 +693,8 @@ async function queryD1StoreApi(targets, pos, radius){
     if(!company) return null;
     const lat = Number(s.lat), lng = Number(s.lng), distance = Number(s.distance);
     if(!Number.isFinite(lat) || !Number.isFinite(lng) || !Number.isFinite(distance)) return null;
+    const saintmarcBenefit = company.id === 'saintmarc' ? saintmarcBenefitForStore(company, s) : null;
+    if(company.id === 'saintmarc' && !saintmarcBenefit) return null;
     const officialStore = {
       store_id: s.store_id,
       name: s.name,
@@ -713,6 +716,7 @@ async function queryD1StoreApi(targets, pos, radius){
       matchedAlias: s.brand_name || company.name,
       category: s.category || 'restaurant',
       officialStore,
+      benefitDiscountPercent: saintmarcBenefit?.discountPercent || null,
       officialVerified: true,
       distance
     };
@@ -915,6 +919,8 @@ function renderResults(items, radius){
     const mapQuery = [storeName, storeAddress].filter(Boolean).join(' ');
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
     const officialUrl = safeExternalUrl(x.company.sourceUrl);
+    const saintmarcDiscount = x.company.id === 'saintmarc' && [10,20].includes(x.benefitDiscountPercent)
+      ? `<span class="badge discount-${x.benefitDiscountPercent}">${x.benefitDiscountPercent}% OFF</span>` : '';
     card.innerHTML=`
       <div class="card-top">
         <div class="distance">${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
@@ -924,6 +930,7 @@ function renderResults(items, radius){
         </div>
       </div>
       <div class="badges">
+        ${saintmarcDiscount}
         <span class="badge company">${esc(x.company.name)}優待</span>
         <span class="badge">${esc(x.matchedAlias)}</span>
         <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
