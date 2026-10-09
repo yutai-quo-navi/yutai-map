@@ -1164,7 +1164,7 @@ async function loadBrandCatalog(){
   try {
     const groups=await Promise.all(chunk(companies,20).map(async group=>{
       const params=new URLSearchParams({issuers:group.map(c=>c.id).join(',')});
-      const res=await fetch(`${STORE_API.replace('/stores/search','/brands')}?${params}`, {cache:'no-store'});
+      const res=await fetch(`${STORE_API.replace('/stores/search','/brands')}?${params}`);
       if(!res.ok) throw new Error('brand catalog unavailable');
       return (await res.json()).brands || [];
     }));

@@ -8,14 +8,16 @@ function setup({place=false, denied=false} = {}) {
   const context=vm.createContext({
     lastPosition:null,lastCenterLabel:'現在地',
     specialFeatures:{refresh(){calls.refresh++;},invalidate(){calls.refresh++;}},
-    els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false}},
+    els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false,setAttribute(){},removeAttribute(){}}},
     navigator:{geolocation:{getCurrentPosition(success,failure){calls.geo++;denied ? failure({code:1}) : success({coords:{latitude:43.06,longitude:141.35}});}}},
+    setTimeout,clearTimeout,qs:()=>null,
     invalidateDiningSearch(){},setStatus(){},showError(){},normalize:value=>value,console,
     SUGGEST_API:'https://api.example.com/suggest',URLSearchParams,
     fetch:async()=>({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',center:[130.4,33.59]}]})}),
     searchNearby(){calls.search++;}
   });
   const source=readFileSync(new URL('../app.js',import.meta.url),'utf8');
+  vm.runInContext(source.slice(source.indexOf('let searchFeedbackDepth ='),source.indexOf('let pendingSearch =')),context);
   vm.runInContext(source.slice(source.indexOf('async function submitPlaceSearch('),source.indexOf('async function searchNearby(')),context);
   return {context,calls};
 }

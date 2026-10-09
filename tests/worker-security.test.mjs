@@ -40,7 +40,7 @@ test('missing, empty and hostile coordinates cannot reach SQL; health checks wit
   for(const query of ['issuers=colowide','lat=&lng=0&issuers=colowide','lat=NaN&lng=0&issuers=colowide','lat=91&lng=0&issuers=colowide','lat=0&lng=181&issuers=colowide','lat=0&lng=0&radius=-1&issuers=colowide']){
     assert.equal((await worker.fetch(request('/v1/stores/search?'+query),env)).status,400);
   }
-  const healthEnv={ALLOWED_ORIGIN:allowed,API_RATE_LIMITER:permit,DB:{prepare(){return {first:async()=>({count:1})};}}};
+  const healthEnv={ALLOWED_ORIGIN:allowed,API_RATE_LIMITER:permit,DB:{prepare(){return {all:async()=>({results:[{stores:1,referenceStores:1}]})};}}};
   const health=await worker.fetch(request('/health',{headers:{'CF-Connecting-IP':'192.0.2.10'}}),healthEnv);
   assert.equal(health.status,200);
   assert.equal(health.headers.get('X-Content-Type-Options'),'nosniff');
@@ -69,7 +69,7 @@ test('reference matching uses a fixed upstream destination and a timeout signal'
   };
   const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:'["店舗"]'}),
-    all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:[{store_id:'test',name:'店舗'}]})
+    all:async()=>({results:sql.includes('FROM issuer_stats')?[{issuer_id:'colowide',aliases_json:'["店舗"]'}]:sql.includes('FROM reference_stores')?[{store_id:'test',name:'店舗'}]:[]})
   };}};}}};
   try{
     assert.equal((await worker.fetch(request(protectedPaths[3]),env)).status,200);
@@ -91,15 +91,15 @@ test('search limiter failure also stops DB reads without an unhandled exception'
 async function withReferenceFixture(aliasGroups, upstream, check, searchLimiter=permit){
   const oldFetch=globalThis.fetch, oldCache=globalThis.caches, oldError=console.error;
   const locks=new Map(), calls=[], dbReads=[];
-  globalThis.caches={default:{match:async key=>locks.get(key.url),put:async(key,value)=>{locks.set(key.url,value);}}};
+  globalThis.caches={default:{match:async key=>locks.get(key.url)?.clone(),put:async(key,value)=>{locks.set(key.url,value.clone());}}};
   globalThis.fetch=async(url,options)=>{calls.push({url,options});return upstream(url,options,calls.length);};
   console.error=()=>{};
   const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:searchLimiter,DB:{prepare(sql){
     dbReads.push(sql);
     return {args:[],bind(...args){this.args=args;return this;},
       async first(){return {aliases_json:JSON.stringify(aliasGroups[this.args[0]] || [])};},
-      async all(){return {results:sql.includes('SELECT DISTINCT')
-        ? Object.keys(aliasGroups).filter(id=>this.args.includes(id)).map(issuer_id=>({issuer_id}))
+      async all(){return {results:sql.includes('FROM issuer_stats')
+        ? Object.keys(aliasGroups).filter(id=>this.args.includes(id)).map(issuer_id=>({issuer_id,aliases_json:JSON.stringify(aliasGroups[issuer_id])}))
         : sql.includes('FROM reference_stores\n')
           ? [{issuer_id:this.args[0],store_id:'target',name:'Target Store',address:'東京都千代田区',brand_name:'Target',category:'restaurant'}]
           : []};}

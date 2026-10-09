@@ -53,18 +53,18 @@ jobs:
         run: |
           npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "
             SELECT s.issuer_id,
-                   COALESCE(g.c,0)+COALESCE(r.c,0) AS store_count,
-                   COALESCE(raw.c,0) AS raw_count,
+                   COALESCE(a.geo_count,0)+COALESCE(a.reference_count,0) AS store_count,
+                   COALESCE(a.raw_count,0) AS raw_count,
                    s.updated_at
             FROM issuer_state s
-            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM stores GROUP BY issuer_id) g ON g.issuer_id=s.issuer_id
-            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM reference_stores GROUP BY issuer_id) r ON r.issuer_id=s.issuer_id
-            LEFT JOIN (SELECT issuer_id,COUNT(*) c FROM store_raw GROUP BY issuer_id) raw ON raw.issuer_id=s.issuer_id
+            LEFT JOIN issuer_stats a ON a.issuer_id=s.issuer_id
             ORDER BY s.issuer_id;
           " --json > /tmp/d1-health.json
 
       - name: Validate D1 state
-        run: python tools/check_d1_health.py /tmp/d1-health.json
+        run: |
+          python tools/check_d1_health.py /tmp/d1-health.json
+          PYTHONPATH=tools python -c 'import json; from d1_client import usage; usage("watchdog",json.load(open("/tmp/d1-health.json")))'
 
       - name: Verify Worker health
         run: curl -fsS https://yutai-map-api.yutaisamurai.workers.dev/health

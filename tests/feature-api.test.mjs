@@ -7,7 +7,7 @@ test('feature endpoint returns snapshot with CORS and cache headers, independent
   const snapshot = {id:'balnibarbi-dining',checkedOn:'2026-10-07',stores:[{id:'remote'}]};
   const env = {API_RATE_LIMITER:{limit:async()=>({success:true})},ALLOWED_ORIGIN:'https://example.com',DB:{prepare(sql) {
     assert.equal(sql, 'SELECT payload_json FROM feature_snapshots WHERE feature_id = ?');
-    return {bind(id) {assert.equal(id,snapshot.id);return {first:async()=>({payload_json:JSON.stringify(snapshot)})};}};
+    return {bind(id) {assert.equal(id,snapshot.id);return {all:async()=>({results:[{payload_json:JSON.stringify(snapshot)}]})};}};
   }}};
   const response = await worker.fetch(request('/v1/features/balnibarbi-dining'),env);
   assert.equal(response.status,200);
@@ -16,7 +16,7 @@ test('feature endpoint returns snapshot with CORS and cache headers, independent
   assert.deepEqual(await response.json(),snapshot);
 });
 test('feature endpoint rejects unknown datasets and survives missing D1 data', async () => {
-  const env = {API_RATE_LIMITER:{limit:async()=>({success:true})},DB:{prepare(){return {bind(){return {first:async()=>null};}};}}};
+  const env = {API_RATE_LIMITER:{limit:async()=>({success:true})},DB:{prepare(){return {bind(){return {all:async()=>({results:[]})};}};}}};
   assert.equal((await worker.fetch(request('/v1/features/private-dataset'),env)).status,404);
   assert.equal((await worker.fetch(request('/v1/features/balnibarbi-dining'),env)).status,503);
 });
@@ -24,7 +24,7 @@ test('hotel voucher endpoints bind distinct dataset IDs and retain rate limiting
   for (const id of ['vision-hotels','wakita-hotels','tkp-hotels','wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels','daiwa-house-hotels','kyoritsu-hotel-discount','kyoritsu-resort-plan']) {
     let limited = 0;
     const env = {API_RATE_LIMITER:{limit:async()=>{limited++;return {success:true};}},DB:{prepare(){return {
-      bind(actual) {assert.equal(actual,id);return {first:async()=>({payload_json:JSON.stringify({id,stores:[]})})};}
+      bind(actual) {assert.equal(actual,id);return {all:async()=>({results:[{payload_json:JSON.stringify({id,stores:[]})}]})};}
     };}}};
     const response=await worker.fetch(request('/v1/features/'+id),env);
     assert.equal(response.status,200);assert.equal((await response.json()).id,id);assert.equal(limited,1);
