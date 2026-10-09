@@ -1,0 +1,35 @@
+name: Verify Saint Marc benefit display
+
+on:
+  pull_request:
+    paths:
+      - "app.js"
+      - "saintmarc-benefit.js"
+      - "style.css"
+      - "data/issuers/saintmarc/config.json"
+      - "tests/saintmarc-benefits.test.mjs"
+      - ".github/workflows/test_saintmarc.yml"
+  push:
+    branches: [main]
+    paths:
+      - "app.js"
+      - "saintmarc-benefit.js"
+      - "style.css"
+      - "data/issuers/saintmarc/config.json"
+      - "tests/saintmarc-benefits.test.mjs"
+      - ".github/workflows/test_saintmarc.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: "24.19.0"
+          package-manager-cache: false
+      - run: node --check app.js && node --check saintmarc-benefit.js
+      - run: node --test tests/saintmarc-benefits.test.mjs

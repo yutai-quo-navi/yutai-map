@@ -120,6 +120,13 @@
       "name": "グルメ杵屋",
       "status": "public",
       "config": "./data/issuers/kineya/config.json"
+    },
+    {
+      "id": "saintmarc",
+      "code": "3395",
+      "name": "サンマルクホールディングス",
+      "status": "development",
+      "config": "./data/issuers/saintmarc/config.json"
     }
   ]
 }
