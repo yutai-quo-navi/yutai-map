@@ -127,6 +127,13 @@
       "name": "サンマルクホールディングス",
       "status": "public",
       "config": "./data/issuers/saintmarc/config.json"
+    },
+    {
+      "id": "chimney",
+      "code": "3178",
+      "name": "チムニー",
+      "status": "public",
+      "config": "./data/issuers/chimney/config.json"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import {initExpirySearch} from './expiry-search.js?v=20261009-next30';
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
@@ -275,8 +275,8 @@ async function loadVoucherDeadlines(){
     if (!response.ok) throw new Error('Expiry ledger unavailable');
     const ledger = await response.json();
     expirySearch.setEntries(ledger.entries);
-    featureVoucherDeadlines = voucherEntriesFromLedger(ledger.entries || []);
-    featureApplicationDeadlines = voucherEntriesFromLedger(ledger.entries || [], '申込期限');
+    featureVoucherDeadlines = voucherEntriesFromLedger(ledger.entries || [], '利用期限', companies);
+    featureApplicationDeadlines = voucherEntriesFromLedger(ledger.entries || [], '申込期限', companies);
   } catch(error) { expirySearch.fail(); featureVoucherDeadlines=[]; featureApplicationDeadlines=[]; console.warn('特集の優待期限を読み込めませんでした',error); }
 }
 function allVoucherDeadlines(){
