@@ -137,6 +137,8 @@ if len(sys.argv) != 2:
     raise SystemExit("usage: build_d1_issuer_sql.py ISSUER")
 
 issuer = sys.argv[1]
+if not re.fullmatch(r"[a-z][a-z0-9_-]{0,63}", issuer):
+    raise SystemExit("invalid issuer ID")
 config_path = ROOT / "data" / "issuers" / issuer / "config.json"
 if not config_path.exists():
     raise SystemExit(f"missing config: {config_path}")

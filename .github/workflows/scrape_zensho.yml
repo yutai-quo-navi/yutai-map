@@ -52,13 +52,7 @@ jobs:
           printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
 
       - name: Restore previous private state from D1
-        run: |
-          rm -f /tmp/raw_*.json /tmp/meta.json
-          for offset in 0 500 1000 1500 2000 2500 3000 3500 4000 4500 5000; do
-            npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT raw_json FROM store_raw WHERE issuer_id='zensho' ORDER BY store_id LIMIT 500 OFFSET $offset;" --json > "/tmp/raw_${offset}.json"
-          done
-          npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --command "SELECT current_meta_json FROM issuer_state WHERE issuer_id='zensho';" --json > /tmp/meta.json
-          python tools/restore_d1_state.py zensho '/tmp/raw_*.json' /tmp/meta.json
+        run: python tools/restore_d1_issuer.py zensho
 
       - name: Build current snapshot and diff
         run: python tools/issuers/zensho/scrape.py
@@ -72,14 +66,11 @@ jobs:
           echo "ZENSHO_EXPECTED=${EXPECTED}" >> "$GITHUB_ENV"
           echo "Expected Zensho stores: ${EXPECTED}"
 
-      - name: Apply D1 schema
-        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/schema.sql
-
       - name: Build issuer D1 sync
         run: python tools/build_d1_issuer_sql.py zensho
 
       - name: Sync issuer to private D1
-        run: npx wrangler d1 execute "4540cbaa-3214-4111-9c7a-11e18fd067db" --remote --file=cloudflare/generated/sync_zensho.sql
+        run: python tools/sync_d1_issuer.py zensho
 
       - name: Verify D1 sync
         run: |

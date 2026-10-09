@@ -24,7 +24,7 @@ async function search(pois, refs=[reference], radius=10000, origin={lat:43.055,l
   const permit={limit:async()=>({success:true})};
   const env={API_RATE_LIMITER:permit, SEARCH_COUNTER:counterPermit, SEARCH_RATE_LIMITER:permit, DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:'["ラパウザ"]'}),
-    all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:refs})
+    all:async()=>({results:sql.includes('FROM issuer_stats')?[{issuer_id:'colowide',aliases_json:'["ラパウザ"]'}]:sql.includes('FROM reference_stores')?refs:[]})
   };}};}}};
   try {
     const response=await worker.fetch(new Request(`https://api.example.com/v1/stores/search?lat=${origin.lat}&lng=${origin.lng}&radius=${radius}&issuers=colowide&category=restaurant`),env);
@@ -93,7 +93,7 @@ test('a geographic brand cannot fill the shared candidate limit and hide La Paus
   const permit={limit:async()=>({success:true})};
   const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(){return {
     first:async()=>({aliases_json:JSON.stringify(['甘太郎','北海道','ラパウザ','ウルフギャング・パック','ウルフギャング･パック'])}),
-    all:async()=>({results:sql.includes('SELECT DISTINCT')?[{issuer_id:'colowide'}]:[reference]})
+    all:async()=>({results:sql.includes('FROM issuer_stats')?[{issuer_id:'colowide',aliases_json:JSON.stringify(['甘太郎','北海道','ラパウザ','ウルフギャング・パック','ウルフギャング･パック'])}]:sql.includes('FROM reference_stores')?[reference]:[]})
   };}};}}};
   try {
     const response=await worker.fetch(new Request('https://api.example.com/v1/stores/search?lat=43.06&lng=141.48&radius=10000&issuers=colowide'),env);
@@ -117,7 +117,7 @@ test('one issuer returns both official coordinates and matched references with c
   const env={API_RATE_LIMITER:permit,SEARCH_COUNTER:counterPermit,SEARCH_RATE_LIMITER:permit,DB:{prepare(sql){return {bind(...args){
     if(sql.includes('FROM stores')) assert.ok(args.includes('fujio'),'mixed issuer must be searched in the coordinate table');
     return {first:async()=>({aliases_json:'["ラパウザ"]'}),all:async()=>({results:
-      sql.includes('SELECT DISTINCT') ? [{issuer_id:'fujio'}] :
+      sql.includes('FROM issuer_stats') ? [{issuer_id:'fujio',aliases_json:'["ラパウザ"]'}] :
       sql.includes('FROM reference_stores') ? [ref] :
       sql.includes('FROM stores') ? [located] : []})};
   }};}}};

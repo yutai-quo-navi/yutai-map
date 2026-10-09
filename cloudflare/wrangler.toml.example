@@ -7,6 +7,7 @@ workers_dev = true
 binding = "DB"
 database_name = "yutai-map"
 database_id = "4540cbaa-3214-4111-9c7a-11e18fd067db"
+migrations_dir = "migrations"
 
 [vars]
 ALLOWED_ORIGIN = "https://yutai-quo-navi.github.io"
@@ -26,3 +27,8 @@ namespace_id = "1002"
 [ratelimits.simple]
 limit = 60
 period = 60
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 0.1
+invocation_logs = false

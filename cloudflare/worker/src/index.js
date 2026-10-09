@@ -1,9 +1,9 @@
 export {SearchCounter} from './search-counter.js';
+import {cachedData, readRows} from './data-cache.js';
 
 const FEATURE_IDS = new Set(['vision-hotels','wakita-hotels','tkp-hotels','wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 30000;
 const MAX_RESULTS = 30;
-const MAX_CANDIDATES = 600;
 const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
 const OPENPOI_ALIAS_CHUNK = 14;
 const OPENPOI_LIMIT = 200;
@@ -15,6 +15,15 @@ const MAX_REQUEST_URL_LENGTH = 2048;
 
 export default {
   async fetch(request, env) {
+    const usage = {queries:0,rows_read:0,rows_written:0,cache_hits:0};
+    try { return await handleRequest(request, env, usage); }
+    finally {
+      if (usage.queries || usage.cache_hits) console.log(JSON.stringify({event:'d1_usage',operation:new URL(request.url).pathname,...usage}));
+    }
+  }
+};
+
+async function handleRequest(request, env, usage) {
     const url = new URL(request.url);
     const cors = corsHeaders(env, request);
 
@@ -34,12 +43,12 @@ export default {
 
     if (url.pathname === '/health') {
       try {
-        const geo = await env.DB.prepare('SELECT COUNT(*) AS count FROM stores').first();
-        const refs = await env.DB.prepare('SELECT COUNT(*) AS count FROM reference_stores').first();
+        const [totals] = await readRows(env,
+          'SELECT COALESCE(SUM(geo_count),0) AS stores, COALESCE(SUM(reference_count),0) AS referenceStores FROM issuer_stats', [], usage);
         return json({
           ok: true,
-          stores: Number(geo?.count || 0),
-          referenceStores: Number(refs?.count || 0)
+          stores: Number(totals?.stores || 0),
+          referenceStores: Number(totals?.referenceStores || 0)
         }, 200, cors);
       } catch (error) {
         return json({ ok: false, error: 'db_unavailable' }, 503, cors);
@@ -50,7 +59,11 @@ export default {
       const id = url.pathname.slice('/v1/features/'.length);
       if (!FEATURE_IDS.has(id)) return json({error:'not_found'},404,cors);
       try {
-        const row = await env.DB.prepare('SELECT payload_json FROM feature_snapshots WHERE feature_id = ?').bind(id).first();
+        const row = await cachedData(`feature:${id}`, 300, async () => {
+          const [value] = await readRows(env, 'SELECT payload_json FROM feature_snapshots WHERE feature_id = ?', [id], usage);
+          if (!value) throw new Error('Missing feature');
+          return value;
+        }, usage);
         if (!row) return json({error:'feature_unavailable'},503,cors);
         return json(JSON.parse(row.payload_json),200,{...cors,'Cache-Control':'public, max-age=300'});
       } catch { return json({error:'feature_unavailable'},503,cors); }
@@ -61,10 +74,10 @@ export default {
       if(!ids.length) return json({brands:[]},200,cors);
       try {
         const placeholders=ids.map(()=>'?').join(',');
-        const {results=[]}=await env.DB.prepare(`SELECT issuer_id,brand_name AS name,COUNT(*) AS count FROM (
-          SELECT issuer_id,brand_name FROM stores WHERE issuer_id IN (${placeholders})
-          UNION ALL SELECT issuer_id,brand_name FROM reference_stores WHERE issuer_id IN (${placeholders})
-        ) WHERE brand_name != '' GROUP BY issuer_id,brand_name ORDER BY issuer_id,brand_name`).bind(...ids,...ids).all();
+        const versions = await readRows(env, `SELECT issuer_id,catalog_revision FROM issuer_stats WHERE issuer_id IN (${placeholders}) ORDER BY issuer_id`, ids, usage);
+        const key = `brands:${ids.slice().sort().join(',')}:${JSON.stringify(versions)}`;
+        const results = await cachedData(key, 300, () => readRows(env,
+          `SELECT issuer_id,brand_name AS name,store_count AS count FROM brand_catalog WHERE issuer_id IN (${placeholders}) AND store_count > 0 ORDER BY issuer_id,brand_name`, ids, usage), usage);
         return json({brands:results},200,{...cors,'Cache-Control':'public, max-age=300'});
       } catch { return json({error:'brands_unavailable'},503,cors); }
     }
@@ -94,27 +107,26 @@ export default {
     } catch { return json({error:'rate_limit_unavailable'},503,cors); }
 
     try {
-      const referenceIssuers = await findReferenceIssuers(env, issuers);
+      const referenceConfigs = await findReferenceConfigs(env, issuers, usage);
       // One issuer can have both official coordinates and unlocated references.
       const geoIssuers = issuers;
-      const referenceSearches = (await Promise.all(referenceIssuers.map(id =>
-        prepareReferenceSearch(env, id, '', brand)
+      const referenceSearches = (await Promise.all(referenceConfigs.map(config =>
+        prepareReferenceSearch(env, config, brand, usage)
       ))).filter(Boolean);
       const upstreamRequests = referenceSearches.reduce((total, search) => total + search.aliasChunks.length, 0);
       if (upstreamRequests > OPENPOI_MAX_REQUESTS) throw new Error('OpenPOI request budget exceeded');
 
-      const [geoResults, referenceResults, geoCounts] = await Promise.all([
-        searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand),
+      const [geo, referenceResults] = await Promise.all([
+        searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand, usage),
         Promise.all(referenceSearches.map(search =>
           searchReferenceIssuer(search, lat, lng, radius)
-        )).then(groups => groups.flat()),
-        countGeoCategories(env, geoIssuers, lat, lng, radius, brand)
+        )).then(groups => groups.flat())
       ]);
 
-      const categoryCounts = {...geoCounts};
+      const categoryCounts = {...geo.counts};
       for(const s of referenceResults){ const key=s.category || 'restaurant'; categoryCounts[key]=(categoryCounts[key] || 0)+1; }
       categoryCounts.all=Object.values(categoryCounts).reduce((a,b)=>a+b,0);
-      const combined = dedupeResults([...geoResults, ...referenceResults.filter(s=>!category || s.category===category)])
+      const combined = dedupeResults([...geo.results, ...referenceResults.filter(s=>!category || s.category===category)])
         .sort((a,b) => a.distance - b.distance)
         .slice(0, MAX_RESULTS);
 
@@ -126,8 +138,7 @@ export default {
       console.error(error);
       return json({ error: 'search_failed' }, 502, cors);
     }
-  }
-};
+}
 
 async function enforceApiRateLimit(env, request, cors){
   if (!env.API_RATE_LIMITER) return json({error:'rate_limit_unavailable'},503,cors);
@@ -191,29 +202,15 @@ async function enforceSearchRateLimit(env, request, cors){
   });
 }
 
-async function findReferenceIssuers(env, issuers){
+async function findReferenceConfigs(env, issuers, usage){
   if (!issuers.length) return [];
   const placeholders = issuers.map(() => '?').join(',');
-  const { results = [] } = await env.DB.prepare(
-    `SELECT DISTINCT issuer_id FROM reference_stores WHERE issuer_id IN (${placeholders})`
-  ).bind(...issuers).all();
-  return results.map(r => r.issuer_id);
+  return readRows(env,
+    `SELECT s.issuer_id,s.reference_revision,c.aliases_json,c.updated_at FROM issuer_stats s JOIN issuer_search_config c ON c.issuer_id=s.issuer_id WHERE s.issuer_id IN (${placeholders}) AND s.reference_count > 0`, issuers, usage);
 }
 
-async function countGeoCategories(env, issuers, lat, lng, radius, brand){
-  if(!issuers.length) return {};
-  const latDelta=radius/111320, lngDelta=radius/(111320*Math.max(Math.cos(lat*Math.PI/180),0.1));
-  const {results=[]}=await env.DB.prepare(`SELECT category,lat,lng FROM stores WHERE issuer_id IN (${issuers.map(()=>'?').join(',')}) AND lat BETWEEN ? AND ? AND lng BETWEEN ? AND ? ${brand ? 'AND brand_name = ?' : ''}`).bind(...issuers,lat-latDelta,lat+latDelta,lng-lngDelta,lng+lngDelta,...(brand ? [brand] : [])).all();
-  const counts={};
-  for(const s of results){
-    if(haversine(lat,lng,Number(s.lat),Number(s.lng))>radius) continue;
-    const key=s.category || 'restaurant'; counts[key]=(counts[key] || 0)+1;
-  }
-  return counts;
-}
-
-async function searchGeoStores(env, issuers, lat, lng, radius, category, brand){
-  if (!issuers.length) return [];
+async function searchGeoStores(env, issuers, lat, lng, radius, category, brand, usage){
+  if (!issuers.length) return {results:[],counts:{}};
 
   const latDelta = radius / 111320;
   const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
@@ -224,37 +221,38 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category, brand){
     WHERE issuer_id IN (${placeholders})
       AND lat BETWEEN ? AND ?
       AND lng BETWEEN ? AND ?
-      ${category ? 'AND category = ?' : ''}
-      ${brand ? 'AND brand_name = ?' : ''}
-    ORDER BY ((lat - ?) * (lat - ?)) + ((lng - ?) * (lng - ?))
-    LIMIT ${MAX_CANDIDATES}`;
+      ${brand ? 'AND brand_name = ?' : ''}`;
 
-  const { results = [] } = await env.DB.prepare(sql).bind(
+  const results = await readRows(env, sql, [
     ...issuers,
     lat-latDelta, lat+latDelta,
     lng-lngDelta, lng+lngDelta,
-    ...(category ? [category] : []),
-    ...(brand ? [brand] : []),
-    lat, lat, lng, lng
-  ).all();
+    ...(brand ? [brand] : [])
+  ], usage);
 
-  return results
+  const nearby = results
     .map(s => ({
       ...s,
-      distance: Math.round(haversine(lat, lng, Number(s.lat), Number(s.lng)))
+      distance: haversine(lat, lng, Number(s.lat), Number(s.lng))
     }))
     .filter(s => s.distance <= radius)
+    .map(s => ({...s,distance:Math.round(s.distance)}));
+  const counts = {};
+  for (const s of nearby) {
+    const key=s.category || 'restaurant';
+    counts[key]=(counts[key] || 0)+1;
+  }
+  return {counts, results:nearby
+    .filter(s => !category || s.category === category)
     .sort((a,b) => a.distance - b.distance)
-    .slice(0, MAX_RESULTS);
+    .slice(0, MAX_RESULTS)};
 }
 
-async function prepareReferenceSearch(env, issuer, category, brand){
-  const cfg = await env.DB.prepare(
-    'SELECT aliases_json FROM issuer_search_config WHERE issuer_id = ?'
-  ).bind(issuer).first();
+async function prepareReferenceSearch(env, config, brand, usage){
+  const issuer = config.issuer_id;
 
   let aliases = [];
-  try { aliases = JSON.parse(cfg?.aliases_json || '[]'); } catch {}
+  try { aliases = JSON.parse(config.aliases_json || '[]'); } catch {}
   aliases = aliases.map(x => String(x || '').trim()).filter(Boolean);
   if (!aliases.length) return null;
 
@@ -262,12 +260,11 @@ async function prepareReferenceSearch(env, issuer, category, brand){
       name_norm, address_norm, phone_norm, brand_name, category, official_url
     FROM reference_stores
     WHERE issuer_id = ?
-      ${category ? 'AND category = ?' : ''}
       ${brand ? 'AND brand_name = ?' : ''}`;
 
-  const { results: refs = [] } = await env.DB.prepare(refSql)
-    .bind(issuer, ...(category ? [category] : []), ...(brand ? [brand] : []))
-    .all();
+  const key=`references:${issuer}:${config.reference_revision}:${config.updated_at}:${JSON.stringify(brand)}`;
+  const refs = await cachedData(key, 600, () => readRows(env, refSql,
+    [issuer, ...(brand ? [brand] : [])], usage), usage);
   if (!refs.length) return null;
 
   const aliasChunks = referenceAliasChunks(brand ? [brand] : aliases);
