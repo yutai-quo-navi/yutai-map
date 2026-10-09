@@ -2,6 +2,10 @@ name: Check Cloudflare D1 store DB
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync_cloudflare_d1.yml'
 
 permissions:
   contents: read
