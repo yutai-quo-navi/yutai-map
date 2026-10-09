@@ -1309,7 +1309,7 @@
       "id": "2678-2026-11-1",
       "code": "2678",
       "company_name": "アスクル",
-      "benefit_name": "株主優待クーポン",
+      "benefit_name": "ロハコ500円引×4回分",
       "issue": "",
       "expiry_date": "2026-11-16",
       "research_month": "2026-11",
@@ -1318,11 +1318,11 @@
       "brands": [
         "LOHACO"
       ],
-      "source_url": "",
+      "source_url": "https://lohaco.yahoo.co.jp/help/coupon/coupon_sh/",
       "secondary_source_url": "",
-      "checked_on": "2026-10-06",
+      "checked_on": "2026-10-09",
       "status": "confirmed",
-      "notes": "使用期限2026年11月16日18:00／2026-10-06 ユーザー確認済み。対象発行回未登録",
+      "notes": "使用期限2026年11月16日18:00／2026-10-06 ユーザー確認済み。対象発行回未登録／2026-10-09 ユーザー追加：ロハコ500円引×4回分を既存行に統合。",
       "issuer_id": "",
       "search_brand": "",
       "emoji": "",
