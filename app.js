@@ -1,5 +1,5 @@
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-explicit-search';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 const API = 'https://api.openpoiapi.com/v1/search';

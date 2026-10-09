@@ -94,7 +94,9 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
         ended:feature.status === 'ended', count:feature.stores.length
       }}))
-      .sort((a,b) => compareBenefitPriority(a.priority, b.priority))
+      .sort((a,b) => section === 'hotel'
+        ? b.feature.stores.length - a.feature.stores.length
+        : compareBenefitPriority(a.priority, b.priority))
       .map(item => item.feature);
     const available = new Set(displayed.map(feature => feature.id));
     for (const id of selectedFeatures) if (!available.has(id)) selectedFeatures.delete(id);
