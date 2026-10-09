@@ -7,7 +7,7 @@
   "sourceUrl": "https://www.saint-marc-hd.com/hd/ir/investor/",
   "storeSearchUrl": "https://www.saint-marc-hd.com/hd/search_index/",
   "matchingMode": "official_brand_and_store_exceptions",
-  "note": "株主様ご優待カードの対象国内店舗。ブランド別の10％・20％割引と対象外店舗は公式IR情報に従う。",
+  "note": "株主様ご優待カード対象の国内店舗のみ。ブランド別の10％・20％割引は公式IRに準拠し、対象外店舗は除外。未検証店舗は公開しない。",
   "aliases": [
     "ベーカリーレストラン・サンマルク",
     "ベーカリーレストラン サンマルク",
@@ -458,5 +458,29 @@
         "store": "大丸梅田社員食堂店"
       }
     ]
+  },
+  "locationMode": "worker_reference",
+  "storeDataPath": "./data/issuers/saintmarc/stores/current.json",
+  "officialStoreFilter": "公式優待対象ブランドと店舗個別除外を適用した国内の店舗だけをD1に同期する。",
+  "health": {
+    "minStores": 1,
+    "maxStores": 5000,
+    "maxAgeDays": 40,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "www.saint-marc-hd.com",
+      "saint-marc-hd.com"
+    ],
+    "maxAdded": 500,
+    "maxRemoved": 500,
+    "maxChanged": 1000,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
   }
 }
