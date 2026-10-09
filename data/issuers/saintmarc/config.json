@@ -1,0 +1,462 @@
+{
+  "id": "saintmarc",
+  "code": "3395",
+  "name": "サンマルクHD",
+  "fullName": "サンマルクホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.saint-marc-hd.com/hd/ir/investor/",
+  "storeSearchUrl": "https://www.saint-marc-hd.com/hd/search_index/",
+  "matchingMode": "official_brand_and_store_exceptions",
+  "note": "株主様ご優待カードの対象国内店舗。ブランド別の10％・20％割引と対象外店舗は公式IR情報に従う。",
+  "aliases": [
+    "ベーカリーレストラン・サンマルク",
+    "ベーカリーレストラン サンマルク",
+    "サンマルクカフェ",
+    "サンマルクカフェ＋R",
+    "サンマルクカフェ+R",
+    "サンマルクカフェ&茶",
+    "サンマルクカフェ＆茶",
+    "ベーカリーレストラン・バケット",
+    "バケット",
+    "BAQET",
+    "プレミアムバケット",
+    "BISTRO309",
+    "ビストロ309",
+    "ブレッドガーデン",
+    "パントリエ",
+    "BAKERY RESTAURANT C",
+    "ベーカリーレストランC",
+    "BAKERY CAFE C",
+    "ベーカリーカフェC",
+    "Petrichor Bakery and Cafe",
+    "ペトリコール",
+    "すし処函館市場",
+    "函館市場",
+    "宝田水産",
+    "生麺専門鎌倉パスタ",
+    "鎌倉パスタ",
+    "KamakurapastaFresca",
+    "カマクラパスタフレスカ",
+    "ぎをん椿庵",
+    "てっぱんのスパゲッティ",
+    "TEPPAN SPAGHETTI",
+    "おだしもん",
+    "神戸元町ドリア",
+    "横濱元町ドリア",
+    "グリル蔵敷",
+    "チーズ&ドリア.スイーツ",
+    "チーズ＆ドリア.スイーツ",
+    "チーズアンドドリア",
+    "Wallace Brothers Cheese Bar",
+    "ウォレスブラザーズチーズバー",
+    "台湾小籠包",
+    "石焼炒飯店",
+    "九份小籠包",
+    "倉式珈琲店",
+    "RISTRETTO＆CROISSANT LABORATORIO",
+    "RISTRETTO & CROISSANT LABORATORIO",
+    "韓と米",
+    "グリル＆ベーカリー ザ・シーズン",
+    "グリル&ベーカリー THE SEASON",
+    "天ぷら天清",
+    "牛カツ京都勝牛",
+    "牛かつ京都勝牛",
+    "京都勝牛",
+    "NICK STOCK",
+    "ニックストック",
+    "Gottie`s BEEF",
+    "Gottie's BEEF",
+    "ゴッチーズビーフ",
+    "Hamburg Conel",
+    "ハンバーグコネル",
+    "牛かつもと村",
+    "牛カツもと村",
+    "牛かつ もと村",
+    "牛かつ 壱弐参",
+    "浅草 牛かつ",
+    "浅草牛かつ",
+    "牛かつ いろは",
+    "喫茶マドラグ",
+    "喫茶 la madrague",
+    "喫茶 le madrague",
+    "喫茶ガボール",
+    "喫茶 le GABOR"
+  ],
+  "excludedNames": [
+    "牛カツ京都勝牛 東京ドーム店",
+    "牛カツ京都勝牛 みずほPayPayドーム店",
+    "NICK STOCK 東京ドーム店",
+    "喫茶マドラグ 大丸神戸社員食堂店",
+    "喫茶マドラグ 大丸梅田社員食堂店"
+  ],
+  "categories": {
+    "ベーカリーレストラン・サンマルク": "restaurant",
+    "ベーカリーレストラン サンマルク": "restaurant",
+    "サンマルクカフェ": "cafe",
+    "サンマルクカフェ＋R": "cafe",
+    "サンマルクカフェ+R": "cafe",
+    "サンマルクカフェ&茶": "cafe",
+    "サンマルクカフェ＆茶": "cafe",
+    "ベーカリーレストラン・バケット": "restaurant",
+    "バケット": "restaurant",
+    "BAQET": "restaurant",
+    "プレミアムバケット": "restaurant",
+    "BISTRO309": "restaurant",
+    "ビストロ309": "restaurant",
+    "ブレッドガーデン": "restaurant",
+    "パントリエ": "restaurant",
+    "BAKERY RESTAURANT C": "restaurant",
+    "ベーカリーレストランC": "restaurant",
+    "BAKERY CAFE C": "cafe",
+    "ベーカリーカフェC": "cafe",
+    "Petrichor Bakery and Cafe": "cafe",
+    "ペトリコール": "cafe",
+    "すし処函館市場": "restaurant",
+    "函館市場": "restaurant",
+    "宝田水産": "restaurant",
+    "生麺専門鎌倉パスタ": "restaurant",
+    "鎌倉パスタ": "restaurant",
+    "KamakurapastaFresca": "restaurant",
+    "カマクラパスタフレスカ": "restaurant",
+    "ぎをん椿庵": "restaurant",
+    "てっぱんのスパゲッティ": "restaurant",
+    "TEPPAN SPAGHETTI": "restaurant",
+    "おだしもん": "restaurant",
+    "神戸元町ドリア": "restaurant",
+    "横濱元町ドリア": "restaurant",
+    "グリル蔵敷": "restaurant",
+    "チーズ&ドリア.スイーツ": "restaurant",
+    "チーズ＆ドリア.スイーツ": "restaurant",
+    "チーズアンドドリア": "restaurant",
+    "Wallace Brothers Cheese Bar": "restaurant",
+    "ウォレスブラザーズチーズバー": "restaurant",
+    "台湾小籠包": "restaurant",
+    "石焼炒飯店": "restaurant",
+    "九份小籠包": "restaurant",
+    "倉式珈琲店": "cafe",
+    "RISTRETTO＆CROISSANT LABORATORIO": "cafe",
+    "RISTRETTO & CROISSANT LABORATORIO": "cafe",
+    "韓と米": "restaurant",
+    "グリル＆ベーカリー ザ・シーズン": "restaurant",
+    "グリル&ベーカリー THE SEASON": "restaurant",
+    "天ぷら天清": "restaurant",
+    "牛カツ京都勝牛": "restaurant",
+    "牛かつ京都勝牛": "restaurant",
+    "京都勝牛": "restaurant",
+    "NICK STOCK": "restaurant",
+    "ニックストック": "restaurant",
+    "Gottie`s BEEF": "restaurant",
+    "Gottie's BEEF": "restaurant",
+    "ゴッチーズビーフ": "restaurant",
+    "Hamburg Conel": "restaurant",
+    "ハンバーグコネル": "restaurant",
+    "牛かつもと村": "restaurant",
+    "牛カツもと村": "restaurant",
+    "牛かつ もと村": "restaurant",
+    "牛かつ 壱弐参": "restaurant",
+    "浅草 牛かつ": "restaurant",
+    "浅草牛かつ": "restaurant",
+    "牛かつ いろは": "restaurant",
+    "喫茶マドラグ": "cafe",
+    "喫茶 la madrague": "cafe",
+    "喫茶 le madrague": "cafe",
+    "喫茶ガボール": "cafe",
+    "喫茶 le GABOR": "cafe"
+  },
+  "searchNames": [
+    "サンマルクHD",
+    "サンマルクホールディングス"
+  ],
+  "verified": "2026-10-09",
+  "benefitRules": {
+    "asOf": "2026-10-01",
+    "sourceUrl": "https://www.saint-marc-hd.com/hd/ir/investor/",
+    "domesticOnly": true,
+    "eligibleBrands": [
+      {
+        "name": "ベーカリーレストラン・サンマルク",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "ベーカリーレストラン サンマルク"
+        ]
+      },
+      {
+        "name": "サンマルクカフェ",
+        "discountPercent": 20,
+        "category": "cafe",
+        "variants": [
+          "サンマルクカフェ＋R",
+          "サンマルクカフェ+R",
+          "サンマルクカフェ&茶",
+          "サンマルクカフェ＆茶"
+        ]
+      },
+      {
+        "name": "ベーカリーレストラン・バケット",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "バケット",
+          "BAQET",
+          "プレミアムバケット"
+        ]
+      },
+      {
+        "name": "BISTRO309",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "ビストロ309"
+        ]
+      },
+      {
+        "name": "ブレッドガーデン",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "パントリエ",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "BAKERY RESTAURANT C",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "ベーカリーレストランC"
+        ]
+      },
+      {
+        "name": "BAKERY CAFE C",
+        "discountPercent": 20,
+        "category": "cafe",
+        "variants": [
+          "ベーカリーカフェC"
+        ]
+      },
+      {
+        "name": "Petrichor Bakery and Cafe",
+        "discountPercent": 20,
+        "category": "cafe",
+        "variants": [
+          "ペトリコール"
+        ]
+      },
+      {
+        "name": "すし処函館市場",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "函館市場",
+          "宝田水産"
+        ]
+      },
+      {
+        "name": "生麺専門鎌倉パスタ",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "鎌倉パスタ",
+          "KamakurapastaFresca",
+          "カマクラパスタフレスカ"
+        ]
+      },
+      {
+        "name": "ぎをん椿庵",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "てっぱんのスパゲッティ",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "TEPPAN SPAGHETTI"
+        ]
+      },
+      {
+        "name": "おだしもん",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "神戸元町ドリア",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "横濱元町ドリア"
+        ]
+      },
+      {
+        "name": "グリル蔵敷",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "チーズ&ドリア.スイーツ",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "チーズ＆ドリア.スイーツ",
+          "チーズアンドドリア"
+        ]
+      },
+      {
+        "name": "Wallace Brothers Cheese Bar",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "ウォレスブラザーズチーズバー"
+        ]
+      },
+      {
+        "name": "台湾小籠包",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "石焼炒飯店",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "九份小籠包",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "倉式珈琲店",
+        "discountPercent": 20,
+        "category": "cafe"
+      },
+      {
+        "name": "RISTRETTO＆CROISSANT LABORATORIO",
+        "discountPercent": 20,
+        "category": "cafe",
+        "variants": [
+          "RISTRETTO & CROISSANT LABORATORIO"
+        ]
+      },
+      {
+        "name": "韓と米",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "グリル＆ベーカリー ザ・シーズン",
+        "discountPercent": 20,
+        "category": "restaurant",
+        "variants": [
+          "グリル&ベーカリー THE SEASON"
+        ]
+      },
+      {
+        "name": "天ぷら天清",
+        "discountPercent": 20,
+        "category": "restaurant"
+      },
+      {
+        "name": "牛カツ京都勝牛",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "牛かつ京都勝牛",
+          "京都勝牛"
+        ]
+      },
+      {
+        "name": "NICK STOCK",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "ニックストック"
+        ]
+      },
+      {
+        "name": "Gottie`s BEEF",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "Gottie's BEEF",
+          "ゴッチーズビーフ"
+        ]
+      },
+      {
+        "name": "Hamburg Conel",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "ハンバーグコネル"
+        ]
+      },
+      {
+        "name": "牛かつもと村",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "牛カツもと村",
+          "牛かつ もと村"
+        ]
+      },
+      {
+        "name": "牛かつ 壱弐参",
+        "discountPercent": 10,
+        "category": "restaurant"
+      },
+      {
+        "name": "浅草 牛かつ",
+        "discountPercent": 10,
+        "category": "restaurant",
+        "variants": [
+          "浅草牛かつ"
+        ]
+      },
+      {
+        "name": "牛かつ いろは",
+        "discountPercent": 10,
+        "category": "restaurant"
+      },
+      {
+        "name": "喫茶マドラグ",
+        "discountPercent": 10,
+        "category": "cafe",
+        "variants": [
+          "喫茶 la madrague",
+          "喫茶 le madrague"
+        ]
+      },
+      {
+        "name": "喫茶ガボール",
+        "discountPercent": 10,
+        "category": "cafe",
+        "variants": [
+          "喫茶 le GABOR"
+        ]
+      }
+    ],
+    "excludedStores": [
+      {
+        "brand": "牛カツ京都勝牛",
+        "store": "東京ドーム店"
+      },
+      {
+        "brand": "牛カツ京都勝牛",
+        "store": "みずほPayPayドーム店"
+      },
+      {
+        "brand": "NICK STOCK",
+        "store": "東京ドーム店"
+      },
+      {
+        "brand": "喫茶マドラグ",
+        "store": "大丸神戸社員食堂店"
+      },
+      {
+        "brand": "喫茶マドラグ",
+        "store": "大丸梅田社員食堂店"
+      }
+    ]
+  }
+}
