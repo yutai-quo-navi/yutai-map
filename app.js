@@ -62,6 +62,30 @@ let pickerCompanies = [];
 let lastPosition = null;
 let lastCenterLabel = '現在地';
 let searching = false;
+let searchFeedbackDepth = 0;
+let searchFeedbackTimer = null;
+const searchButtons = [els.locate, qs('#placeSearchActions button')].filter(Boolean);
+const searchButtonLabels = searchButtons.map(button => button.textContent);
+function beginSearchFeedback(){
+  if (searchFeedbackDepth++ === 0) {
+    for (const button of searchButtons) {
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+    }
+    searchFeedbackTimer = setTimeout(() => {
+      for (const button of searchButtons) button.textContent = '検索中…';
+    }, 250);
+  }
+  return () => {
+    if (--searchFeedbackDepth !== 0) return;
+    clearTimeout(searchFeedbackTimer);
+    searchButtons.forEach((button, index) => {
+      button.textContent = searchButtonLabels[index];
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+    });
+  };
+}
 let pendingSearch = null;
 let lastResults = [];
 let categoryCounts = null;
@@ -484,7 +508,9 @@ async function submitPlaceSearch(e, {search = true} = {}){
   e.preventDefault();
   const q = els.placeInput.value.trim();
   if(!q) return;
+  if(searchFeedbackDepth) return;
   if (lastPosition && normalize(q) === normalize(lastCenterLabel)) return applySearchOrigin(lastPosition, lastCenterLabel, search);
+  const finishFeedback = beginSearchFeedback();
   setStatus('場所を探しています…');
   try{
     const params = new URLSearchParams({q, limit:'8', fields:'minimal'});
@@ -495,12 +521,12 @@ async function submitPlaceSearch(e, {search = true} = {}){
     let pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
     if(pick){
       els.placeSuggestions.hidden = true;
-      return applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search);
+      return await applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search);
     }
     const s = (data.suggestions || [])[0];
     if(s && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lng))){
       els.placeSuggestions.hidden = true;
-      return applySearchOrigin({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q, search);
+      return await applySearchOrigin({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q, search);
     }
     showError('場所を特定できませんでした。地名・駅名・施設名を少し詳しく入力してください。');
     setStatus('場所を特定できませんでした');
@@ -508,6 +534,8 @@ async function submitPlaceSearch(e, {search = true} = {}){
     console.error(e);
     showError('場所の検索中にエラーが発生しました。');
     setStatus('場所を検索できませんでした');
+  }finally{
+    finishFeedback();
   }
 }
 
@@ -520,12 +548,13 @@ function applySearchOrigin(pos, label, search){
   return pos;
 }
 async function requestLocation({search = true} = {}){
+  if(searchFeedbackDepth) return;
   if(!navigator.geolocation){
     showError('このブラウザでは現在地取得に対応していません。');
     return;
   }
 
-  els.locate.disabled = true;
+  const finishFeedback = beginSearchFeedback();
   setStatus('現在地を確認しています…');
 
   let permissionState = '確認不可';
@@ -539,14 +568,17 @@ async function requestLocation({search = true} = {}){
   }
 
   return new Promise(resolve => navigator.geolocation.getCurrentPosition(
-    p => {
+    async p => {
       const pos = {lat:p.coords.latitude, lng:p.coords.longitude};
-      applySearchOrigin(pos, '現在地', search);
-      if (!search) els.locate.disabled = false;
-      resolve(pos);
+      try {
+        await applySearchOrigin(pos, '現在地', search);
+      } finally {
+        finishFeedback();
+        resolve(pos);
+      }
     },
     err => {
-      els.locate.disabled = false;
+      finishFeedback();
 
       const codeName =
         err.code === 1 ? 'PERMISSION_DENIED' :
@@ -591,7 +623,8 @@ async function searchNearby(pos, centerLabel='現在地'){
   const targets = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id) && (!brand || brand.issuer_id===c.id));
   if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
 
-  searching = true; els.locate.disabled = true;
+  searching = true;
+  const finishFeedback = beginSearchFeedback();
   const revision = diningSearchRevision;
   categoryCounts=null; renderCategoryFilters();
   els.count.textContent = '';
@@ -639,8 +672,8 @@ async function searchNearby(pos, centerLabel='現在地'){
     }
   } finally {
     searching=false;
+    finishFeedback();
     if(pendingSearch){ const next=pendingSearch; pendingSearch=null; searchNearby(next.pos,next.centerLabel); }
-    setTimeout(() => { els.locate.disabled=false; }, 1500);
   }
 }
 
