@@ -43,10 +43,7 @@ const els = {
   brandSuggestions: qs('#brandSuggestions'), brandSelection: qs('#brandSelection'),
   brandReset: qs('#brandReset'), brandCandidateStatus: qs('#brandCandidateStatus'),
   favorites: qs('#favoritesDialog'), favoritesList: qs('#favoritesList'),
-  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount'),
-  memo: qs('#memoDialog'), memoForm: qs('#memoForm'), memoList: qs('#memoList'),
-  memoCompany: qs('#memoCompany'), memoDate: qs('#memoDate'), memoAmount: qs('#memoAmount'),
-  memoNote: qs('#memoNote'), memoId: qs('#memoId'), memoSummary: qs('#memoSummary')
+  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount')
 };
 
 const expirySearch = initExpirySearch({root:qs('#expiryPanel'), alertsRoot:qs('#expiryAlerts'), read:readJSON, write:writeSetting});
@@ -89,8 +86,6 @@ let activeBrand = readSetting('yutai-brand', '');
 let brandRequest = 0;
 const savedFavorites = readJSON('yutai-favorites', []);
 let favorites = Array.isArray(savedFavorites) ? savedFavorites.filter(x => x && typeof x.key==='string' && typeof x.name==='string').slice(0,500) : [];
-const savedMemos = readJSON('yutai-memos', []);
-let memos = Array.isArray(savedMemos) ? savedMemos.filter(x => x && typeof x.id==='string' && typeof x.issuer==='string' && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,200) : [];
 let activeBenefit = 'dining';
 const searchRadius = initSearchRadius(els.radius, {read: readSetting, write: writeSetting});
 
@@ -148,7 +143,7 @@ async function init(){
     renderChips();
     renderCategoryFilters();
     await loadBrandCatalog();
-    renderMemoCompanies(); renderMemos(); updateFavoritesCount();
+    updateFavoritesCount();
   } catch(e){
     setStatus('優待データを読み込めませんでした');
   }
@@ -244,20 +239,11 @@ async function init(){
   },0));
   els.favoritesButton.addEventListener('click', () => { renderFavorites(); els.favorites.showModal(); });
   qs('#favoritesClose').addEventListener('click', () => els.favorites.close());
-  qs('#memoButton').addEventListener('click', () => { renderMemos(); els.memo.showModal(); });
-  qs('#memoClose').addEventListener('click', () => els.memo.close());
-  qs('#memoCancel').addEventListener('click', resetMemoForm);
-  els.memoForm.addEventListener('submit', saveMemo);
   window.addEventListener('storage', event => {
     if(event.key==='yutai-favorites'){
       const next=readJSON('yutai-favorites',[]);
       if(Array.isArray(next)) favorites=next.filter(x=>x && typeof x.key==='string' && typeof x.name==='string').slice(0,500);
       updateFavoritesCount(); renderFavorites(); updateFavoriteButtons();
-    }
-    if(event.key==='yutai-memos'){
-      const next=readJSON('yutai-memos',[]);
-      if(Array.isArray(next)) memos=next.filter(x=>x && typeof x.id==='string' && typeof x.issuer==='string' && /^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,200);
-      renderMemos();
     }
   });
 }
@@ -1284,55 +1270,5 @@ function renderFavorites(){
       favorites=next; renderFavorites(); updateFavoritesCount(); updateFavoriteButtons();
     });
     els.favoritesList.appendChild(card);
-  }
-}
-function renderMemoCompanies(){
-  els.memoCompany.innerHTML='';
-  for(const c of companies){ const option=document.createElement('option'); option.value=c.id; option.textContent=c.name; els.memoCompany.appendChild(option); }
-}
-function resetMemoForm(){ els.memoForm.reset(); els.memoId.value=''; qs('#memoSave').textContent='メモを保存'; qs('#memoCancel').hidden=true; }
-function saveMemo(event){
-  event.preventDefault();
-  const issuer=els.memoCompany.value,date=els.memoDate.value,amount=els.memoAmount.value;
-  if(!visibleCompanyIds.has(issuer) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
-  if(amount && (!Number.isFinite(Number(amount)) || Number(amount)<0 || Number(amount)>100000000)) return;
-  if(!els.memoId.value && memos.length>=200){ setStatus('期限メモは200件まで保存できます。'); return; }
-  const entry={id:els.memoId.value || (globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`),issuer,date,amount:amount==='' ? null : Number(amount),note:els.memoNote.value.trim().slice(0,120)};
-  const next=[...memos.filter(m=>m.id!==entry.id),entry];
-  if(!writeSetting('yutai-memos',JSON.stringify(next))) return;
-  memos=next; resetMemoForm(); renderMemos();
-}
-function daysUntil(date){
-  const today=new Date();
-  const [y,m,d]=date.split('-').map(Number);
-  return Math.round((Date.UTC(y,m-1,d)-Date.UTC(today.getFullYear(),today.getMonth(),today.getDate()))/86400000);
-}
-function renderMemos(){
-  els.memoList.innerHTML='';
-  const ordered=[...memos].sort((a,b)=>a.date.localeCompare(b.date));
-  const upcoming=ordered.filter(m=>daysUntil(m.date)>=0 && (m.amount===null || m.amount>0));
-  els.memoSummary.textContent=upcoming.length ? `次の期限 ${upcoming[0].date.replaceAll('-','/')} · ${upcoming.length}件` : '期限・残高を手入力で記録';
-  if(!ordered.length){ els.memoList.innerHTML='<p class="personal-empty">手持ちの優待の期限を、手入力で記録できます。</p>'; return; }
-  for(const m of ordered){
-    const c=companies.find(c=>c.id===m.issuer),days=daysUntil(m.date);
-    const state=days<0 ? '期限経過' : days===0 ? '今日まで' : `あと${days}日`;
-    const card=document.createElement('article'); card.className=`personal-card ${issuerTone(m.issuer)}`;
-    card.innerHTML=`<div class="memo-deadline${days>=0 && days<=30 ? ' soon' : ''}">${esc(m.date.replaceAll('-','/'))} · ${state}</div><h3>${esc(c?.name || m.issuer)}</h3>${m.amount!==null ? `<p>残高メモ ${Number(m.amount).toLocaleString('ja-JP')}円</p>` : ''}${m.note ? `<p>${esc(m.note)}</p>` : ''}<div class="card-actions"><button class="memo-search" type="button" ${c ? '' : 'disabled'}>この優待で探す</button><button class="memo-edit" type="button">編集</button><button class="memo-delete" type="button">削除</button></div>`;
-    card.querySelector('.memo-edit').addEventListener('click',()=>{
-      els.memoId.value=m.id; els.memoCompany.value=m.issuer; els.memoDate.value=m.date; els.memoAmount.value=m.amount ?? ''; els.memoNote.value=m.note || '';
-      qs('#memoSave').textContent='変更を保存'; qs('#memoCancel').hidden=false; els.memoForm.scrollIntoView({block:'start'}); els.memoDate.focus();
-    });
-    card.querySelector('.memo-delete').addEventListener('click',()=>{
-      const next=memos.filter(v=>v.id!==m.id); if(!writeSetting('yutai-memos',JSON.stringify(next))) return;
-      memos=next; if(els.memoId.value===m.id) resetMemoForm(); renderMemos();
-    });
-    card.querySelector('.memo-search').addEventListener('click',()=>{
-      selected.clear(); selected.add(m.issuer); activeBrand=''; els.brandSearch.value=''; activeCategory='all';
-      writeSetting('yutai-brand',''); writeSetting('yutai-category','all'); persistSelection(); renderChips(); renderBrandOptions(); renderCategoryFilters();
-      els.memo.close(); qs('.hero').scrollIntoView({behavior:'smooth',block:'start'});
-      invalidateDiningSearch();
-      setStatus('優待を選択しました。「現在地から探す」または「この場所で探す」を押してください');
-    });
-    els.memoList.appendChild(card);
   }
 }
