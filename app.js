@@ -1,4 +1,4 @@
-import {initExpirySearch} from './expiry-search.js?v=20261009-expiry-search';
+import {initExpirySearch} from './expiry-search.js?v=20261009-expiry-simple';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
