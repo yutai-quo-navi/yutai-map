@@ -51,8 +51,11 @@ export function parseHoldings(text, entries) {
   // Names may occur inside copied brokerage rows; prices alone are never enough.
   const compact=normalize(source);
   for(const [code,name] of companies) if(normalize(name).length>=3 && compact.includes(normalize(name))) matches.add(code);
-  const simple=/^[\s,、;；0-9A-Z]+$/.test(source) && source.split(/[\s,、;；]+/).filter(Boolean).every(token=>/^[0-9]{3}[0-9A-Z]$/.test(token));
-  if(simple) for(const code of source.split(/[\s,、;；]+/).filter(Boolean)) (companies.has(code)?matches:unknown).add(code);
+  // Code-only input accepts 4-character groups, including runs without separators.
+  // Never split numeric columns in brokerage tables: this path requires the entire input to contain only codes.
+  const tokens=source.split(/[\s,、;；]+/).filter(Boolean);
+  const simple=tokens.length>0 && tokens.every(token=>/^(?:[0-9]{4}|[0-9]{3}[A-Z])+$/.test(token));
+  if(simple) for(const token of tokens) for(const code of token.match(/.{4}/g)) (companies.has(code)?matches:unknown).add(code);
   else {
     // A code immediately followed by a name is distinct from numeric portfolio columns.
     const pattern=/(?:^|[\s,、;；])([0-9]{3}[0-9A-Z])[\s]+([^\s,、;；]+)/gu;
@@ -106,13 +109,13 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     const far=visible.filter(e=>!near.includes(e)&&!usual.includes(e));
     const owned=all.filter(e=>settings[e.id]?.owned).length;
     root.innerHTML=`<div class="expiry-heading"><h2>失効検索</h2><p>優待の期限を、ひと目で。</p></div>
-      <div class="expiry-register"><span>持ち株一覧を、ざっくりコピペでOK。</span><button type="button" id="expiryBulkToggle" aria-expanded="${bulkOpen}" aria-controls="expiryBulk">まとめて登録</button></div>
-      <div id="expiryBulk" ${bulkOpen?'':'hidden'}><label for="expiryPaste">証券会社や管理アプリの一覧を、そのまま貼り付け</label><textarea id="expiryPaste" maxlength="100000" rows="5" placeholder="銘柄名・コードだけでも、株価や損益が混ざっていてもOK">${esc(paste)}</textarea><button type="button" id="expiryParse">銘柄を読み取る</button><div id="expiryParseResult" aria-live="polite">${parsed?`<p>${parsed.matches.length}銘柄が期限DBと一致しました。</p><ul>${parsed.matches.map(m=>`<li>${esc(m.name)}（${esc(m.code)}）</li>`).join('')}</ul>${parsed.unknown.length?`<p>期限DB未登録・照合できないコード：${parsed.unknown.map(esc).join('、')}</p>`:''}${!parsed.matches.length?'<p>見つからない場合は、銘柄名やコードだけを貼り付けてください。</p>':''}<button type="button" id="expiryImport" ${parsed.matches.length?'':'disabled'}>${parsed.matches.length}銘柄の優待をまとめて登録</button>`:''}</div><p class="expiry-note">現在掲載されている未失効の優待を登録します。券を持っていないものは、登録後にチェックを外せます。貼り付けた内容は送信・保存しません。</p></div>
+      <div class="expiry-register"><span>銘柄コードだけでも、まとめて登録。</span><button type="button" id="expiryBulkToggle" aria-expanded="${bulkOpen}" aria-controls="expiryBulk">まとめて登録</button></div>
+      <div id="expiryBulk" ${bulkOpen?'':'hidden'}><label for="expiryPaste">銘柄コード、または証券会社などの銘柄一覧を貼り付け</label><textarea id="expiryPaste" maxlength="100000" rows="5" placeholder="例：8016,2914,556A ／ 8016 2914 556A ／ 80162914556A">${esc(paste)}</textarea><button type="button" id="expiryParse">銘柄を読み取る</button><div id="expiryParseResult" aria-live="polite">${parsed?`<p>${parsed.matches.length}銘柄が期限DBと一致しました。</p><ul>${parsed.matches.map(m=>`<li>${esc(m.name)}（${esc(m.code)}）</li>`).join('')}</ul>${parsed.unknown.length?`<p>期限DB未登録・照合できないコード：${parsed.unknown.map(esc).join('、')}</p>`:''}${!parsed.matches.length?'<p>見つからない場合は、銘柄名やコードだけを貼り付けてください。</p>':''}<button type="button" id="expiryImport" ${parsed.matches.length?'':'disabled'}>${parsed.matches.length}銘柄の優待をまとめて登録</button>`:''}</div><p class="expiry-note">現在掲載されている未失効の優待を登録します。券を持っていない場合は、登録後にチェックを外してください。</p><p class="expiry-note">貼り付けた原文はブラウザ内で照合し、サーバーへ送信せず、保存もしません。登録後は「持ってる」の選択結果だけをこのブラウザに保存します。口座番号・氏名などの個人情報は貼り付けないでください。</p><p class="expiry-note">心配な方は銘柄コードだけでOK。数字4桁（または数字3桁＋英字1字）を、カンマ区切り・スペース区切り・区切りなしで並べてもOKです。</p></div>
       <div class="expiry-common"><p>「持ってる」を選ぶと、期限前にお知らせ。</p><fieldset><legend>お知らせする日</legend><div class="expiry-day-options">${[3,2,1,0].map(day=>`<label><input type="checkbox" data-alert-day="${day}" ${alertDays.includes(day)?'checked':''}><span>${day===0?'当日':day+'日前'}</span></label>`).join('')}</div></fieldset><p class="expiry-note">このサイトを開いたときにお知らせします。${alertDays.length?'':'通知日は選択されていません。'}</p></div>
       <div class="expiry-view-tabs"><button type="button" data-view="all" aria-pressed="${!ownedOnly}">すべて</button><button type="button" data-view="owned" aria-pressed="${ownedOnly}">持ってる ${owned}</button></div>
       <label class="expiry-search-label"><span class="visually-hidden">銘柄・優待名から探す</span><input type="search" id="expiryKeyword" autocomplete="off" placeholder="銘柄名・コード・優待名で絞り込み" value="${esc(query)}"></label><p class="expiry-save-status" role="status">${esc(message)}</p>
       <div class="expiry-groups">${failed?'<p>期限情報を読み込めませんでした。ページを再読み込みしてください。</p>':groupHTML('あと7日以内',near)+EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,usual.filter(e=>expiryGroup(e)===key))).join('')+(far.length?`<details class="expiry-future" ${farOpen?'open':''}><summary>もっと先の期限を見る（61日以降・${far.length}件）</summary>${EXPIRY_GROUPS.map(([key,title])=>groupHTML(title,far.filter(e=>expiryGroup(e)===key))).join('')}</details>`:'')+(!visible.length?'<p class="expiry-note">'+(ownedOnly?'「持ってる」を選ぶと、ここに表示されます。':'条件に合う期限情報はありません。')+'</p>':'')}</div><p class="expiry-note expiry-storage-note">選択はこのブラウザに保存されます。期限を過ぎた優待は自動で表示から外れます。</p>`;
-    root.querySelector('#expiryBulkToggle').onclick=()=>{bulkOpen=!bulkOpen;render();if(bulkOpen)root.querySelector('#expiryPaste').focus();};
+    root.querySelector('#expiryBulkToggle').onclick=()=>{bulkOpen=!bulkOpen;if(!bulkOpen){paste='';parsed=null;}render();if(bulkOpen)root.querySelector('#expiryPaste').focus();};
     root.querySelector('#expiryPaste').oninput=e=>{paste=e.target.value;parsed=null;root.querySelector('#expiryParseResult').replaceChildren();};
     root.querySelector('#expiryParse').onclick=()=>{parsed=parseHoldings(paste,entries);render();};
     root.querySelector('#expiryImport')?.addEventListener('click',()=>{

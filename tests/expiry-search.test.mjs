@@ -56,3 +56,17 @@ test('paste accepts delimited codes, deduplicates, reports unknown and supports 
  assert.equal(parseHoldings('オンワードＨＤ、犬猫生活',entries).matches.length,2);
  assert.deepEqual(cleanAlertDays(null),[0,1,2,3]);assert.deepEqual(cleanAlertDays([3,3,4,-1,'2']),[3]);
 });
+
+
+test('code-only paste supports comma, spaces, full-width input, and unseparated four-character codes',()=>{
+ const entries=[['8016','オンワードHD'],['2914','JT'],['556A','犬猫生活']].map(([code,company_name])=>({code,company_name}));
+ const expected=['2914','556A','8016'];
+ for(const input of ['8016,2914,556A','8016 2914 556A','80162914556A','８０１６２９１４５５６Ａ','8016、2914556A','8016\\n2914;556A']){
+   assert.deepEqual(parseHoldings(input,entries).matches.map(({code})=>code).sort(),expected,input);
+ }
+ assert.deepEqual(parseHoldings('8016,8016,9999',entries).unknown,['9999']);
+ assert.deepEqual(parseHoldings('8016,8016,9999',entries).matches.map(({code})=>code),['8016']);
+ // Portfolio/account amounts must not be blindly split into purported ticker codes.
+ assert.equal(parseHoldings('残高 80162914556A',entries).matches.length,0);
+ assert.equal(parseHoldings('価格 2914 株数 100',entries).matches.length,0);
+});
