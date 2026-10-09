@@ -125,7 +125,7 @@
       "id": "saintmarc",
       "code": "3395",
       "name": "サンマルクホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/saintmarc/config.json"
     }
   ]

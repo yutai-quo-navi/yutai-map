@@ -3,7 +3,7 @@ import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucher
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
-import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc1';
+import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';

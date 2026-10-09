@@ -22,7 +22,7 @@ export function saintmarcBenefitForStore(company, store) {
   if (!storeName) return null;
   const excluded = (rules.excludedStores || []).some(exception =>
     benefitKey(exception.brand) === benefitKey(rule.name) &&
-    storeName.includes(benefitKey(exception.store))
+    [exception.store, ...(exception.variants || [])].some(name => storeName.includes(benefitKey(name)))
   );
   if (excluded) return null;
   return {discountPercent: rule.discountPercent, brand: rule.name};

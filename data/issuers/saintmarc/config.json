@@ -3,7 +3,7 @@
   "code": "3395",
   "name": "サンマルクHD",
   "fullName": "サンマルクホールディングス",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://www.saint-marc-hd.com/hd/ir/investor/",
   "storeSearchUrl": "https://www.saint-marc-hd.com/hd/search_index/",
   "matchingMode": "official_brand_and_store_exceptions",
@@ -443,7 +443,10 @@
       },
       {
         "brand": "牛カツ京都勝牛",
-        "store": "みずほPayPayドーム店"
+        "store": "みずほPayPayドーム店",
+        "variants": [
+          "みずほPayPayドーム福岡店"
+        ]
       },
       {
         "brand": "NICK STOCK",
@@ -463,13 +466,19 @@
   "storeDataPath": "./data/issuers/saintmarc/stores/current.json",
   "officialStoreFilter": "公式優待対象ブランドと店舗個別除外を適用した国内の店舗だけをD1に同期する。",
   "health": {
-    "minStores": 1,
-    "maxStores": 5000,
+    "minStores": 800,
+    "maxStores": 1000,
     "maxAgeDays": 40,
     "requireCoordinates": false,
     "allowedSourceHosts": [
       "www.saint-marc-hd.com",
-      "saint-marc-hd.com"
+      "saint-marc-hd.com",
+      "gyukatsu-kyotokatsugyu.com",
+      "www.gyukatsu-motomura.com",
+      "www.nick-stock.com",
+      "www.gotties-beef.com",
+      "hamburgconel-kyoto.com",
+      "madrague.info"
     ],
     "maxAdded": 500,
     "maxRemoved": 500,

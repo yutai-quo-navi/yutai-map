@@ -30,6 +30,7 @@ test('explicit exceptions are never eligible', () => {
   const names=[
     ['牛カツ京都勝牛','牛カツ京都勝牛 東京ドーム店'],
     ['京都勝牛','牛カツ京都勝牛 みずほPayPayドーム店'],
+    ['京都勝牛','牛カツ京都勝牛 みずほPayPayドーム福岡店'],
     ['NICK STOCK','NICK STOCK 東京ドーム店'],
     ['喫茶マドラグ','喫茶マドラグ 大丸神戸社員食堂店'],
     ['喫茶マドラグ','喫茶マドラグ 大丸梅田社員食堂店'],
