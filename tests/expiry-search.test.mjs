@@ -61,7 +61,7 @@ test('paste accepts delimited codes, deduplicates, reports unknown and supports 
 test('code-only paste supports comma, spaces, full-width input, and unseparated four-character codes',()=>{
  const entries=[['8016','オンワードHD'],['2914','JT'],['556A','犬猫生活']].map(([code,company_name])=>({code,company_name}));
  const expected=['2914','556A','8016'];
- for(const input of ['8016,2914,556A','8016 2914 556A','80162914556A','８０１６２９１４５５６Ａ','8016、2914556A','8016\\n2914;556A']){
+ for(const input of ['8016,2914,556A','8016 2914 556A','80162914556A','８０１６２９１４５５６Ａ','8016、2914556A','8016\n2914;556A']){
    assert.deepEqual(parseHoldings(input,entries).matches.map(({code})=>code).sort(),expected,input);
  }
  assert.deepEqual(parseHoldings('8016,8016,9999',entries).unknown,['9999']);
