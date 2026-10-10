@@ -107,7 +107,9 @@ def collect(root, query):
         else:
             refreshed = True
             brands = query('SELECT brand_name,store_count FROM brand_catalog WHERE issuer_id=? AND store_count>0 ORDER BY brand_name', [issuer])
-        if sum(b['store_count'] for b in brands) != current['geo_count'] + current['reference_count']:
+        # Existing triggers exclude unnamed brands; issuer totals include them.
+        # Use only named catalogue counts, without inventing the missing labels.
+        if any(not b['brand_name'] or b['store_count'] <= 0 for b in brands) or sum(b['store_count'] for b in brands) > current['geo_count'] + current['reference_count']:
             raise ValueError(f'Incomplete brand projection: {issuer}')
         state['issuers'][issuer] = {'revision': revision, 'brands': brands}
     # A hotel catalogue is ALREADY stored as one snapshot per voucher. Only ~13 rows.

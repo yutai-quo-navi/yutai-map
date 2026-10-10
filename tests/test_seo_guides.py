@@ -94,6 +94,14 @@ class SeoGuidesTest(unittest.TestCase):
             self.assertEqual(len(calls), 2)
             self.assertNotIn('brand_catalog', '\n'.join(calls))
             self.assertNotIn('lat', cached['features'][0]['stores'][0])
+            # Unnamed stores are intentionally absent from the trigger-maintained catalogue.
+            stats[0]['reference_count'] = 14
+            seo.collect(root, query)
+            stats[0]['geo_count'] = 0
+            stats[0]['reference_count'] = 3
+            with self.assertRaises(ValueError): seo.collect(root, query)
+            stats[0]['geo_count'] = 4
+            stats[0]['reference_count'] = 0
             saved = (root / 'sitemap.xml').read_text()
             snapshot['stores'][0]['verified'] = False
             with self.assertRaises(ValueError): seo.collect(root, query)
