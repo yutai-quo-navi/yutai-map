@@ -1019,8 +1019,27 @@ h1 span{
 .selection-change{margin-left:auto;white-space:nowrap}
 .issuer-selection .chips{min-height:28px}
 
-/* Content-sized cards use the same selection states for dining and hotels. */
-#companyChips{align-items:flex-start;gap:10px;padding-top:0}
+/* Dining cards fill each row, keeping company priority order. */
+#companyChips{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,max(74px,calc((100% - 18px)/4))),1fr));
+  align-items:stretch;
+  gap:6px;
+  padding-top:0;
+}
+#companyChips .selected-issuer-group{display:flex;align-items:stretch;width:100%}
+#companyChips .benefit-choice{
+  width:100%;
+  align-items:center;
+  justify-content:center;
+  padding:8px 4px;
+  font-size:13px;
+  line-height:1.4;
+  text-align:center;
+}
+#companyChips .benefit-choice-name{display:flex;align-items:center;justify-content:center;min-height:2.8em;width:100%}
+#companyChips .voucher-deadline-bubble{align-self:center;justify-content:center}
+/* Hotel cards keep their content-sized layout. */
 .selected-issuer-group{
   display:inline-flex;
   flex-direction:row;
@@ -1066,7 +1085,7 @@ h1 span{
 .benefit-choice .voucher-deadline-bubble::after{display:none}
 .benefit-choice:focus-visible{outline:2px solid var(--accent-text);outline-offset:3px}
 @media(max-width:520px){
-  #companyChips,.feature-buttons{gap:8px}
+  .feature-buttons{gap:8px}
   .benefit-choice{padding:9px 12px}
   .feature-item{max-width:calc((100% - 8px)/2)}
   .feature-button .benefit-choice-heading{display:block}
