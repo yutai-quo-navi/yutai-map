@@ -3,10 +3,10 @@
   "code": "2702",
   "name": "日本マクドナルドホールディングス",
   "fullName": "日本マクドナルドホールディングス",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://www.mcd-holdings.co.jp/ir/individual/shareholder_benefits/",
   "matchingMode": "single_brand",
-  "note": "単一ブランドのため、基本はブランド一致＋例外店舗のみ管理する軽量方式を予定。",
+  "note": "日本国内のマクドナルド店舗で株主優待食事券を利用できます（一部対象外店舗あり）。デリバリー・モバイルオーダー・セルフオーダーキオスクでは利用できません。店舗情報はOpenPOIの検索結果です。利用前に公式情報をご確認ください。",
   "aliases": [
     "マクドナルド",
     "McDonald's",
@@ -20,5 +20,12 @@
   },
   "searchNames": [
     "マクドナルド"
-  ]
+  ],
+  "domesticOnly": true,
+  "brandName": "マクドナルド",
+  "catalogBrands": [
+    "マクドナルド"
+  ],
+  "verified": "2026-10-11",
+  "storeSearchUrl": "https://map.mcdonalds.co.jp/"
 }

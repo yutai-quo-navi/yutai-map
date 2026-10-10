@@ -330,7 +330,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
 const issuerDisplayNames = {
   skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
-  monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD'
+  monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
@@ -817,7 +817,7 @@ function classify(p, company, origin){
   const lat = Number(p.lat), lng = Number(p.lng);
   if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
   return {
-    ...p, lat, lng, company, matchedAlias: alias, category,
+    ...p, lat, lng, company, matchedAlias: company.brandName || alias, category,
     distance: haversine(origin.lat, origin.lng, lat, lng)
   };
 }
@@ -973,6 +973,7 @@ function renderResults(items, radius){
         <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
         <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
+      ${x.company.id==='mcd' ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
       <div class="card-actions">
         <a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener">Googleマップで見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
@@ -1165,6 +1166,7 @@ function esc(s){ return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&
 function brandKey(b){ return JSON.stringify([b.issuer_id,b.name]); }
 async function loadBrandCatalog(){
   const request=++brandRequest;
+  const configuredBrands=companies.flatMap(c=>(c.catalogBrands || []).map(name=>({issuer_id:c.id,name})));
   try {
     const groups=await Promise.all(chunk(companies,20).map(async group=>{
       const params=new URLSearchParams({issuers:group.map(c=>c.id).join(',')});
@@ -1173,10 +1175,17 @@ async function loadBrandCatalog(){
       return (await res.json()).brands || [];
     }));
     if(request!==brandRequest) return;
-    brandCatalog=groups.flat().filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
+    const apiBrands=groups.flat();
+    brandCatalog=[...apiBrands,...configuredBrands.filter(b=>!apiBrands.some(a=>brandKey(a)===brandKey(b)))].filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
     renderChips();
     syncTypedBrand(); renderBrandOptions();
   } catch {
+    if(request!==brandRequest) return;
+    if(configuredBrands.length){
+      brandCatalog=configuredBrands; renderChips(); syncTypedBrand(); renderBrandOptions();
+      els.brandCandidateStatus.textContent='一部のブランド候補を取得できませんでした。ページを再読み込みしてください。';
+      return;
+    }
     els.brandSearch.disabled=true;
     hideBrandSuggestions();
     els.brandCandidateStatus.textContent='ブランド候補を取得できませんでした。ページを再読み込みしてください。';
@@ -1185,6 +1194,7 @@ async function loadBrandCatalog(){
 let brandCandidateLimit=12;
 // Small local reading dictionary; typing never requests the store API.
 const brandReadings={
+  'マクドナルド':'まくどなるど まっく まくど mcdonalds mcdonald',
   '鳥良商店':'とりよししょうてん とりよし', 'おもてなしとりよし':'おもてなしとりよし',
   'サンジェルマン':'さんじぇるまん', 'プルミエ サンジェルマン':'ぷるみえさんじぇるまん', '小樽サンジェルマン':'おたるさんじぇるまん',
   'レフボン':'れふぼん', 'サンヴァリエ':'さんゔぁりえ さんばりえ', 'フラマンドール':'ふらまんどーる',

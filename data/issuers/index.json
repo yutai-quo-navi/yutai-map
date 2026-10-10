@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-10",
+  "updated": "2026-10-11",
   "issuers": [
     {
       "id": "skylark",
@@ -55,7 +55,7 @@
       "id": "mcd",
       "code": "2702",
       "name": "日本マクドナルドホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/mcd/config.json"
     },
     {
