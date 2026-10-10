@@ -141,6 +141,13 @@
       "name": "リンガーハット",
       "status": "public",
       "config": "./data/issuers/ringerhut/config.json"
+    },
+    {
+      "id": "hiday",
+      "code": "7611",
+      "name": "ハイデイ日高",
+      "status": "public",
+      "config": "./data/issuers/hiday/config.json"
     }
   ]
 }
