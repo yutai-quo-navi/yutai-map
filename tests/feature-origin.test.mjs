@@ -2,11 +2,12 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {requestCurrentPosition} from '../geolocation.js';
 
 function setup({place=false, denied=false} = {}) {
   const calls={geo:0, search:0, refresh:0};
   const context=vm.createContext({
-    lastPosition:null,lastCenterLabel:'現在地',
+    requestCurrentPosition,lastPosition:null,lastCenterLabel:'現在地',
     specialFeatures:{refresh(){calls.refresh++;},invalidate(){calls.refresh++;}},
     els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false,setAttribute(){},removeAttribute(){}}},
     navigator:{geolocation:{getCurrentPosition(success,failure){calls.geo++;denied ? failure({code:1}) : success({coords:{latitude:43.06,longitude:141.35}});}}},

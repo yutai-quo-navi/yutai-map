@@ -1,3 +1,4 @@
+import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261009-next30';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261011-guides';
@@ -571,17 +572,7 @@ async function requestLocation({search = true} = {}){
   const finishFeedback = beginSearchFeedback();
   setStatus('現在地を確認しています…');
 
-  let permissionState = '確認不可';
-  try {
-    if(navigator.permissions?.query){
-      const permission = await navigator.permissions.query({name:'geolocation'});
-      permissionState = permission.state;
-    }
-  } catch(e){
-    permissionState = 'Safariでは取得不可';
-  }
-
-  return new Promise(resolve => navigator.geolocation.getCurrentPosition(
+  return new Promise(resolve => requestCurrentPosition(navigator.geolocation,
     async p => {
       const pos = {lat:p.coords.latitude, lng:p.coords.longitude};
       try {
@@ -603,7 +594,7 @@ async function requestLocation({search = true} = {}){
       setStatus('現在地は保存していません');
       resolve(null);
     },
-    {enableHighAccuracy:true, timeout:15000, maximumAge:60000}
+    () => setStatus('現在地の取得を再試行しています…')
   ));
 }
 
