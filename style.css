@@ -1032,12 +1032,13 @@ h1 span{
   width:100%;
   align-items:center;
   justify-content:center;
-  padding:8px 4px;
+  padding:6px 4px;
+  gap:2px;
   font-size:13px;
-  line-height:1.4;
+  line-height:1.3;
   text-align:center;
 }
-#companyChips .benefit-choice-name{display:flex;align-items:center;justify-content:center;min-height:2.8em;width:100%}
+#companyChips .benefit-choice-name{display:flex;align-items:center;justify-content:center;min-height:0;width:100%}
 #companyChips .voucher-deadline-bubble{align-self:center;justify-content:center}
 /* Hotel cards keep their content-sized layout. */
 .selected-issuer-group{
