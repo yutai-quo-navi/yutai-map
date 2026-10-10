@@ -2564,6 +2564,32 @@
       "expiry_year": 2027
     },
     {
+      "id": "8200-2027-02-points",
+      "code": "8200",
+      "company_name": "リンガーハット",
+      "benefit_name": "長崎ちゃんぽん他（電子株主優待ポイント）",
+      "issue": "",
+      "expiry_date": "2027-02-01",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [
+        "リンガーハット",
+        "濵かつ",
+        "長崎卓袱浜勝"
+      ],
+      "source_url": "https://www.ringerhut.co.jp/ir/investor/stocks_compliment.php",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-10",
+      "status": "confirmed",
+      "notes": "2026-10-10 ユーザー入力の利用期限2027-02-01を反映。リンク先公式ページは一般的な優待制度の案内であり、2027年期限の個別公式告知は未確認。券面・ポイント画面で期限と発行回を確認。",
+      "issuer_id": "ringerhut",
+      "search_brand": "リンガーハット",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "3479-2027-02-1",
       "code": "3479",
       "company_name": "TKP",
