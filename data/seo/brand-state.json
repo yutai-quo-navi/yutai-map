@@ -1,0 +1,3054 @@
+{
+  "version": 1,
+  "issuers": {
+    "skylark": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "chawan",
+          "store_count": 30
+        },
+        {
+          "brand_name": "から好し（単独店）",
+          "store_count": 51
+        },
+        {
+          "brand_name": "くし葉",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶ葉",
+          "store_count": 336
+        },
+        {
+          "brand_name": "じゅうじゅうカルビ",
+          "store_count": 43
+        },
+        {
+          "brand_name": "すうぷ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "その他ブッフェレストラン",
+          "store_count": 16
+        },
+        {
+          "brand_name": "とんから亭",
+          "store_count": 23
+        },
+        {
+          "brand_name": "むさしの森珈琲",
+          "store_count": 83
+        },
+        {
+          "brand_name": "ゆめあん食堂",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ガスト",
+          "store_count": 1203
+        },
+        {
+          "brand_name": "グラッチェガーデンズ",
+          "store_count": 9
+        },
+        {
+          "brand_name": "グランブッフェ",
+          "store_count": 11
+        },
+        {
+          "brand_name": "ザ ブッフェ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ジョナサン",
+          "store_count": 154
+        },
+        {
+          "brand_name": "ステーキガスト",
+          "store_count": 65
+        },
+        {
+          "brand_name": "ダイナー",
+          "store_count": 3
+        },
+        {
+          "brand_name": "トマト＆オニオン",
+          "store_count": 48
+        },
+        {
+          "brand_name": "ニューマーケット",
+          "store_count": 6
+        },
+        {
+          "brand_name": "バーミヤン",
+          "store_count": 372
+        },
+        {
+          "brand_name": "フェスタガーデン",
+          "store_count": 3
+        },
+        {
+          "brand_name": "フォレスト",
+          "store_count": 4
+        },
+        {
+          "brand_name": "ペルティカ",
+          "store_count": 11
+        },
+        {
+          "brand_name": "ラ・オハナ",
+          "store_count": 19
+        },
+        {
+          "brand_name": "三〇三",
+          "store_count": 1
+        },
+        {
+          "brand_name": "八献",
+          "store_count": 1
+        },
+        {
+          "brand_name": "八郎そば",
+          "store_count": 3
+        },
+        {
+          "brand_name": "包包點心",
+          "store_count": 3
+        },
+        {
+          "brand_name": "夢庵",
+          "store_count": 171
+        },
+        {
+          "brand_name": "点心甜心",
+          "store_count": 2
+        },
+        {
+          "brand_name": "藍屋",
+          "store_count": 31
+        },
+        {
+          "brand_name": "魚屋路",
+          "store_count": 22
+        },
+        {
+          "brand_name": "點心甜心",
+          "store_count": 1
+        }
+      ]
+    },
+    "colowide": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "3・6・5酒場",
+          "store_count": 44
+        },
+        {
+          "brand_name": "KITEKI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "いろはにほへと",
+          "store_count": 37
+        },
+        {
+          "brand_name": "かっぱ寿司",
+          "store_count": 294
+        },
+        {
+          "brand_name": "かつ時",
+          "store_count": 11
+        },
+        {
+          "brand_name": "がんこ亭",
+          "store_count": 1
+        },
+        {
+          "brand_name": "なぎさ橋珈琲",
+          "store_count": 2
+        },
+        {
+          "brand_name": "にぎりの徳兵衛",
+          "store_count": 43
+        },
+        {
+          "brand_name": "ぴん酒場",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ほのぼの横丁",
+          "store_count": 1
+        },
+        {
+          "brand_name": "やきとりセンター",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ウルフギャング・パック",
+          "store_count": 6
+        },
+        {
+          "brand_name": "カフェ&ビヤレストラン 宮",
+          "store_count": 1
+        },
+        {
+          "brand_name": "カルビ大将",
+          "store_count": 64
+        },
+        {
+          "brand_name": "ジンギスカン羊々亭",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ステーキ宮",
+          "store_count": 100
+        },
+        {
+          "brand_name": "ラパウザ",
+          "store_count": 14
+        },
+        {
+          "brand_name": "北海道",
+          "store_count": 31
+        },
+        {
+          "brand_name": "寧々家",
+          "store_count": 24
+        },
+        {
+          "brand_name": "小さな森珈琲",
+          "store_count": 3
+        },
+        {
+          "brand_name": "暖や",
+          "store_count": 1
+        },
+        {
+          "brand_name": "海へ",
+          "store_count": 11
+        },
+        {
+          "brand_name": "海鮮アトム",
+          "store_count": 9
+        },
+        {
+          "brand_name": "甘太郎",
+          "store_count": 6
+        },
+        {
+          "brand_name": "贔屓屋",
+          "store_count": 4
+        },
+        {
+          "brand_name": "酒場トリノ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "鳥の蔵",
+          "store_count": 1
+        }
+      ]
+    },
+    "create": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "AW55",
+          "store_count": 1
+        },
+        {
+          "brand_name": "AWkitchen",
+          "store_count": 5
+        },
+        {
+          "brand_name": "Atlantic　ららぽーとEXPOCITY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BAYSIDE GRILL THE BBQ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BAYSIDE ROASTERY COFFEE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BEER BAR　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BERRY BEANS COFFEE　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BOSTON Seafood Place 東京ミッドタウン日比谷",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Bar & Tapas Celona",
+          "store_count": 2
+        },
+        {
+          "brand_name": "Bread&Coffee IKEDAYAMA",
+          "store_count": 2
+        },
+        {
+          "brand_name": "CARROLL アトレ五反田2",
+          "store_count": 1
+        },
+        {
+          "brand_name": "COFFEE & NY DELI  CAFE NOLITA　アトレ川崎店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "COUNTRY KITCHEN　FKDショッピングモール宇都宮インターパーク",
+          "store_count": 1
+        },
+        {
+          "brand_name": "CYCLO Banh mi　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Creperie Cafe Sucre",
+          "store_count": 3
+        },
+        {
+          "brand_name": "D’s Sweet Marche",
+          "store_count": 4
+        },
+        {
+          "brand_name": "EBISU FOOD HALL 恵比寿",
+          "store_count": 1
+        },
+        {
+          "brand_name": "EVERYONEs CAFE 上野恩賜公園",
+          "store_count": 1
+        },
+        {
+          "brand_name": "EVERYONE’S CAFE ペリエ千葉",
+          "store_count": 1
+        },
+        {
+          "brand_name": "FISHERMAN’S MARKET",
+          "store_count": 2
+        },
+        {
+          "brand_name": "FREEMAN CAFE 渋谷メトロプラザ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "JEAN FRANÇOIS",
+          "store_count": 10
+        },
+        {
+          "brand_name": "JINNAN CAFE　渋谷店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "L’HOTEL de BUFFET　イオンレイクタウン店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MACCARONI　名古屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MACCHA HOUSE",
+          "store_count": 13
+        },
+        {
+          "brand_name": "MAGURO MARKET　RAYARD MIYASHITA PARK",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MAISON CRÊPE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MAISON DE BUFFET",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MAISON GALETTE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Manoa Pancake House",
+          "store_count": 2
+        },
+        {
+          "brand_name": "Mare Cucina　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Morton’s The Steakhouse 丸の内二重橋ビル",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Mr.FARMER",
+          "store_count": 4
+        },
+        {
+          "brand_name": "Natural Bread Bakery　Pasar幕張",
+          "store_count": 1
+        },
+        {
+          "brand_name": "OCEAN CLUB BUFFET デックス東京ビーチ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "PRECIOUS BUFFET",
+          "store_count": 4
+        },
+        {
+          "brand_name": "Philly’s　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "RIO GRANDE GRILL",
+          "store_count": 4
+        },
+        {
+          "brand_name": "ROMANO　三井アウトレットパーク横浜ベイサイド",
+          "store_count": 1
+        },
+        {
+          "brand_name": "STEAK MOUNTAIN  御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Salon de Sweets　イクスピアリ店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Sam Choy’s　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "San Antonio TEX-MEX 東京ミッドタウン日比谷",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Susan’s MEAT BALL 東京ミッドタウン日比谷",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TANTO TANTO",
+          "store_count": 7
+        },
+        {
+          "brand_name": "TAP9　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "THE CENTRAL BUFFET　イオンモール岡山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "THE PLATINUM",
+          "store_count": 2
+        },
+        {
+          "brand_name": "TOKYO STATION BUFFET 馳走三昧",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TReeTalk　宇都宮福田屋百貨店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "VIETNAMESE CYCLO　東京ミッドタウン日比谷",
+          "store_count": 1
+        },
+        {
+          "brand_name": "cafe locally　ルミネ横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "あずさ珈琲",
+          "store_count": 14
+        },
+        {
+          "brand_name": "いち膳屋　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "いっちょう",
+          "store_count": 23
+        },
+        {
+          "brand_name": "うな濱　ネオパーサ浜松",
+          "store_count": 1
+        },
+        {
+          "brand_name": "えびそば 一幻",
+          "store_count": 6
+        },
+        {
+          "brand_name": "おもてなしとりよし",
+          "store_count": 7
+        },
+        {
+          "brand_name": "かごの屋",
+          "store_count": 79
+        },
+        {
+          "brand_name": "からあげセンター",
+          "store_count": 5
+        },
+        {
+          "brand_name": "きづなすし",
+          "store_count": 2
+        },
+        {
+          "brand_name": "きみはん",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ごっつええ本舗",
+          "store_count": 5
+        },
+        {
+          "brand_name": "しゃぶしゃぶ すき焼き ステーキ  籠乃屋  本店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶしゃぶ・すし 六本木 八山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶしゃぶ・すし 紀尾井町 八山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶ菜",
+          "store_count": 56
+        },
+        {
+          "brand_name": "しゃぶ菜別邸",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃる うぃ キャンディ？　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "すいれん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "せいろ蕎麦 ゆうづる　イオンモール広島府中",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ちゃんぷら~　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ちゅら屋　ジョイナス横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "つけめん102",
+          "store_count": 1
+        },
+        {
+          "brand_name": "つけめんTETSU",
+          "store_count": 17
+        },
+        {
+          "brand_name": "とうふ料理　吉座",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とん楽　Pasar幕張",
+          "store_count": 1
+        },
+        {
+          "brand_name": "はしや",
+          "store_count": 5
+        },
+        {
+          "brand_name": "はーべすと",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ひたち大宮ゴルフクラブ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ひとにぎり",
+          "store_count": 7
+        },
+        {
+          "brand_name": "ひゃくしょう茶屋　駕町店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ふうふや",
+          "store_count": 2
+        },
+        {
+          "brand_name": "まんぷく食堂　コクーン新都心",
+          "store_count": 1
+        },
+        {
+          "brand_name": "もみじ茶屋",
+          "store_count": 2
+        },
+        {
+          "brand_name": "やさい家めい",
+          "store_count": 6
+        },
+        {
+          "brand_name": "やなぎ茶屋 ecute上野",
+          "store_count": 1
+        },
+        {
+          "brand_name": "よつばの香　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "わさび　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ア・ル・ロイック",
+          "store_count": 2
+        },
+        {
+          "brand_name": "オールド・オウル　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "カフェ・トレイル＆トラック　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "グリーンバーズゴルフ倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "グロワールゴルフ倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ココパ三重白山ゴルフコースレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "サンジェルマン",
+          "store_count": 39
+        },
+        {
+          "brand_name": "サンメンバーズカントリークラブ内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "サンヴァリエ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "スタミナまんぷく食堂　ネオパーサ浜松",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ステーキの店　吉備　さんすて岡山店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "テコナベーグル",
+          "store_count": 2
+        },
+        {
+          "brand_name": "テコナベーグルワークス",
+          "store_count": 1
+        },
+        {
+          "brand_name": "デコラクリーマリー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "デザート王国",
+          "store_count": 32
+        },
+        {
+          "brand_name": "トルセドール　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ドゥ マゴ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ナムルごはん　SHIK-TTANG　コクーン新都心",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ハタケノパスタ　イオンモールナゴヤドーム前",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ハマチカ酒場　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "バル・リカ・セルヴェッサ　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ビストロ ISOMARU 町田店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ビストロ磯丸会館",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ピッタ ゼロゼロ イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "フラマンドール",
+          "store_count": 3
+        },
+        {
+          "brand_name": "プルミエ サンジェルマン",
+          "store_count": 5
+        },
+        {
+          "brand_name": "プレジデントカントリー倶楽部レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ホームベース　伊勢佐木町店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "レインフォレスト カフェ・トーキョー イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "レフボン",
+          "store_count": 25
+        },
+        {
+          "brand_name": "ロッキーズ　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ロティズ・ハウス　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ローストビーフ星",
+          "store_count": 4
+        },
+        {
+          "brand_name": "三河の海女さん・魚河岸うお坐食堂 上郷SA店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "九龍點心",
+          "store_count": 2
+        },
+        {
+          "brand_name": "五の五",
+          "store_count": 8
+        },
+        {
+          "brand_name": "伊達祭　大津店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "伊香保國際カンツリークラブレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "佐藤商店　完熟バナナジュース　ＰＡＳＡＲ幕張上り",
+          "store_count": 1
+        },
+        {
+          "brand_name": "前川水軍",
+          "store_count": 2
+        },
+        {
+          "brand_name": "前川珈琲店　戸島店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "北神戸ゴルフ場レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "南翔饅頭店",
+          "store_count": 3
+        },
+        {
+          "brand_name": "博多豚骨たかくら　武蔵小杉東急スクエア店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "右衛門　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "喜多方の味 蔵小町　エスパル郡山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "大分ななせゴルフ倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天つるり",
+          "store_count": 4
+        },
+        {
+          "brand_name": "天ぷらと寿司18坪",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天草水軍　健軍店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "太田双葉カントリークラブレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "太陽のごちそう　エアポートウォーク名古屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "宮島カンツリー倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "宮島志和カンツリー倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "富士ロイヤルカントリークラブ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "小樽サンジェルマン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "島ぬ風",
+          "store_count": 2
+        },
+        {
+          "brand_name": "彩の国レストラン　ららぽーと富士見",
+          "store_count": 1
+        },
+        {
+          "brand_name": "御殿場カリー　御殿場プレミアム・アウトレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "手揉み中華そば 中村",
+          "store_count": 1
+        },
+        {
+          "brand_name": "揚げたて天ぷら はま天",
+          "store_count": 1
+        },
+        {
+          "brand_name": "新嘉坡鶏飯",
+          "store_count": 2
+        },
+        {
+          "brand_name": "旬菜しゃぶ重",
+          "store_count": 6
+        },
+        {
+          "brand_name": "東大門　エスパル郡山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "森林公園ゴルフ倶楽部内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "江戸前天丼 濱乃屋",
+          "store_count": 5
+        },
+        {
+          "brand_name": "波止場食堂　ＰＡＳＡＲ幕張上り",
+          "store_count": 1
+        },
+        {
+          "brand_name": "海人酒房",
+          "store_count": 6
+        },
+        {
+          "brand_name": "海南鶏飯食堂",
+          "store_count": 4
+        },
+        {
+          "brand_name": "海山亭いっちょう",
+          "store_count": 18
+        },
+        {
+          "brand_name": "満点カレー　ＰＡＳＡＲ幕張上り",
+          "store_count": 1
+        },
+        {
+          "brand_name": "焼肉じゅん 枚方市役所前店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "牛かつ ふたば亭 ららぽーとTOKYO-BAY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "牛かつ上村　イオンモール岡山",
+          "store_count": 1
+        },
+        {
+          "brand_name": "牛たん伊之助　イオンモール各務原インター",
+          "store_count": 1
+        },
+        {
+          "brand_name": "狼煙",
+          "store_count": 5
+        },
+        {
+          "brand_name": "玉丁本店 八重洲店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "甜點菜楼　ルミネエスト新宿",
+          "store_count": 1
+        },
+        {
+          "brand_name": "町鮨とろたく",
+          "store_count": 3
+        },
+        {
+          "brand_name": "白浜軒　ＰＡＳＡＲ幕張上り",
+          "store_count": 1
+        },
+        {
+          "brand_name": "石焼ビビンバ BIBI イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "磯丸水産",
+          "store_count": 105
+        },
+        {
+          "brand_name": "磯丸水産食堂",
+          "store_count": 3
+        },
+        {
+          "brand_name": "磯丸酒場",
+          "store_count": 3
+        },
+        {
+          "brand_name": "祭雛",
+          "store_count": 1
+        },
+        {
+          "brand_name": "立ち寿司　おや潮　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "笑福厨房　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "紀の善 神楽坂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "紀南カントリークラブ内レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "肉そば 岳しろ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "肉そばと丼　そば匠　十兵衛　イオンモール長久手",
+          "store_count": 1
+        },
+        {
+          "brand_name": "肉丼の星",
+          "store_count": 2
+        },
+        {
+          "brand_name": "肉麺　右衛門　ＰＡＳＡＲ幕張上り",
+          "store_count": 1
+        },
+        {
+          "brand_name": "自然派ビュッフェ　饗の詩　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "舞浜洋食軒　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "菜の庵　神戸ハーバーランドumie",
+          "store_count": 1
+        },
+        {
+          "brand_name": "菜菜麻辣湯",
+          "store_count": 7
+        },
+        {
+          "brand_name": "華都飯店 Osaka Metro本町ビル店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "萬家",
+          "store_count": 5
+        },
+        {
+          "brand_name": "蕎麦五反 五反田",
+          "store_count": 1
+        },
+        {
+          "brand_name": "蕎麦六本　六本木",
+          "store_count": 1
+        },
+        {
+          "brand_name": "角川食堂 ところざわサクラタウン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "足柄の森レストラン　エクスパーサ足柄SA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "遊鶴",
+          "store_count": 11
+        },
+        {
+          "brand_name": "金ごま屋　コクーン新都心",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鉄板ホルモン五の五",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鉄板二百℃",
+          "store_count": 2
+        },
+        {
+          "brand_name": "銀座　炎蔵",
+          "store_count": 1
+        },
+        {
+          "brand_name": "銀座木屋",
+          "store_count": 5
+        },
+        {
+          "brand_name": "鍋’ｓ KITCHEN　イオンモール堺鉄砲町",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鍋専門店　籠菜　イオンレイクタウン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "長南カントリークラブレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "長南パブリックコースレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "長野といえば、バニクマン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "阿騎野ゴルフ倶楽部レストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "雛鮨",
+          "store_count": 5
+        },
+        {
+          "brand_name": "静岡よみうりカントリークラブレストラン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "韓国料理 SHIK-TTANG　CIAL横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "韓国料理　SHIK-TTANG　三井アウトレットパーク横浜ベイサイド",
+          "store_count": 1
+        },
+        {
+          "brand_name": "韓食菜美　SHIK-TTANG　イオンモール各務原インター",
+          "store_count": 1
+        },
+        {
+          "brand_name": "餃子販売所 いち五郎",
+          "store_count": 4
+        },
+        {
+          "brand_name": "香港厨房　三井アウトレットパーク入間",
+          "store_count": 1
+        },
+        {
+          "brand_name": "香港蒸蘢",
+          "store_count": 3
+        },
+        {
+          "brand_name": "馳走小町　イオンモール京都桂川",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鳥平ちゃん",
+          "store_count": 6
+        },
+        {
+          "brand_name": "鳥良商店",
+          "store_count": 27
+        },
+        {
+          "brand_name": "麦うさぎ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "麺大将",
+          "store_count": 2
+        }
+      ]
+    },
+    "zensho": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "かつ庵",
+          "store_count": 57
+        },
+        {
+          "brand_name": "すき家",
+          "store_count": 2003
+        },
+        {
+          "brand_name": "なか卯",
+          "store_count": 445
+        },
+        {
+          "brand_name": "はま寿司",
+          "store_count": 686
+        },
+        {
+          "brand_name": "エルトリート",
+          "store_count": 2
+        },
+        {
+          "brand_name": "オリーブの丘",
+          "store_count": 67
+        },
+        {
+          "brand_name": "ココス",
+          "store_count": 506
+        },
+        {
+          "brand_name": "ジョリーパスタ",
+          "store_count": 324
+        },
+        {
+          "brand_name": "ゼッテリア",
+          "store_count": 272
+        },
+        {
+          "brand_name": "ビッグボーイ",
+          "store_count": 139
+        },
+        {
+          "brand_name": "ヴィクトリアステーション",
+          "store_count": 27
+        },
+        {
+          "brand_name": "久兵衛屋",
+          "store_count": 44
+        },
+        {
+          "brand_name": "熟成焼肉いちばん",
+          "store_count": 87
+        },
+        {
+          "brand_name": "華屋与兵衛",
+          "store_count": 33
+        }
+      ]
+    },
+    "toridoll": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "KNOWS COFFEE",
+          "store_count": 2
+        },
+        {
+          "brand_name": "PALM WAGON",
+          "store_count": 3
+        },
+        {
+          "brand_name": "TamJai Mixian",
+          "store_count": 1
+        },
+        {
+          "brand_name": "goodNess",
+          "store_count": 1
+        },
+        {
+          "brand_name": "いぶきうどん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ずんどう屋",
+          "store_count": 100
+        },
+        {
+          "brand_name": "とりどーる",
+          "store_count": 10
+        },
+        {
+          "brand_name": "ふたば製麺",
+          "store_count": 1
+        },
+        {
+          "brand_name": "まきの",
+          "store_count": 7
+        },
+        {
+          "brand_name": "コナズ珈琲",
+          "store_count": 56
+        },
+        {
+          "brand_name": "丸亀製麺",
+          "store_count": 901
+        },
+        {
+          "brand_name": "天ぷらまきの",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天ぷら定食まきの",
+          "store_count": 8
+        },
+        {
+          "brand_name": "天丼まきの",
+          "store_count": 2
+        },
+        {
+          "brand_name": "晩杯屋",
+          "store_count": 52
+        },
+        {
+          "brand_name": "焼きたてコッペ製パン",
+          "store_count": 2
+        },
+        {
+          "brand_name": "肉のヤマ牛",
+          "store_count": 20
+        },
+        {
+          "brand_name": "譚仔三哥米線",
+          "store_count": 2
+        },
+        {
+          "brand_name": "豚屋とん一",
+          "store_count": 20
+        },
+        {
+          "brand_name": "長田本庄軒",
+          "store_count": 7
+        }
+      ]
+    },
+    "yoshinoya": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "うまげな",
+          "store_count": 17
+        },
+        {
+          "brand_name": "かるびのとりこ",
+          "store_count": 6
+        },
+        {
+          "brand_name": "さぬき麺屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "でいから",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とりの助",
+          "store_count": 15
+        },
+        {
+          "brand_name": "はなまるうどん",
+          "store_count": 371
+        },
+        {
+          "brand_name": "ばり嗎",
+          "store_count": 23
+        },
+        {
+          "brand_name": "もう〜とりこ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "カヤバール",
+          "store_count": 2
+        },
+        {
+          "brand_name": "カレーうどん千吉",
+          "store_count": 10
+        },
+        {
+          "brand_name": "キラメキノ未来",
+          "store_count": 25
+        },
+        {
+          "brand_name": "クッキング＆コンフォート",
+          "store_count": 538
+        },
+        {
+          "brand_name": "テイクアウト・デリバリー専門店",
+          "store_count": 39
+        },
+        {
+          "brand_name": "吉野家",
+          "store_count": 691
+        },
+        {
+          "brand_name": "吉野家×はなまるうどん",
+          "store_count": 17
+        },
+        {
+          "brand_name": "竹清",
+          "store_count": 3
+        },
+        {
+          "brand_name": "讃岐うどんの心 つるさく",
+          "store_count": 8
+        },
+        {
+          "brand_name": "讃岐うどん高松勅使",
+          "store_count": 1
+        },
+        {
+          "brand_name": "風雲丸",
+          "store_count": 4
+        },
+        {
+          "brand_name": "鶏千",
+          "store_count": 1
+        }
+      ]
+    },
+    "mcd": {
+      "revision": "config:92b283c9a2797c99bc4bc075488fcd3cb3c0272171ee3cc053c1886f40090064",
+      "brands": [
+        {
+          "brand_name": "マクドナルド",
+          "store_count": null
+        }
+      ]
+    },
+    "monogatari": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "お好み焼本舗",
+          "store_count": 21
+        },
+        {
+          "brand_name": "しゃぶとかに 源氏総本店",
+          "store_count": 2
+        },
+        {
+          "brand_name": "丸源ラーメン",
+          "store_count": 246
+        },
+        {
+          "brand_name": "丸福",
+          "store_count": 1
+        },
+        {
+          "brand_name": "二代目丸源",
+          "store_count": 1
+        },
+        {
+          "brand_name": "和牛焼肉 NIKUGEN",
+          "store_count": 2
+        },
+        {
+          "brand_name": "寿司･しゃぶしゃぶ ゆず庵",
+          "store_count": 121
+        },
+        {
+          "brand_name": "果実屋珈琲",
+          "store_count": 4
+        },
+        {
+          "brand_name": "焼きたてのかるび",
+          "store_count": 40
+        },
+        {
+          "brand_name": "焼肉きんぐ",
+          "store_count": 372
+        },
+        {
+          "brand_name": "熟成肉とんかつ ロース堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "熟成醤油ラーメン きゃべとん",
+          "store_count": 7
+        },
+        {
+          "brand_name": "牛たん大好き 焼肉はっぴぃ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "肉讃岐 もっちりうどん源次郎",
+          "store_count": 1
+        },
+        {
+          "brand_name": "魚貝三昧 げん屋",
+          "store_count": 1
+        }
+      ]
+    },
+    "matsuya": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "松のや",
+          "store_count": 122
+        },
+        {
+          "brand_name": "松のや・マイカリー食堂",
+          "store_count": 76
+        },
+        {
+          "brand_name": "松屋",
+          "store_count": 662
+        },
+        {
+          "brand_name": "松屋・マイカリー食堂",
+          "store_count": 68
+        },
+        {
+          "brand_name": "松屋・松のや",
+          "store_count": 471
+        },
+        {
+          "brand_name": "松屋・松のや・マイカリー食堂",
+          "store_count": 10
+        }
+      ]
+    },
+    "royal": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "てんや",
+          "store_count": 142
+        },
+        {
+          "brand_name": "カフェクロワッサン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "シェーキーズ",
+          "store_count": 14
+        },
+        {
+          "brand_name": "シズラー",
+          "store_count": 12
+        },
+        {
+          "brand_name": "スタンダードコーヒー",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ミセスエリザベスマフィン",
+          "store_count": 4
+        },
+        {
+          "brand_name": "リッチモンドホテル",
+          "store_count": 56
+        },
+        {
+          "brand_name": "ロイヤルガーデンカフェ",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ロイヤルグループ専門店",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ロイヤルホスト",
+          "store_count": 214
+        },
+        {
+          "brand_name": "空港・高速道路店内および専門店等",
+          "store_count": 66
+        }
+      ]
+    },
+    "balnibarbi": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "& Ovo",
+          "store_count": 1
+        },
+        {
+          "brand_name": "AD'ACCHIO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "AOI NAPOLI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "AOI NAPOLI IN THE PARK",
+          "store_count": 1
+        },
+        {
+          "brand_name": "AOINAPOLI UMISOBA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Awaji Blue Coast icecream",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BARKT",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BESIDE SEASIDE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BON COCOTTE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "BONSAI 1877",
+          "store_count": 1
+        },
+        {
+          "brand_name": "CAFE ETRANGER NARAD",
+          "store_count": 1
+        },
+        {
+          "brand_name": "CAFFÉ ITALIANO LOCALE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "CANALIA trattoria&cafe",
+          "store_count": 1
+        },
+        {
+          "brand_name": "CUORERUDINO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Caffe&Pizza LOCALE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Cielo y Rio HIGASHI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "DOUBLE UP Ice Cream",
+          "store_count": 1
+        },
+        {
+          "brand_name": "DRAWING HOUSE OF HIBIYA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "DRAWING HOUSE OF NAKANOSHIMA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "FRENCH BAGUETTE CAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB CASTELLO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB CENTRAL",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB CLIFF TERRACE IZUMO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB COSTA ORANGE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB COSTA ORANGE LONG TERRACE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB Cheers OTEMACHI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB DRESSING",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB GREEN WALK",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB MONAQUE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB PUBLIC",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB Tokyo",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB weeks",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GARB 江ノ島",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING BURGER AWAJI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE & GRILL 虎ノ門",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE NOWADAYS",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE ルミネ池袋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE 中野セントラルパーク",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE 品川シーズンテラス",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE 早稲田",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MORNING CAFE 錦町",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Hamac de Paradis",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Hamac de Paradis ICC",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Hamac de Paradis 寒梅館",
+          "store_count": 1
+        },
+        {
+          "brand_name": "IN THE GREEN",
+          "store_count": 1
+        },
+        {
+          "brand_name": "IN THE GREEN GARDENS",
+          "store_count": 1
+        },
+        {
+          "brand_name": "L'Antica Pizzeria da Michele",
+          "store_count": 1
+        },
+        {
+          "brand_name": "L'Antica Pizzeria da Michele 北海道",
+          "store_count": 1
+        },
+        {
+          "brand_name": "L'Antica Pizzeria da Michele 横浜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "L'Antica Pizzeria da Michele 福岡",
+          "store_count": 1
+        },
+        {
+          "brand_name": "LA & LE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "LAND_A",
+          "store_count": 1
+        },
+        {
+          "brand_name": "LOAF Bakery",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Lemonade SHIMA-LEMON",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MEAL TOGETHER ROOF TERRACE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "MOULiN",
+          "store_count": 1
+        },
+        {
+          "brand_name": "NANAIRO Eat at Home!",
+          "store_count": 1
+        },
+        {
+          "brand_name": "NARAD Parcside",
+          "store_count": 1
+        },
+        {
+          "brand_name": "NEW LIGHT",
+          "store_count": 1
+        },
+        {
+          "brand_name": "NORTH tRunk",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Nine Doors",
+          "store_count": 1
+        },
+        {
+          "brand_name": "OBU CAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ORANGE BALCONY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "PARADIS 小石川本店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "PICNIC GARDEN",
+          "store_count": 1
+        },
+        {
+          "brand_name": "RIBAYON ATTACK",
+          "store_count": 1
+        },
+        {
+          "brand_name": "RIDE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Restaurant FARMERS CLUB",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SACAY TERRACE SALTO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SLOW JET COFFEE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SLOW JET COFFEE IN THE ZOO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SUNDAY'S BAKE 569",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SUNDAY'S BAKE RIVER GARDEN",
+          "store_count": 1
+        },
+        {
+          "brand_name": "THE CALENDAR",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TRATTORIA amarancia",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TUFFE TERRACE EAT",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TableNice",
+          "store_count": 1
+        },
+        {
+          "brand_name": "The LOAF Cafe",
+          "store_count": 1
+        },
+        {
+          "brand_name": "UPMARKET PIZZA&CAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Wee Nam Kee Hainanese Chicken Rice",
+          "store_count": 1
+        },
+        {
+          "brand_name": "idyllic",
+          "store_count": 1
+        },
+        {
+          "brand_name": "monochrome",
+          "store_count": 1
+        },
+        {
+          "brand_name": "アスショク",
+          "store_count": 1
+        },
+        {
+          "brand_name": "オサキ食堂 カフェテラス",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ボン花火",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ローカル湯だねパン しまのねこ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "両国テラスカフェ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "京抹茶クレープ ARINCO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "十割そば 否否五杯と本家かのや",
+          "store_count": 1
+        },
+        {
+          "brand_name": "島食堂 旨い海",
+          "store_count": 1
+        },
+        {
+          "brand_name": "日月",
+          "store_count": 1
+        },
+        {
+          "brand_name": "淡路島 回転すし 悦三郎",
+          "store_count": 1
+        },
+        {
+          "brand_name": "焼鳥と十割蕎麦 否否三杯",
+          "store_count": 1
+        },
+        {
+          "brand_name": "酒場 ニューライト",
+          "store_count": 1
+        }
+      ]
+    },
+    "daiichikosho": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "CELTS",
+          "store_count": 9
+        },
+        {
+          "brand_name": "KITCHEN",
+          "store_count": 10
+        },
+        {
+          "brand_name": "MARUNOUCHI BASE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "REGALO",
+          "store_count": 19
+        },
+        {
+          "brand_name": "ROBACE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SHINAGAWA PIVOT",
+          "store_count": 1
+        },
+        {
+          "brand_name": "あたらよ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "あまつ",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ぎん天。",
+          "store_count": 2
+        },
+        {
+          "brand_name": "じぶんどき",
+          "store_count": 28
+        },
+        {
+          "brand_name": "せせらぎを聴きながら",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ととうお",
+          "store_count": 6
+        },
+        {
+          "brand_name": "びすとろ家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "もちの木パスタ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ウメ子の家",
+          "store_count": 12
+        },
+        {
+          "brand_name": "ダーツワン",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ハイボールバー",
+          "store_count": 8
+        },
+        {
+          "brand_name": "フォレストダイナー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "七合目",
+          "store_count": 2
+        },
+        {
+          "brand_name": "京町しずく",
+          "store_count": 1
+        },
+        {
+          "brand_name": "八王子珈琲店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "十勝石狩函館",
+          "store_count": 1
+        },
+        {
+          "brand_name": "楽蔵",
+          "store_count": 43
+        },
+        {
+          "brand_name": "湊一や",
+          "store_count": 4
+        },
+        {
+          "brand_name": "祭酒場",
+          "store_count": 2
+        },
+        {
+          "brand_name": "蒸しと酒 みちる",
+          "store_count": 1
+        },
+        {
+          "brand_name": "銀座珈琲店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鮨やハレの日",
+          "store_count": 2
+        },
+        {
+          "brand_name": "鮮や一夜",
+          "store_count": 3
+        }
+      ]
+    },
+    "fujio": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "OG CAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "OIC CAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SAM'S",
+          "store_count": 8
+        },
+        {
+          "brand_name": "うお藤",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うちの食堂",
+          "store_count": 3
+        },
+        {
+          "brand_name": "おきがる 串家物語",
+          "store_count": 1
+        },
+        {
+          "brand_name": "お茶づけ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "かっぽうぎ",
+          "store_count": 12
+        },
+        {
+          "brand_name": "かつ満",
+          "store_count": 12
+        },
+        {
+          "brand_name": "さち福や",
+          "store_count": 42
+        },
+        {
+          "brand_name": "じゅうじゅう屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "すき焼 藤尾",
+          "store_count": 1
+        },
+        {
+          "brand_name": "つるまる",
+          "store_count": 60
+        },
+        {
+          "brand_name": "はらドーナッツ",
+          "store_count": 11
+        },
+        {
+          "brand_name": "まいどおおきに食堂",
+          "store_count": 253
+        },
+        {
+          "brand_name": "アメリカンキッチン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "アヤコ食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "キッチン フジオ軒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "キッチンはら",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ジュテームカフェ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "スキヤキ フジオ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "スキヤキフジオ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "チャンピーニ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "デリス タルト＆カフェ",
+          "store_count": 14
+        },
+        {
+          "brand_name": "ハニーミツバチ珈琲",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ピノキオ",
+          "store_count": 52
+        },
+        {
+          "brand_name": "フジオ軒",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ホルモン食堂",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ローズガーデン",
+          "store_count": 2
+        },
+        {
+          "brand_name": "串家物語",
+          "store_count": 94
+        },
+        {
+          "brand_name": "出汁茶漬け",
+          "store_count": 2
+        },
+        {
+          "brand_name": "印度のルー",
+          "store_count": 2
+        },
+        {
+          "brand_name": "土山人",
+          "store_count": 7
+        },
+        {
+          "brand_name": "大衆酒場 中津食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天鳳",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天麩羅 えびのや",
+          "store_count": 32
+        },
+        {
+          "brand_name": "日本の食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "有馬本喜楽別館",
+          "store_count": 1
+        },
+        {
+          "brand_name": "本串家物語",
+          "store_count": 1
+        },
+        {
+          "brand_name": "浪花ハイボール",
+          "store_count": 1
+        },
+        {
+          "brand_name": "火の音水の音",
+          "store_count": 2
+        },
+        {
+          "brand_name": "火の音水の音ハービスPLAZA店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "米牛",
+          "store_count": 1
+        },
+        {
+          "brand_name": "結び屋",
+          "store_count": 3
+        },
+        {
+          "brand_name": "萬庵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "藤よし",
+          "store_count": 1
+        },
+        {
+          "brand_name": "銀しゃり家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鳥料理 藤よし",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鶏乃物語",
+          "store_count": 1
+        },
+        {
+          "brand_name": "麺乃庄 よろず庵",
+          "store_count": 1
+        },
+        {
+          "brand_name": "３３ＣＡＦＥ",
+          "store_count": 1
+        }
+      ]
+    },
+    "srs": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "CHOJIRO",
+          "store_count": 6
+        },
+        {
+          "brand_name": "うどんのう",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うどんの詩",
+          "store_count": 2
+        },
+        {
+          "brand_name": "うまい鮨勘",
+          "store_count": 16
+        },
+        {
+          "brand_name": "うまい鮨勘ゆとろぎ",
+          "store_count": 11
+        },
+        {
+          "brand_name": "きらりCUCINA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "さん天",
+          "store_count": 33
+        },
+        {
+          "brand_name": "すし弁慶",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とくとく",
+          "store_count": 7
+        },
+        {
+          "brand_name": "にぎり長次郎",
+          "store_count": 69
+        },
+        {
+          "brand_name": "まるかん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "まるくに",
+          "store_count": 4
+        },
+        {
+          "brand_name": "ビフテキ牛ノ福",
+          "store_count": 8
+        },
+        {
+          "brand_name": "三宝庵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "勝福惣店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "和食さと",
+          "store_count": 200
+        },
+        {
+          "brand_name": "回転すし北海道",
+          "store_count": 5
+        },
+        {
+          "brand_name": "宅配にぎり長次郎",
+          "store_count": 3
+        },
+        {
+          "brand_name": "家族亭",
+          "store_count": 46
+        },
+        {
+          "brand_name": "家族庵",
+          "store_count": 1
+        },
+        {
+          "brand_name": "得得",
+          "store_count": 60
+        },
+        {
+          "brand_name": "法善寺夫婦善哉",
+          "store_count": 1
+        },
+        {
+          "brand_name": "海鮮丼家族庵",
+          "store_count": 1
+        },
+        {
+          "brand_name": "玉子焼・お出汁ひまわり",
+          "store_count": 8
+        },
+        {
+          "brand_name": "花旬庵",
+          "store_count": 4
+        },
+        {
+          "brand_name": "蕎旬",
+          "store_count": 3
+        },
+        {
+          "brand_name": "蕎菜",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鮨正",
+          "store_count": 2
+        }
+      ]
+    },
+    "arclands": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "Cento per Cento",
+          "store_count": 9
+        },
+        {
+          "brand_name": "DANCING CRAB",
+          "store_count": 2
+        },
+        {
+          "brand_name": "かつや",
+          "store_count": 501
+        },
+        {
+          "brand_name": "からあげ縁",
+          "store_count": 30
+        },
+        {
+          "brand_name": "からやま",
+          "store_count": 129
+        },
+        {
+          "brand_name": "ごちとん",
+          "store_count": 6
+        },
+        {
+          "brand_name": "たれとん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "スンドゥブ 中山豆腐店",
+          "store_count": 2
+        },
+        {
+          "brand_name": "マンゴツリーカフェ",
+          "store_count": 9
+        },
+        {
+          "brand_name": "マンゴツリーキッチン",
+          "store_count": 2
+        },
+        {
+          "brand_name": "マンゴツリー東京",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天ぷら 魚新",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天丼はま田",
+          "store_count": 3
+        },
+        {
+          "brand_name": "東京たらこスパゲティ",
+          "store_count": 5
+        },
+        {
+          "brand_name": "東京とろろそば",
+          "store_count": 3
+        },
+        {
+          "brand_name": "肉めし 岡もと",
+          "store_count": 1
+        }
+      ]
+    },
+    "kineya": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "BAR心斎橋1923",
+          "store_count": 1
+        },
+        {
+          "brand_name": "FUJIYAMA55",
+          "store_count": 2
+        },
+        {
+          "brand_name": "GELATERIA solege",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GENKI SUSHI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GINZA SEN-RYO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "KAMI-HIKOKI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うま勝",
+          "store_count": 3
+        },
+        {
+          "brand_name": "おらがそば",
+          "store_count": 1
+        },
+        {
+          "brand_name": "おらが蕎麦",
+          "store_count": 25
+        },
+        {
+          "brand_name": "かつ里",
+          "store_count": 1
+        },
+        {
+          "brand_name": "きなさ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "きねや",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ぎんざ田中屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぽーるーじゅ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "すみ田",
+          "store_count": 1
+        },
+        {
+          "brand_name": "そじ坊",
+          "store_count": 92
+        },
+        {
+          "brand_name": "つけ麺吉衛門",
+          "store_count": 1
+        },
+        {
+          "brand_name": "てっか丸",
+          "store_count": 1
+        },
+        {
+          "brand_name": "もりの屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "やおみ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ゆきむら亭",
+          "store_count": 18
+        },
+        {
+          "brand_name": "らーめん 王子",
+          "store_count": 1
+        },
+        {
+          "brand_name": "グルメ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "コメダ珈琲店",
+          "store_count": 10
+        },
+        {
+          "brand_name": "ゴーゴーカレーxフジヤマ55",
+          "store_count": 1
+        },
+        {
+          "brand_name": "サイアムオーキッド",
+          "store_count": 3
+        },
+        {
+          "brand_name": "シジャン",
+          "store_count": 19
+        },
+        {
+          "brand_name": "ティーヌン",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ドン・キホーテ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "フジヤマ55",
+          "store_count": 24
+        },
+        {
+          "brand_name": "モトヤマ55",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ロムレット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ロンフーエアキッチン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ロンフーダイニング",
+          "store_count": 17
+        },
+        {
+          "brand_name": "一刻屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "一刻魁堂",
+          "store_count": 44
+        },
+        {
+          "brand_name": "中華料理雪村",
+          "store_count": 1
+        },
+        {
+          "brand_name": "丼丼亭",
+          "store_count": 13
+        },
+        {
+          "brand_name": "二尺五寸",
+          "store_count": 5
+        },
+        {
+          "brand_name": "京都千両",
+          "store_count": 1
+        },
+        {
+          "brand_name": "元気寿司",
+          "store_count": 7
+        },
+        {
+          "brand_name": "千両",
+          "store_count": 3
+        },
+        {
+          "brand_name": "叶家",
+          "store_count": 10
+        },
+        {
+          "brand_name": "名古屋鯱ひげ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "壱番亭",
+          "store_count": 18
+        },
+        {
+          "brand_name": "天はな",
+          "store_count": 2
+        },
+        {
+          "brand_name": "天亭",
+          "store_count": 1
+        },
+        {
+          "brand_name": "明月庵ぎんざ田中屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "有楽家",
+          "store_count": 16
+        },
+        {
+          "brand_name": "杵屋",
+          "store_count": 83
+        },
+        {
+          "brand_name": "杵屋麦丸",
+          "store_count": 8
+        },
+        {
+          "brand_name": "炎座",
+          "store_count": 3
+        },
+        {
+          "brand_name": "石焼らーめん一兆",
+          "store_count": 1
+        },
+        {
+          "brand_name": "神田",
+          "store_count": 2
+        },
+        {
+          "brand_name": "穂の香",
+          "store_count": 1
+        },
+        {
+          "brand_name": "萬野",
+          "store_count": 1
+        },
+        {
+          "brand_name": "醤々亭",
+          "store_count": 2
+        },
+        {
+          "brand_name": "開明軒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "雪村",
+          "store_count": 1
+        },
+        {
+          "brand_name": "魚べい",
+          "store_count": 186
+        },
+        {
+          "brand_name": "鯱ひげ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "鶏一番",
+          "store_count": 1
+        },
+        {
+          "brand_name": "麦まる",
+          "store_count": 6
+        }
+      ]
+    },
+    "saintmarc": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "BAKERY CAFE C",
+          "store_count": 3
+        },
+        {
+          "brand_name": "BAKERY RESTAURANT C",
+          "store_count": 7
+        },
+        {
+          "brand_name": "BISTRO309",
+          "store_count": 12
+        },
+        {
+          "brand_name": "Gottie`s BEEF",
+          "store_count": 3
+        },
+        {
+          "brand_name": "Hamburg Conel",
+          "store_count": 1
+        },
+        {
+          "brand_name": "NICK STOCK",
+          "store_count": 9
+        },
+        {
+          "brand_name": "Petrichor Bakery and Cafe",
+          "store_count": 1
+        },
+        {
+          "brand_name": "RISTRETTO＆CROISSANT LABORATORIO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Wallace Brothers Cheese Bar",
+          "store_count": 1
+        },
+        {
+          "brand_name": "おだしもん",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ぎをん椿庵",
+          "store_count": 8
+        },
+        {
+          "brand_name": "すし処函館市場",
+          "store_count": 9
+        },
+        {
+          "brand_name": "てっぱんのスパゲッティ",
+          "store_count": 10
+        },
+        {
+          "brand_name": "グリル蔵敷",
+          "store_count": 2
+        },
+        {
+          "brand_name": "グリル＆ベーカリー ザ・シーズン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "サンマルクカフェ",
+          "store_count": 291
+        },
+        {
+          "brand_name": "チーズ&ドリア.スイーツ",
+          "store_count": 15
+        },
+        {
+          "brand_name": "パントリエ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ブレッドガーデン",
+          "store_count": 8
+        },
+        {
+          "brand_name": "ベーカリーレストラン・サンマルク",
+          "store_count": 35
+        },
+        {
+          "brand_name": "ベーカリーレストラン・バケット",
+          "store_count": 41
+        },
+        {
+          "brand_name": "九份小籠包",
+          "store_count": 1
+        },
+        {
+          "brand_name": "倉式珈琲店",
+          "store_count": 47
+        },
+        {
+          "brand_name": "台湾小籠包",
+          "store_count": 6
+        },
+        {
+          "brand_name": "喫茶ガボール",
+          "store_count": 1
+        },
+        {
+          "brand_name": "喫茶マドラグ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "天ぷら天清",
+          "store_count": 1
+        },
+        {
+          "brand_name": "浅草 牛かつ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "牛かつ いろは",
+          "store_count": 1
+        },
+        {
+          "brand_name": "牛かつ 壱弐参",
+          "store_count": 1
+        },
+        {
+          "brand_name": "牛かつもと村",
+          "store_count": 32
+        },
+        {
+          "brand_name": "牛カツ京都勝牛",
+          "store_count": 64
+        },
+        {
+          "brand_name": "生麺専門鎌倉パスタ",
+          "store_count": 193
+        },
+        {
+          "brand_name": "石焼炒飯店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "神戸元町ドリア",
+          "store_count": 28
+        },
+        {
+          "brand_name": "韓と米",
+          "store_count": 2
+        }
+      ]
+    },
+    "chimney": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "66洋食",
+          "store_count": 6
+        },
+        {
+          "brand_name": "DE ICHIBA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "からあげ千ちゃん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "こだわりや フシキ 八幡山駅前店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "こだわりやま",
+          "store_count": 3
+        },
+        {
+          "brand_name": "こだわりやま 久喜クッキープラザ店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "こだわり天ぷらと旨い魚 こだわりや 伏見桃山店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "さかなや道場",
+          "store_count": 63
+        },
+        {
+          "brand_name": "さかな酒場 魚星",
+          "store_count": 32
+        },
+        {
+          "brand_name": "さくら",
+          "store_count": 3
+        },
+        {
+          "brand_name": "はなの夢",
+          "store_count": 7
+        },
+        {
+          "brand_name": "はなの舞",
+          "store_count": 80
+        },
+        {
+          "brand_name": "はなの舞 北海道",
+          "store_count": 1
+        },
+        {
+          "brand_name": "やきとり道場",
+          "store_count": 4
+        },
+        {
+          "brand_name": "やきとり道場 こだわりやま",
+          "store_count": 2
+        },
+        {
+          "brand_name": "チムニー",
+          "store_count": 7
+        },
+        {
+          "brand_name": "三代目網元",
+          "store_count": 2
+        },
+        {
+          "brand_name": "三代目網元 さかなや道場",
+          "store_count": 7
+        },
+        {
+          "brand_name": "両国だしもんじゃもんじ",
+          "store_count": 5
+        },
+        {
+          "brand_name": "九州人情酒場 魚星",
+          "store_count": 7
+        },
+        {
+          "brand_name": "升屋",
+          "store_count": 5
+        },
+        {
+          "brand_name": "博多安べゑ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "団欒炎",
+          "store_count": 3
+        },
+        {
+          "brand_name": "大衆食堂 安べゑ",
+          "store_count": 25
+        },
+        {
+          "brand_name": "村上海賊",
+          "store_count": 1
+        },
+        {
+          "brand_name": "火入れ みつ囲",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼肉 牛星",
+          "store_count": 10
+        },
+        {
+          "brand_name": "焼肉だんらんさくら",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼肉だんらん炎",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼肉上田屋",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼肉家族 かたひら 二俣川南口店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "焼肉牛壱心",
+          "store_count": 1
+        },
+        {
+          "brand_name": "知夢仁",
+          "store_count": 1
+        },
+        {
+          "brand_name": "美蔵",
+          "store_count": 12
+        },
+        {
+          "brand_name": "花の舞 はなの舞",
+          "store_count": 2
+        },
+        {
+          "brand_name": "花の舞 北海道",
+          "store_count": 1
+        },
+        {
+          "brand_name": "豊丸",
+          "store_count": 8
+        },
+        {
+          "brand_name": "軍鶏",
+          "store_count": 2
+        },
+        {
+          "brand_name": "遠藤水産",
+          "store_count": 2
+        },
+        {
+          "brand_name": "魚鮮水産",
+          "store_count": 19
+        },
+        {
+          "brand_name": "魚鮮水産 さかなや道場",
+          "store_count": 2
+        }
+      ]
+    },
+    "ringerhut": {
+      "revision": 0,
+      "brands": [
+        {
+          "brand_name": "リンガーハット",
+          "store_count": 543
+        },
+        {
+          "brand_name": "濵かつ",
+          "store_count": 80
+        },
+        {
+          "brand_name": "長崎卓袱浜勝",
+          "store_count": 1
+        }
+      ]
+    },
+    "hiday": {
+      "revision": 483,
+      "brands": [
+        {
+          "brand_name": "ちょいのみ日高屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "中華一番",
+          "store_count": 3
+        },
+        {
+          "brand_name": "大衆酒場HIDAKA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "小皿料理 台南市場",
+          "store_count": 1
+        },
+        {
+          "brand_name": "日高屋",
+          "store_count": 446
+        },
+        {
+          "brand_name": "来来軒",
+          "store_count": 4
+        },
+        {
+          "brand_name": "焼鳥日高",
+          "store_count": 27
+        }
+      ]
+    },
+    "ichibanya": {
+      "revision": 1229,
+      "brands": [
+        {
+          "brand_name": "CoCo壱番屋",
+          "store_count": 1200
+        },
+        {
+          "brand_name": "SPICE UP! COCOICHI BAKERY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "パスタ・デ・ココ",
+          "store_count": 28
+        }
+      ]
+    }
+  }
+}
