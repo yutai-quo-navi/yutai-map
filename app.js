@@ -1,6 +1,7 @@
 import {initExpirySearch} from './expiry-search.js?v=20261009-next30';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261009-hotel-count-order';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261011-analytics';
+import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
@@ -119,6 +120,7 @@ init();
 async function init(){
   initBenefitTabs({onChange(section) {
     activeBenefit = section;
+    track('benefit_tab', {section});
     if (section !== 'expiry') searchRadius.setSection(section);
     els.results.closest('.results-section').hidden = section !== 'dining';
     specialFeatures.refresh();
@@ -336,6 +338,7 @@ function shortIssuerName(company){
 function toggleIssuer(id){
   if(!visibleCompanyIds.has(id)) return;
   selected.has(id) ? selected.delete(id) : selected.add(id);
+  track('benefit_select', {section: 'dining', benefit_id: id, selected: selected.has(id)});
   resetCategoryFilter();
   persistSelection(); renderChips(); renderBrandOptions();
   els.chips.querySelector('[data-issuer="'+id+'"]')?.focus();
@@ -657,6 +660,7 @@ async function searchNearby(pos, centerLabel='現在地'){
       categoryCounts.all++; categoryCounts[s.category || 'restaurant']++;
     }
     lastResults = normalized;
+    track('benefit_search', {section: 'dining', mode: centerLabel === '現在地' ? 'current' : 'place', result_count: normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
     setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);

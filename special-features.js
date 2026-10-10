@@ -1,4 +1,5 @@
 // Feature search uses independent radii and either manual or scheduled data.
+import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
 export const FEATURE_RADIUS_METERS = 3_000_000;
 const MAX_FEATURE_RADIUS_METERS = 4_000_000;
@@ -127,6 +128,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       button.dataset.feature = feature.id;
       button.addEventListener('click', () => {
         selectedFeatures.has(feature.id) ? selectedFeatures.delete(feature.id) : selectedFeatures.add(feature.id);
+        track('benefit_select', {section, benefit_id: feature.id, selected: selectedFeatures.has(feature.id)});
         hasSearched = false; render();
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
@@ -216,6 +218,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     search() {
       if (!selectedFeatures.size) visibleFeatures(features, today(), preview).forEach(feature => selectedFeatures.add(feature.id));
       originUnavailable = !getOrigin(); hasSearched = true; render();
+      const chosen = visibleFeatures(features, today(), preview).filter(feature => selectedFeatures.has(feature.id));
+      if (chosen.length && (getOrigin() || chosen.every(feature => currentRadius(feature) === 'all'))) {
+        track('benefit_search', {section, mode: getCenterLabel() === '現在地' ? 'current' : 'place', result_count: featureSearchResults(chosen, getOrigin(), currentRadius).length});
+      }
     }
   };
 }
@@ -244,3 +250,4 @@ export async function loadFeatureData(configs, fetcher = fetch) {
     return [];
   });
 }
+

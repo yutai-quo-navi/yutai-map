@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.openpoiapi.com; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://api.openpoiapi.com; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>プライバシーポリシー｜優待券使えるお店検索 α</title>
   <link rel="stylesheet" href="./style.css?v=20261005-personal-tools1">
@@ -39,7 +39,12 @@
     <p>本サイトは、X（旧Twitter）を含むSNSアカウントやその他の外部アカウントとのログイン連携を行いません。SNSアカウント情報の取得、フォロー状況の取得、投稿履歴との紐付け等も行いません。</p>
 
     <h2>5. アクセス解析・広告</h2>
-    <p>本α版では、Google Analytics等のアクセス解析サービスおよび広告配信用Cookieを使用しません。将来これらを導入する場合は、本ポリシーを更新し、必要な情報を明示します。</p>
+    <p>本サイトでは、利用状況の把握と改善のためGoogle アナリティクス（GA4）を使用します。GoogleのCookie等により、閲覧ページ、利用端末、流入元、優待の選択、検索の実行・結果件数、地図・公式サイトへの移動などを計測します。広告向けの計測・Googleシグナルは無効にしています。</p>
+
+    <p>現在地の緯度・経度、入力住所、自由入力の検索文、お気に入りの内容はアクセス解析に送信しません。ページURLと参照元URLのクエリ・フラグメントを除いて送信します。Google アナリティクスはIPアドレスからおおまかな地域情報を推定する場合があります。</p>
+    <p>Googleによるデータの取り扱いは、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>および<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Googleのサービスを使用するサイトやアプリから収集した情報の使用</a>をご確認ください。</p>
+    <p><label><input type="checkbox" id="analyticsDisabled"> このブラウザでアクセス解析を停止する</label></p>
+    <p>設定はこのブラウザに保存されます。変更時はページを再読み込みします。停止中はGoogleの計測タグを読み込みません。広告ブロッカー等により計測されない場合があるため、集計値は実際の利用数と一致しないことがあります。</p>
 
     <h2>6. 外部サービスへのリンク</h2>
     <p>本サイトから、各社公式サイト、Google Maps、OpenPOI API等の外部サービスへ移動できる場合があります。移動後の情報の取り扱いについては、各外部サービスのプライバシーポリシー等が適用されます。</p>
@@ -50,9 +55,10 @@
     <h2>8. 改定</h2>
     <p>機能追加や外部サービスの変更等に応じて、本ポリシーを改定する場合があります。</p>
 
-    <p><strong>制定日：2026年10月3日 ／ 最終改定日：2026年10月5日</strong></p>
+    <p><strong>制定日：2026年10月3日 ／ 最終改定日：2026年10月11日</strong></p>
   </article>
 </main>
 <footer class="footer site-footer"><div class="site-footer-brand">株主優待券店舗とQUOガソリン給油検索</div><div class="footer-links"><a href="./">優待券のお店検索へ戻る</a><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener noreferrer">出典: OpenPOI API</a></div><a class="creator-link" href="https://x.com/yutai_samurai" target="_blank" rel="noopener noreferrer" aria-label="運営者 yutai_samurai のX"><img src="./assets/yutai-samurai.png" width="17" height="17" alt="" loading="lazy"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-7.4L5.5 22H2.3l7.3-8.5L.8 2h6.5l4.4 6.7L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg><span>@yutai_samurai</span></a></footer>
+  <script type="module" src="./analytics.js?v=20261011"></script>
 </body>
 </html>
