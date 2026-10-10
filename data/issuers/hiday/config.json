@@ -3,13 +3,22 @@
   "code": "7611",
   "name": "ハイデイ日高",
   "fullName": "株式会社ハイデイ日高",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://www.hiday.co.jp/ir/index6.html",
   "storeSearchUrl": "https://hidakaya.hiday.co.jp/hits/ja/shop/99/list.html",
   "matchingMode": "official_store_filter",
   "officialStoreFilter": "ハイデイ日高の公式店舗一覧に掲載された国内店舗。改装休業中の店舗を除外",
   "note": "日高屋・焼鳥日高・来来軒・台南市場・中華一番などで株主ご優待券を利用可能。",
-  "aliases": ["日高屋", "焼鳥日高", "来来軒", "小皿料理 台南市場", "台南市場", "中華一番", "大衆酒場HIDAKA", "ちょいのみ日高屋"],
+  "aliases": [
+    "日高屋",
+    "焼鳥日高",
+    "来来軒",
+    "小皿料理 台南市場",
+    "台南市場",
+    "中華一番",
+    "大衆酒場HIDAKA",
+    "ちょいのみ日高屋"
+  ],
   "excludedNames": [],
   "categories": {
     "日高屋": "restaurant",
@@ -21,7 +30,15 @@
     "大衆酒場HIDAKA": "restaurant",
     "ちょいのみ日高屋": "restaurant"
   },
-  "searchNames": ["日高屋", "焼鳥日高", "来来軒", "台南市場", "中華一番", "大衆酒場HIDAKA", "ちょいのみ日高屋"],
+  "searchNames": [
+    "日高屋",
+    "焼鳥日高",
+    "来来軒",
+    "台南市場",
+    "中華一番",
+    "大衆酒場HIDAKA",
+    "ちょいのみ日高屋"
+  ],
   "verified": "2026-10-10",
   "locationMode": "worker_reference",
   "storeDataPath": "./data/issuers/hiday/stores/current.json",
@@ -30,13 +47,18 @@
     "maxStores": 650,
     "maxAgeDays": 40,
     "requireCoordinates": false,
-    "allowedSourceHosts": ["hidakaya.hiday.co.jp"],
+    "allowedSourceHosts": [
+      "hidakaya.hiday.co.jp"
+    ],
     "maxAdded": 75,
     "maxRemoved": 40,
     "maxChanged": 100,
     "maxChangeRatio": 0.15,
     "japanOnlyCoordinates": true,
-    "groupFields": ["brand_name", "prefecture"],
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
     "minGroupSize": 10,
     "maxGroupDropRatio": 0.5
   }

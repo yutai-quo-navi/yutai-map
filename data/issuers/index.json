@@ -146,7 +146,7 @@
       "id": "hiday",
       "code": "7611",
       "name": "ハイデイ日高",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/hiday/config.json"
     }
   ]
