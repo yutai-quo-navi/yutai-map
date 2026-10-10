@@ -148,6 +148,13 @@
       "name": "ハイデイ日高",
       "status": "public",
       "config": "./data/issuers/hiday/config.json"
+    },
+    {
+      "id": "ichibanya",
+      "code": "7630",
+      "name": "壱番屋",
+      "status": "public",
+      "config": "./data/issuers/ichibanya/config.json"
     }
   ]
 }

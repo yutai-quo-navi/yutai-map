@@ -1,0 +1,61 @@
+{
+  "id": "ichibanya",
+  "code": "7630",
+  "name": "壱番屋",
+  "fullName": "株式会社壱番屋",
+  "status": "public",
+  "sourceUrl": "https://www.ichibanya.jp/ir/stockholder/preferential/",
+  "storeSearchUrl": "https://tenpo.ichibanya.co.jp/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "国内のCoCo壱番屋・パスタ・デ・ココ・ココイチベーカリー。公式Q&Aの対象外店舗と子会社店舗は除外。",
+  "note": "株主様ご飲食優待券が利用可能。東京競馬場店・小倉競馬場店と子会社店舗は対象外。",
+  "aliases": [
+    "CoCo壱番屋",
+    "カレーハウスCoCo壱番屋",
+    "ココイチ",
+    "ココ壱番屋",
+    "パスタ・デ・ココ",
+    "パスタデココ",
+    "SPICE UP! COCOICHI BAKERY",
+    "ココイチベーカリー"
+  ],
+  "excludedNames": [
+    "東京競馬場店",
+    "小倉競馬場店"
+  ],
+  "categories": {
+    "CoCo壱番屋": "restaurant",
+    "パスタ・デ・ココ": "restaurant",
+    "SPICE UP! COCOICHI BAKERY": "bakery"
+  },
+  "searchNames": [
+    "壱番屋",
+    "CoCo壱番屋",
+    "ココイチ",
+    "パスタ・デ・ココ",
+    "ココイチベーカリー"
+  ],
+  "verified": "2026-10-10",
+  "locationMode": "worker_reference",
+  "storeDataPath": "./data/issuers/ichibanya/stores/current.json",
+  "health": {
+    "minStores": 1100,
+    "maxStores": 1400,
+    "maxAgeDays": 40,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "tenpo.ichibanya.co.jp",
+      "www.sunroad.org"
+    ],
+    "maxAdded": 150,
+    "maxRemoved": 150,
+    "maxChanged": 250,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
+}
