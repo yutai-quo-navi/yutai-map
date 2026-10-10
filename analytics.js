@@ -2,10 +2,10 @@
 export const MEASUREMENT_ID = 'G-1KH2LCX7HT';
 const DISABLED_KEY = 'yutai-analytics-disabled';
 const disabledFlag = `ga-disable-${MEASUREMENT_ID}`;
-const production = location.hostname === 'yutai-quo-navi.github.io';
+const production = typeof window !== 'undefined' && typeof location !== 'undefined' && location.hostname === 'yutai-quo-navi.github.io';
 let disabled = false;
 try { disabled = localStorage.getItem(DISABLED_KEY) === '1'; } catch {}
-window[disabledFlag] = disabled || !production;
+if (typeof window !== 'undefined') window[disabledFlag] = disabled || !production;
 
 const cleanUrl = value => {
   try { const url = new URL(value); return url.protocol === 'https:' ? url.origin + url.pathname : ''; }
@@ -45,7 +45,7 @@ if (production && !disabled) {
   document.head.append(script);
 }
 
-const toggle = document.getElementById('analyticsDisabled');
+const toggle = typeof document !== 'undefined' ? document.getElementById('analyticsDisabled') : null;
 if (toggle) {
   toggle.checked = disabled;
   toggle.addEventListener('change', () => {
@@ -56,7 +56,7 @@ if (toggle) {
 }
 
 // No link URL, store address, search input or coordinates are included.
-document.addEventListener('click', event => {
+if (typeof document !== 'undefined') document.addEventListener('click', event => {
   const node = event.target.closest?.('.card a');
   if (!node) return;
   const section = node.closest('#hotelFeatures') ? 'hotel' : 'dining';
