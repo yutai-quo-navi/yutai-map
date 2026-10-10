@@ -27,5 +27,6 @@
     "マクドナルド"
   ],
   "verified": "2026-10-11",
-  "storeSearchUrl": "https://map.mcdonalds.co.jp/"
+  "storeSearchUrl": "https://map.mcdonalds.co.jp/",
+  "locationMode": "openpoi"
 }

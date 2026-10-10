@@ -26,6 +26,9 @@ for item in manifest.get("issuers", []):
     issuer = item["id"]
     cfg_path = ROOT / str(item["config"]).removeprefix("./")
     cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    if cfg.get("locationMode") == "openpoi":
+        print(f"SKIP {issuer}: external OpenPOI search (no D1 store state)")
+        continue
     health = cfg.get("health") or {}
     row = by_issuer.get(issuer)
     if not row:
@@ -60,4 +63,4 @@ if errors:
         print("-", e)
     raise SystemExit(1)
 
-print("All public issuers passed D1 state checks.")
+print("All public D1-backed issuers passed D1 state checks.")

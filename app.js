@@ -594,25 +594,12 @@ async function requestLocation({search = true} = {}){
     err => {
       finishFeedback();
 
-      const codeName =
-        err.code === 1 ? 'PERMISSION_DENIED' :
-        err.code === 2 ? 'POSITION_UNAVAILABLE' :
-        err.code === 3 ? 'TIMEOUT' :
-        'UNKNOWN';
-
-      const base =
-        err.code === 1 ? '現在地の利用がブラウザ側から拒否されました。' :
-        err.code === 2 ? '現在地を特定できませんでした。' :
-        err.code === 3 ? '現在地の取得がタイムアウトしました。' :
-        '現在地を取得できませんでした。';
-
-      const detail = [
-        `エラー: ${codeName}（code ${err.code}）`,
-        `権限状態: ${permissionState}`,
-        err.message ? `ブラウザ応答: ${err.message}` : ''
-      ].filter(Boolean).join('<br>');
-
-      showError(`${base}<br><small>${detail}</small>`);
+      const message =
+        err.code === 1 ? '現在地の利用が拒否されました。ブラウザや端末の位置情報設定をご確認いただくか、「場所を指定」で住所・駅名を入力してください。' :
+        err.code === 2 ? '端末の現在地を特定できませんでした。「場所を指定」で住所・駅名を入力して検索してください。' :
+        err.code === 3 ? '現在地の取得に時間がかかっています。再度お試しいただくか、「場所を指定」で住所・駅名を入力してください。' :
+        '現在地を取得できませんでした。「場所を指定」で住所・駅名を入力してください。';
+      showError(message);
       setStatus('現在地は保存していません');
       resolve(null);
     },
