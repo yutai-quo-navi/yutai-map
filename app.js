@@ -1,8 +1,9 @@
 import {initExpirySearch} from './expiry-search.js?v=20261009-next30';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261011-analytics';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261011-guides';
+import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
-import {initBenefitTabs} from './benefit-tabs.js?v=20261009-selection-cards';
+import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
 const API = 'https://api.openpoiapi.com/v1/search';
@@ -118,7 +119,7 @@ const searchRadius = initSearchRadius(els.radius, {read: readSetting, write: wri
 init();
 
 async function init(){
-  initBenefitTabs({onChange(section) {
+  initBenefitTabs({initialSection: guideSearchSelection(location.search).section, onChange(section) {
     activeBenefit = section;
     track('benefit_tab', {section});
     if (section !== 'expiry') searchRadius.setSection(section);
@@ -154,12 +155,18 @@ async function init(){
     if(!Array.isArray(selectedSaved)){
       companies.filter(c => c.status === 'public').forEach(c => selected.add(c.id));
     }
+    const guide = guideSearchSelection(location.search, companies);
+    if (guide.issuer) {
+      selected.clear(); selected.add(guide.issuer);
+      activeBrand = ''; writeSetting('yutai-brand', ''); els.brandSearch.value = '';
+      resetCategoryFilter();
+    }
     await loadVoucherDeadlines();
     const featureCatalog = loadFeatureCatalog();
     specialFeaturesReady = Promise.all([
       ['#hotelFeatures', 'hotel']
     ].map(([selector, section]) => initSpecialFeatures({
-      root: qs(selector), section, catalog: featureCatalog, getOrigin: () => lastPosition,
+      root: qs(selector), section, catalog: featureCatalog, initialFeature: guide.feature, getOrigin: () => lastPosition,
       getCenterLabel: () => lastCenterLabel,
       getRadius: () => searchRadius.value('hotel'),
       createDeadlineBubble: (issuer, pattern, type) => deadlineBubble(issuer, pattern, true, type),
@@ -170,6 +177,10 @@ async function init(){
     renderChips();
     renderCategoryFilters();
     await loadBrandCatalog();
+    if (guide.issuer && guide.brand) {
+      const target = brandCatalog.find(b => b.issuer_id === guide.issuer && b.name === guide.brand);
+      if (target) chooseBrand(brandKey(target));
+    }
     updateFavoritesCount();
   } catch(e){
     setStatus('優待データを読み込めませんでした');

@@ -79,7 +79,7 @@ export function featureSearchResults(features, origin, getRadius = featureRadius
     .sort((a,b) => (a.store.distance ?? Infinity) - (b.store.distance ?? Infinity));
 }
 
-export async function initSpecialFeatures({root, getOrigin, getCenterLabel, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null}) {
+export async function initSpecialFeatures({root, getOrigin, getCenterLabel, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null, initialFeature = ''}) {
   if (!root) return {refresh() {}, search() {}, invalidate() {}};
   let features = [], hasSearched = false, originUnavailable = false;
   const selectedRadii = new Map();
@@ -208,6 +208,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   };
   try {
     features = (await (catalog || loadFeatureCatalog())).filter(feature => (feature.section || 'dining') === section);
+    if (visibleFeatures(features, today(), preview).some(feature => feature.id === initialFeature)) selectedFeatures.add(initialFeature);
     render();
   } catch (error) {
     root.hidden = true; console.warn('特集を読み込めませんでした', error);

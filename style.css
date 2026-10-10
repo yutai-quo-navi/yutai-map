@@ -1211,3 +1211,5 @@ h1 span{
  .expiry-row{grid-template-columns:76px minmax(0,1fr) 78px;gap:8px;padding:13px 0}.expiry-countdown{font-size:12px}.expiry-countdown strong{font-size:29px;margin:0 1px}.expiry-benefit{padding-left:8px;font-size:13px}.expiry-benefit small{font-size:10px}.expiry-own-button{font-size:11px;gap:4px}.expiry-group h2{font-size:16px}
 }
 @media(max-width:360px){.expiry-row{grid-template-columns:65px minmax(0,1fr) 69px;gap:5px}.expiry-countdown{font-size:11px}.expiry-countdown strong{font-size:24px}.expiry-benefit{padding-left:5px}.expiry-own-button{font-size:10px;gap:3px}.expiry-day-options label{font-size:11px}}
+
+.nav-menu .guide-menu-link{display:flex;align-items:center;min-height:43px;padding:0 13px;color:#41464c;font-size:13px;font-weight:500;text-decoration:none;border-radius:11px}.nav-menu .guide-menu-link:hover,.nav-menu .guide-menu-link:focus-visible{background:var(--surface-soft)}

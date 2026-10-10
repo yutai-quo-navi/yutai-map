@@ -1,0 +1,97 @@
+name: Build static benefit guides
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '50 22 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/seo/**'
+      - 'tests/test_seo_guides.py'
+      - 'tests/guide-search.test.mjs'
+      - 'data/issuers/index.json'
+      - 'data/issuers/**/config.json'
+      - 'data/features/index.json'
+      - 'guide.css'
+      - '.github/workflows/build_seo_guides.yml'
+  workflow_run:
+    workflows:
+      - 'Build Arclands store DB'
+      - 'Update Balnibarbi feature stores'
+      - 'Build Colowide store DB'
+      - 'Build Create Restaurants store DB'
+      - 'Build Daiichi Kosho store DB'
+      - 'Update Daiwa House hotel benefits'
+      - 'Build Fujio Food store DB'
+      - 'Update GREENS hotel benefits'
+      - 'Build Gourmet Kineya store DB'
+      - 'Update Kyoritsu hotel benefits'
+      - 'Build Matsuya store DB'
+      - 'Build Monogatari store DB'
+      - 'Update RESOL hotel benefits'
+      - 'Build Royal store DB'
+      - 'Update Seibu hotel benefits'
+      - 'Build Skylark store DB'
+      - 'Build SRS store DB'
+      - 'Update Sun Frontier hotel benefits'
+      - 'Update TKP hotel benefits'
+      - 'Build Toridoll store DB'
+      - 'Update TOSEI hotel benefits'
+      - 'Update Vision hotel benefits'
+      - 'Update Wakita hotel benefits'
+      - 'Update Wealth Management hotel benefits'
+      - 'Build Yoshinoya store DB'
+      - 'Build Zensho store DB'
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-benefit-guides
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12.14'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
+      - name: Verify generation, removals, metadata and selection links
+        run: |
+          python -m unittest discover -s tests -p 'test_seo_guides.py'
+          node --test tests/guide-search.test.mjs tests/special-features.test.mjs
+          node --check app.js
+      - name: Build from existing verified aggregates and snapshots
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: python tools/seo/build_guides.py
+      - name: Publish generated HTML and sitemap
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add guides data/seo sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Generate verified benefit guides and sitemap'
+            git pull --rebase origin main
+            git push origin HEAD:main
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+          fi

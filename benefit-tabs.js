@@ -1,5 +1,5 @@
 // Panels stay mounted: switching categories never resets their selection or search state.
-export function initBenefitTabs({onChange = () => {}} = {}) {
+export function initBenefitTabs({onChange = () => {}, initialSection = 'dining'} = {}) {
   const root = document.getElementById('benefitSelection');
   const tabs = [...root.querySelectorAll('[role="tab"]:not(:disabled)')];
   const select = tab => {
@@ -21,5 +21,5 @@ export function initBenefitTabs({onChange = () => {}} = {}) {
       select(next); next.focus();
     });
   }
-  select(tabs[0]);
+  select(tabs.find(tab => tab.id === ({dining:'diningTab', hotel:'hotelTab', expiry:'expiryTab'}[initialSection])) || tabs[0]);
 }
