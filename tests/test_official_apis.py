@@ -31,6 +31,7 @@ class OfficialSources(unittest.TestCase):
     def test_misdo_uses_official_decimal_coordinates_and_ignores_legend(self):
         text='<li class="list-item"><a href="/b/misterdonut/info/0012/"><h2 class="list-content-name">サンプル ショップ</h2><div data-lat="35.68" data-lng="139.76"></div><div class="list-content-text">東京都千代田区丸の内1</div></a></li><li class="list-item">凡例</li>'
         rows=m.misdo_rows(text);self.assertEqual(len(rows),1);self.assertEqual(rows[0]['lat'],35.68)
+        self.assertEqual(m.misdo_rows(text.replace('サンプル ショップ</h2>','サンプル ショップ <span>休店中</span></h2>'))[0]['name'],'ミスタードーナツ サンプル ショップ')
         with self.assertRaises(ValueError):m.misdo_rows(text.replace('data-lat','invalid-lat'))
     def test_snapshot_second_import_does_not_rewrite_unchanged_stores(self):
         import os

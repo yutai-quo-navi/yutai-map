@@ -19,6 +19,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   scrape:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[migration]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
