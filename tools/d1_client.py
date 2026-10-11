@@ -17,10 +17,24 @@ def issuer_id(value):
     return value
 
 
+def parse_output(output):
+    # Wrangler bulk imports can print progress before their JSON result.
+    # Read only a complete result array; never treat progress as success.
+    decoder = json.JSONDecoder()
+    for match in re.finditer(r'^\s*\[', output, flags=re.MULTILINE):
+        try:
+            data, _ = decoder.raw_decode(output[match.start():].lstrip())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(data, list) and data and all(isinstance(x, dict) and x.get('success') is True and isinstance(x.get('meta'), dict) for x in data):
+            return data
+    raise RuntimeError('D1 operation did not return a successful JSON result')
+
+
 def execute(*args):
     output = subprocess.check_output(['npx', 'wrangler', 'd1', 'execute', DATABASE,
                                       '--remote', '--json', *args], text=True)
-    data = json.loads(output)
+    data = parse_output(output)
     if not isinstance(data, list) or not data or any(x.get('success') is False for x in data):
         raise RuntimeError('D1 operation failed or returned an invalid response')
     return data

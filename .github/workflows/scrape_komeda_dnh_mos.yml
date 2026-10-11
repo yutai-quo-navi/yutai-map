@@ -11,6 +11,8 @@ on:
       - 'tools/issuers/dnh/**'
       - 'tools/issuers/mos/**'
       - 'tests/test_official_apis.py'
+      - 'tools/d1_client.py'
+      - 'tests/test_d1_efficiency.py'
       - '.github/workflows/scrape_komeda_dnh_mos.yml'
 permissions:
   contents: write
@@ -34,7 +36,9 @@ jobs:
           node-version: '24.19.0'
           package-manager-cache: false
       - name: Verify official parsers and incremental sync
-        run: python -m unittest discover -s tests -p 'test_official_apis.py'
+        run: |
+          python -m unittest discover -s tests -p 'test_official_apis.py'
+          python -m unittest discover -s tests -p 'test_d1_efficiency.py'
       - name: Install locked Wrangler
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Prepare Cloudflare API token

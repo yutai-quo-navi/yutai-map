@@ -112,3 +112,13 @@ class DeploymentRecovery(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 apply(run=lambda *a,**k:SimpleNamespace(returncode=1,stdout='',stderr=message),sleep=waits.append,now=lambda:dt.datetime(2026,10,9,1,0,tzinfo=dt.timezone.utc))
             self.assertEqual(waits,[])
+
+
+class WranglerImportOutput(unittest.TestCase):
+    def test_import_progress_and_metadata_are_parsed_without_losing_usage(self):
+        from d1_client import parse_output, usage
+        data=parse_output('🌀 Importing statements...\n[{"success":true,"results":[],"meta":{"rows_read":4,"rows_written":12}}]\n')
+        self.assertEqual(usage('test',data)['rows_written'],12)
+        with self.assertRaises(RuntimeError):parse_output('🌀 Import started but has no result')
+        with self.assertRaises(RuntimeError):parse_output('[{"success":false,"meta":{}}]')
+        with self.assertRaises(RuntimeError):parse_output('[{"message":"progress only"}]')
