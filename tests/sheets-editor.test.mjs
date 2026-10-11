@@ -10,8 +10,9 @@ function setup(){
  const table=[Array.from(c.HEADERS),Array.from(c.FIELDS,k=>base[k]||'')];let locked=false;
  const s={getLastRow:()=>table.length,getRange:(row,col,n,m)=>({getValues:()=>table.slice(row-1,row-1+n).map(v=>v.slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++){table[row-1+i]||=[];values[i].forEach((v,j)=>table[row-1+i][col-1+j]=typeof v==='string'&&v.startsWith("'")?v.slice(1):v);}}})};
  c.SpreadsheetApp={getActiveSpreadsheet:()=>({getSheetByName:()=>s}),flush:()=>{}};
- c.LockService={getDocumentLock:()=>({waitLock:()=>{assert.equal(locked,false);locked=true;},releaseLock:()=>{locked=false;}})};
+ c.LockService={getScriptLock:()=>({waitLock:()=>{assert.equal(locked,false);locked=true;},releaseLock:()=>{locked=false;}})};
  c.Utilities={formatDate:d=>d.toISOString().slice(0,10),base64EncodeWebSafe:v=>Buffer.from(v).toString('base64url'),computeDigest:(_a,v)=>crypto.createHash('sha256').update(v).digest(),DigestAlgorithm:{SHA_256:'sha256'},Charset:{UTF_8:'utf8'},getUuid:()=>crypto.randomUUID()};
+ c.queueExpirySync_=()=>({queued:false});
  return {c,table,get:()=>c.getEditorData().rows[0],base};
 }
 test('sorting does not change the record selected for correction',()=>{const{c,table,get}=setup();const original=get();table.push([...table[1]]);table[2][0]='other-id';table.reverse();table.unshift(table.pop());c.saveRecord({...original,benefit_name:'訂正版'});assert.equal(c.getEditorData().rows.find(r=>r.id===original.id).benefit_name,'訂正版');assert.equal(table.length,3);});

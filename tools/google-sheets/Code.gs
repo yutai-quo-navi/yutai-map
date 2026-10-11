@@ -5,13 +5,21 @@ var HEADERS = ['管理ID','証券コード','会社名','優待名称','期限�
 var CSV_FIELDS = ['id','code','company_name','benefit_name','issue','expiry_date','research_month','expiry_type','category','brands','source_url','secondary_source_url','checked_on','status','notes','issuer_id','search_brand','emoji','verification_method'];
 var CATEGORIES = {dining:'外食・飲食系',shopping:'買物・割引系',leisure:'サービス・レジャー系',catalog:'カタログ・申込期限',other:'その他'};
 var TYPES = ['利用期限','申込期限','登録期限','予約期限','ポイント失効','交換期限','受取期限'];
-var ISSUERS = {skylark:'3197',colowide:'7616',create:'3387',zensho:'7550',toridoll:'3397',foodlife:'3563',yoshinoya:'9861',mcd:'2702',monogatari:'3097',kyoritsu:'9616',balnibarbi:'3418'};
+var ISSUERS = {"skylark":"3197","colowide":"7616","create":"3387","zensho":"7550","toridoll":"3397","foodlife":"3563","yoshinoya":"9861","mcd":"2702","monogatari":"3097","matsuya":"9887","royal":"8179","balnibarbi":"3418","daiichikosho":"7458","fujio":"2752","srs":"8163","arclands":"9842","kineya":"9850","saintmarc":"3395","chimney":"3178","ringerhut":"8200","hiday":"7611","ichibanya":"7630","komeda":"3543","dnh":"3087","mos":"8153","kyoritsu":"9616"};
 
 function onOpen() { SpreadsheetApp.getUi().createMenu('優待期限').addItem('編集画面を開く','openEditor').addToUi(); }
 function openEditor() { SpreadsheetApp.getUi().showModelessDialog(HtmlService.createHtmlOutputFromFile('Editor').setWidth(1200).setHeight(780),'優待期限の編集'); }
 function today_() { return Utilities.formatDate(new Date(),'Asia/Tokyo','yyyy-MM-dd'); }
+function book_() {
+  var active=SpreadsheetApp.getActiveSpreadsheet();
+  if(active) return active;
+  var id=PropertiesService.getScriptProperties().getProperty('EXPIRY_SPREADSHEET_ID');
+  if(!id) throw new Error('接続するシートの初期設定がまだありません。');
+  return SpreadsheetApp.openById(id);
+}
 function sheet_() {
-  var s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(DB_NAME);
+  var book = book_();
+  var s = book.getSheetByName(DB_NAME);
   if (!s) throw new Error('「期限DB」シートが見つかりません。移行ファイルを読み込んでください。');
   if (JSON.stringify(s.getRange(1,1,1,HEADERS.length).getValues()[0]) !== JSON.stringify(HEADERS)) throw new Error('列名・列順が違います。1行目を元に戻してください。');
   return s;
@@ -23,6 +31,7 @@ function rows_(s) {
     var r = {};
     FIELDS.forEach(function(k,i) { var v=values[i]; r[k] = v instanceof Date ? Utilities.formatDate(v,'Asia/Tokyo','yyyy-MM-dd') : String(v == null ? '' : v).trim(); });
     r.research_month = r.research_year+'-'+('0'+r.research_month_number).slice(-2);
+    if (/^\d{1,2}$/.test(r.expiry_date)) r.expiry_date = r.research_month+'-'+('0'+r.expiry_date).slice(-2);
     r._row = index+2; r._version=token_(r); return r;
   }).filter(function(r){return !!r.id;});
 }
@@ -52,10 +61,10 @@ function normalize_(input) {
   if(r.search_brand&&(!r.issuer_id||r.brands.split('|').indexOf(r.search_brand)<0)) throw new Error('検索ブランドは会社IDと利用可能ブランドも必要です。');
   return r;
 }
-function key_(r) {return JSON.stringify([r.code,r.benefit_name,r.issue,r.expiry_type,r.expiry_date||r.research_month]);}
+function key_(r) {return JSON.stringify([r.code,r.benefit_name,r.issue||'',r.expiry_type,r.expiry_date||r.research_month]);}
 function literal_(v) { return /^[=+\-@]/.test(String(v)) ? "'"+v : v; }
 function saveRecord(input) {
-  var lock=LockService.getDocumentLock(); lock.waitLock(20000);
+  var lock=LockService.getScriptLock(); lock.waitLock(20000);
   try {
     var s=sheet_(), rows=rows_(s), old=input.id ? rows.find(function(r){return r.id===input.id;}) : null;
     if(input.id&&!old) throw new Error('元の記録が見つかりません。再読み込みしてください。');
@@ -65,10 +74,10 @@ function saveRecord(input) {
     if(rows.some(function(v){return (!target||v.id!==target.id)&&key_(v)===key_(r);})) throw new Error('同じ優待・発行回・期限が既にあります。既存の記録を編集してください。');
     r.id=target ? target.id : 'exp-'+Utilities.getUuid().toLowerCase();
     var line=target ? target._row : s.getLastRow()+1;
-    var values=FIELDS.map(function(k){return k==='research_year'||k==='research_month_number' ? Number(r[k]) : literal_(r[k]);});
+    var values=FIELDS.map(function(k){return k==='research_year'||k==='research_month_number' ? Number(r[k]) : k==='expiry_date' ? (r[k] ? Number(r[k].slice(-2)) : '') : literal_(r[k]);});
     s.getRange(line,1,1,HEADERS.length).setValues([values]);
     SpreadsheetApp.flush();
-    return {id:r.id,created:!target,keptPreviousYear:!!newYear,data:getEditorData()};
+    return {id:r.id,created:!target,keptPreviousYear:!!newYear,data:getEditorData(),sync:queueExpirySync_()};
   } finally {lock.releaseLock();}
 }
 function exportMasterCsv() {
