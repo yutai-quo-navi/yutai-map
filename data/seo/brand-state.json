@@ -3051,133 +3051,133 @@
       ]
     },
     "komeda": {
-      "revision": "config:e4aaa837feb19f756557d8f3421784dfb448be7a299c61db39f8b9f1cd18c28a",
+      "revision": 1063,
       "brands": [
         {
-          "brand_name": "コメダ珈琲店",
-          "store_count": null
-        },
-        {
-          "brand_name": "おかげ庵",
-          "store_count": null
+          "brand_name": "BAKERY ADEMOK",
+          "store_count": 2
         },
         {
           "brand_name": "KOMEDA is □",
-          "store_count": null
+          "store_count": 1
         },
         {
-          "brand_name": "BAKERY ADEMOK",
-          "store_count": null
+          "brand_name": "おかげ庵",
+          "store_count": 20
         },
         {
-          "brand_name": "大餡吉日",
-          "store_count": null
+          "brand_name": "コメダ珈琲店",
+          "store_count": 1034
         },
         {
           "brand_name": "ジェリコ堂",
-          "store_count": null
+          "store_count": 2
+        },
+        {
+          "brand_name": "大餡吉日",
+          "store_count": 1
         },
         {
           "brand_name": "米屋の太郎",
-          "store_count": null
+          "store_count": 3
         }
       ]
     },
     "dnh": {
-      "revision": "config:4b8a43660f7b7d0d858b233eb9131dfcca1e6a4502030fbbd44b274a9af7ad72",
+      "revision": 1244,
       "brands": [
         {
-          "brand_name": "ドトールコーヒーショップ",
-          "store_count": null
-        },
-        {
-          "brand_name": "ドトールキッチン",
-          "store_count": null
-        },
-        {
-          "brand_name": "ドトールスタンド",
-          "store_count": null
-        },
-        {
-          "brand_name": "ドトール パークカフェ",
-          "store_count": null
-        },
-        {
           "brand_name": "エクセルシオール カフェ",
-          "store_count": null
-        },
-        {
-          "brand_name": "カフェ レクセル",
-          "store_count": null
-        },
-        {
-          "brand_name": "梟書茶房",
-          "store_count": null
-        },
-        {
-          "brand_name": "ドトール珈琲農園",
-          "store_count": null
-        },
-        {
-          "brand_name": "コッペ田島",
-          "store_count": null
-        },
-        {
-          "brand_name": "神乃珈琲",
-          "store_count": null
-        },
-        {
-          "brand_name": "ドトール珈琲店",
-          "store_count": null
+          "store_count": 125
         },
         {
           "brand_name": "カフェ コロラド",
-          "store_count": null
+          "store_count": 5
+        },
+        {
+          "brand_name": "カフェ レクセル",
+          "store_count": 6
+        },
+        {
+          "brand_name": "コッペ田島",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ドトール パークカフェ",
+          "store_count": 4
+        },
+        {
+          "brand_name": "ドトールキッチン",
+          "store_count": 33
+        },
+        {
+          "brand_name": "ドトールコーヒーショップ",
+          "store_count": 1037
+        },
+        {
+          "brand_name": "ドトールスタンド",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ドトール珈琲店",
+          "store_count": 19
+        },
+        {
+          "brand_name": "ドトール珈琲農園",
+          "store_count": 5
+        },
+        {
+          "brand_name": "梟書茶房",
+          "store_count": 1
+        },
+        {
+          "brand_name": "神乃珈琲",
+          "store_count": 4
         }
       ]
     },
     "mos": {
-      "revision": "config:123d2b452cb0bcb0407a50478bc85f7d41202abc20f08906c159f5f49cfc8df9",
+      "revision": 2400,
       "brands": [
         {
-          "brand_name": "モスバーガー",
-          "store_count": null
-        },
-        {
-          "brand_name": "モスプレミアム",
-          "store_count": null
-        },
-        {
-          "brand_name": "モスド",
-          "store_count": null
-        },
-        {
-          "brand_name": "マザーリーフ",
-          "store_count": null
-        },
-        {
-          "brand_name": "マザーリーフティースタイル",
-          "store_count": null
+          "brand_name": "あえん",
+          "store_count": 4
         },
         {
           "brand_name": "カフェ 山と海と太陽",
-          "store_count": null
+          "store_count": 2
         },
         {
-          "brand_name": "あえん",
-          "store_count": null
+          "brand_name": "マザーリーフ",
+          "store_count": 3
         },
         {
-          "brand_name": "玄米食堂あえん",
-          "store_count": null
-        },
-        {
-          "brand_name": "モッシュ バーガー & バル",
-          "store_count": null
+          "brand_name": "マザーリーフティースタイル",
+          "store_count": 3
         },
         {
           "brand_name": "ミスタードーナツ",
-          "store_count": null
+          "store_count": 1078
+        },
+        {
+          "brand_name": "モスド",
+          "store_count": 2
+        },
+        {
+          "brand_name": "モスバーガー",
+          "store_count": 1301
+        },
+        {
+          "brand_name": "モスプレミアム",
+          "store_count": 2
+        },
+        {
+          "brand_name": "モッシュ バーガー & バル",
+          "store_count": 1
+        },
+        {
+          "brand_name": "玄米食堂あえん",
+          "store_count": 4
         }
       ]
     }
