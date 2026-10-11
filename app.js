@@ -137,7 +137,7 @@ async function init(){
     companies = await Promise.all(
       visibleIssuers.map(async x => {
         const c = await fetch(x.config, {cache:'no-store'}).then(r => r.json());
-        if(c.storeDataPath && !['official_coordinates','worker_reference'].includes(c.locationMode)){
+        if(c.storeDataPath && !['official_coordinates','worker_reference','openpoi'].includes(c.locationMode)){
           try{
             const db = await fetch(c.storeDataPath, {cache:'no-store'}).then(r => r.json());
             c.officialStores = db.stores || [];
@@ -769,7 +769,7 @@ function classify(p, company, origin){
     if(country && !['japan','jp','日本'].includes(country)) return null;
   }
 
-  if(company.storeDataPath && company.locationMode !== 'official_coordinates'){
+  if(company.storeDataPath && !['official_coordinates','openpoi'].includes(company.locationMode)){
     const country = normalize(p.country || p.country_code || p.countryCode || '');
     if(country && !['japan','jp','日本'].includes(country)) return null;
 
@@ -964,7 +964,7 @@ function renderResults(items, radius){
         <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
         <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
-      ${x.company.locationMode==='openpoi' && x.company.note ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
+      ${(x.company.locationMode==='openpoi' || x.company.showStoreNote) && x.company.note ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
       <div class="card-actions">
         <a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener">Googleマップで見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>

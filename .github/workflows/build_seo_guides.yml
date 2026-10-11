@@ -31,6 +31,7 @@ on:
       - 'Build Monogatari store DB'
       - 'Update RESOL hotel benefits'
       - 'Build Royal store DB'
+      - 'Build Komeda Doutor MOS official store DBs'
       - 'Update Seibu hotel benefits'
       - 'Build Skylark store DB'
       - 'Build SRS store DB'

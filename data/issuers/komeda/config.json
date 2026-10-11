@@ -92,5 +92,20 @@
   "locationMode": "openpoi",
   "referenceUrls": [
     "https://www.komeda.co.jp/service/komeca.html"
-  ]
+  ],
+  "storeDataPath": "./data/issuers/komeda/stores/current.json",
+  "health": {
+    "minStores": 900,
+    "maxStores": 1300,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "eu.komeda.co.jp",
+      "www.komeda.co.jp"
+    ],
+    "maxAdded": 200,
+    "maxRemoved": 200,
+    "maxChanged": 500,
+    "japanOnlyCoordinates": true
+  }
 }

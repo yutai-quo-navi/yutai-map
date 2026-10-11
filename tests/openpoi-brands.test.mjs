@@ -15,8 +15,9 @@ test('published issuer manifest and configured catalogs are consistent',()=>{
  const index=JSON.parse(fs.readFileSync(new URL('../data/issuers/index.json',import.meta.url)));
  for(const [id,c] of Object.entries(configs)){
   assert.equal(index.issuers.find(x=>x.id===id)?.status,'public');
-  assert.equal(c.locationMode,'openpoi');
-  for(const alias of c.aliases){assert.ok(c.catalogBrands.includes(c.aliasBrands[alias]));assert.ok(c.categories[alias]);}
+  assert.ok(['openpoi','official_coordinates'].includes(c.locationMode));
+  assert.ok(c.health.requireCoordinates);
+  for(const alias of c.aliases){assert.ok(c.aliasBrands[alias]);assert.ok(c.categories[alias]);}
   assert.ok(c.poiSearchNames.every(q=>!q.includes(' ')));
  }
 });
