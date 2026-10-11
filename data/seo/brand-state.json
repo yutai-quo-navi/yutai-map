@@ -3084,10 +3084,22 @@
       ]
     },
     "dnh": {
-      "revision": "config:01ea1e6eac0c42ea167568c1caca1eef9ac05944d3f7509825d78af0950dc761",
+      "revision": "config:4b8a43660f7b7d0d858b233eb9131dfcca1e6a4502030fbbd44b274a9af7ad72",
       "brands": [
         {
           "brand_name": "ドトールコーヒーショップ",
+          "store_count": null
+        },
+        {
+          "brand_name": "ドトールキッチン",
+          "store_count": null
+        },
+        {
+          "brand_name": "ドトールスタンド",
+          "store_count": null
+        },
+        {
+          "brand_name": "ドトール パークカフェ",
           "store_count": null
         },
         {
@@ -3099,7 +3111,7 @@
           "store_count": null
         },
         {
-          "brand_name": "ル・カフェ ドトール",
+          "brand_name": "梟書茶房",
           "store_count": null
         },
         {
@@ -3107,11 +3119,19 @@
           "store_count": null
         },
         {
+          "brand_name": "コッペ田島",
+          "store_count": null
+        },
+        {
+          "brand_name": "神乃珈琲",
+          "store_count": null
+        },
+        {
           "brand_name": "ドトール珈琲店",
           "store_count": null
         },
         {
-          "brand_name": "ドトールキッチン",
+          "brand_name": "カフェ コロラド",
           "store_count": null
         }
       ]
