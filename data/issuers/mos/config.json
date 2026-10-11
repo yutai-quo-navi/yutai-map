@@ -5,8 +5,8 @@
   "fullName": "モスフードサービス",
   "status": "public",
   "sourceUrl": "https://www.mos.co.jp/company/ir/stockholder/yutai/",
-  "matchingMode": "brand_aliases",
-  "note": "株主優待券は日本国内のモスグループ店舗とミスタードーナツで利用できます（一部対象外店舗あり）。利用前に公式情報と店舗で利用条件をご確認ください。",
+  "matchingMode": "official_store_filter",
+  "note": "モスとミスタードーナツの公式店舗情報・座標を掲載しています。株主優待券は一部対象外店舗があります。利用前に券面・公式情報と店舗で利用条件をご確認ください。",
   "aliases": [
     "モスバーガー",
     "MOS BURGER",
@@ -104,21 +104,21 @@
     "MOSH"
   ],
   "catalogBrands": [
-    "モスバーガー",
-    "モスプレミアム",
-    "モスド",
+    "あえん",
+    "カフェ 山と海と太陽",
     "マザーリーフ",
     "マザーリーフティースタイル",
-    "カフェ 山と海と太陽",
-    "あえん",
-    "玄米食堂あえん",
+    "ミスタードーナツ",
+    "モスド",
+    "モスバーガー",
+    "モスプレミアム",
     "モッシュ バーガー & バル",
-    "ミスタードーナツ"
+    "玄米食堂あえん"
   ],
   "domesticOnly": true,
   "verified": "2026-10-11",
-  "storeSearchUrl": "https://www.mos.co.jp/shop/",
-  "locationMode": "openpoi",
+  "storeSearchUrl": "https://www.mos.jp/shop/",
+  "locationMode": "official_coordinates",
   "referenceUrls": [
     "https://www.mos.co.jp/company/ir/stockholder/yutai/"
   ],
@@ -137,5 +137,6 @@
     "maxRemoved": 200,
     "maxChanged": 500,
     "japanOnlyCoordinates": true
-  }
+  },
+  "showStoreNote": true
 }

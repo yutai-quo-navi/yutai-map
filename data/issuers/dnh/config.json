@@ -5,7 +5,7 @@
   "fullName": "ドトール・日レスホールディングス",
   "status": "public",
   "sourceUrl": "https://www.dnh.co.jp/ir/stockholder/benefit/",
-  "matchingMode": "brand_aliases",
+  "matchingMode": "official_store_filter",
   "note": "公式店舗検索の「ドトール バリューカード対応」店舗を掲載しています。株主ご優待カードの利用条件は券面と公式情報をご確認ください。星乃珈琲店・洋麺屋五右衛門は対象外です。",
   "aliases": [
     "ドトールコーヒーショップ",
@@ -84,23 +84,23 @@
     "LEXCEL"
   ],
   "catalogBrands": [
-    "ドトールコーヒーショップ",
-    "ドトールキッチン",
-    "ドトールスタンド",
-    "ドトール パークカフェ",
     "エクセルシオール カフェ",
+    "カフェ コロラド",
     "カフェ レクセル",
-    "梟書茶房",
-    "ドトール珈琲農園",
     "コッペ田島",
-    "神乃珈琲",
+    "ドトール パークカフェ",
+    "ドトールキッチン",
+    "ドトールコーヒーショップ",
+    "ドトールスタンド",
     "ドトール珈琲店",
-    "カフェ コロラド"
+    "ドトール珈琲農園",
+    "梟書茶房",
+    "神乃珈琲"
   ],
   "domesticOnly": true,
   "verified": "2026-10-11",
   "storeSearchUrl": "https://shop.doutor.co.jp/doutor/spot/list?c_d22=1",
-  "locationMode": "openpoi",
+  "locationMode": "official_coordinates",
   "referenceUrls": [
     "https://www.dnh.co.jp/assets/pdf/benefit_docs_2026.pdf",
     "https://www.doutor.co.jp/dvc/qanda01.html",
@@ -134,5 +134,6 @@
     "maxRemoved": 200,
     "maxChanged": 500,
     "japanOnlyCoordinates": true
-  }
+  },
+  "showStoreNote": true
 }

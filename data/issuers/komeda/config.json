@@ -5,8 +5,8 @@
   "fullName": "コメダホールディングス",
   "status": "public",
   "sourceUrl": "https://komeda-holdings.co.jp/benefit/",
-  "matchingMode": "brand_aliases",
-  "note": "株主優待でチャージされたKOMECAを対応店舗で利用できます。一部対象外店舗があります。利用前に公式店舗情報でKOMECA対応をご確認ください。",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗APIでKOMECA対応を確認した日本国内の店舗を掲載しています。利用条件は券面と公式情報をご確認ください。",
   "aliases": [
     "コメダ珈琲店",
     "コメダ珈琲",
@@ -78,18 +78,18 @@
     "米屋の太郎"
   ],
   "catalogBrands": [
-    "コメダ珈琲店",
-    "おかげ庵",
-    "KOMEDA is □",
     "BAKERY ADEMOK",
-    "大餡吉日",
+    "KOMEDA is □",
+    "おかげ庵",
+    "コメダ珈琲店",
     "ジェリコ堂",
+    "大餡吉日",
     "米屋の太郎"
   ],
   "domesticOnly": true,
   "verified": "2026-10-11",
   "storeSearchUrl": "https://www.komeda.co.jp/shop/",
-  "locationMode": "openpoi",
+  "locationMode": "official_coordinates",
   "referenceUrls": [
     "https://www.komeda.co.jp/service/komeca.html"
   ],
@@ -107,5 +107,6 @@
     "maxRemoved": 200,
     "maxChanged": 500,
     "japanOnlyCoordinates": true
-  }
+  },
+  "showStoreNote": true
 }
