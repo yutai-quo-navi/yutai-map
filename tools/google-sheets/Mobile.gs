@@ -25,7 +25,7 @@ function getMobileData() {
   return {ledger:getEditorData(),companies:companyCatalog_(),sync:getExpirySyncStatus()};
 }
 function dateCandidates_(text) {
-  var t=String(text||'').normalize('NFKC'), dates=[], re=/(20\d{2}|令和\s*(?:元|\d{1,2})|平成\s*(?:元|\d{1,2}))\s*[年\/.\-]\s*(\d{1,2})\s*[月\/.\-]\s*(\d{1,2})\s*日?/g, match;
+  var t=String(text||'').normalize('NFKC').replace(/[\s\u200B-\u200D\uFEFF]/g,''), dates=[], re=/(20\d{2}|令和\s*(?:元|\d{1,2})|平成\s*(?:元|\d{1,2}))\s*[年\/.\-]\s*(\d{1,2})\s*[月\/.\-]\s*(\d{1,2})\s*日?/g, match;
   while((match=re.exec(t))){
     var year=match[1],era=/^(令和|平成)/.exec(year);
     if(era) year=(era[1]==='令和'?2018:1988)+Number(year.replace(era[1],'').trim().replace('元','1'));
@@ -38,15 +38,32 @@ function dateCandidates_(text) {
 }
 function parseCouponText_(text,companies) {
   var normalized=String(text||'').normalize('NFKC'), key=companyKey_(normalized);
-  var candidates=companies.filter(function(c){
-    var aliases=[c.company_name].concat(c.aliases||[]).map(companyKey_).filter(function(v){return v.length>=3;});
-    var code=new RegExp('(?:証券|銘柄|コード)[^0-9A-Z]{0,8}'+c.code+'(?![0-9A-Z])','i');
-    return code.test(normalized)||aliases.some(function(v){return key.indexOf(v)>=0;});
+  function matchesName(value) {
+    var alias=companyKey_(value);
+    if(alias.length<3) return false;
+    // Latin initials need token boundaries: whitespace removal must not create a match.
+    if(/^[a-z0-9]+$/.test(alias)) {
+      var escaped=String(value||'').normalize('NFKC').toLowerCase()
+        .replace(/株式会社|ホールディングス|holdings/g,'').trim()
+        .replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      return new RegExp('(^|[^a-z0-9])'+escaped+'($|[^a-z0-9])','i').test(normalized);
+    }
+    return key.indexOf(alias)>=0;
+  }
+  var explicit=companies.filter(function(c){
+    return new RegExp('(?:証券(?:コード)?|銘柄(?:コード)?|コード)[^0-9A-Z]{0,8}'+c.code+'(?![0-9A-Z])','i').test(normalized);
   });
+  var named=companies.filter(function(c){return matchesName(c.company_name);});
+  // Prefer a printed company name over incidental brand aliases.
+  var candidates=explicit.length?explicit:named.length?named:companies.filter(function(c){
+    return (c.aliases||[]).some(matchesName);
+  });
+  var benefits=normalized.replace(/[\s\u200B-\u200D\uFEFF]/g,'').match(/株主優待(?:乗車証|乗車券|食事券|買物券|割引券|優待券)/g)||[];
+  benefits=benefits.filter(function(v,i){return benefits.indexOf(v)===i;});
   var dates=dateCandidates_(normalized),marked=dates.filter(function(d){return d.deadline;});
   var selected=marked.length===1 ? marked[0].date : '';
   return {companies:candidates.map(function(c){return {code:c.code,company_name:c.company_name};}),dates:dates,
-    code:candidates.length===1?candidates[0].code:'',expiry_date:selected,
+    code:candidates.length===1?candidates[0].code:'',expiry_date:selected,benefit_name:benefits.length===1?benefits[0]:'',
     text:normalized.slice(0,25000),needsReview:candidates.length!==1||!selected};
 }
 function recognizeCoupon(image) {
