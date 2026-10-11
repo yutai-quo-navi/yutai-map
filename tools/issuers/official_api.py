@@ -118,7 +118,7 @@ def snapshot(issuer,stores,meta):
     stamp=NOW.isoformat(timespec='seconds')
     counts={'previous':len(old),'current':len(stores),'added':len(added),'removed':len(removed),'changed':len(changed)}
     current={**meta,'generated_at':stamp,'eligible_count':len(stores),'brand_counts':dict(Counter(s['brand_name'] for s in stores)),'stores':sorted(stores,key=lambda s:s['store_id'])}
-    diff={'source':meta['source'],'generated_at':stamp,'run_date':DATE,'counts':counts,'added':[by_id[s] for s in added],'removed':[old[s] for s in removed],'changed':[{'store_id':s,'before':old[s],'after':by_id[s]} for s in changed]}
+    diff={'source':meta['source'],'generated_at':stamp,'run_date':DATE,'previous_generated_at':previous.get('generated_at'),'counts':counts,'added':[by_id[s] for s in added],'removed':[old[s] for s in removed],'changed':[{'store_id':s,'before':old[s],'after':by_id[s]} for s in changed]}
     for path,obj in [(p,current),(base/'diffs'/f'{DATE}.json',diff)]:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
     (base/'last_diff.md').write_text(f'# {cfg["name"]}店舗DB 差分 {DATE}\n\n'+''.join(f'- {k}: {v}\n' for k,v in counts.items()))
     print(json.dumps({'issuer':issuer,**counts,'brands':current['brand_counts']},ensure_ascii=False),flush=True)

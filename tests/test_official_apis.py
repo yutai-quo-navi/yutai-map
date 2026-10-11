@@ -45,4 +45,5 @@ class OfficialSources(unittest.TestCase):
                 m.snapshot('sample',copy.deepcopy(rows),{'source':'https://example.com'})
                 d=json.loads((p/'stores/diffs'/f'{m.DATE}.json').read_text())
                 self.assertEqual(d['counts'],{'previous':1,'current':1,'added':0,'removed':0,'changed':0})
+                self.assertTrue(d['previous_generated_at'])
             finally:os.chdir(original)
