@@ -40,6 +40,7 @@ KBRANDS={1:'コメダ珈琲店',2:'おかげ庵',5:'KOMEDA is □',6:'BAKERY ADE
 
 def komeda_detail(item,data):
     row=data['shop'];brand=KBRANDS[int(item['brand_type'])]
+    if re.search(r'営業テスト|表示サンプル|ご利用不可',row['name']):return None
     if row['name']!=item['name'] or row['address']!=item['address'] or int(row['brand_type'])!=int(item['brand_type']):raise ValueError('Komeda list/detail mismatch')
     # Public locator ID differs from the internal shop.id; preserve the locator ID.
     payments=[d for d in row['details'] if d['id']=='207-4']

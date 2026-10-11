@@ -16,6 +16,9 @@ class OfficialSources(unittest.TestCase):
         self.assertIsNone(m.komeda_detail(item,detail))
         detail['shop']['details']=[]
         self.assertIsNone(m.komeda_detail(item,detail))
+        detail['shop']['name']='表示サンプル店舗(ご利用不可)'
+        detail['shop']['shop_latitude']=0
+        self.assertIsNone(m.komeda_detail(item,detail))
         detail['shop']['name']='別店舗'
         with self.assertRaises(ValueError):m.komeda_detail(item,detail)
     def test_doutor_requires_official_card_flag_including_other_formats(self):
