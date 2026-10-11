@@ -155,6 +155,27 @@
       "name": "壱番屋",
       "status": "public",
       "config": "./data/issuers/ichibanya/config.json"
+    },
+    {
+      "id": "komeda",
+      "code": "3543",
+      "name": "コメダホールディングス",
+      "status": "public",
+      "config": "./data/issuers/komeda/config.json"
+    },
+    {
+      "id": "dnh",
+      "code": "3087",
+      "name": "ドトール・日レスホールディングス",
+      "status": "public",
+      "config": "./data/issuers/dnh/config.json"
+    },
+    {
+      "id": "mos",
+      "code": "8153",
+      "name": "モスフードサービス",
+      "status": "public",
+      "config": "./data/issuers/mos/config.json"
     }
   ]
 }

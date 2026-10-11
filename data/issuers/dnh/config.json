@@ -1,0 +1,124 @@
+{
+  "id": "dnh",
+  "code": "3087",
+  "name": "ドトール・日レスホールディングス",
+  "fullName": "ドトール・日レスホールディングス",
+  "status": "public",
+  "sourceUrl": "https://www.dnh.co.jp/ir/stockholder/benefit/",
+  "matchingMode": "brand_aliases",
+  "note": "株主ご優待カードはドトール バリューカード対応店舗で利用できます。一部対象外店舗があります。星乃珈琲店・洋麺屋五右衛門は対象外です。利用前に公式店舗情報でカード対応をご確認ください。",
+  "aliases": [
+    "ドトールコーヒーショップ",
+    "ドトールコーヒー",
+    "Doutor Coffee Shop",
+    "エクセルシオール カフェ",
+    "エクセルシオール",
+    "Excelsior Caffe",
+    "Excelsior Cafe",
+    "カフェ レクセル",
+    "Cafe Lexcel",
+    "ル・カフェ ドトール",
+    "ルカフェドトール",
+    "Le Cafe Doutor",
+    "ドトール珈琲農園",
+    "ドトール珈琲店",
+    "ドトールキッチン",
+    "Doutor Kitchen"
+  ],
+  "aliasBrands": {
+    "ドトールコーヒーショップ": "ドトールコーヒーショップ",
+    "ドトールコーヒー": "ドトールコーヒーショップ",
+    "Doutor Coffee Shop": "ドトールコーヒーショップ",
+    "エクセルシオール カフェ": "エクセルシオール カフェ",
+    "エクセルシオール": "エクセルシオール カフェ",
+    "Excelsior Caffe": "エクセルシオール カフェ",
+    "Excelsior Cafe": "エクセルシオール カフェ",
+    "カフェ レクセル": "カフェ レクセル",
+    "Cafe Lexcel": "カフェ レクセル",
+    "ル・カフェ ドトール": "ル・カフェ ドトール",
+    "ルカフェドトール": "ル・カフェ ドトール",
+    "Le Cafe Doutor": "ル・カフェ ドトール",
+    "ドトール珈琲農園": "ドトール珈琲農園",
+    "ドトール珈琲店": "ドトール珈琲店",
+    "ドトールキッチン": "ドトールキッチン",
+    "Doutor Kitchen": "ドトールキッチン"
+  },
+  "categories": {
+    "ドトールコーヒーショップ": "cafe",
+    "ドトールコーヒー": "cafe",
+    "Doutor Coffee Shop": "cafe",
+    "エクセルシオール カフェ": "cafe",
+    "エクセルシオール": "cafe",
+    "Excelsior Caffe": "cafe",
+    "Excelsior Cafe": "cafe",
+    "カフェ レクセル": "cafe",
+    "Cafe Lexcel": "cafe",
+    "ル・カフェ ドトール": "cafe",
+    "ルカフェドトール": "cafe",
+    "Le Cafe Doutor": "cafe",
+    "ドトール珈琲農園": "cafe",
+    "ドトール珈琲店": "cafe",
+    "ドトールキッチン": "cafe",
+    "Doutor Kitchen": "cafe"
+  },
+  "excludedBrands": [
+    "星乃珈琲",
+    "五右衛門",
+    "神乃珈琲",
+    "コロラド",
+    "梟書茶房",
+    "コッペ田島",
+    "パンの田島"
+  ],
+  "searchNames": [
+    "ドトール・日レスホールディングス",
+    "ドトールコーヒーショップ",
+    "エクセルシオール カフェ",
+    "カフェ レクセル",
+    "ル・カフェ ドトール",
+    "ドトール珈琲農園",
+    "ドトール珈琲店",
+    "ドトールキッチン"
+  ],
+  "poiSearchNames": [
+    "ドトール",
+    "エクセルシオール",
+    "レクセル",
+    "DOUTOR",
+    "EXCELSIOR",
+    "LEXCEL"
+  ],
+  "catalogBrands": [
+    "ドトールコーヒーショップ",
+    "エクセルシオール カフェ",
+    "カフェ レクセル",
+    "ル・カフェ ドトール",
+    "ドトール珈琲農園",
+    "ドトール珈琲店",
+    "ドトールキッチン"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-11",
+  "storeSearchUrl": "https://shop.doutor.co.jp/doutor/spot/list?c_d22=1",
+  "locationMode": "openpoi",
+  "referenceUrls": [
+    "https://www.dnh.co.jp/assets/pdf/benefit_docs_2026.pdf",
+    "https://www.doutor.co.jp/dvc/qanda01.html",
+    "https://www.doutor.co.jp/news/newsrelease/detail/20260729153158.html",
+    "https://shop.doutor.co.jp/doutor/spot/detail?code=1011020"
+  ],
+  "poiSearchGroups": [
+    [
+      "ドトール",
+      "DOUTOR"
+    ],
+    [
+      "エクセルシオール",
+      "EXCELSIOR"
+    ],
+    [
+      "レクセル",
+      "LEXCEL"
+    ]
+  ]
+}

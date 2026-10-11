@@ -1,0 +1,96 @@
+{
+  "id": "komeda",
+  "code": "3543",
+  "name": "コメダホールディングス",
+  "fullName": "コメダホールディングス",
+  "status": "public",
+  "sourceUrl": "https://komeda-holdings.co.jp/benefit/",
+  "matchingMode": "brand_aliases",
+  "note": "株主優待でチャージされたKOMECAを対応店舗で利用できます。一部対象外店舗があります。利用前に公式店舗情報でKOMECA対応をご確認ください。",
+  "aliases": [
+    "コメダ珈琲店",
+    "コメダ珈琲",
+    "コメダコーヒー",
+    "Komeda Coffee",
+    "おかげ庵",
+    "KOMEDA is □",
+    "KOMEDA is",
+    "コメダイズ",
+    "BAKERY ADEMOK",
+    "ADEMOK",
+    "アデモック",
+    "大餡吉日",
+    "ジェリコ堂",
+    "米屋の太郎"
+  ],
+  "aliasBrands": {
+    "コメダ珈琲店": "コメダ珈琲店",
+    "コメダ珈琲": "コメダ珈琲店",
+    "コメダコーヒー": "コメダ珈琲店",
+    "Komeda Coffee": "コメダ珈琲店",
+    "おかげ庵": "おかげ庵",
+    "KOMEDA is □": "KOMEDA is □",
+    "KOMEDA is": "KOMEDA is □",
+    "コメダイズ": "KOMEDA is □",
+    "BAKERY ADEMOK": "BAKERY ADEMOK",
+    "ADEMOK": "BAKERY ADEMOK",
+    "アデモック": "BAKERY ADEMOK",
+    "大餡吉日": "大餡吉日",
+    "ジェリコ堂": "ジェリコ堂",
+    "米屋の太郎": "米屋の太郎"
+  },
+  "categories": {
+    "コメダ珈琲店": "cafe",
+    "コメダ珈琲": "cafe",
+    "コメダコーヒー": "cafe",
+    "Komeda Coffee": "cafe",
+    "おかげ庵": "cafe",
+    "KOMEDA is □": "cafe",
+    "KOMEDA is": "cafe",
+    "コメダイズ": "cafe",
+    "BAKERY ADEMOK": "bakery",
+    "ADEMOK": "bakery",
+    "アデモック": "bakery",
+    "大餡吉日": "cafe",
+    "ジェリコ堂": "cafe",
+    "米屋の太郎": "restaurant"
+  },
+  "excludedBrands": [
+    "BLUE LEAF CAFÉ"
+  ],
+  "searchNames": [
+    "コメダホールディングス",
+    "コメダ珈琲店",
+    "おかげ庵",
+    "KOMEDA is □",
+    "BAKERY ADEMOK",
+    "大餡吉日",
+    "ジェリコ堂",
+    "米屋の太郎"
+  ],
+  "poiSearchNames": [
+    "コメダ",
+    "おかげ庵",
+    "KOMEDA",
+    "ADEMOK",
+    "大餡吉日",
+    "ジェリコ堂",
+    "米屋の太郎"
+  ],
+  "catalogBrands": [
+    "コメダ珈琲店",
+    "おかげ庵",
+    "KOMEDA is □",
+    "BAKERY ADEMOK",
+    "大餡吉日",
+    "ジェリコ堂",
+    "米屋の太郎"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-11",
+  "storeSearchUrl": "https://www.komeda.co.jp/shop/",
+  "locationMode": "openpoi",
+  "referenceUrls": [
+    "https://www.komeda.co.jp/service/komeca.html"
+  ]
+}

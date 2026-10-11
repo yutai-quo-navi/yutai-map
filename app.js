@@ -342,7 +342,8 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
 const issuerDisplayNames = {
   skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
-  monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド'
+  monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
+  komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
@@ -633,7 +634,7 @@ async function searchNearby(pos, centerLabel='現在地'){
 
     const d1Groups = d1Targets.length ? await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius))) : [];
     const d1Results=d1Groups.flatMap(g=>g.results);
-    const batches = openPoiTargets.flatMap(company => chunk(company.aliases, 14).map(aliases => ({company, aliases})));
+    const batches = openPoiTargets.flatMap(company => (company.poiSearchGroups || chunk(company.poiSearchNames || company.aliases, 14)).map(aliases => ({company, aliases})));
     const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
     if (revision !== diningSearchRevision) return;
     const raw = [
@@ -800,13 +801,14 @@ function classify(p, company, origin){
   const excludedBrand = (company.excludedBrands || []).some(x => hay.includes(normalize(x)));
   const excludedStore = (company.excludedStores || []).some(x => hay.includes(normalize(x)));
   if(excludedLegacy || excludedBrand || excludedStore) return null;
-  const alias = company.aliases.find(x => hay.includes(normalize(x)));
+  const aliases = company.aliasBrands ? [...company.aliases].sort((a,b) => normalize(b).length - normalize(a).length) : company.aliases;
+  const alias = aliases.find(x => hay.includes(normalize(x)));
   if(!alias) return null;
   const category = company.categories?.[alias] || 'other';
   const lat = Number(p.lat), lng = Number(p.lng);
   if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
   return {
-    ...p, lat, lng, company, matchedAlias: company.brandName || alias, category,
+    ...p, lat, lng, company, matchedAlias: company.aliasBrands?.[alias] || company.brandName || alias, category,
     distance: haversine(origin.lat, origin.lng, lat, lng)
   };
 }
@@ -962,7 +964,7 @@ function renderResults(items, radius){
         <span class="badge category">${esc(categoryLabels[x.category] || 'その他')}</span>
         <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
-      ${x.company.id==='mcd' ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
+      ${x.company.locationMode==='openpoi' && x.company.note ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
       <div class="card-actions">
         <a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener">Googleマップで見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
@@ -1183,6 +1185,16 @@ async function loadBrandCatalog(){
 let brandCandidateLimit=12;
 // Small local reading dictionary; typing never requests the store API.
 const brandReadings={
+  'コメダ珈琲店':'こめだこーひー こめだ komeda', 'おかげ庵':'おかげあん',
+  'KOMEDA is □':'こめだいず', 'BAKERY ADEMOK':'べーかりーあでもっく あでもっく',
+  '大餡吉日':'だいあんきちじつ', 'ジェリコ堂':'じぇりこどう', '米屋の太郎':'こめやのたろう',
+  'ドトールコーヒーショップ':'どとーる doutor', 'エクセルシオール カフェ':'えくせるしおーる',
+  'カフェ レクセル':'かふぇれくせる', 'ル・カフェ ドトール':'るかふぇどとーる',
+  'ドトール珈琲農園':'どとーるこーひーのうえん', 'ドトール珈琲店':'どとーるこーひーてん', 'ドトールキッチン':'どとーるきっちん',
+  'モスバーガー':'もすばーがー もす mos', 'モスプレミアム':'もすぷれみあむ', 'モスド':'もすど',
+  'マザーリーフ':'まざーりーふ', 'マザーリーフティースタイル':'まざーりーふてぃーすたいる',
+  'カフェ 山と海と太陽':'かふぇやまとうみとたいよう', 'あえん':'あえん', '玄米食堂あえん':'げんまいしょくどうあえん',
+  'モッシュ バーガー & バル':'もっしゅばーがーばる', 'ミスタードーナツ':'みすたーどーなつ みすど',
   'マクドナルド':'まくどなるど まっく まくど mcdonalds mcdonald',
   '鳥良商店':'とりよししょうてん とりよし', 'おもてなしとりよし':'おもてなしとりよし',
   'サンジェルマン':'さんじぇるまん', 'プルミエ サンジェルマン':'ぷるみえさんじぇるまん', '小樽サンジェルマン':'おたるさんじぇるまん',
