@@ -42,3 +42,7 @@ ChatGPTのGoogle Drive連携を追加し、期限DBを置きたいGoogleアカ�
 ## 開発時の検証
 
 `node --test tests/sheets-editor.test.mjs`で訂正、年度追加、重複、同時編集、日付、文字列保存、X原稿を検証します。プレビューの更新は`python tools/google-sheets/build_preview.py`です。
+
+## スマホ用のWeb編集画面
+
+本人専用の別画面・複数画像OCR・自動同期の追加設計は [スマホ編集の設計と初期設定](mobile-expiry.md) を参照してください。従来のシート内編集とは必要ファイル・権限が異なります。公開・初期設定が済むまでは実運用できません。
