@@ -209,3 +209,13 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
   #hotelFeatures .benefit-choice-count{margin-left:0}
   .food-tool #hotelFeatures .benefit-choice-status,.food-tool #hotelFeatures .voucher-deadline-bubble,.food-tool #hotelFeatures .deadline-count{font-size:12px}
 }
+
+/* Short hotel captions on phones; all text stays within its card. */
+#hotelFeatures .hotel-caption-compact{display:none}
+#hotelFeatures .feature-item,#hotelFeatures .feature-button{min-width:0;max-width:100%;box-sizing:border-box}
+#hotelFeatures .benefit-choice-copy,#hotelFeatures .feature-caption{max-width:100%}
+#hotelFeatures .voucher-deadline-bubble{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:520px){
+  #hotelFeatures .hotel-caption-full{display:none}
+  #hotelFeatures .hotel-caption-compact{display:inline}
+}
