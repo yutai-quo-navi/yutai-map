@@ -116,7 +116,9 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const count = document.createElement('span'); count.className = 'benefit-choice-count';
       count.textContent = `（${feature.stores.length}件）`;
       const check=document.createElement('span'); check.className='issuer-check'; check.setAttribute('aria-hidden','true');
-      nameRow.append(check,name,count); button.append(nameRow);
+      const copy = document.createElement('span'); copy.className = 'benefit-choice-copy';
+      nameRow.append(name,count); copy.append(nameRow);
+      button.append(check,copy);
       count.setAttribute('data-ui-number','');
       button.title=feature.title;
       button.setAttribute('aria-controls', resultsId);
@@ -144,7 +146,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         const state = document.createElement('span'); state.className = 'benefit-choice-status';
         state.textContent = '選択中'; detail.append(state);
       }
-      if (detail.childElementCount) button.append(detail);
+      if (detail.childElementCount) copy.append(detail);
       item.append(button);
       if (!getRadius) {
         const radiusLabel = document.createElement('label'); radiusLabel.className = 'feature-radius-label';
