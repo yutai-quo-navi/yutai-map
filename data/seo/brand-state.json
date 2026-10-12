@@ -1129,7 +1129,7 @@
       ]
     },
     "zensho": {
-      "revision": 0,
+      "revision": 2,
       "brands": [
         {
           "brand_name": "かつ庵",
@@ -1141,7 +1141,7 @@
         },
         {
           "brand_name": "なか卯",
-          "store_count": 445
+          "store_count": 446
         },
         {
           "brand_name": "はま寿司",
@@ -1161,7 +1161,7 @@
         },
         {
           "brand_name": "ジョリーパスタ",
-          "store_count": 324
+          "store_count": 325
         },
         {
           "brand_name": "ゼッテリア",
