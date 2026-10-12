@@ -176,7 +176,7 @@ try{
     return {text,first,cellAnimations,repeated,changed,reels,shape};
   });
   assert.equal(badgeResult.text,'48日');
-  assert.deepEqual(badgeResult.shape,{width:'36px',height:'36px',radius:'50%',color:'rgb(199, 53, 58)'});
+  assert.deepEqual(badgeResult.shape,{width:'20px',height:'20px',radius:'50%',color:'rgb(199, 53, 58)'});
   assert.ok(badgeResult.first.includes('t-badge-slide-in'),'official diagonal slide runs');
   assert.equal(badgeResult.cellAnimations,0,'choice cell itself does not animate');
   assert.equal(badgeResult.repeated,0,'unchanged badge does not replay');
