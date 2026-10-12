@@ -1,3 +1,4 @@
+import {numberHTML} from './number-motion.js?v=20261012-soft-ui';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
@@ -105,7 +106,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     root.innerHTML = '';
     if (!displayed.length) return;
     const integrated = root.hasAttribute('data-tab-panel');
-    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary" aria-live="polite">${selectedFeatures.size}件 選択中</span><span class="selection-hint">複数選択できます</span></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
+    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary" aria-live="polite">${numberHTML(section+':selected',selectedFeatures.size)}件 選択中</span><span class="selection-hint">複数選択できます</span></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
     for (const feature of displayed) {
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
@@ -114,7 +115,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const name = document.createElement('span'); name.className = 'benefit-choice-name';
       name.textContent = feature.shortName || feature.issuer.name;
       const count = document.createElement('span'); count.className = 'benefit-choice-count';
-      count.textContent = `（${feature.stores.length}件）`;
+      count.innerHTML = numberHTML('feature:'+feature.id,feature.stores.length)+'<span class="number-unit">件</span>';
       const check=document.createElement('span'); check.className='issuer-check'; check.setAttribute('aria-hidden','true');
       const copy = document.createElement('span'); copy.className = 'benefit-choice-copy';
       nameRow.append(name,count); copy.append(nameRow);
@@ -190,7 +191,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     const label = getCenterLabel();
     const details = document.createElement('div');
     const total = chosen.reduce((sum, feature) => sum + feature.stores.length, 0);
-    output.innerHTML = `<p class="feature-note">${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(chosen[0])/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${matches.length}件表示・全${total}${unit}</p>`;
+    output.innerHTML = `<p class="feature-note">${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(chosen[0])/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${numberHTML(section+':results',matches.length)}件表示・全${numberHTML(section+':total',total)}${unit}</p>`;
     if (origin && !matches.length && total) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。検索範囲を広げるか、別の場所を指定してください。</p>`;
     for (const active of chosen) {
       const info = document.createElement('div');

@@ -1,12 +1,14 @@
+import {numberHTML, initNumberMotion} from './number-motion.js?v=20261012-soft-ui';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
-import {initExpirySearch} from './expiry-search.js?v=20261012-ui-quality';
+import {initExpirySearch} from './expiry-search.js?v=20261012-soft-ui';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261012-hotel-two-columns';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261012-soft-ui';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
+initNumberMotion(document.body);
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -335,6 +337,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   bubble.textContent=deadlineLabel(entry);
   const count=document.createElement('span'); count.className='deadline-count';
   count.textContent=entry.days < 0 ? '失効' : entry.days===0 ? (expiryType === '申込期限' ? '本日申込期限' : '本日失効') : entry.days+'日で'+(expiryType === '申込期限' ? '申込期限' : '失効');
+  if(entry.days > 0) count.innerHTML=numberHTML(`deadline:${issuer}:${entry.date}:${expiryType}`,entry.days)+'日で'+(expiryType === '申込期限' ? '申込期限' : '失効');
   bubble.replaceChildren(count);
   const detail=(expiryType === '申込期限' ? '申込期限：' : '使用期限：')+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
@@ -410,7 +413,7 @@ function renderChips(){
     group.appendChild(badge);
     els.chips.appendChild(group);
   }
-  qs('#selectionSummary').textContent=available.filter(c=>selected.has(c.id)).length+'社 選択中';
+  qs('#selectionSummary').innerHTML=numberHTML('dining:selected',available.filter(c=>selected.has(c.id)).length)+'社 選択中';
 }
 function refreshDeadlineDisplay(){
   const next=japanDay();
@@ -934,7 +937,7 @@ function renderFilteredResults(radius){
 
 function renderResults(items, radius){
   const total=Number(categoryCounts?.[activeCategory] || 0);
-  els.count.textContent = total>items.length ? `${items.length}件表示／対象${total}件` : `${items.length}件`;
+  els.count.innerHTML = numberHTML('dining:results',items.length)+(total>items.length ? `件表示／対象${numberHTML('dining:total',total)}件` : '件');
   if(!items.length){
     els.results.className='results empty-state';
     const restricted=activeCategory!=='all' || activeBrand;
