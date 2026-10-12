@@ -48,20 +48,38 @@ jobs:
           test -n "$CF_API_TOKEN"
           echo "::add-mask::$CF_API_TOKEN"
           printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
-      - name: Restore, collect and sync only validated issuer deltas
+      - name: Restore, collect and sync each issuer independently
         run: |
+          synced=""
           for issuer in yamaokaya chikaranomoto; do
-            python tools/restore_d1_issuer.py "$issuer"
-            python "tools/issuers/$issuer/scrape.py"
-            python tools/build_d1_issuer_sql.py "$issuer"
-            python tools/sync_d1_issuer.py "$issuer"
+            if python tools/restore_d1_issuer.py "$issuer" && python "tools/issuers/$issuer/scrape.py" && python tools/build_d1_issuer_sql.py "$issuer" && python tools/sync_d1_issuer.py "$issuer"; then
+              synced="$synced $issuer"
+            else
+              echo "::warning::$issuer official source unavailable; existing search and data preserved"
+              rm -rf "data/issuers/$issuer/stores"
+            fi
           done
+          test -n "$synced"
+          printf '%s' "$synced" > cloudflare/generated/ramen-synced.txt
       - name: Verify D1 imports before publication
         run: |
           npx wrangler d1 execute 4540cbaa-3214-4111-9c7a-11e18fd067db --remote --json --command "SELECT issuer_id,geo_count,reference_count FROM issuer_stats WHERE issuer_id IN ('yamaokaya','chikaranomoto');" > /tmp/ramen-counts.json
-          python tools/issuers/verify_ramen_d1.py /tmp/ramen-counts.json
-      - name: Enable official search after both successful imports
-        run: python tools/issuers/promote_ramen.py
+          python - <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0,'tools/issuers')
+          from verify_ramen_d1 import verify
+          verify(json.loads(Path('/tmp/ramen-counts.json').read_text()), Path('cloudflare/generated/ramen-synced.txt').read_text().split())
+          PY
+      - name: Enable official search only for successfully verified imports
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0,'tools/issuers')
+          from promote_ramen import promote
+          promote(Path('cloudflare/generated/ramen-synced.txt').read_text().split())
+          PY
       - name: Merge public update history
         run: |
           python tools/build_updates.py

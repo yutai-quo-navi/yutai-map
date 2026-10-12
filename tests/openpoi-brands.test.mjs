@@ -39,3 +39,10 @@ test('non-Japanese and invalid coordinates cannot become benefit stores',()=>{
   assert.ok(match(id,name,{country:'JP'}));
  }
 });
+
+test('Yamaokaya fallback distinguishes eligible ramen brands and excludes gyoza',()=>{
+ const config=JSON.parse(fs.readFileSync(new URL('../data/issuers/yamaokaya/config.json',import.meta.url)));
+ const classify=name=>context.classify({name,...origin,country:'JP'},config,origin);
+ for(const [name,brand] of [['山岡家 青梅店','ラーメン山岡家'],['味噌ラーメン山岡家 すすきの店','味噌ラーメン山岡家'],['煮干しラーメン山岡家 荒川沖店','煮干しラーメン山岡家']]) assert.equal(classify(name)?.matchedAlias,brand);
+ for(const name of ['餃子の山岡家 すすきの店','餃子山岡家','一蘭']) assert.equal(classify(name),null);
+});

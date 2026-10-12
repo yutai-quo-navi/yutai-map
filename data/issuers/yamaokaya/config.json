@@ -3,24 +3,27 @@
   "code": "3399",
   "name": "丸千代山岡家",
   "fullName": "丸千代山岡家",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://maruchiyo.yamaokaya.com/ir/incentives/",
-  "matchingMode": "official_store_filter",
-  "note": "公式店舗データと優待対象を確認中です。",
+  "matchingMode": "aliases",
+  "note": "株主優待対象のラーメン山岡家・味噌ラーメン山岡家・煮干しラーメン山岡家を検索します。位置情報は現在OpenPOIを使用しています。公式座標への切替準備中です。餃子業態は対象外です。",
   "aliases": [
     "ラーメン山岡家",
     "味噌ラーメン山岡家",
-    "煮干しラーメン山岡家"
+    "煮干しラーメン山岡家",
+    "山岡家"
   ],
   "aliasBrands": {
     "ラーメン山岡家": "ラーメン山岡家",
     "味噌ラーメン山岡家": "味噌ラーメン山岡家",
-    "煮干しラーメン山岡家": "煮干しラーメン山岡家"
+    "煮干しラーメン山岡家": "煮干しラーメン山岡家",
+    "山岡家": "ラーメン山岡家"
   },
   "categories": {
     "ラーメン山岡家": "restaurant",
     "味噌ラーメン山岡家": "restaurant",
-    "煮干しラーメン山岡家": "restaurant"
+    "煮干しラーメン山岡家": "restaurant",
+    "山岡家": "restaurant"
   },
   "searchNames": [
     "丸千代山岡家",
@@ -36,7 +39,7 @@
   "domesticOnly": true,
   "verified": "2026-10-12",
   "storeSearchUrl": "https://www.yamaokaya.com/shops/",
-  "locationMode": "worker_reference",
+  "locationMode": "openpoi",
   "storeDataPath": "./data/issuers/yamaokaya/stores/current.json",
   "health": {
     "minStores": 170,
@@ -51,5 +54,16 @@
     "maxChanged": 120,
     "japanOnlyCoordinates": true
   },
-  "showStoreNote": true
+  "showStoreNote": true,
+  "poiSearchNames": [
+    "山岡家"
+  ],
+  "excludedNames": [
+    "餃子の山岡家",
+    "餃子山岡家"
+  ],
+  "excludedBrands": [
+    "餃子の山岡家"
+  ],
+  "sourceLimitation": "公式一覧・座標・202店舗の詳細情報を確認済み。GitHub収集環境から公式サイトへの接続がタイムアウトし、接続中のCloudflare API権限ではD1書き込みが拒否されるため、公式座標の初回反映は保留。"
 }

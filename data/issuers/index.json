@@ -181,7 +181,7 @@
       "id": "yamaokaya",
       "code": "3399",
       "name": "丸千代山岡家",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/yamaokaya/config.json"
     },
     {

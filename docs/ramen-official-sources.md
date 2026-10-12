@@ -9,7 +9,8 @@
 - 店舗ID・業態・全店座標は公式HTMLと `json_realtime.shops` から取得。
 - 全HTML店舗IDとJSON店舗IDの一致を検証し、各店舗詳細の住所・電話・地図座標と照合。
 - 株主優待対象のラーメン山岡家、味噌ラーメン山岡家、煮干しラーメン山岡家のみ。餃子業態を除外。
-- WordPress RESTページAPIも確認したが403。公式HTML/JSONに必要情報があるためOpenPOIは使用しない。
+- WordPress RESTページAPIも確認したが403。公式HTML/JSONに必要情報があり、全202店舗の座標・詳細を確認済み。
+- GitHub収集環境から公式サイトへの接続がタイムアウト。Cloudflare連携のSQL書込みも権限拒否。初回の検索は暫定OpenPOIとし、完全な公式データのD1反映成功時に公式座標へ切り替える。餃子業態は名前による除外も適用。
 
 ## 力の源（一風堂系）
 
@@ -26,5 +27,5 @@
 
 `tools/issuers/ramen_official.py` と各社 `scrape.py` が収集、`scrape_yamaokaya_chikaranomoto.yml` が毎月更新。
 D1の前回スナップショットを復元し、検証済み差分のみ反映。全件書き直しをしない。
-初回はdevelopmentで追加し、両社D1の件数・座標を確認してからpublic/official_coordinatesへ昇格。
+初回はdevelopmentで追加。公式座標のD1件数を検証できた会社のみpublic/official_coordinatesへ昇格。取得失敗時は他社の成功を妨げず、該当社の既存データを維持。
 ガイドは成功した更新ワークフロー完了後に再生成。

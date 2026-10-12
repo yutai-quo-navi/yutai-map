@@ -3,11 +3,11 @@ import json
 import sys
 from pathlib import Path
 
-def verify(data):
+def verify(data, issuers=None):
     if not data or any(x.get('success') is not True for x in data):
         raise ValueError('D1 query failed')
     rows = {r['issuer_id']:r for result in data for r in result.get('results',[])}
-    for issuer in ['yamaokaya','chikaranomoto']:
+    for issuer in (issuers or ['yamaokaya','chikaranomoto']):
         snapshot = json.loads(Path(f'data/issuers/{issuer}/stores/current.json').read_text())
         row=rows.get(issuer,{})
         if row.get('geo_count') != len(snapshot['stores']) or row.get('reference_count') != 0:

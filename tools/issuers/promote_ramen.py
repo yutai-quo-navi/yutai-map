@@ -6,11 +6,12 @@ NOTES = {
     'chikaranomoto': '力の源の優待対象のうち、一風堂・一風堂 KAY・RAMEN EXPRESS系を公式店舗情報・座標から掲載しています。名島亭・因幡うどんは現在未掲載です。優待カードの利用条件は券面と公式情報をご確認ください。'
 }
 
-def promote():
+def promote(issuers=None):
     configs = []
     manifest_path = Path('data/issuers/index.json')
     manifest = json.loads(manifest_path.read_text())
-    for issuer, note in NOTES.items():
+    for issuer in (issuers or list(NOTES)):
+        note = NOTES[issuer]
         path = Path(f'data/issuers/{issuer}/config.json')
         config = json.loads(path.read_text())
         current = json.loads(Path(f'data/issuers/{issuer}/stores/current.json').read_text())
