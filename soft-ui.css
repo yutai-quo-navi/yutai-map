@@ -1,28 +1,28 @@
-/* Concept 03: quiet surfaces, compact selection cards, and clear number hierarchy. */
-:root{--bg:#f6f8f7;--surface:#fff;--surface-soft:#f1f5f3;--surface-strong:#e6efeb;--text:#1f302e;--muted:#596a65;--muted-2:#596a65;--line:#dce5e1;--accent:#e7f3ee;--accent-strong:#d4eae0;--accent-border:#abcdbf;--accent-text:#17634f;--radius-lg:18px;--radius-md:14px;--radius-sm:10px;--shadow:0 4px 18px #183d2d06;--shadow-soft:0 2px 8px #183d2d05}
-body.food-tool{--brand-accent:#17634f;--brand-soft:#e7f3ee;--brand-line:#dce5e1;--brand-muted:#596a65;--muted:#596a65;--muted-2:#596a65}
+/* Benefit search: warm, welcoming cards with playful selection and clear numbers. */
+:root{--bg:#fffaf3;--surface:#fff;--surface-soft:#fff4e5;--surface-strong:#fbe6cc;--text:#3c3028;--muted:#746251;--muted-2:#746251;--line:#edddc9;--accent:#fff0db;--accent-strong:#ffe4bd;--accent-border:#edc493;--accent-text:#ab481d;--radius-lg:18px;--radius-md:14px;--radius-sm:10px;--shadow:0 4px 18px #75452106;--shadow-soft:0 2px 8px #75452105}
+body.food-tool{--brand-accent:#ab481d;--brand-soft:#fff0db;--brand-line:#edddc9;--brand-muted:#746251;--muted:#746251;--muted-2:#746251}
 .food-tool :is(button,a,input,select,textarea):focus-visible{outline-color:var(--accent-text)}
 .food-tool .site-brand-name{color:var(--text)}
 .food-tool .site-logo{border-radius:12px;box-shadow:none}
-.food-tool .tool-nav{background:#eaf0ed;border:0;border-radius:14px}
-.food-tool .tool-nav a[aria-current]{background:#fff;color:var(--accent-text);box-shadow:0 2px 5px #183d2d0d}
+.food-tool .tool-nav{background:#f9eddd;border:0;border-radius:14px}
+.food-tool .tool-nav a[aria-current]{background:#fff;color:var(--accent-text);box-shadow:0 2px 5px #7545210d}
 .food-tool .hero{border-color:var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft)}
-.food-tool .primary-button{background:var(--accent-text);border-color:var(--accent-text);border-radius:12px;color:#fff;box-shadow:0 2px 5px #183d2d0b}
-.food-tool .primary-button:active{background:#104c3c}
-.food-tool .search-mode{background:#eef2f0;border:0;border-radius:12px;padding:4px}
+.food-tool .primary-button{background:var(--accent-text);border-color:var(--accent-text);border-radius:12px;color:#fff;box-shadow:0 2px 5px #7545210b}
+.food-tool .primary-button:active{background:#8d3514}
+.food-tool .search-mode{background:#faf0e3;border:0;border-radius:12px;padding:4px}
 .food-tool .search-mode-button{border:0;border-radius:9px;background:transparent}
-.food-tool .search-mode-button[aria-pressed=true]{background:#fff;color:var(--accent-text);box-shadow:0 1px 4px #183d2d10}
+.food-tool .search-mode-button[aria-pressed=true]{background:#fff;color:var(--accent-text);box-shadow:0 1px 4px #75452110}
 .food-tool .benefit-window{border-radius:18px;box-shadow:var(--shadow-soft)}
-.food-tool .benefit-tabs{margin:12px 12px 0;padding:4px;border:0;border-radius:12px;background:#edf1ef;gap:8px}
+.food-tool .benefit-tabs{margin:12px 12px 0;padding:4px;border:0;border-radius:12px;background:#f8ecdd;gap:8px}
 .food-tool .benefit-tab{border-radius:9px;transition:background-color .18s,color .18s,box-shadow .18s}
-.food-tool .benefit-tab[aria-selected=true]{background:#fff;color:var(--accent-text);box-shadow:0 2px 5px #183d2d10;font-weight:700}
+.food-tool .benefit-tab[aria-selected=true]{background:#fff;color:var(--accent-text);box-shadow:0 2px 5px #75452110;font-weight:700}
 .food-tool .benefit-tab::after{display:none}
 .food-tool .selection-summary{color:var(--accent-text)}
 .food-tool .selection-change{border-color:var(--line);border-radius:10px;background:#fff}
 #companyChips{grid-template-columns:repeat(3,minmax(0,1fr))}
-#companyChips .benefit-choice,#hotelFeatures .benefit-choice{position:relative;align-items:flex-start;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);box-shadow:0 2px 5px #183d2d04;transition:background-color .18s,border-color .18s,box-shadow .18s}
-#companyChips .benefit-choice[aria-pressed=true],#hotelFeatures .benefit-choice[aria-pressed=true]{background:#edf7f2;border-color:#b2d4c5;box-shadow:0 1px 4px #183d2d06}
-#companyChips .issuer-check,#hotelFeatures .issuer-check{position:absolute;top:10px;right:8px;width:14px;height:14px;border-color:#b8c5bf}
+#companyChips .benefit-choice,#hotelFeatures .benefit-choice{position:relative;align-items:flex-start;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);box-shadow:0 2px 5px #75452104;transition:background-color .18s,border-color .18s,box-shadow .18s}
+#companyChips .benefit-choice[aria-pressed=true],#hotelFeatures .benefit-choice[aria-pressed=true]{background:#fff0db;border-color:#edc493;box-shadow:0 1px 4px #75452106}
+#companyChips .issuer-check,#hotelFeatures .issuer-check{position:absolute;top:10px;right:8px;width:14px;height:14px;border-color:#cbbbaa}
 #companyChips .benefit-choice[aria-pressed=true] .issuer-check,#hotelFeatures .benefit-choice[aria-pressed=true] .issuer-check{background:var(--accent-text);border-color:var(--accent-text)}
 #companyChips .benefit-choice-copy,#hotelFeatures .benefit-choice-copy{width:100%}
 #companyChips .benefit-choice-name,#hotelFeatures .benefit-choice-name{padding-right:18px;font-weight:600}
@@ -33,7 +33,7 @@ body.food-tool{--brand-accent:#17634f;--brand-soft:#e7f3ee;--brand-line:#dce5e1;
 #hotelFeatures .benefit-choice-count .motion-number{font-size:20px;font-weight:700;line-height:1.3}
 .number-unit{font-size:12px;color:var(--muted)}
 .food-tool .benefit-choice-status{color:var(--accent-text)}
-.food-tool .brand-controls{border-color:var(--line);background:#f7f9f8;border-radius:12px;padding:14px}
+.food-tool .brand-controls{border-color:var(--line);background:#fff8ed;border-radius:12px;padding:14px}
 .food-tool .brand-selection{color:var(--accent-text)}
 .food-tool .brand-option{border-color:var(--line);border-radius:12px}
 .food-tool .brand-option:hover,.food-tool .brand-option.is-selected{background:var(--accent)}
@@ -43,16 +43,16 @@ body.food-tool{--brand-accent:#17634f;--brand-soft:#e7f3ee;--brand-line:#dce5e1;
 .food-tool .result-count{color:var(--accent-text)}
 .food-tool .result-count .motion-number{font-size:24px;font-weight:700}
 .hotel-issuer-label{background:var(--accent);border-radius:8px;margin-bottom:10px}
-.hotel-benefit-conditions{padding:12px;border:0;border-radius:10px;background:#f4f7f5}
+.hotel-benefit-conditions{padding:12px;border:0;border-radius:10px;background:#fff7ec}
 .food-tool .picker-row:has(input:checked){background:var(--accent);border-color:var(--accent-border)}
 .food-tool .expiry-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.expiry-stat{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#f5f8f6;font-size:14px}
+.expiry-stat{display:flex;flex-direction:column;gap:4px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff5e6;font-size:14px}
 .expiry-stat strong{display:flex;align-items:baseline;gap:5px;font-size:32px;font-weight:700;line-height:1.3}
 .expiry-stat small{font-size:14px;font-weight:400}
 .expiry-stat-due{background:#fff5f1;border-color:#f2ded5;color:#a43c2c}
-#expiryPanel .expiry-view-tabs{border:0;border-radius:12px;background:#edf1ef;padding:4px;gap:8px}
+#expiryPanel .expiry-view-tabs{border:0;border-radius:12px;background:#f8ecdd;padding:4px;gap:8px}
 #expiryPanel .expiry-view-tabs button{flex:1;border:0;border-radius:9px;background:transparent;padding:10px 12px}
-#expiryPanel .expiry-view-tabs button[aria-pressed=true]{background:#fff;box-shadow:0 2px 5px #183d2d10}
+#expiryPanel .expiry-view-tabs button[aria-pressed=true]{background:#fff;box-shadow:0 2px 5px #75452110}
 #expiryPanel .expiry-row{grid-template-columns:minmax(0,1fr) 104px;gap:12px 16px;padding:16px;border-color:var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow-soft)}
 #expiryPanel .expiry-benefit{grid-column:1;grid-row:1;font-size:16px;align-self:center}
 #expiryPanel .expiry-countdown{grid-column:2;grid-row:1;text-align:center;background:transparent;color:var(--accent-text);border-left:1px solid var(--line);border-radius:0;padding:8px 0 8px 12px;white-space:normal}
@@ -61,13 +61,13 @@ body.food-tool{--brand-accent:#17634f;--brand-soft:#e7f3ee;--brand-line:#dce5e1;
 #expiryPanel .expiry-countdown.is-soon{color:#9a5b12}
 #expiryPanel .expiry-countdown.is-critical{color:#b33e30}
 #expiryPanel .expiry-urgency{font-weight:600;font-size:12px}
-#expiryPanel .expiry-own-button{grid-row:2;grid-column:1/-1;justify-self:end;min-width:112px;padding:8px 12px;background:#f6f8f7}
+#expiryPanel .expiry-own-button{grid-row:2;grid-column:1/-1;justify-self:end;min-width:112px;padding:8px 12px;background:#fffaf3}
 #expiryPanel .expiry-own-button:has(input:checked){background:var(--accent);border-color:var(--accent-border);color:var(--accent-text)}
-#expiryPanel .expiry-register{background:#f5f8f6;border-radius:12px}
+#expiryPanel .expiry-register{background:#fff5e6;border-radius:12px}
 #expiryPanel .expiry-day-options label:has(input:checked){background:var(--accent);border-color:var(--accent-border);color:var(--accent-text)}
 .food-tool .expiry-alerts{background:#fff5f1;border-color:#edc9bc;color:var(--text)}
 .motion-number{display:inline-block;font-variant-numeric:tabular-nums;white-space:nowrap}
-.motion-digit{display:inline-block;min-width:.6em;text-align:center}
+.motion-digit{display:inline-block;width:.65em;height:1.1em;overflow:hidden;vertical-align:-.08em;text-align:center;line-height:1.1}
 .motion-separator{display:inline-block}
 @media(max-width:520px){
   .food-tool .benefit-body{padding:14px 10px}
@@ -86,6 +86,52 @@ body.food-tool{--brand-accent:#17634f;--brand-soft:#e7f3ee;--brand-line:#dce5e1;
   #expiryPanel .expiry-heading h2{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){.food-tool *{transition:none!important;animation:none!important}}
-.food-tool .search-radius,.food-tool .search-radius select{background:#f1f5f3;border-color:var(--line);color:var(--text)}
+.food-tool .search-radius,.food-tool .search-radius select{background:#fff4e5;border-color:var(--line);color:var(--text)}
 .food-tool .picker-row .issuer-check{color:var(--accent-text)}
 .food-tool .personal-body,.food-tool .personal-note,.food-tool .personal-card h3,.food-tool .picker-foot p{background:var(--surface)}
+
+/* Warm shades make each choice feel like a benefit card rather than a dashboard. */
+.food-tool .issuer-tone-0{--issuer:#a34427;--issuer-soft:#fff0e7;--issuer-line:#efc6b2}
+.food-tool .issuer-tone-1{--issuer:#96374a;--issuer-soft:#fff0f1;--issuer-line:#efc3cc}
+.food-tool .issuer-tone-2{--issuer:#8a6018;--issuer-soft:#fff5d9;--issuer-line:#ead49c}
+.food-tool .issuer-tone-3{--issuer:#865c16;--issuer-soft:#fff2da;--issuer-line:#ebd4a7}
+.food-tool .issuer-tone-4{--issuer:#7b5633;--issuer-soft:#faf0e3;--issuer-line:#dbc6ae}
+.food-tool .issuer-tone-5{--issuer:#8f4b22;--issuer-soft:#fff0e1;--issuer-line:#e9cbb5}
+.food-tool .issuer-tone-6{--issuer:#775075;--issuer-soft:#f9eff7;--issuer-line:#dec9dc}
+.food-tool .issuer-tone-7{--issuer:#984b3c;--issuer-soft:#ffede7;--issuer-line:#ebc6bb}
+.food-tool .issuer-tone-8{--issuer:#76548a;--issuer-soft:#f6effb;--issuer-line:#d8c6e7}
+#companyChips .benefit-choice[aria-pressed=true]{background:var(--issuer-soft,var(--accent));border-color:var(--issuer-line,var(--accent-border))}
+#companyChips .benefit-choice[aria-pressed=true] .issuer-check{background:var(--issuer,var(--accent-text));border-color:var(--issuer,var(--accent-text))}
+#companyChips .benefit-choice-status{color:var(--issuer,var(--accent-text))}
+#hotelFeatures .feature-item:nth-child(4n+1){--choice-fill:#fff0e3;--choice-line:#edc4a9;--choice-ink:#9b4820}
+#hotelFeatures .feature-item:nth-child(4n+2){--choice-fill:#fff1f2;--choice-line:#edc2ca;--choice-ink:#96374a}
+#hotelFeatures .feature-item:nth-child(4n+3){--choice-fill:#fff5dc;--choice-line:#e8d19b;--choice-ink:#865c16}
+#hotelFeatures .feature-item:nth-child(4n+4){--choice-fill:#f8eff7;--choice-line:#dec9dc;--choice-ink:#775075}
+#hotelFeatures .benefit-choice[aria-pressed=true]{background:var(--choice-fill);border-color:var(--choice-line)}
+#hotelFeatures .benefit-choice[aria-pressed=true] .issuer-check{background:var(--choice-ink);border-color:var(--choice-ink)}
+#hotelFeatures .benefit-choice-count{color:var(--choice-ink,var(--accent-text))}
+.food-tool .hero{background:#fffdf9;border-color:#efddc5}
+.food-tool .primary-button{background:#b34c1c;border-color:#b34c1c;box-shadow:0 3px 8px #ad58271a}
+.food-tool .site-logo{background:#b34c1c;border-radius:12px;color:#fff;box-shadow:0 3px 10px #ad582715}
+.food-tool .site-logo svg{width:24px;height:24px}
+.food-tool .benefit-tab[aria-selected=true]{background:#fff7ea;color:#934118;box-shadow:0 2px 5px #75452112}
+.food-tool .benefit-choice:hover{box-shadow:0 3px 8px #75452112}
+.food-tool .benefit-choice:active{transform:translateY(1px)}
+@media(prefers-reduced-motion:reduce){.food-tool .benefit-choice:active{transform:none}}
+
+.motion-reel{display:flex;flex-direction:column;line-height:1.1}
+.motion-glyph{display:block;flex:none;height:1.1em;line-height:1.1}
+.motion-reel.digit-0{transform:translateY(-0.0em)}
+.motion-reel.digit-1{transform:translateY(-1.1em)}
+.motion-reel.digit-2{transform:translateY(-2.2em)}
+.motion-reel.digit-3{transform:translateY(-3.3em)}
+.motion-reel.digit-4{transform:translateY(-4.4em)}
+.motion-reel.digit-5{transform:translateY(-5.5em)}
+.motion-reel.digit-6{transform:translateY(-6.6em)}
+.motion-reel.digit-7{transform:translateY(-7.7em)}
+.motion-reel.digit-8{transform:translateY(-8.8em)}
+.motion-reel.digit-9{transform:translateY(-9.9em)}
+
+#hotelFeatures .benefit-choice-count .motion-number{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.food-tool .deadline-count .motion-number{font-size:16px;font-weight:700}
+#expiryPanel .expiry-countdown strong{font-size:32px;letter-spacing:-.03em}

@@ -127,6 +127,7 @@ try{
   const motionPage=await motionContext.newPage();
   await motionPage.route('**/*',route=>new URL(route.request().url()).origin===url?route.continue():route.abort());
   await motionPage.goto(url+'/privacy.html');
+  await motionPage.addStyleTag({url:url+'/soft-ui.css'});
   const motionResult=await motionPage.evaluate(async()=>{
     const {numberHTML,initNumberMotion}=await import('/number-motion.js');
     document.body.replaceChildren();
@@ -137,7 +138,9 @@ try{
     Element.prototype.animate=function(...args){starts++;return original.apply(this,args);};
     const frame=()=>new Promise(resolve=>setTimeout(resolve,100));
     root.innerHTML=numberHTML('test',128);await frame();
-    const initial=starts, value=root.textContent, label=root.firstElementChild.getAttribute('aria-label');
+    const initial=starts, label=root.firstElementChild.getAttribute('aria-label');
+    await new Promise(resolve=>setTimeout(resolve,700));
+    const value=[...root.querySelectorAll('.motion-digit')].map(slot=>[...slot.querySelectorAll('.motion-glyph')].find(glyph=>{const r=glyph.getBoundingClientRect(),s=slot.getBoundingClientRect();return r.top+r.height/2>s.top && r.top+r.height/2<s.bottom;})?.textContent).join('');
     root.innerHTML=numberHTML('test',128);await frame();const repeated=starts;
     root.innerHTML=numberHTML('test',46);await frame();const changed=starts;
     root.innerHTML='<div hidden>'+numberHTML('hidden',7)+'</div>';await frame();const hidden=starts;

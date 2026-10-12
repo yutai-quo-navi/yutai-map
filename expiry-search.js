@@ -1,4 +1,4 @@
-import {numberHTML} from './number-motion.js?v=20261012-soft-ui';
+import {numberHTML} from './number-motion.js?v=20261013-reel';
 import {japanDay, deadlineDays} from './expiry.js?v=20261009-benefit-order';
 
 export const EXPIRY_GROUPS = [
