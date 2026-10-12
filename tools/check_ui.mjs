@@ -154,6 +154,31 @@ try{
   assert.ok(motionResult.changed>motionResult.repeated,'changed values animate');
   assert.equal(motionResult.hidden,motionResult.changed,'hidden values wait');
   assert.ok(motionResult.revealed>motionResult.hidden,'revealed values animate');
+  await motionPage.addStyleTag({url:url+'/notification-badge.css'});
+  const badgeResult=await motionPage.evaluate(async()=>{
+    const {makeDeadlineBadge,initNotificationBadges}=await import('/notification-badge.js');
+    const root=document.createElement('div');root.id='companyChips';document.body.replaceChildren(root);
+    const stop=initNotificationBadges(root);
+    const render=value=>{
+      const cell=document.createElement('button');cell.className='benefit-choice';
+      const badge=document.createElement('span');badge.className='voucher-deadline-bubble';badge.textContent=value+'日で失効';
+      cell.append(makeDeadlineBadge(badge,'test'));root.replaceChildren(cell);return badge;
+    };
+    const frame=()=>new Promise(resolve=>setTimeout(resolve,100));
+    let badge=render(48);await frame();
+    const text=badge.textContent, first=badge.getAnimations().map(a=>a.animationName);
+    const cellAnimations=root.firstElementChild.getAnimations().length;
+    badge=render(48);await frame();const repeated=badge.getAnimations({subtree:true}).length;
+    badge=render(47);await frame();const changed=badge.getAnimations().map(a=>a.animationName);
+    const reels=root.querySelectorAll('[data-motion-value]').length;stop();
+    return {text,first,cellAnimations,repeated,changed,reels};
+  });
+  assert.equal(badgeResult.text,'あと48日');
+  assert.ok(badgeResult.first.includes('t-badge-slide-in'),'official diagonal slide runs');
+  assert.equal(badgeResult.cellAnimations,0,'choice cell itself does not animate');
+  assert.equal(badgeResult.repeated,0,'unchanged badge does not replay');
+  assert.ok(badgeResult.changed.includes('t-badge-slide-in'),'updated badge animates');
+  assert.equal(badgeResult.reels,0,'badge uses its own motion, not the number reel');
   await motionPage.emulateMedia({reducedMotion:'reduce'});
   assert.deepEqual(await motionPage.evaluate(async()=>{
     const {numberHTML,initNumberMotion}=await import('/number-motion.js');
@@ -162,6 +187,14 @@ try{
     await new Promise(resolve=>setTimeout(resolve,100));
     const result={value:root.textContent,animations:document.getAnimations().length};stop();return result;
   }),{value:'1,234',animations:0});
+  assert.deepEqual(await motionPage.evaluate(async()=>{
+    const {makeDeadlineBadge,initNotificationBadges}=await import('/notification-badge.js');
+    const root=document.createElement('div');root.id='companyChips';document.body.replaceChildren(root);
+    const stop=initNotificationBadges(root),badge=document.createElement('span');badge.textContent='7日で失効';
+    root.append(makeDeadlineBadge(badge,'reduced'));
+    await new Promise(resolve=>setTimeout(resolve,100));
+    const result={text:badge.textContent,open:badge.dataset.open,animations:badge.getAnimations({subtree:true}).length};stop();return result;
+  }),{text:'あと7日',open:'true',animations:0});
   await motionContext.close();
   await writeFile(resolve(output,'lintapple.json'),JSON.stringify(reports,null,2));
   const findings=reports.flatMap(r=>r.findings.map(f=>({width:r.viewport.width,state:r.state,...f})));
