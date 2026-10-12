@@ -2674,6 +2674,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "exp-a9300ca2-bb9a-4b62-a18a-ad092c6eedfc",
+      "code": "3399",
+      "company_name": "丸千代山岡家",
+      "benefit_name": "お食事券",
+      "issue": "",
+      "expiry_date": "2027-01-31",
+      "research_month": "2027-01",
+      "expiry_type": "利用期限",
+      "category": "other",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-12",
+      "status": "confirmed",
+      "notes": "",
+      "issuer_id": "",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "8200-2027-02-points",
       "code": "8200",
       "company_name": "リンガーハット",
