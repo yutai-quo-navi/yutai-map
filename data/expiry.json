@@ -2838,6 +2838,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "exp-da436bcc-d383-4453-a27f-d4f8bb58b8c2",
+      "code": "9823",
+      "company_name": "マミーマートホールディングス",
+      "benefit_name": "株主優待券100円（1千円毎1枚使用可）",
+      "issue": "",
+      "expiry_date": "2027-02-28",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "shopping",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-12",
+      "status": "confirmed",
+      "notes": "",
+      "issuer_id": "",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "exp-087556ef-a0c6-4240-92b0-155d2d0c572d",
       "code": "2702",
       "company_name": "日本マクドナルドホールディングス",
