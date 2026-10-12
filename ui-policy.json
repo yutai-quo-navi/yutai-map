@@ -145,5 +145,11 @@
       ],
       "reason": "Intentional one-pixel visually hidden accessible labels; visible fields retain their readable labels or placeholders."
     }
+  ],
+  "controlSizeRules": [
+    {
+      "selector": ".card-actions button",
+      "minSize": 24
+    }
   ]
 }
