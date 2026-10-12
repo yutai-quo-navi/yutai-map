@@ -22,14 +22,15 @@
 
   <title>株主優待券が使えるお店検索｜優待券使えるお店検索 α</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://yutai-quo-navi.github.io/yutai-map/#website","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","description":"株主優待が使える飲食店・ホテルを、現在地や指定した場所から検索。優待会社・ブランド別ガイドと宿泊優待ガイドで、対象店の探し方や利用条件、公式情報を確認できます。","inLanguage":"ja-JP"},{"@type":"WebApplication","@id":"https://yutai-quo-navi.github.io/yutai-map/#app","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"description":"株主優待が使える飲食店・ホテルを、現在地や指定した場所から検索。優待会社・ブランド別ガイドと宿泊優待ガイドで、対象店の探し方や利用条件、公式情報を確認できます。","inLanguage":"ja-JP","isPartOf":{"@id":"https://yutai-quo-navi.github.io/yutai-map/#website"}}]}</script>
-  <link rel="stylesheet" href="./style.css?v=20261011-guides">
+  <link rel="stylesheet" href="./style.css?v=20261012-ui-quality">
   <link rel="stylesheet" href="./assets/brand.css?v=20261005-brand2">
+  <link rel="stylesheet" href="./ui-quality.css?v=20261012-ui-quality">
 </head>
 <body class="food-tool">
 <header class="site-header">
     <div class="site-brand"><div class="site-logo" aria-hidden="true">Q</div><p class="site-brand-name"><span>株主優待券店舗と</span><span>QUOガソリン給油検索</span></p></div>    <div class="top-actions">
-      <button id="headerSearchButton" class="header-icon-button" type="button" aria-label="検索へ移動" title="検索"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg></button>
-      <button id="menuButton" class="header-icon-button" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu" title="メニュー">☰</button>
+      <button id="headerSearchButton" class="header-icon-button" type="button" aria-label="検索へ移動" title="検索" aria-describedby="headerSearchButtonTooltip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg><span id="headerSearchButtonTooltip" class="ui-tooltip" role="tooltip">検索へ移動</span></button>
+      <button id="menuButton" class="header-icon-button" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu" title="メニュー" aria-describedby="menuButtonTooltip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span id="menuButtonTooltip" class="ui-tooltip" role="tooltip">メニュー</span></button>
       <div id="navMenu" class="nav-menu" hidden>
       <section class="menu-howto" aria-labelledby="menuHowtoTitle">
         <h2 id="menuHowtoTitle">使い方</h2>
@@ -44,7 +45,7 @@
         <a class="guide-menu-link" href="./guides/hotels/">宿泊優待ガイド</a>
         <button id="historyButton" type="button">更新履歴</button>
         <button id="privacyButton" type="button">プライバシー</button>
-        <button id="aboutButton" type="button" aria-haspopup="dialog" aria-controls="aboutDialog">このサービスについて</button>
+        <button id="aboutButton" type="button" aria-haspopup="dialog">このサービスについて</button>
         <button id="menuFeedbackButton" type="button">情報提供</button>
       </div>
     </div>
@@ -61,7 +62,7 @@
       <h1 class="tool-title">〝今いる近くで〟<br class="mobile-break">優待券が使えるお店を探す。</h1>
       <p class="lead">現在地や指定した場所から、近い順に。</p>
 
-      <div id="searchMode" class="search-mode" aria-label="検索地点">
+      <div id="searchMode" class="search-mode" role="group" aria-label="検索地点">
         <button type="button" class="search-mode-button" data-mode="current" aria-pressed="true">現在地</button>
         <button type="button" class="search-mode-button" data-mode="place" aria-pressed="false">場所を指定</button>
       </div>
@@ -81,7 +82,7 @@
       </div>
 
       <form id="placeSearchPanel" class="place-search-panel" hidden>
-        <input id="placeInput" type="search" autocomplete="off" placeholder="福岡、天神、博多駅、ホテル名など">
+        <label for="placeInput" class="sr-only">検索する場所・駅・ホテル名</label><input id="placeInput" type="search" autocomplete="off" placeholder="福岡、天神、博多駅、ホテル名など">
         <div id="placeSearchActions" class="search-action-row"><button class="primary-button" type="submit">この場所で探す</button></div>
         <div id="placeSuggestions" class="place-suggestions" hidden></div>
       </form>
@@ -101,9 +102,9 @@
         <span class="section-title-row">
           <span id="selectionSummary" class="selection-summary" aria-live="polite"></span>
           <span class="selection-hint">複数選択できます</span>
-          <button id="companyPickerButton" class="text-button selection-change" type="button" aria-haspopup="dialog" aria-controls="companyPickerDialog" hidden>選択・変更</button>
+          <button id="companyPickerButton" class="text-button selection-change" type="button" aria-haspopup="dialog">選択・変更</button>
         </span>
-        <div id="companyChips" class="chips" aria-label="優待会社の選択"></div>
+        <div id="companyChips" class="chips" role="group" aria-label="優待会社の選択"></div>
       </div>
 
       <div id="brandControls" class="brand-controls">
@@ -128,7 +129,7 @@
     <section class="results-section">
       <div class="section-title-row sticky-title">
         <h2>近い順</h2>
-        <span id="resultCount" class="result-count"></span>
+        <span id="resultCount" class="result-count" data-ui-number></span>
       </div>
       <div id="results" class="results empty-state">
         <p>現在地から探すと<br>ここに近い優待店が表示されます</p>
@@ -136,7 +137,7 @@
     </section>
     <section class="personal-tools" aria-label="便利な機能">
       <p class="personal-tools-caption">便利な機能</p>
-      <button id="favoritesButton" type="button" aria-label="お気に入りのお店を開く" aria-haspopup="dialog" aria-controls="favoritesDialog" title="お気に入りのお店">
+      <button id="favoritesButton" type="button" aria-label="お気に入りのお店を開く" aria-haspopup="dialog" title="お気に入りのお店">
         <span class="personal-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.8 5.7 6.3.9-4.5 4.4 1.1 6.2-5.7-3-5.7 3 1.1-6.2-4.5-4.4 6.3-.9Z"/></svg></span>
         <span class="personal-tool-label">お気に入り</span><span id="favoritesCount" hidden>0</span>
       </button>
@@ -144,7 +145,7 @@
   </main>
 
   <dialog id="companyPickerDialog" class="company-picker" aria-labelledby="companyPickerTitle">
-    <div class="picker-head"><div class="dialog-head"><h2 id="companyPickerTitle">使いたい優待を選ぶ</h2><button id="companyPickerClose" class="icon-button" type="button" aria-label="変更せず閉じる">×</button></div>
+    <div class="picker-head"><div class="dialog-head"><h2 id="companyPickerTitle">使いたい優待を選ぶ</h2><button id="companyPickerClose" class="icon-button" type="button" aria-label="変更せず閉じる" aria-describedby="companyPickerCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="companyPickerCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button></div>
       <label class="picker-search-label" for="companyPickerSearch">優待会社・系列店名で検索</label><input id="companyPickerSearch" type="search" placeholder="例：すかいらーく、ガスト" autocomplete="off">
       <div class="picker-tools"><span id="companyPickerCount" aria-live="polite"></span><button id="companyPickerAll" type="button">すべて選択</button><button id="companyPickerClear" type="button">解除</button></div>
     </div>
@@ -153,16 +154,16 @@
   </dialog>
 
   <dialog id="favoritesDialog" class="personal-dialog" aria-labelledby="favoritesTitle">
-    <div class="dialog-head"><h2 id="favoritesTitle">お気に入りのお店</h2><button id="favoritesClose" class="icon-button" type="button" aria-label="閉じる">×</button></div>
+    <div class="dialog-head"><h2 id="favoritesTitle">お気に入りのお店</h2><button id="favoritesClose" class="icon-button" type="button" aria-label="閉じる" aria-describedby="favoritesCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="favoritesCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button></div>
     <div class="personal-body"><p class="personal-note">このブラウザ内だけに保存します。端末間の同期はありません。保存時の情報なので、ご利用前に公式情報をご確認ください。</p><p class="storage-status" role="status"></p><div id="favoritesList"></div></div>
   </dialog>
-  <dialog id="historyDialog" class="history-dialog">
+  <dialog id="historyDialog" class="history-dialog" aria-labelledby="historyTitle">
     <div class="dialog-head">
       <div>
-        <h2>店舗更新履歴</h2>
+        <h2 id="historyTitle">店舗更新履歴</h2>
         <p class="dialog-subtitle">公式店舗DBで検出した追加・掲載終了・情報変更を蓄積しています</p>
       </div>
-      <button id="historyClose" class="icon-button" aria-label="閉じる">×</button>
+      <button id="historyClose" class="icon-button" aria-label="閉じる" aria-describedby="historyCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="historyCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button>
     </div>
     <div class="history-body">
       <div class="history-controls">
@@ -196,7 +197,7 @@
   <dialog id="aboutDialog" class="privacy-dialog" aria-labelledby="aboutTitle">
     <div class="dialog-head">
       <h2 id="aboutTitle">このサービスについて</h2>
-      <button id="aboutClose" class="icon-button" type="button" aria-label="閉じる">×</button>
+      <button id="aboutClose" class="icon-button" type="button" aria-label="閉じる" aria-describedby="aboutCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="aboutCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button>
     </div>
     <div class="dialog-body">
       <p>現在地や指定した場所を基準に、株主優待券が使える店舗を近い順に探せる店舗検索サービスです。すかいらーくホールディングス、コロワイド、クリエイト・レストランツ・ホールディングス、物語コーポレーション、ゼンショーホールディングス、吉野家ホールディングス、トリドールホールディングス、松屋フーズホールディングスに対応しています。</p>
@@ -204,10 +205,10 @@
     </div>
   </dialog>
 
-  <dialog id="privacyDialog" class="privacy-dialog">
+  <dialog id="privacyDialog" class="privacy-dialog" aria-labelledby="privacyTitle">
     <div class="dialog-head">
-      <h2>現在地とプライバシー</h2>
-      <button id="privacyClose" class="icon-button" aria-label="閉じる">×</button>
+      <h2 id="privacyTitle">現在地とプライバシー</h2>
+      <button id="privacyClose" class="icon-button" aria-label="閉じる" aria-describedby="privacyCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="privacyCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button>
     </div>
     <div class="dialog-body">
       <p>このサイトはログイン不要です。</p>
@@ -223,10 +224,10 @@
     </div>
   </dialog>
 
-  <dialog id="feedbackDialog" class="feedback-dialog">
+  <dialog id="feedbackDialog" class="feedback-dialog" aria-labelledby="feedbackTitle">
     <div class="dialog-head">
-      <h2>情報提供</h2>
-      <button id="feedbackClose" class="icon-button" aria-label="閉じる">×</button>
+      <h2 id="feedbackTitle">情報提供</h2>
+      <button id="feedbackClose" class="icon-button" aria-label="閉じる" aria-describedby="feedbackCloseTooltip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg><span id="feedbackCloseTooltip" class="ui-tooltip" role="tooltip">閉じる</span></button>
     </div>
     <form id="feedbackForm" class="feedback-form">
       <p class="feedback-intro">優待情報の精度向上にご協力ください。内容は確認後に反映します。</p>
@@ -276,7 +277,7 @@
       </div></div>
   <footer class="footer site-footer"><div class="site-footer-brand">株主優待券店舗とQUOガソリン給油検索</div><div class="footer-links"><a href="./guides/dining/">優待・ブランドガイド</a><a href="./guides/hotels/">宿泊優待ガイド</a><button id="feedbackButton" type="button">情報提供</button><a href="./privacy.html">プライバシー</a><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener noreferrer">出典: OpenPOI API</a></div><p>店舗・優待情報は変更される場合があります。ご利用前に各社公式情報をご確認ください。</p><a class="creator-link" href="https://x.com/yutai_samurai" target="_blank" rel="noopener noreferrer" aria-label="運営者 yutai_samurai のX"><img src="./assets/yutai-samurai.png" width="17" height="17" alt="" loading="lazy"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-7.4L5.5 22H2.3l7.3-8.5L.8 2h6.5l4.4 6.7L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg><span>@yutai_samurai</span></a></footer>
 
-  <script src="./app.js?v=20261011-official-brands" type="module"></script>
+  <script src="./app.js?v=20261012-ui-quality" type="module"></script>
 </body>
 </html>
 

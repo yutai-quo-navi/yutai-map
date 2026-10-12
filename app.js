@@ -1,5 +1,5 @@
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
-import {initExpirySearch} from './expiry-search.js?v=20261009-next30';
+import {initExpirySearch} from './expiry-search.js?v=20261012-ui-quality';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261011-guides';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
@@ -183,6 +183,7 @@ async function init(){
       if (target) chooseBrand(brandKey(target));
     }
     updateFavoritesCount();
+    document.body.dataset.appReady = 'true';
   } catch(e){
     setStatus('優待データを読み込めませんでした');
   }
@@ -329,6 +330,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
     (!feature && companies.find(company => company.id === issuer)?.showExpiredDeadline ? latestExpiredDeadline(allVoucherDeadlines(), issuer) : null);
   if(!entry || entry.days>=60) return null;
   const bubble=document.createElement('span');
+  bubble.setAttribute('data-ui-number','');
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
   const count=document.createElement('span'); count.className='deadline-count';
@@ -390,10 +392,12 @@ function renderChips(){
     badge.dataset.issuer=c.id;
     badge.className='selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
     badge.setAttribute('aria-pressed',String(active));
-    badge.setAttribute('aria-label',c.name);
     badge.title=c.name;
     const name=document.createElement('span'); name.className='selected-issuer-name benefit-choice-name';
     name.textContent=shortIssuerName(c);
+    const check=document.createElement('span'); check.className='issuer-check';
+    check.setAttribute('aria-hidden','true');
+    name.prepend(check);
     badge.appendChild(name);
     if(bubble) badge.appendChild(bubble);
     else if(active) {
@@ -947,11 +951,12 @@ function renderResults(items, radius){
     const mapQuery = [storeName, storeAddress].filter(Boolean).join(' ');
     const mapUrl=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
     const officialUrl = safeExternalUrl(x.company.sourceUrl);
+    const routeUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(x.lat+','+x.lng)}`;
     const saintmarcDiscount = x.company.id === 'saintmarc' && [10,20].includes(x.benefitDiscountPercent)
       ? `<span class="badge discount-${x.benefitDiscountPercent}">${x.benefitDiscountPercent}% OFF</span>` : '';
     card.innerHTML=`
       <div class="card-top">
-        <div class="distance">${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
+        <div class="distance" data-ui-number>${distanceText(x.distance)}<small>${esc(lastCenterLabel)}から</small></div>
         <div class="store">
           <div class="store-title-row"><h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener">${esc(storeName)}</a></h3></div>
           <p class="store-address">${esc(storeAddress)}</p>
@@ -966,7 +971,7 @@ function renderResults(items, radius){
       </div>
       ${(x.company.locationMode==='openpoi' || x.company.showStoreNote) && x.company.note ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
       <div class="card-actions">
-        <a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener">Googleマップで見る</a>
+        <a class="issuer-map-button" href="${routeUrl}" target="_blank" rel="noopener">経路を見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
         <button class="favorite-toggle" type="button" aria-pressed="false">☆ 保存</button>
         <button class="feedback-link" type="button">情報修正</button>
