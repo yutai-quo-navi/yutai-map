@@ -2648,6 +2648,28 @@
       "expiry_year": 2026
     },
     {
+      "id": "exp-70b6bb97-a524-4d51-89fb-52faeec38897",
+      "code": "9104",
+      "company_name": "商船三井",
+      "benefit_name": "フェリー割引券5000円引",
+      "issue": "",
+      "expiry_date": "2026-12-31",
+      "research_month": "2026-12",
+      "expiry_type": "利用期限",
+      "category": "leisure",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-12",
+      "status": "confirmed",
+      "notes": "",
+      "issuer_id": "",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2026
+    },
+    {
       "id": "9828-2026-12-1",
       "code": "9828",
       "company_name": "Genki Global Dining Concepts",
