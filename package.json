@@ -6,9 +6,15 @@
     "node": ">=22.0.0"
   },
   "devDependencies": {
+    "lintapple": "0.1.20",
     "wrangler": "4.148.0"
   },
   "overrides": {
     "sharp": "0.35.5"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "lint:ui": "node tools/check_ui.mjs",
+    "test:ui": "node tools/check_ui.mjs --strict"
   }
 }

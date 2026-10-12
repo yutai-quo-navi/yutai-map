@@ -1,0 +1,143 @@
+{
+  "fonts": [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Hiragino Sans",
+    "Yu Gothic UI",
+    "Meiryo",
+    "sans-serif",
+    "system-ui"
+  ],
+  "fontSizes": [
+    12,
+    13,
+    14,
+    16,
+    18,
+    20,
+    24,
+    28,
+    32
+  ],
+  "typeRules": [
+    {
+      "selector": ".benefit-choice-status, .benefit-choice .voucher-deadline-bubble, .issuer-check, .personal-tool-label",
+      "sizes": [
+        12
+      ]
+    },
+    {
+      "selector": ".ui-tooltip",
+      "sizes": [
+        12
+      ]
+    },
+    {
+      "selector": ".icon-button, .header-icon-button",
+      "sizes": [
+        20,
+        22,
+        24
+      ]
+    },
+    {
+      "selector": "h1",
+      "sizes": [
+        28,
+        32
+      ]
+    },
+    {
+      "selector": "h2",
+      "sizes": [
+        15,
+        16,
+        17,
+        18,
+        20,
+        21,
+        24
+      ]
+    },
+    {
+      "selector": "h3",
+      "sizes": [
+        16,
+        18
+      ]
+    },
+    {
+      "selector": "button, [role=button]",
+      "sizes": [
+        13,
+        14,
+        16
+      ]
+    },
+    {
+      "selector": ".site-logo",
+      "sizes": [
+        18,
+        20
+      ]
+    },
+    {
+      "selector": ".icon-button",
+      "sizes": [
+        20,
+        22,
+        24
+      ]
+    },
+    {
+      "selector": ".header-icon-button",
+      "sizes": [
+        20,
+        22,
+        24
+      ]
+    },
+    {
+      "selector": ".expiry-countdown strong",
+      "sizes": [
+        28,
+        32
+      ]
+    }
+  ],
+  "minControlSize": 44,
+  "minControlGap": 8,
+  "minControlInset": 8,
+  "controlContainers": [
+    "[data-ui-container]"
+  ],
+  "minLayoutGap": 8,
+  "bannedCopy": [],
+  "viewports": [
+    {
+      "width": 320,
+      "height": 740
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "colorSchemes": [
+    "light"
+  ],
+  "exceptions": [
+    {
+      "selector": ".sr-only, .visually-hidden",
+      "rules": [
+        "content-clipping"
+      ],
+      "reason": "Intentional one-pixel visually hidden accessible labels; visible fields retain their readable labels or placeholders."
+    }
+  ]
+}

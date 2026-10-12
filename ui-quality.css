@@ -1,0 +1,174 @@
+/* Shared quality rules: readable text, generous targets and resilient layouts. */
+.food-tool{--muted:#665a4d;--muted-2:#665a4d;font-size:16px;line-height:1.6}
+.food-tool :is(button,a,input,select,textarea):focus-visible{outline:3px solid #a83e08;outline-offset:3px}
+.food-tool :is(button,a,input,select,textarea){scroll-margin-block:24px}
+.food-tool button:not(:disabled),.food-tool select{cursor:pointer}
+.food-tool input:not([type=checkbox]),.food-tool select,.food-tool textarea{font-size:16px}
+.food-tool .site-header,.food-tool .wrap,.food-tool .site-footer{max-width:760px}
+.food-tool .top-actions{gap:8px}
+.food-tool .header-icon-button,.food-tool .icon-button{position:relative;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px}
+.food-tool .site-brand-name{font-size:14px;overflow-wrap:anywhere}
+.food-tool .tool-nav{gap:8px}
+.food-tool .tool-nav a{font-size:14px}
+.food-tool .hero{padding:24px}
+.food-tool .tool-title{font-size:32px;line-height:1.4;letter-spacing:-.025em;overflow-wrap:anywhere}
+.food-tool .mobile-break{display:none}
+.food-tool .lead,.food-tool .status{font-size:14px;line-height:1.7}
+.food-tool .search-mode{gap:8px}
+.food-tool .search-mode-button{min-height:44px;font-size:14px}
+.food-tool .search-radius label{font-size:12px}
+.food-tool .primary-button{font-size:16px;min-height:48px;padding:12px 16px}
+.food-tool .benefit-body{padding:20px}
+.food-tool .section-title-row{flex-wrap:wrap;gap:8px 12px}
+.food-tool .selection-summary{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.food-tool .selection-hint{font-size:12px;color:var(--muted)}
+.food-tool .text-button{min-height:44px;padding:8px 12px;font-size:14px;color:var(--accent-text)}
+.food-tool .selection-change{margin-left:auto;border:1px solid var(--line);border-radius:12px}
+.food-tool .benefit-tabs{gap:8px}
+.food-tool .benefit-tab{font-size:14px;min-height:48px;white-space:normal}
+#companyChips{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#companyChips .benefit-choice{min-height:64px;padding:10px 8px;font-size:14px;line-height:1.5;gap:4px}
+#companyChips .benefit-choice-name{gap:6px}
+.issuer-check{flex:none;display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid var(--line);border-radius:50%;font-size:12px;line-height:1;background:#fff;color:var(--accent-text)}
+.benefit-choice[aria-pressed=true] .issuer-check{background:var(--accent-text);color:#fff;border-color:var(--accent-text)}
+.benefit-choice[aria-pressed=true] .issuer-check::before{content:'';width:5px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(45deg)}
+.food-tool [data-ui-number]{font-variant-numeric:tabular-nums}
+.food-tool .search-mode-button{color:var(--muted)}
+.food-tool .personal-tools-caption,.food-tool .site-footer-brand{font-size:13px}
+.food-tool .footer-links button{min-width:44px}
+#expiryPanel .expiry-register button{font-size:14px}
+.food-tool input::placeholder,.food-tool textarea::placeholder{color:var(--muted);opacity:1}
+.food-tool .badge.beta{color:#565b62;background:#f5f5f6}
+.food-tool .picker-tools button{min-width:44px}
+.food-tool .picker-list{grid-auto-rows:max-content}
+.food-tool .picker-row{align-self:stretch}
+.food-tool .benefit-choice-status,.food-tool .benefit-choice .voucher-deadline-bubble,.food-tool .benefit-choice .deadline-count{font-size:12px;line-height:1.5}
+.food-tool .benefit-choice[aria-pressed=true]{color:var(--text)}
+.food-tool .brand-controls label{font-size:14px;font-weight:600;color:var(--text)}
+.food-tool .brand-help,.food-tool .brand-selection,.food-tool .brand-option small{font-size:13px;line-height:1.7}
+.food-tool .brand-option{min-height:48px;padding:14px;gap:6px}
+.food-tool .brand-option strong{font-size:16px}
+.food-tool .brand-suggestions,.food-tool .place-suggestions{scroll-padding:12px}
+.food-tool .card{padding:20px;border-radius:20px;overflow:visible}
+.food-tool .card-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px}
+.food-tool .card-top .store{grid-column:1;grid-row:1}
+.food-tool .card-top .distance{grid-column:2;grid-row:1;max-width:112px;text-align:right;font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.4}
+.food-tool .distance small{font-size:12px;letter-spacing:0;overflow-wrap:anywhere}
+.food-tool .store-title-row{flex-wrap:wrap;gap:8px}
+.food-tool .store-title-row .store-name{flex-basis:100%;font-size:18px;font-weight:700;line-height:1.6}
+.food-tool .store-title-row>.voucher-deadline-bubble{margin:0;align-self:flex-start;font-size:12px;min-height:24px;white-space:normal;line-height:1.5}
+.food-tool .voucher-deadline-bubble .deadline-count{font-size:inherit}
+.food-tool .store-address,.food-tool .feature-note,.food-tool .personal-note,.food-tool .personal-meta{font-size:14px;line-height:1.7}
+.food-tool .badges{gap:8px}
+.food-tool .badge,.food-tool .badge.beta{font-size:12px;line-height:1.5;padding:5px 10px}
+.food-tool .card-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px;padding-top:16px}
+.food-tool .card-actions a,.food-tool .card-actions button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 8px;border:1px solid var(--line);border-radius:12px;font-size:14px;line-height:1.5;text-align:center;overflow-wrap:anywhere;background:#fff;color:var(--text)}
+.food-tool .card-actions .issuer-map-button{background:var(--accent-text);color:white;border-color:var(--accent-text);font-size:14px;min-height:44px}
+.food-tool .favorite-toggle[aria-pressed=true]{background:var(--issuer-soft);border-color:var(--issuer);color:var(--issuer)}
+.food-tool .result-count,.food-tool .distance,.food-tool .deadline-count,.food-tool .expiry-countdown,.food-tool .expiry-date{font-variant-numeric:tabular-nums}
+.food-tool .result-count{font-size:14px}
+.food-tool .empty-state{padding:24px;font-size:14px;line-height:1.8}
+.food-tool .picker-head{padding:20px 20px 12px}
+.food-tool .picker-head h2{font-size:20px}
+.food-tool .picker-search-label{font-size:14px}
+.food-tool .picker-tools{flex-wrap:wrap;gap:8px;font-size:14px}
+.food-tool .picker-tools button{min-height:44px;padding:8px 10px}
+.food-tool .picker-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start;padding:16px 20px;scroll-padding:12px}
+.food-tool .picker-row{min-width:0;min-height:72px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px 10px;gap:8px;background:var(--surface)}
+.food-tool .picker-row:has(input:checked){background:var(--issuer-soft);border-color:var(--issuer-line)}
+.food-tool .picker-row:focus-within{outline:3px solid var(--accent-text);outline-offset:2px}
+.food-tool .picker-row input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent-text)}
+.food-tool .picker-row strong{color:var(--text);font-size:14px}
+.food-tool .picker-row small{font-size:12px}
+.food-tool .picker-empty{grid-column:1/-1}
+.food-tool .picker-foot{padding:16px 20px max(16px,env(safe-area-inset-bottom))}
+.food-tool .picker-foot p{font-size:12px;line-height:1.7}
+.food-tool .company-picker{max-width:620px;max-height:90dvh}
+.food-tool .dialog-head h2{overflow-wrap:anywhere}
+.food-tool .dialog-head{gap:12px}
+.food-tool .nav-menu{max-height:calc(100dvh - 120px);padding:12px;overflow-x:hidden;scroll-padding:12px}
+.food-tool .nav-menu button,.food-tool .nav-menu .guide-menu-link{min-height:44px;font-size:14px}
+.food-tool .nav-menu .howto-sub,.food-tool .nav-menu li,.food-tool .howto-expiry{font-size:13px;line-height:1.7}
+.food-tool .personal-tool-label{font-size:12px;line-height:1.5}
+.food-tool .personal-tools>button{width:88px;padding:8px}
+.food-tool .personal-tool-icon{width:44px;height:44px}
+.food-tool .personal-card h3{font-size:18px}
+.food-tool .personal-card p,.food-tool .personal-card .card-actions a,.food-tool .personal-card .card-actions button{font-size:14px}
+.food-tool .privacy-note p,.food-tool .privacy-title,.food-tool .site-footer{font-size:13px;line-height:1.8}
+.food-tool .footer-links{gap:8px 16px}
+.food-tool .footer-links a,.food-tool .footer-links button{display:inline-flex;align-items:center;min-height:44px;font-size:13px}
+.food-tool .site-footer .creator-link{min-height:44px;font-size:12px}
+.food-tool .feature-card>a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent-text);font-size:14px}
+.food-tool .feature-radius{min-height:44px}
+.food-tool .feature-caption,.food-tool .feature-radius-label{font-size:12px;line-height:1.6}
+.food-tool .feature-conditions{font-size:14px}
+.food-tool .history-note,.food-tool .history-meta,.food-tool .history-address,.food-tool .history-detail{font-size:13px;line-height:1.7}
+.food-tool .history-pagination button{min-height:44px;font-size:14px}
+.food-tool .feedback-form label,.food-tool .feedback-intro,.food-tool .feedback-note{font-size:14px}
+.food-tool .feedback-form{max-height:65dvh;overflow-y:auto}
+.ui-tooltip{position:absolute;z-index:5;right:0;top:calc(100% + 6px);width:max-content;max-width:180px;background:var(--text);color:#fff;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:400;line-height:1.5;pointer-events:none;visibility:hidden}
+button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
+.dialog-head .ui-tooltip{top:0;right:calc(100% + 6px)}
+
+/* Expiry retains ownership and deadline semantics, with a shared card hierarchy. */
+#expiryPanel{background:transparent;color:var(--text)}
+#expiryPanel .expiry-heading h2{font-size:24px;font-weight:700}
+#expiryPanel .expiry-heading p{color:var(--muted);line-height:1.7}
+.expiry-register{background:var(--surface-soft);border:1px solid var(--line);border-radius:14px;flex-wrap:wrap}
+#expiryPanel :is(.expiry-register button,#expiryParse,#expiryImport){background:var(--accent-text);border-color:var(--accent-text);border-radius:12px;min-height:44px;white-space:normal}
+.expiry-day-options{gap:8px}
+.expiry-day-options label,.expiry-own-button{border-color:var(--line);border-radius:12px;min-height:44px;font-size:14px}
+.expiry-day-options label:has(input:checked),.expiry-own-button:has(input:checked){background:var(--accent-text);border-color:var(--accent-text)}
+#expiryPanel input[type=checkbox]{accent-color:var(--accent-text);width:18px;height:18px}
+.expiry-own-button:focus-within,.expiry-day-options label:focus-within{outline:3px solid var(--accent-text);outline-offset:3px}
+.expiry-common{border-color:var(--line)}
+.expiry-common legend,.expiry-note,.expiry-common .expiry-note,.expiry-save-status{font-size:13px;line-height:1.8;color:var(--muted)}
+#expiryPanel .expiry-view-tabs{gap:8px}
+#expiryPanel .expiry-view-tabs button{font-size:14px}
+#expiryPanel .expiry-view-tabs button[aria-pressed=true]{color:var(--accent-text);border-bottom-color:var(--accent-text);font-weight:700}
+.expiry-search-label input{min-height:48px;padding:12px;border-radius:12px;background:#fff}
+.expiry-group h2{font-size:18px;font-weight:700;margin-bottom:12px}
+.expiry-list{display:grid;gap:12px}
+.expiry-row{grid-template-columns:100px minmax(0,1fr) 110px;gap:16px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.expiry-row:has(.is-soon){border-color:#dfb28a;background:#fff9f1}
+.expiry-row:has(.is-critical){border-color:#dca899;background:#fff5f2}
+.expiry-countdown{color:var(--accent-text);background:var(--surface-soft);font-size:14px;padding:10px 4px;border-radius:12px}
+.expiry-countdown strong{font-size:32px;font-weight:700}
+.expiry-countdown.is-soon{color:#a6420c;background:#ffecd7}
+.expiry-countdown.is-critical{color:#fff;background:#ab3023}
+.expiry-urgency{display:block;font-size:12px;line-height:1.6;font-weight:700;margin-bottom:4px}
+.expiry-benefit{padding-left:0;border:0;font-size:16px;font-weight:600}
+.expiry-benefit small,.expiry-benefit-description{font-size:13px;font-weight:400;color:var(--muted);line-height:1.7;margin-top:6px}
+.expiry-benefit .expiry-date{font-size:14px;font-weight:600;color:var(--text)}
+.expiry-own-button{padding:8px;white-space:normal;gap:8px}
+.expiry-alerts{border-radius:16px;font-size:14px;background:#fff5f2}
+@media(max-width:520px){
+  .food-tool .site-header{gap:12px 8px;padding-top:calc(16px + env(safe-area-inset-top))}
+  .food-tool .site-brand{gap:8px}
+  .food-tool .site-brand-name{font-size:12px;line-height:1.5}
+  .food-tool .site-logo{width:34px;height:34px}
+  .food-tool .wrap{padding:20px 14px 28px}
+  .food-tool .hero{padding:20px 16px}
+  .food-tool .tool-title{font-size:28px}
+  .food-tool .benefit-body{padding:16px}
+  #companyChips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .food-tool .selection-hint{order:3;flex-basis:100%}
+  .food-tool .search-action-row{grid-template-columns:minmax(0,1fr) 100px;gap:8px}
+  .food-tool .search-action-row .primary-button{font-size:14px}
+  .food-tool .card{padding:16px}
+  .food-tool .card-top{gap:8px}
+  .food-tool .card-top .distance{max-width:86px;font-size:18px}
+  .food-tool .distance small{font-size:12px}
+  .food-tool .store-name{font-size:18px}
+  .food-tool .company-picker{max-height:90dvh}
+  .food-tool .picker-head{padding:16px 16px 8px}
+  .food-tool .picker-list{padding:12px 16px}
+  .food-tool .picker-row{gap:6px;padding:12px 8px}
+  .food-tool .picker-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .expiry-row{grid-template-columns:80px minmax(0,1fr);gap:12px;padding:14px}
+  .expiry-countdown strong{font-size:28px}
+  .expiry-own-button{grid-column:1/-1;justify-self:end;min-width:120px}
+  .expiry-benefit{font-size:16px}
+  .expiry-day-options label{font-size:13px;gap:4px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.food-tool *{scroll-behavior:auto;transition:none;animation:none}}
