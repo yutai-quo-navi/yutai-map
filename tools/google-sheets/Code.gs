@@ -62,6 +62,12 @@ function normalize_(input) {
   return r;
 }
 function key_(r) {return JSON.stringify([r.code,r.benefit_name,r.issue||'',r.expiry_type,r.expiry_date||r.research_month]);}
+// Names extracted from images vary; match the stock, deadline and type first.
+function similarCoupon_(a,b) {
+  return a.code===b.code&&a.expiry_type===b.expiry_type&&
+    (a.expiry_date||a.research_month)===(b.expiry_date||b.research_month)&&
+    (!a.issue||!b.issue||a.issue===b.issue);
+}
 function literal_(v) { return /^[=+\-@]/.test(String(v)) ? "'"+v : v; }
 function saveRecord(input) {
   var lock=LockService.getScriptLock(); lock.waitLock(20000);
@@ -72,6 +78,10 @@ function saveRecord(input) {
     var r=normalize_(input), newYear=old&&r.research_year!==old.research_year;
     var target=old&&!newYear ? old : null;
     if(rows.some(function(v){return (!target||v.id!==target.id)&&key_(v)===key_(r);})) throw new Error('同じ優待・発行回・期限が既にあります。既存の記録を編集してください。');
+    var similar=rows.filter(function(v){return (!target||v.id!==target.id)&&similarCoupon_(v,r);});
+    var distinct=Array.isArray(input._distinctFrom)?input._distinctFrom:[];
+    if(!target&&similar.some(function(v){return distinct.indexOf(v.id)<0;}))
+      throw new Error('同じ銘柄・期限・種類の記録があります。優待名の表記違いの可能性があります。既存の記録を確認してください。');
     r.id=target ? target.id : 'exp-'+Utilities.getUuid().toLowerCase();
     var line=target ? target._row : s.getLastRow()+1;
     var values=FIELDS.map(function(k){return k==='research_year'||k==='research_month_number' ? Number(r[k]) : k==='expiry_date' ? (r[k] ? Number(r[k].slice(-2)) : '') : literal_(r[k]);});

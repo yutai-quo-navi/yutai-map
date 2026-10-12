@@ -100,7 +100,7 @@ function saveMobileRecord(input) {
 }
 function checkMobileRecords(inputs) {
   if(!Array.isArray(inputs)||inputs.length<1||inputs.length>10) throw new Error('一度に確認できるのは10件までです。');
-  var catalog=companyCatalog_(),rows=rows_(sheet_()),batch={},issues=[];
+  var catalog=companyCatalog_(),rows=rows_(sheet_()),batch={},prior=[],issues=[];
   inputs.forEach(function(input,index){
     var c=catalog.find(function(v){return v.code===String(input.code||'');});
     if(!c) throw new Error((index+1)+'件目の会社を選んでください。');
@@ -109,7 +109,38 @@ function checkMobileRecords(inputs) {
     var k=key_(r);
     if(same) issues.push({index:index,kind:'existing',record:same});
     else if(batch[k]!==undefined) issues.push({index:index,kind:'batch',otherIndex:batch[k]});
-    else batch[k]=index;
+    else {
+      var similar=rows.filter(function(old){return !input.id&&old.id!==input.id&&similarCoupon_(old,r)&&
+        (!Array.isArray(input._distinctFrom)||input._distinctFrom.indexOf(old.id)<0);});
+      var batchSimilar=prior.find(function(v){return similarCoupon_(v.record,r);});
+      if(similar.length) issues.push({index:index,kind:'similar',record:similar[0],records:similar});
+      else if(batchSimilar) issues.push({index:index,kind:'batch',otherIndex:batchSimilar.index});
+      batch[k]=index;
+    }
+    prior.push({index:index,record:r});
   });
   return {issues:issues};
+}
+
+function deleteMobileRecord(input) {
+  if(!input||!input.id||!input._version) throw new Error('削除する記録を選び直してください。');
+  var lock=LockService.getScriptLock();lock.waitLock(20000);
+  try {
+    var sheet=sheet_(),record=rows_(sheet).find(function(r){return r.id===input.id;});
+    if(!record) throw new Error('この記録は既に削除されています。再読み込みしてください。');
+    if(record._version!==input._version) throw new Error('別の編集が入っています。内容を再確認してから削除してください。');
+    var book=book_(),archive=book.getSheetByName('削除履歴')||book.insertSheet('削除履歴');
+    var headers=HEADERS.concat(['削除日時']);
+    if(archive.getLastRow()===0) archive.getRange(1,1,1,headers.length).setValues([headers]);
+    else if(JSON.stringify(archive.getRange(1,1,1,headers.length).getValues()[0])!==JSON.stringify(headers))
+      throw new Error('削除履歴の列が変更されています。削除を中止しました。');
+    var values=sheet.getRange(record._row,1,1,HEADERS.length).getValues()[0]
+      .map(function(v){return typeof v==='string'?literal_(v):v;});
+    values.push(new Date().toISOString());
+    archive.getRange(archive.getLastRow()+1,1,1,headers.length).setValues([values]);
+    SpreadsheetApp.flush();
+    sheet.deleteRow(record._row);
+    SpreadsheetApp.flush();
+    return {deletedId:record.id,data:getEditorData(),sync:queueExpirySync_()};
+  } finally {lock.releaseLock();}
 }
