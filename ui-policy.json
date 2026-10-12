@@ -22,6 +22,12 @@
   ],
   "typeRules": [
     {
+      "selector": ".benefit-choice-count",
+      "sizes": [
+        12
+      ]
+    },
+    {
       "selector": ".benefit-choice-status, .benefit-choice .voucher-deadline-bubble, .issuer-check, .personal-tool-label",
       "sizes": [
         12

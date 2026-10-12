@@ -115,8 +115,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       name.textContent = feature.shortName || feature.issuer.name;
       const count = document.createElement('span'); count.className = 'benefit-choice-count';
       count.textContent = `（${feature.stores.length}件）`;
-      nameRow.append(name, count); button.append(nameRow);
-      button.setAttribute('aria-label', `${feature.title}、${feature.stores.length}${unit}${feature.subtitle ? '、'+feature.subtitle : ''}`);
+      const check=document.createElement('span'); check.className='issuer-check'; check.setAttribute('aria-hidden','true');
+      nameRow.append(check,name,count); button.append(nameRow);
+      count.setAttribute('data-ui-number','');
+      button.title=feature.title;
       button.setAttribute('aria-controls', resultsId);
       const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType);
       if (feature.status === 'ended') {
@@ -201,7 +203,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const card = document.createElement('article'); card.className = 'card feature-card';
       const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + ' ' + store.address)}`;
       const sourceUrl = safeUrl(store.sourceUrl || active.sourceUrl);
-      card.innerHTML = `${chosen.length > 1 ? `<p class="feature-note">${esc(active.shortName || active.issuer.name)}／${esc(active.voucherName || active.title)}</p>` : ''}<h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p><p class="feature-note">${store.distance == null ? '距離未確認'  : `${featureDistanceLabel(store.distance)}・${esc(label)}から`}</p><p class="feature-conditions">${esc(store.conditions)}</p>${store.coordinateNote ? `<p class="feature-note">${esc(store.coordinateNote)}</p>` : ''}${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}`;
+      const routeUrl=store.lat!=null && store.lng!=null ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(store.lat+','+store.lng)}` : '';
+      card.innerHTML = `<div class="hotel-issuer-label">${esc(active.shortName || active.issuer.name)}${active.voucherName ? '／'+esc(active.voucherName) : ''}</div><div class="card-top"><div class="store"><h3 class="store-name"><a class="store-link" href="${mapUrl}" target="_blank" rel="noopener noreferrer">${esc(store.name)}</a></h3><p class="store-address">${esc(store.address)}</p></div><div class="distance" data-ui-number>${store.distance == null ? '<span class="hotel-distance-unknown">距離未確認</span>' : `${featureDistanceLabel(store.distance)}<small>${esc(label)}から</small>`}</div></div><div class="hotel-benefit-conditions"><span class="hotel-condition-label">利用条件</span><p class="feature-conditions">${esc(store.conditions)}</p></div>${store.coordinateNote ? `<p class="feature-note">${esc(store.coordinateNote)}</p>` : ''}${store.menu ? `<p class="feature-note">${esc(store.menu)}</p>` : ''}<div class="card-actions">${routeUrl ? `<a class="issuer-map-button" href="${routeUrl}" target="_blank" rel="noopener noreferrer">経路を見る</a>` : `<a class="issuer-map-button" href="${mapUrl}" target="_blank" rel="noopener noreferrer">地図で確認</a>`}${sourceUrl ? `<a href="${esc(sourceUrl)}" target="_blank" rel="noopener noreferrer">公式情報を確認</a>` : ''}</div>`;
       output.append(card);
     }
     output.append(details);

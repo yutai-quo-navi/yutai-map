@@ -35,6 +35,7 @@ const stores=[
   {issuer_id:'yoshinoya',store_id:'ui-2',brand_name:'吉野家',name:'吉野家 表示検証用店舗',address:'東京都○○区○○町2丁目（テスト用）',lat:35.682,lng:139.768,distance:800,category:'restaurant'}
 ];
 const reports=[];
+const hotelFixture={id:'ui-hotel',section:'hotel',title:'テスト宿泊優待',shortName:'表示確認ホテル',subtitle:'宿泊券で泊まる',issuer:{id:'ui-hotel',code:'9999',name:'表示確認ホテル'},updateMode:'manual',status:'public',availability:'continuous',radiusMeters:'all',sourceUrl:'https://example.com/benefit',checkedOn:'2026-10-12',description:'表示確認用の宿泊優待です。',stores:[{id:'ui-hotel-1',name:'表示検証用ホテル・長いホテル名とリゾート施設',address:'東京都○○区○○町（テスト用）',lat:35.682,lng:139.768,conditions:'事前予約が必要です。宿泊券の対象プランと除外日を公式情報でご確認ください。',verified:true}]};
 let browser;
 try{
   browser=await chromium.launch(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{});
@@ -46,7 +47,7 @@ try{
       const requestUrl=new URL(route.request().url());
       if(requestUrl.origin===url){
         // Keep local issuer configs and the expiry ledger, stub remote hotel datasets.
-        if(requestUrl.pathname==='/data/features/index.json') return route.fulfill({json:{features:[]}});
+        if(requestUrl.pathname==='/data/features/index.json') return route.fulfill({json:{features:[hotelFixture]}});
         return route.continue();
       }
       if(requestUrl.pathname==='/v1/brands')return route.fulfill({json:{brands:stores.map(s=>({issuer_id:s.issuer_id,name:s.brand_name,count:1}))}});
@@ -95,6 +96,15 @@ try{
     await page.locator('#favoritesDialog .personal-card').first().scrollIntoViewIfNeeded();
     await audit('favorites');
     await page.locator('#favoritesClose').click();
+    await page.locator('#hotelTab').click();
+    await page.locator('#hotelFeatures [data-feature="ui-hotel"]').waitFor();
+    await audit('hotel-selection');
+    await page.locator('#hotelFeatures [data-feature="ui-hotel"]').click();
+    assert.equal(await page.locator('#hotelFeatures [aria-pressed=true]').count(),1);
+    await page.locator('#locateButton').click();
+    await page.locator('#hotelFeatures .feature-card').waitFor();
+    assert.match(await page.locator('#hotelFeatures .issuer-map-button').getAttribute('href'),/maps\/dir\//);
+    await audit('hotel-results');
     await page.locator('#expiryTab').click();
     await page.locator('#expiryKeyword').waitFor();
     if(await page.locator('.expiry-row').count())await page.locator('.expiry-row').first().scrollIntoViewIfNeeded();
