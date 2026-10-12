@@ -397,13 +397,14 @@ function renderChips(){
     name.textContent=shortIssuerName(c);
     const check=document.createElement('span'); check.className='issuer-check';
     check.setAttribute('aria-hidden','true');
-    name.prepend(check);
-    badge.appendChild(name);
-    if(bubble) badge.appendChild(bubble);
+    const copy=document.createElement('span'); copy.className='benefit-choice-copy';
+    copy.appendChild(name);
+    if(bubble) copy.appendChild(bubble);
     else if(active) {
       const state=document.createElement('span'); state.className='benefit-choice-status';
-      state.textContent='選択中'; badge.appendChild(state);
+      state.textContent='選択中'; copy.appendChild(state);
     }
+    badge.append(check,copy);
     badge.addEventListener('click',()=>toggleIssuer(c.id));
     group.appendChild(badge);
     els.chips.appendChild(group);

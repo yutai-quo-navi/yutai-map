@@ -27,8 +27,12 @@
 .food-tool .benefit-tabs{gap:8px}
 .food-tool .benefit-tab{font-size:14px;min-height:48px;white-space:normal}
 #companyChips{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-#companyChips .benefit-choice{min-height:64px;padding:10px 8px;font-size:14px;line-height:1.5;gap:4px}
-#companyChips .benefit-choice-name{gap:6px}
+#companyChips .benefit-choice{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;min-height:64px;padding:10px 8px;font-size:14px;line-height:1.5;gap:7px;text-align:left}
+#companyChips .benefit-choice-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-width:0;flex:1}
+#companyChips .benefit-choice-name{display:block;width:100%;text-align:left}
+#companyChips .voucher-deadline-bubble{align-self:flex-start;justify-content:flex-start;text-align:left}
+#companyChips .issuer-check{width:16px;height:16px;box-sizing:border-box}
+#companyChips .benefit-choice[aria-pressed=true] .issuer-check::before{width:4px;height:7px;border-width:0 1.5px 1.5px 0}
 .issuer-check{flex:none;display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid var(--line);border-radius:50%;font-size:12px;line-height:1;background:#fff;color:var(--accent-text)}
 .benefit-choice[aria-pressed=true] .issuer-check{background:var(--accent-text);color:#fff;border-color:var(--accent-text)}
 .benefit-choice[aria-pressed=true] .issuer-check::before{content:'';width:5px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:translateY(-1px) rotate(45deg)}
@@ -152,7 +156,11 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
   .food-tool .hero{padding:20px 16px}
   .food-tool .tool-title{font-size:28px}
   .food-tool .benefit-body{padding:16px}
-  #companyChips{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #companyChips{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  #companyChips .benefit-choice{padding:10px 6px;gap:5px;font-size:12px;min-height:64px}
+  #companyChips .issuer-check{width:14px;height:14px}
+  #companyChips .benefit-choice[aria-pressed=true] .issuer-check::before{width:3px;height:6px}
+  .food-tool #companyChips .benefit-choice-status,.food-tool #companyChips .voucher-deadline-bubble,.food-tool #companyChips .deadline-count{font-size:12px}
   .food-tool .selection-hint{order:3;flex-basis:100%}
   .food-tool .search-action-row{grid-template-columns:minmax(0,1fr) 100px;gap:8px}
   .food-tool .search-action-row .primary-button{font-size:14px}
