@@ -22,6 +22,19 @@
   ],
   "typeRules": [
     {
+      "selector": ".benefit-choice-count .motion-number",
+      "sizes": [
+        20
+      ]
+    },
+    {
+      "selector": ".benefit-choice-name, .feature-caption",
+      "sizes": [
+        12,
+        14
+      ]
+    },
+    {
       "selector": ".benefit-choice-count",
       "sizes": [
         12

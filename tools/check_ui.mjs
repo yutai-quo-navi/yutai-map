@@ -122,6 +122,44 @@ try{
     assert.deepEqual(errors,[],`${viewport.width}px runtime errors`);
     await context.close();
   }
+  // Exercise real motion as well as the reduced-motion layout audits above.
+  const motionContext=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'no-preference'});
+  const motionPage=await motionContext.newPage();
+  await motionPage.route('**/*',route=>new URL(route.request().url()).origin===url?route.continue():route.abort());
+  await motionPage.goto(url+'/privacy.html');
+  const motionResult=await motionPage.evaluate(async()=>{
+    const {numberHTML,initNumberMotion}=await import('/number-motion.js');
+    document.body.replaceChildren();
+    const root=document.createElement('main');document.body.append(root);
+    const stop=initNumberMotion(root);
+    let starts=0;
+    const original=Element.prototype.animate;
+    Element.prototype.animate=function(...args){starts++;return original.apply(this,args);};
+    const frame=()=>new Promise(resolve=>setTimeout(resolve,100));
+    root.innerHTML=numberHTML('test',128);await frame();
+    const initial=starts, value=root.textContent, label=root.firstElementChild.getAttribute('aria-label');
+    root.innerHTML=numberHTML('test',128);await frame();const repeated=starts;
+    root.innerHTML=numberHTML('test',46);await frame();const changed=starts;
+    root.innerHTML='<div hidden>'+numberHTML('hidden',7)+'</div>';await frame();const hidden=starts;
+    root.firstElementChild.hidden=false;await frame();const revealed=starts;
+    stop();Element.prototype.animate=original;
+    return {initial,value,label,repeated,changed,hidden,revealed};
+  });
+  assert.ok(motionResult.initial>0,'first visible numbers animate');
+  assert.equal(motionResult.value,'128');assert.equal(motionResult.label,'128');
+  assert.equal(motionResult.repeated,motionResult.initial,'unchanged values do not replay');
+  assert.ok(motionResult.changed>motionResult.repeated,'changed values animate');
+  assert.equal(motionResult.hidden,motionResult.changed,'hidden values wait');
+  assert.ok(motionResult.revealed>motionResult.hidden,'revealed values animate');
+  await motionPage.emulateMedia({reducedMotion:'reduce'});
+  assert.deepEqual(await motionPage.evaluate(async()=>{
+    const {numberHTML,initNumberMotion}=await import('/number-motion.js');
+    const root=document.createElement('main');document.body.replaceChildren(root);
+    const stop=initNumberMotion(root);root.innerHTML=numberHTML('reduced',1234);
+    await new Promise(resolve=>setTimeout(resolve,100));
+    const result={value:root.textContent,animations:document.getAnimations().length};stop();return result;
+  }),{value:'1,234',animations:0});
+  await motionContext.close();
   await writeFile(resolve(output,'lintapple.json'),JSON.stringify(reports,null,2));
   const findings=reports.flatMap(r=>r.findings.map(f=>({width:r.viewport.width,state:r.state,...f})));
   console.log(`${reports.length} UI states checked; ${findings.length} findings recorded in ui-reports/lintapple.json.`);
