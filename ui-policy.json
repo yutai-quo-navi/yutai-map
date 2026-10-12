@@ -22,6 +22,12 @@
   ],
   "typeRules": [
     {
+      "selector": ".t-badge-number",
+      "sizes": [
+        14
+      ]
+    },
+    {
       "selector": ".deadline-count .motion-number",
       "sizes": [
         16

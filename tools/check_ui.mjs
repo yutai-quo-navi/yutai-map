@@ -169,11 +169,14 @@ try{
     const text=badge.textContent, first=badge.getAnimations().map(a=>a.animationName);
     const cellAnimations=root.firstElementChild.getAnimations().length;
     badge=render(48);await frame();const repeated=badge.getAnimations({subtree:true}).length;
+    const dotStyle=getComputedStyle(badge.querySelector('.t-badge-dot'));
+    const shape={width:dotStyle.width,height:dotStyle.height,radius:dotStyle.borderRadius,color:dotStyle.backgroundColor};
     badge=render(47);await frame();const changed=badge.getAnimations().map(a=>a.animationName);
     const reels=root.querySelectorAll('[data-motion-value]').length;stop();
-    return {text,first,cellAnimations,repeated,changed,reels};
+    return {text,first,cellAnimations,repeated,changed,reels,shape};
   });
-  assert.equal(badgeResult.text,'あと48日');
+  assert.equal(badgeResult.text,'48日');
+  assert.deepEqual(badgeResult.shape,{width:'36px',height:'36px',radius:'50%',color:'rgb(199, 53, 58)'});
   assert.ok(badgeResult.first.includes('t-badge-slide-in'),'official diagonal slide runs');
   assert.equal(badgeResult.cellAnimations,0,'choice cell itself does not animate');
   assert.equal(badgeResult.repeated,0,'unchanged badge does not replay');
@@ -194,7 +197,7 @@ try{
     root.append(makeDeadlineBadge(badge,'reduced'));
     await new Promise(resolve=>setTimeout(resolve,100));
     const result={text:badge.textContent,open:badge.dataset.open,animations:badge.getAnimations({subtree:true}).length};stop();return result;
-  }),{text:'あと7日',open:'true',animations:0});
+  }),{text:'7日',open:'true',animations:0});
   await motionContext.close();
   await writeFile(resolve(output,'lintapple.json'),JSON.stringify(reports,null,2));
   const findings=reports.flatMap(r=>r.findings.map(f=>({width:r.viewport.width,state:r.state,...f})));
