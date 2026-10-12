@@ -10,7 +10,12 @@ export function makeDeadlineBadge(bubble, key) {
   bubble.dataset.open = 'false';
   const dot = document.createElement('span');
   dot.className = 't-badge-dot';
-  dot.textContent = days == null ? label : `あと${days}日`;
+  if (days == null) dot.textContent = label === '本日失効' ? '本日' : label;
+  else {
+    const number=document.createElement('span');number.className='t-badge-number';number.textContent=days;
+    const unit=document.createElement('span');unit.className='t-badge-unit';unit.textContent='日';
+    dot.append(number,unit);
+  }
   bubble.replaceChildren(dot);
   return bubble;
 }

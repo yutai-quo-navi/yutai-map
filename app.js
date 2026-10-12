@@ -1,4 +1,4 @@
-import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-dining';
+import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-red-round';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261013-reel';
