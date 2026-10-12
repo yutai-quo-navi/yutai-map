@@ -1,4 +1,4 @@
-// Final values stay readable and accessible; motion never counts through false values.
+// Accessible final values with a short, visible digit-reel transition.
 const escape = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 export function numberHTML(key, value) {
   const number = Number(value);
@@ -22,26 +22,36 @@ export function initNumberMotion(root) {
       const previous = seen.get(key);
       seen.set(key, value);
       if (previous === value || reduced.matches || !node.animate) continue;
-      // Individual digit slots reveal once; commas and the surrounding text stay still.
       const label = node.textContent;
+      const oldLabel = previous == null ? '' : Number(previous).toLocaleString('ja-JP');
       node.setAttribute('role', 'img');
       node.setAttribute('aria-label', label);
-      node.replaceChildren(...Array.from(label, character => {
-        const digit = document.createElement('span');
-        digit.textContent = character;
-        digit.setAttribute('aria-hidden', 'true');
-        digit.className = /\d/.test(character) ? 'motion-digit' : 'motion-separator';
-        return digit;
-      }));
-      node.querySelectorAll('.motion-digit').forEach((digit, index) => {
-        const animation = digit.animate([
-          {transform:'translateY(.55em)', opacity:0},
-          {transform:'translateY(0)', opacity:1}
-        ], {duration:240, delay:Math.min(index * 18, 72), easing:'cubic-bezier(.22,1,.36,1)', fill:'backwards'});
+      node.replaceChildren(...Array.from(label, (character, index) => {
+        const slot = document.createElement('span');
+        slot.setAttribute('aria-hidden', 'true');
+        if (!/\d/.test(character)) {
+          slot.className = 'motion-separator'; slot.textContent = character; return slot;
+        }
+        slot.className = 'motion-digit';
+        const reel = document.createElement('span');
+        reel.className = 'motion-reel digit-'+character;
+        for (let value = 0; value <= 9; value++) {
+          const glyph = document.createElement('span'); glyph.className = 'motion-glyph';
+          glyph.textContent = String(value); reel.append(glyph);
+        }
+        slot.append(reel);
+        const before = oldLabel[index - label.length + oldLabel.length];
+        const start = /\d/.test(before || '') ? Number(before) : 0;
+        const target = Number(character);
+        const animation = reel.animate([
+          {transform:`translateY(${-start * 1.1}em)`, filter:'blur(1px)'},
+          {transform:`translateY(${-target * 1.1}em)`, filter:'blur(0)'}
+        ], {duration:previous == null ? 560 : 380, delay:Math.min(index * 35, 105), easing:'cubic-bezier(.22,1,.36,1)', fill:'backwards'});
         active.add(animation);
         const release = () => active.delete(animation);
         animation.onfinish = release; animation.oncancel = release;
-      });
+        return slot;
+      }));
     }
   });
   const scan = element => {

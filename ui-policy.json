@@ -22,9 +22,15 @@
   ],
   "typeRules": [
     {
+      "selector": ".deadline-count .motion-number",
+      "sizes": [
+        16
+      ]
+    },
+    {
       "selector": ".benefit-choice-count .motion-number",
       "sizes": [
-        20
+        24
       ]
     },
     {

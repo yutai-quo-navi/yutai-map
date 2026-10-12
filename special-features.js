@@ -1,4 +1,4 @@
-import {numberHTML} from './number-motion.js?v=20261012-soft-ui';
+import {numberHTML} from './number-motion.js?v=20261013-reel';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
