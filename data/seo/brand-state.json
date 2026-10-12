@@ -3180,6 +3180,23 @@
           "store_count": 4
         }
       ]
+    },
+    "yamaokaya": {
+      "revision": "config:d4c6cc6d2cb2357900a355bf5e31ab9f77f26849f284d7d464e75a1670e5d8c8",
+      "brands": [
+        {
+          "brand_name": "ラーメン山岡家",
+          "store_count": null
+        },
+        {
+          "brand_name": "味噌ラーメン山岡家",
+          "store_count": null
+        },
+        {
+          "brand_name": "煮干しラーメン山岡家",
+          "store_count": null
+        }
+      ]
     }
   }
 }

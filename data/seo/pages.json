@@ -2924,6 +2924,18 @@
       "hash": "47e5bafc1c409bb6c2034570d5061d651744f02831ca5300d5d75ed9487f40ee",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/yamaokaya/47942dc8f4bb688c/index.html": {
+      "hash": "615ac467ca3dff9c9baf303eaf7808cdae4ea2b23cf4ea024eeb5522664bf650",
+      "lastmod": "2026-10-12"
+    },
+    "guides/dining/brands/yamaokaya/df438757705ab180/index.html": {
+      "hash": "d4d167890c4505a9d55fa7e41ad1a24195c882a8b5ca9f04c24ebea22619a6aa",
+      "lastmod": "2026-10-12"
+    },
+    "guides/dining/brands/yamaokaya/ef1f47c4f57a2196/index.html": {
+      "hash": "51558b6b27cc299b6c85f1448a146034f3bc3bbdcc9f655f767004151b4b4be7",
+      "lastmod": "2026-10-12"
+    },
     "guides/dining/brands/yoshinoya/0e9353412cf139dc/index.html": {
       "hash": "2a3df604d0b8c3a00da64636de19d79110310d290e8540bf66f0f13c61abfd3a",
       "lastmod": "2026-10-11"
@@ -3061,7 +3073,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "2be65106cfdc2de8d842e81f4e770644795d4c5c1c388b89b20c67f1357faf3c",
+      "hash": "dfc30ae4c2af538942584315a341a4d19a2fcfac28a1f64537032c4fb0cadbef",
       "lastmod": "2026-10-12"
     },
     "guides/dining/issuers/arclands/index.html": {
@@ -3151,6 +3163,10 @@
     "guides/dining/issuers/toridoll/index.html": {
       "hash": "5ecc8931bf1d28947e92c6b90f7272233fc7a79a758fa7db4c1fe6dbe5f012b2",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/yamaokaya/index.html": {
+      "hash": "1b4428819ac8d617b353e41bae4bef330ace3e8f69235a22e6324a13b9d06e7c",
+      "lastmod": "2026-10-12"
     },
     "guides/dining/issuers/yoshinoya/index.html": {
       "hash": "3c13447c2a66abb2e5f2b11342a4a45fa404ccdf46b8bc1a003cc729d806d82e",
