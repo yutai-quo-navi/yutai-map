@@ -1360,11 +1360,11 @@
       ]
     },
     "mcd": {
-      "revision": "config:92b283c9a2797c99bc4bc075488fcd3cb3c0272171ee3cc053c1886f40090064",
+      "revision": 3040,
       "brands": [
         {
           "brand_name": "マクドナルド",
-          "store_count": null
+          "store_count": 3040
         }
       ]
     },
