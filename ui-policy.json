@@ -22,9 +22,9 @@
   ],
   "typeRules": [
     {
-      "selector": ".t-badge-number",
+      "selector": ".t-badge-number, .t-badge-unit",
       "sizes": [
-        14
+        11
       ]
     },
     {
