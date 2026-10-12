@@ -176,6 +176,20 @@
       "name": "モスフードサービス",
       "status": "public",
       "config": "./data/issuers/mos/config.json"
+    },
+    {
+      "id": "yamaokaya",
+      "code": "3399",
+      "name": "丸千代山岡家",
+      "status": "development",
+      "config": "./data/issuers/yamaokaya/config.json"
+    },
+    {
+      "id": "chikaranomoto",
+      "code": "3561",
+      "name": "力の源ホールディングス",
+      "status": "development",
+      "config": "./data/issuers/chikaranomoto/config.json"
     }
   ]
 }

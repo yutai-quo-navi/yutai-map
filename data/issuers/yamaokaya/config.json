@@ -1,0 +1,55 @@
+{
+  "id": "yamaokaya",
+  "code": "3399",
+  "name": "丸千代山岡家",
+  "fullName": "丸千代山岡家",
+  "status": "development",
+  "sourceUrl": "https://maruchiyo.yamaokaya.com/ir/incentives/",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗データと優待対象を確認中です。",
+  "aliases": [
+    "ラーメン山岡家",
+    "味噌ラーメン山岡家",
+    "煮干しラーメン山岡家"
+  ],
+  "aliasBrands": {
+    "ラーメン山岡家": "ラーメン山岡家",
+    "味噌ラーメン山岡家": "味噌ラーメン山岡家",
+    "煮干しラーメン山岡家": "煮干しラーメン山岡家"
+  },
+  "categories": {
+    "ラーメン山岡家": "restaurant",
+    "味噌ラーメン山岡家": "restaurant",
+    "煮干しラーメン山岡家": "restaurant"
+  },
+  "searchNames": [
+    "丸千代山岡家",
+    "ラーメン山岡家",
+    "味噌ラーメン山岡家",
+    "煮干しラーメン山岡家"
+  ],
+  "catalogBrands": [
+    "ラーメン山岡家",
+    "味噌ラーメン山岡家",
+    "煮干しラーメン山岡家"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-12",
+  "storeSearchUrl": "https://www.yamaokaya.com/shops/",
+  "locationMode": "worker_reference",
+  "storeDataPath": "./data/issuers/yamaokaya/stores/current.json",
+  "health": {
+    "minStores": 170,
+    "maxStores": 260,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "www.yamaokaya.com"
+    ],
+    "maxAdded": 60,
+    "maxRemoved": 40,
+    "maxChanged": 120,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

@@ -1,0 +1,62 @@
+{
+  "id": "chikaranomoto",
+  "code": "3561",
+  "name": "力の源ホールディングス",
+  "fullName": "力の源ホールディングス",
+  "status": "development",
+  "sourceUrl": "https://www.chikaranomoto.com/ir/benefit/",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗データと優待対象を確認中です。",
+  "aliases": [
+    "一風堂",
+    "IPPUDO RAMEN EXPRESS",
+    "RAMEN EXPRESS 博多一風堂",
+    "一風堂 KAY"
+  ],
+  "aliasBrands": {
+    "一風堂": "一風堂",
+    "IPPUDO RAMEN EXPRESS": "IPPUDO RAMEN EXPRESS",
+    "RAMEN EXPRESS 博多一風堂": "RAMEN EXPRESS 博多一風堂",
+    "一風堂 KAY": "一風堂 KAY"
+  },
+  "categories": {
+    "一風堂": "restaurant",
+    "IPPUDO RAMEN EXPRESS": "foodcourt",
+    "RAMEN EXPRESS 博多一風堂": "foodcourt",
+    "一風堂 KAY": "restaurant"
+  },
+  "searchNames": [
+    "力の源ホールディングス",
+    "一風堂",
+    "IPPUDO RAMEN EXPRESS",
+    "RAMEN EXPRESS 博多一風堂",
+    "一風堂 KAY"
+  ],
+  "catalogBrands": [
+    "一風堂",
+    "IPPUDO RAMEN EXPRESS",
+    "RAMEN EXPRESS 博多一風堂",
+    "一風堂 KAY"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-12",
+  "storeSearchUrl": "https://stores.ippudo.com/search",
+  "locationMode": "worker_reference",
+  "storeDataPath": "./data/issuers/chikaranomoto/stores/current.json",
+  "health": {
+    "minStores": 120,
+    "maxStores": 220,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "stores.ippudo.com",
+      "cdn.yextapis.com",
+      "prod-cdn.us.yextapis.com"
+    ],
+    "maxAdded": 60,
+    "maxRemoved": 40,
+    "maxChanged": 120,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}
