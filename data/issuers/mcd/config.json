@@ -5,8 +5,8 @@
   "fullName": "日本マクドナルドホールディングス",
   "status": "public",
   "sourceUrl": "https://www.mcd-holdings.co.jp/ir/individual/shareholder_benefits/",
-  "matchingMode": "single_brand",
-  "note": "日本国内のマクドナルド店舗で株主優待食事券を利用できます（一部対象外店舗あり）。デリバリー・モバイルオーダー・セルフオーダーキオスクでは利用できません。店舗情報はOpenPOIの検索結果です。利用前に公式情報をご確認ください。",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗検索APIの店舗情報・公式座標を掲載しています。株主優待食事券は日本国内の店舗で利用できますが、一部対象外店舗があります。デリバリー・モバイルオーダー・セルフオーダーキオスクでは利用できません。利用前に券面・公式情報と店舗で利用条件をご確認ください。",
   "aliases": [
     "マクドナルド",
     "McDonald's",
@@ -26,7 +26,28 @@
   "catalogBrands": [
     "マクドナルド"
   ],
-  "verified": "2026-10-11",
+  "verified": "2026-10-12",
   "storeSearchUrl": "https://map.mcdonalds.co.jp/",
-  "locationMode": "openpoi"
+  "locationMode": "official_coordinates",
+  "showStoreNote": true,
+  "health": {
+    "minStores": 2700,
+    "maxStores": 3500,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "map.mcdonalds.co.jp"
+    ],
+    "maxAdded": 150,
+    "maxRemoved": 150,
+    "maxChanged": 350,
+    "maxChangeRatio": 0.15,
+    "japanOnlyCoordinates": true,
+    "groupFields": [
+      "brand_name",
+      "prefecture"
+    ],
+    "minGroupSize": 10,
+    "maxGroupDropRatio": 0.5
+  }
 }
