@@ -61,10 +61,11 @@
 .food-tool .store-address,.food-tool .feature-note,.food-tool .personal-note,.food-tool .personal-meta{font-size:14px;line-height:1.7}
 .food-tool .badges{gap:8px}
 .food-tool .badge,.food-tool .badge.beta{font-size:12px;line-height:1.5;padding:5px 10px}
-.food-tool .card-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px;padding-top:16px}
-.food-tool .card-actions a,.food-tool .card-actions button{display:flex;align-items:center;justify-content:center;min-height:44px;padding:10px 8px;border:1px solid var(--line);border-radius:12px;font-size:14px;line-height:1.5;text-align:center;overflow-wrap:anywhere;background:#fff;color:var(--text)}
-.food-tool .card-actions .issuer-map-button{background:var(--accent-text);color:white;border-color:var(--accent-text);font-size:14px;min-height:44px}
-.food-tool .favorite-toggle[aria-pressed=true]{background:var(--issuer-soft);border-color:var(--issuer);color:var(--issuer)}
+.food-tool .card-actions{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:8px 22px;margin-top:14px;padding-top:12px}
+.food-tool .card-actions a,.food-tool .card-actions button{display:inline-flex;align-items:center;justify-content:flex-start;min-height:28px;padding:2px 0;border:0;border-radius:0;font-size:14px;line-height:1.7;text-align:left;overflow-wrap:anywhere;background:transparent;color:var(--muted)}
+.food-tool .card-actions .issuer-map-button{background:transparent;color:var(--accent-text);border:0;font-size:14px;font-weight:600;min-height:28px}
+.food-tool .card-actions a:hover,.food-tool .card-actions button:hover{text-decoration:underline;text-underline-offset:3px}
+.food-tool .favorite-toggle[aria-pressed=true]{background:transparent;border:0;color:var(--issuer);font-weight:700}
 .food-tool .result-count,.food-tool .distance,.food-tool .deadline-count,.food-tool .expiry-countdown,.food-tool .expiry-date{font-variant-numeric:tabular-nums}
 .food-tool .result-count{font-size:14px}
 .food-tool .empty-state{padding:24px;font-size:14px;line-height:1.8}
