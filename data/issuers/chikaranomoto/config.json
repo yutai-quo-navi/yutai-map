@@ -3,10 +3,10 @@
   "code": "3561",
   "name": "力の源ホールディングス",
   "fullName": "力の源ホールディングス",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://www.chikaranomoto.com/ir/benefit/",
   "matchingMode": "official_store_filter",
-  "note": "公式店舗データと優待対象を確認中です。",
+  "note": "力の源の優待対象のうち、一風堂・一風堂 KAY・RAMEN EXPRESS系を公式店舗情報・座標から掲載しています。名島亭・因幡うどんは現在未掲載です。優待カードの利用条件は券面と公式情報をご確認ください。",
   "aliases": [
     "一風堂",
     "IPPUDO RAMEN EXPRESS",
@@ -33,15 +33,15 @@
     "一風堂 KAY"
   ],
   "catalogBrands": [
-    "一風堂",
     "IPPUDO RAMEN EXPRESS",
     "RAMEN EXPRESS 博多一風堂",
+    "一風堂",
     "一風堂 KAY"
   ],
   "domesticOnly": true,
   "verified": "2026-10-12",
   "storeSearchUrl": "https://stores.ippudo.com/search",
-  "locationMode": "worker_reference",
+  "locationMode": "official_coordinates",
   "storeDataPath": "./data/issuers/chikaranomoto/stores/current.json",
   "health": {
     "minStores": 120,

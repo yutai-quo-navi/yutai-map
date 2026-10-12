@@ -5,8 +5,8 @@
   "fullName": "丸千代山岡家",
   "status": "public",
   "sourceUrl": "https://maruchiyo.yamaokaya.com/ir/incentives/",
-  "matchingMode": "aliases",
-  "note": "株主優待対象のラーメン山岡家・味噌ラーメン山岡家・煮干しラーメン山岡家を検索します。位置情報は現在OpenPOIを使用しています。公式座標への切替準備中です。餃子業態は対象外です。",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗情報・座標に基づき、株主優待対象のラーメン山岡家・味噌ラーメン山岡家・煮干しラーメン山岡家を掲載しています。餃子業態は対象外です。券面と公式の利用条件をご確認ください。",
   "aliases": [
     "ラーメン山岡家",
     "味噌ラーメン山岡家",
@@ -39,7 +39,7 @@
   "domesticOnly": true,
   "verified": "2026-10-12",
   "storeSearchUrl": "https://www.yamaokaya.com/shops/",
-  "locationMode": "openpoi",
+  "locationMode": "official_coordinates",
   "storeDataPath": "./data/issuers/yamaokaya/stores/current.json",
   "health": {
     "minStores": 170,

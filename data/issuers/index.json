@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-11",
+  "updated": "2026-10-12",
   "issuers": [
     {
       "id": "skylark",
@@ -188,7 +188,7 @@
       "id": "chikaranomoto",
       "code": "3561",
       "name": "力の源ホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/chikaranomoto/config.json"
     }
   ]
