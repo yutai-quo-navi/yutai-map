@@ -172,3 +172,26 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
   .expiry-day-options label{font-size:13px;gap:4px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.food-tool *{scroll-behavior:auto;transition:none;animation:none}}
+
+/* Hotel choices and results use the same selection and card hierarchy. */
+#hotelFeatures .benefit-selection-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin-bottom:16px}
+#hotelFeatures .feature-buttons{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#hotelFeatures .feature-button{min-height:88px;padding:12px;font-size:14px;line-height:1.6;gap:8px}
+#hotelFeatures .benefit-choice-heading{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#hotelFeatures .benefit-choice-name{flex:1;min-width:0;color:var(--text);font-weight:600}
+#hotelFeatures .benefit-choice-count{font-size:12px;font-variant-numeric:tabular-nums}
+#hotelFeatures .benefit-choice-detail{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px}
+#hotelFeatures .feature-caption{font-size:13px;line-height:1.7}
+#hotelFeatures .feature-results{gap:12px;margin-top:20px}
+.food-tool .feature-card .store-name{font-size:18px;line-height:1.6;font-weight:700}
+.hotel-issuer-label{display:inline-block;margin-bottom:12px;padding:5px 10px;border-radius:10px;background:var(--surface-soft);color:var(--accent-text);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.hotel-benefit-conditions{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft)}
+.hotel-condition-label{font-size:13px;font-weight:700;color:var(--text)}
+.hotel-benefit-conditions .feature-conditions{margin:6px 0 0;font-size:14px;line-height:1.8}
+.hotel-distance-unknown{display:block;font-size:13px;font-weight:400;line-height:1.7}
+@media(max-width:520px){
+  #hotelFeatures .feature-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #hotelFeatures .feature-button{padding:12px 10px;min-height:100px}
+  #hotelFeatures .benefit-choice-name{flex-basis:calc(100% - 26px)}
+  #hotelFeatures .benefit-choice-count{margin-left:24px}
+}
