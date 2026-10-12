@@ -139,24 +139,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const detail = document.createElement('span'); detail.className = 'benefit-choice-detail';
       if (feature.subtitle) {
         const subtitle = document.createElement('span'); subtitle.className = 'feature-caption';
-        if (section === 'hotel') {
-          const compactLabels = {
-            '共通割引券で宿泊':'共通割引券宿泊',
-            '共通商品券で宿泊':'共通商品券宿泊',
-            '優待割引券で宿泊':'割引券宿泊',
-            '宿泊割引券で宿泊':'割引券宿泊',
-            '株主優待券で宿泊':'優待券宿泊',
-            '優待プランで宿泊':'優待プラン宿泊',
-            '宿泊代の割引':'宿泊割引',
-            '無料ペア宿泊券':'ペア宿泊券',
-            'ファミリー商品券':'商品券宿泊'
-          };
-          const full = document.createElement('span'); full.className = 'hotel-caption-full';
-          full.textContent = feature.subtitle;
-          const compact = document.createElement('span'); compact.className = 'hotel-caption-compact';
-          compact.textContent = feature.mobileSubtitle || compactLabels[feature.subtitle] || feature.subtitle.replace('で宿泊','宿泊');
-          subtitle.append(full,compact);
-        } else subtitle.textContent = feature.subtitle;
+        subtitle.textContent = feature.subtitle;
         detail.append(subtitle);
       }
       if (bubble) detail.append(bubble);

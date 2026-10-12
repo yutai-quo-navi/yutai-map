@@ -184,7 +184,7 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
 
 /* Hotel choices and results use the same selection and card hierarchy. */
 #hotelFeatures .benefit-selection-meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;margin-bottom:16px}
-#hotelFeatures .feature-buttons{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#hotelFeatures .feature-buttons{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 #hotelFeatures .feature-button{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;min-height:88px;padding:10px 8px;font-size:14px;line-height:1.5;gap:7px;text-align:left}
 #hotelFeatures .benefit-choice-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-width:0;flex:1}
 #hotelFeatures .issuer-check{width:16px;height:16px;box-sizing:border-box}
@@ -202,7 +202,7 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
 .hotel-benefit-conditions .feature-conditions{margin:6px 0 0;font-size:14px;line-height:1.8}
 .hotel-distance-unknown{display:block;font-size:13px;font-weight:400;line-height:1.7}
 @media(max-width:520px){
-  #hotelFeatures .feature-buttons{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #hotelFeatures .feature-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
   #hotelFeatures .feature-button{padding:10px 6px;gap:5px;font-size:12px;min-height:88px}
   #hotelFeatures .issuer-check{width:14px;height:14px}
   #hotelFeatures .benefit-choice[aria-pressed=true] .issuer-check::before{width:3px;height:6px}
@@ -210,12 +210,7 @@ button:hover>.ui-tooltip,button:focus-visible>.ui-tooltip{visibility:visible}
   .food-tool #hotelFeatures .benefit-choice-status,.food-tool #hotelFeatures .voucher-deadline-bubble,.food-tool #hotelFeatures .deadline-count{font-size:12px}
 }
 
-/* Short hotel captions on phones; all text stays within its card. */
-#hotelFeatures .hotel-caption-compact{display:none}
+/* Hotel text stays within its card at every viewport width. */
 #hotelFeatures .feature-item,#hotelFeatures .feature-button{min-width:0;max-width:100%;box-sizing:border-box}
 #hotelFeatures .benefit-choice-copy,#hotelFeatures .feature-caption{max-width:100%}
 #hotelFeatures .voucher-deadline-bubble{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere}
-@media(max-width:520px){
-  #hotelFeatures .hotel-caption-full{display:none}
-  #hotelFeatures .hotel-caption-compact{display:inline}
-}
