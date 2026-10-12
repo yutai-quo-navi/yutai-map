@@ -1,3 +1,4 @@
+import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-dining';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261013-reel';
@@ -9,6 +10,7 @@ import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
 initNumberMotion(document.body);
+initNotificationBadges(document.querySelector('#companyChips'));
 const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
@@ -403,7 +405,7 @@ function renderChips(){
     check.setAttribute('aria-hidden','true');
     const copy=document.createElement('span'); copy.className='benefit-choice-copy';
     copy.appendChild(name);
-    if(bubble) copy.appendChild(bubble);
+    if(bubble) copy.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
     else if(active) {
       const state=document.createElement('span'); state.className='benefit-choice-status';
       state.textContent='選択中'; copy.appendChild(state);
