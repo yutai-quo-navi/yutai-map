@@ -440,6 +440,22 @@
       "hash": "ab2ebf940effad168c74b4872e4d21a5075f6d9cacc248dce1714dabeed5089e",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/chikaranomoto/29604200e261979f/index.html": {
+      "hash": "adfeebcdb1034a3a6bf4fbc02cace5562a6151ad4fe502ea35834944cbaa46d8",
+      "lastmod": "2026-10-12"
+    },
+    "guides/dining/brands/chikaranomoto/357757fd23dc4177/index.html": {
+      "hash": "df0f96393c59bd639539b6525d21c143ba465f47b2176deb044e74881cd668de",
+      "lastmod": "2026-10-12"
+    },
+    "guides/dining/brands/chikaranomoto/7d9445896c225b2a/index.html": {
+      "hash": "b0de3df6d19ad13010233537fe34be4c10624682f8d774e2fb17d39084e7d4bf",
+      "lastmod": "2026-10-12"
+    },
+    "guides/dining/brands/chikaranomoto/b990c0694e2428e1/index.html": {
+      "hash": "98d9e7a7c36739ec834929d215091fc254cf630d0f0b5d97838c16b29c0c4c6c",
+      "lastmod": "2026-10-12"
+    },
     "guides/dining/brands/chimney/025c8915dba769a7/index.html": {
       "hash": "7d2ca3c1c1bb3711ca25cbae70bed3365e94b31d090abf4cc3bfe713c2721d28",
       "lastmod": "2026-10-11"
@@ -2925,15 +2941,15 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/brands/yamaokaya/47942dc8f4bb688c/index.html": {
-      "hash": "615ac467ca3dff9c9baf303eaf7808cdae4ea2b23cf4ea024eeb5522664bf650",
+      "hash": "d20abc1e4c355d7217b9c16aef34a6cff4455f6987bf845d6dcd4157b5eedc5d",
       "lastmod": "2026-10-12"
     },
     "guides/dining/brands/yamaokaya/df438757705ab180/index.html": {
-      "hash": "d4d167890c4505a9d55fa7e41ad1a24195c882a8b5ca9f04c24ebea22619a6aa",
+      "hash": "5c3bbfa787cd74360eda3f4de0bc380828fa6a518245b67a315962027dd22d6c",
       "lastmod": "2026-10-12"
     },
     "guides/dining/brands/yamaokaya/ef1f47c4f57a2196/index.html": {
-      "hash": "51558b6b27cc299b6c85f1448a146034f3bc3bbdcc9f655f767004151b4b4be7",
+      "hash": "8681e38d9adf3ad24bb1b9fe87bf4c35e0df77438d04f569b8041d565ac96397",
       "lastmod": "2026-10-12"
     },
     "guides/dining/brands/yoshinoya/0e9353412cf139dc/index.html": {
@@ -3073,7 +3089,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "dfc30ae4c2af538942584315a341a4d19a2fcfac28a1f64537032c4fb0cadbef",
+      "hash": "2cd3a683dd9c99dfa85d79a55010e3e4acdcd9bb6a0620e60d8e33dcb670dc92",
       "lastmod": "2026-10-12"
     },
     "guides/dining/issuers/arclands/index.html": {
@@ -3083,6 +3099,10 @@
     "guides/dining/issuers/balnibarbi/index.html": {
       "hash": "0cb4007eca899d34bfa4a922bc6818a81802dd8720bbac863d8f97f7a34a297d",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/chikaranomoto/index.html": {
+      "hash": "0b399653c0ef5d66b50b480d49ef76915370c342e87d34b49a153c51ac1360ce",
+      "lastmod": "2026-10-12"
     },
     "guides/dining/issuers/chimney/index.html": {
       "hash": "a6519aa5f9b3bee526704fa4509590ae1297da150865bbcb2c62fd4371025708",
@@ -3165,7 +3185,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/issuers/yamaokaya/index.html": {
-      "hash": "1b4428819ac8d617b353e41bae4bef330ace3e8f69235a22e6324a13b9d06e7c",
+      "hash": "37d3b9f303f861f33d0dbb1bdef65fe57f932609d8e87b83af7f9e04dd06c380",
       "lastmod": "2026-10-12"
     },
     "guides/dining/issuers/yoshinoya/index.html": {
