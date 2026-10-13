@@ -33,7 +33,6 @@ on:
       - 'Build Royal store DB'
       - 'Build Komeda Doutor MOS official store DBs'
       - 'Build Yamaokaya Ippudo official store DBs'
-      - 'Build Ohsho Joyfull official store DBs'
       - 'Update Seibu hotel benefits'
       - 'Build Skylark store DB'
       - 'Build SRS store DB'
