@@ -106,7 +106,7 @@ test('sizing rules keep provided image proportions and grid row heights',async()
   for(const id of Object.keys(suppliedLogos)){
     assert.match(css,new RegExp('data-issuer="'+id+'"'),id);
   }
-  assert.match(css,/\\.representative-mark-image\\{object-fit:contain\\}/);
+  assert.ok(css.includes('.representative-mark-image{object-fit:contain}'));
   assert.match(css,/grid-auto-rows:112px/);
   assert.match(css,/grid-auto-rows:146px/);
 });
