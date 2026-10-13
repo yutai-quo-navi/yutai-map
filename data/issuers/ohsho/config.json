@@ -1,0 +1,56 @@
+{
+  "id": "ohsho",
+  "code": "9936",
+  "name": "王将フードサービス",
+  "fullName": "王将フードサービス",
+  "status": "development",
+  "sourceUrl": "https://ir.ohsho.co.jp/ir/faq/",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗情報・座標に基づき、国内の餃子の王将・GYOZA OHSHO・JoyNahoを掲載しています。優待電子チケットの利用条件は公式情報をご確認ください。",
+  "aliases": [
+    "餃子の王将",
+    "GYOZA OHSHO",
+    "JoyNaho"
+  ],
+  "aliasBrands": {
+    "餃子の王将": "餃子の王将",
+    "GYOZA OHSHO": "GYOZA OHSHO",
+    "JoyNaho": "JoyNaho"
+  },
+  "categories": {
+    "餃子の王将": "restaurant",
+    "GYOZA OHSHO": "restaurant",
+    "JoyNaho": "restaurant"
+  },
+  "searchNames": [
+    "王将フードサービス",
+    "餃子の王将",
+    "GYOZA OHSHO",
+    "JoyNaho"
+  ],
+  "catalogBrands": [
+    "餃子の王将",
+    "GYOZA OHSHO",
+    "JoyNaho"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-13",
+  "storeSearchUrl": "https://www.ohsho.co.jp/shop/",
+  "locationMode": "pending_official_coordinates",
+  "storeDataPath": "./data/issuers/ohsho/stores/current.json",
+  "health": {
+    "minStores": 650,
+    "maxStores": 950,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "map.ohsho.co.jp",
+      "www.ohsho.co.jp"
+    ],
+    "maxAdded": 100,
+    "maxRemoved": 60,
+    "maxChanged": 200,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

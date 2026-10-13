@@ -351,7 +351,7 @@ const issuerDisplayNames = {
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
   komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード',
-  yamaokaya:'山岡家', chikaranomoto:'力の源HD'
+  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
@@ -1197,6 +1197,7 @@ async function loadBrandCatalog(){
 let brandCandidateLimit=12;
 // Small local reading dictionary; typing never requests the store API.
 const brandReadings={
+  '餃子の王将':'ぎょうざのおうしょう おうしょう ohsho', 'GYOZA OHSHO':'ぎょうざおうしょう', 'JoyNaho':'じょいなーほ', 'ジョイフル':'じょいふる joyfull',
   'ラーメン山岡家':'らーめんやまおかや やまおかや yamaokaya', '味噌ラーメン山岡家':'みそらーめんやまおかや', '煮干しラーメン山岡家':'にぼしらーめんやまおかや',
   '一風堂':'いっぷうどう ippudo', '一風堂 KAY':'いっぷうどうかい', 'IPPUDO RAMEN EXPRESS':'いっぷうどうらーめんえくすぷれす', 'RAMEN EXPRESS 博多一風堂':'らーめんえくすぷれすはかたいっぷうどう',
   'コメダ珈琲店':'こめだこーひー こめだ komeda', 'おかげ庵':'おかげあん',

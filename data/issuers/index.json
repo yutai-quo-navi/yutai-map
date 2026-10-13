@@ -190,6 +190,20 @@
       "name": "力の源ホールディングス",
       "status": "public",
       "config": "./data/issuers/chikaranomoto/config.json"
+    },
+    {
+      "id": "ohsho",
+      "code": "9936",
+      "name": "王将フードサービス",
+      "status": "development",
+      "config": "./data/issuers/ohsho/config.json"
+    },
+    {
+      "id": "joyfull",
+      "code": "9942",
+      "name": "ジョイフル",
+      "status": "development",
+      "config": "./data/issuers/joyfull/config.json"
     }
   ]
 }
