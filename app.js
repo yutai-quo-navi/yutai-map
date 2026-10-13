@@ -363,7 +363,7 @@ function toggleIssuer(id){
   track('benefit_select', {section: 'dining', benefit_id: id, selected: selected.has(id)});
   resetCategoryFilter();
   persistSelection(); updateChipSelection(id); renderBrandOptions();
-  els.chips.querySelector('[data-issuer="'+id+'"]')?.focus();
+  els.chips.querySelector('[data-issuer="'+id+'"]')?.focus({preventScroll:true});
   invalidateDiningSearch();
 }
 function invalidateDiningSearch(){

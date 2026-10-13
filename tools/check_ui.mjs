@@ -82,7 +82,7 @@ try{
       const neighbor=document.querySelector('#companyChips [data-issuer="yossix"] .representative-mark');
       const rect=node=>{
         const {x,y,width,height}=node.getBoundingClientRect();
-        return {x,y,width,height};
+        return {x:x+scrollX,y:y+scrollY,width,height};
       };
       const geometry=()=>JSON.stringify([...document.querySelectorAll('#companyChips [data-issuer]')]
         .map(button=>[rect(button),rect(button.querySelector('.representative-mark'))]));
@@ -98,7 +98,7 @@ try{
       if(getComputedStyle(chipGrid).gridTemplateColumns.split(' ').length!==3)throw new Error('Dining grid lost its three columns');
       for(let i=0;i<10;i++){
         card.click();
-        if(geometry()!==initialGeometry)throw new Error('Selection moved a dining cell or logo');
+        if(geometry()!==initialGeometry)throw new Error('Selection moved a dining cell or logo: '+initialGeometry+' -> '+geometry());
         if(JSON.stringify(rect(fixture))!==initialBadge)throw new Error('Selection moved the deadline badge');
         if(getComputedStyle(card).borderTopWidth!=='1px')throw new Error('Selection changed the structural border width');
         const selected=card.getAttribute('aria-pressed')==='true';
@@ -153,6 +153,7 @@ try{
     await page.locator('#hotelTab').click();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').waitFor();
     await audit('hotel-selection');
+    await page.locator('#hotelFeatures [data-feature="ui-hotel"]').scrollIntoViewIfNeeded();
     const hotelGeometry=await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').click();
     assert.deepEqual(await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox(),hotelGeometry,'hotel selection must not move or resize the cell');
