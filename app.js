@@ -404,16 +404,12 @@ function renderChips(){
     badge.title=c.name;
     const name=document.createElement('span'); name.className='selected-issuer-name benefit-choice-name';
     name.textContent=shortIssuerName(c);
-    const check=document.createElement('span'); check.className='issuer-check';
-    check.setAttribute('aria-hidden','true');
     const copy=document.createElement('span'); copy.className='benefit-choice-copy';
     copy.appendChild(name);
-    // The selected label and expiry badge occupy different footer corners.
-    // Keep the text label visible even when there is an expiration badge.
-    // Selected state is conveyed by the check icon, surface tint and logo contrast.
-    // Keep the deadline badge without adding a redundant "選択中" text label.
-    if(bubble) copy.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
-    badge.append(check,copy);
+    // The warm surface and inset frame show selection without a second badge.
+    // Anchor the deadline directly to the card, outside the upper-right corner.
+    badge.append(copy);
+    if(bubble) badge.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
     const mark=existingMarks.get(c.id) || createBrandMark('dining',c.id);
     if(mark) badge.append(mark);
     badge.addEventListener('click',()=>toggleIssuer(c.id));
