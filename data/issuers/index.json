@@ -195,7 +195,7 @@
       "id": "ohsho",
       "code": "9936",
       "name": "王将フードサービス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/ohsho/config.json"
     },
     {
