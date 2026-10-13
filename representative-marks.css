@@ -465,3 +465,42 @@
 }
 /* Keep readable hotel image identities below headers and counts. */
 #hotelFeatures .representative-mark{top:50px;bottom:11px;}
+
+
+/* Logo reliability and visual review, 2026-10-13.
+ * Explicitly contrast text when a remote image cannot load; it must not
+ * disappear into a 23%-opacity placeholder. Real logos retain current tint.
+ */
+#companyChips .representative-mark:not(.has-real-logo){opacity:.46}
+#hotelFeatures .representative-mark:not(.has-real-logo){opacity:.58}
+#companyChips .benefit-choice[aria-pressed=true]>.representative-mark:not(.has-real-logo),
+#hotelFeatures .benefit-choice[aria-pressed=true]>.representative-mark:not(.has-real-logo){opacity:.85}
+
+/* Requested Doutor adjustment: exactly 85% of prior width/height bounds.
+ * Both dimensions are reduced together, preserving the original logo ratio.
+ */
+#companyChips [data-issuer="dnh"]{
+  --logo-width:60.35%;
+  --logo-height:68.85%;
+}
+
+/* Correctly framed hotel wordmarks from social-preview artwork.
+ * Object-fit:cover prevents very large white margins from making the real
+ * logo a tiny speck; the enclosing card remains a fixed height.
+ */
+#hotelFeatures .representative-mark:has(.representative-mark-image){
+  overflow:hidden;
+}
+#hotelFeatures .representative-mark-image{
+  object-fit:cover;
+  object-position:center;
+}
+#hotelFeatures [data-feature="greens-hotels"] .representative-mark-image,
+#hotelFeatures [data-feature="kyoritsu-resort-plan"] .representative-mark-image,
+#hotelFeatures [data-feature="tosei-hotels"] .representative-mark-image,
+#hotelFeatures [data-feature="tkp-hotels"] .representative-mark-image{
+  object-fit:cover;
+}
+#hotelFeatures [data-feature="wealth-hotels"] .representative-mark-image{
+  object-position:right center;
+}
