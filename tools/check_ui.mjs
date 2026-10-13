@@ -14,8 +14,23 @@ const publicIssuerCount=manifest.issuers.filter(issuer=>issuer.status==='public'
 const strict=process.argv.includes('--strict');
 const fontDir=process.env.UI_TEST_FONT_DIRECTORY;
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2'};
+// Compare the real companion site's header with the same browser and viewport.
+const gasBase='https://raw.githubusercontent.com/yutai-quo-navi/yutai-quo-navi.github.io/main/';
+const gasFiles=new Map(await Promise.all(['index.html','assets/brand.css','assets/header-align.css'].map(async path=>{
+  const response=await fetch(gasBase+path);
+  assert.ok(response.ok,'Companion header source must be available: '+path);
+  return [path,await response.text()];
+})));
+assert.equal(gasFiles.get('assets/header-align.css'),await readFile(resolve(root,'assets/header-align.css'),'utf8'),'Both sites must share identical header geometry rules');
+const gasSource=gasFiles.get('index.html');
+gasFiles.set('index.html','<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+'</body></html>');
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+  if(pathname.startsWith('/__gas-header/')){
+    const path=pathname.slice('/__gas-header/'.length),body=gasFiles.get(path);
+    if(body==null){res.writeHead(404).end();return;}
+    res.writeHead(200,{'Content-Type':mime[extname(path)]||'text/plain'}).end(body);return;
+  }
   if(fontDir&&pathname.startsWith('/__ui-font/')){
     const file=resolve(fontDir,pathname.slice('/__ui-font/'.length));
     if(!file.startsWith(resolve(fontDir)+sep)){res.writeHead(403).end();return;}
@@ -75,6 +90,19 @@ try{
       }
     }
     await page.locator('body[data-app-ready=true]').waitFor();
+    const headerGeometry=()=>{
+      const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height};};
+      const name=document.querySelector('.site-header .site-brand-name');
+      const {x,y,height}=rect(name.firstElementChild);
+      return {logo:rect(document.querySelector('.site-header .site-logo')),nameStart:{x,y,height},nameFont:['fontFamily','fontSize','lineHeight','fontWeight','letterSpacing'].map(key=>getComputedStyle(name)[key])};
+    };
+    const foodHeader=await page.evaluate(headerGeometry);
+    const gasPage=await context.newPage();
+    await gasPage.goto(url+'/__gas-header/index.html');
+    assert.deepEqual(await gasPage.evaluate(headerGeometry),foodHeader,`${viewport.width}px: both tools must align their header icon and first title line`);
+    assert.equal(await gasPage.locator('.site-logo svg circle').count(),1,'gas identity includes a magnifying glass');
+    await gasPage.screenshot({path:resolve(output,`${viewport.width}-gas-header.png`)});
+    await gasPage.close();
     // Repeated toggles must retain decoded image nodes, including other cards.
     await page.evaluate(async()=>{
       const card=document.querySelector('#companyChips [data-issuer="foodlife"]');
