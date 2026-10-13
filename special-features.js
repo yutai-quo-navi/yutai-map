@@ -149,11 +149,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         detail.append(subtitle);
       }
       if (bubble) detail.append(bubble);
-      // Always keep the selected state visible, including with a deadline.
-      if (selectedFeatures.has(feature.id)) {
-        const state = document.createElement('span'); state.className = 'benefit-choice-status';
-        state.textContent = '選択中'; detail.append(state);
-      }
+      // The pressed state, checkmark and logo strength show hotel selection.
       if (detail.childElementCount) copy.append(detail);
       item.append(button);
       if (!getRadius) {
