@@ -410,3 +410,23 @@
   #companyChips [data-issuer="colowide"] .representative-mark-name{font-size:19px}
   #companyChips [data-issuer="fujio"] .representative-mark-name{font-size:12px}
 }
+
+
+/* Source-verified user-provided store marks. Preserve their proportions and
+   normalize visual area within the existing fixed-height card logo zone. */
+#companyChips [data-issuer="yamaokaya"]{--logo-width:91%;--logo-height:101%}
+#companyChips [data-issuer="yossix"]{--logo-width:97%;--logo-height:104%}
+#companyChips [data-issuer="srs"]{--logo-width:90%;--logo-height:100%}
+#companyChips [data-issuer="arclands"]{--logo-width:94%;--logo-height:103%}
+#companyChips [data-issuer="create"]{--logo-width:96%;--logo-height:104%}
+#companyChips [data-issuer="chimney"]{--logo-width:96%;--logo-height:100%}
+/* The six square-style files contain their complete marks. Avoid clipping
+   the source canvas or skewing text to imitate another brand's proportions. */
+#companyChips :is(
+  [data-issuer="yamaokaya"],
+  [data-issuer="yossix"],
+  [data-issuer="srs"],
+  [data-issuer="arclands"],
+  [data-issuer="create"],
+  [data-issuer="chimney"]
+) .representative-mark-image{object-fit:contain}
