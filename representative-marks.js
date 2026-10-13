@@ -97,9 +97,18 @@ export function createBrandMark(section, id) {
     image.loading = 'lazy';
     image.decoding = 'async';
     image.addEventListener('load', () => {
-      if (image.naturalWidth > 0) mark.classList.add('has-real-logo');
+      if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+        mark.classList.add('has-real-logo');
+        mark.dataset.logoState='loaded';
+      } else {
+        mark.dataset.logoState='unavailable';
+        image.remove();
+      }
     }, {once:true});
-    image.addEventListener('error', () => image.remove(), {once:true});
+    image.addEventListener('error', () => {
+      mark.dataset.logoState='unavailable';
+      image.remove();
+    }, {once:true});
     mark.append(image);
   }
   return mark;
