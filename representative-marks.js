@@ -5,16 +5,16 @@ const commons = filename => 'https://commons.wikimedia.org/wiki/Special:FilePath
 
 const dining = {
   skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:commons('Gusto Logo.svg')},
-  colowide:      {name:'コロワイド', sub:'COLOWIDE', color:'#5a91b3', symbol:'C'},
-  create:        {name:'クリエイト・レストランツ', sub:'CREATE RESTAURANTS', color:'#c88557', symbol:'CR', compact:true},
+  colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛'},
+  create:        {name:'しゃぶ菜', sub:'SHABUSAI', color:'#a9643b', symbol:'菜'},
   zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:commons('Sukiya logo.svg')},
   toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:commons('Marugame Seimen logo.svg')},
   yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:commons('Yoshinoya Logo.svg')},
   mcd:           {name:'McDonald’s', sub:'マクドナルド', color:'#e5a91e', symbol:'M', large:true, asset:'./assets/mcdonalds-mark.svg'},
   monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉'},
   matsuya:       {name:'松屋', sub:'MATSUYA', color:'#38639b', symbol:'松'},
-  royal:         {name:'ロイヤルホスト', sub:'Royal Host', color:'#be6d27', symbol:'R'},
-  balnibarbi:    {name:'バルニバービ', sub:'BALNIBARBI', color:'#58757b', symbol:'B'},
+  royal:         {name:'ロイヤルホスト', sub:'Royal Host', color:'#be6d27', symbol:'R', asset:commons('Royal Host Logo.png')},
+  balnibarbi:    {name:'GARB', sub:'ガーブ', color:'#58757b', symbol:'G'},
   daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE'},
   fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true},
   srs:           {name:'和食さと', sub:'SATO', color:'#ba4e61', symbol:'さ'},
@@ -24,12 +24,12 @@ const dining = {
   chimney:       {name:'はなの舞', sub:'HANANOMAI', color:'#8a5161', symbol:'花'},
   ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R'},
   hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日'},
-  ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:commons('ICHIBANYA Logo.svg')},
+  ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:'https://pbs.twimg.com/media/ES9CSLQUwAAS2Sc.png'},
   komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
   dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:commons('Doutor Coffee Logo.png')},
   mos:           {name:'MOS BURGER', sub:'モスバーガー', color:'#4d9b69', symbol:'M', asset:commons('MOS-Burger-Logo.svg')},
   yamaokaya:     {name:'ラーメン山岡家', sub:'YAMAOKAYA', color:'#c7414a', symbol:'山'},
-  chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一'},
+  chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一', asset:commons('Ippudo Logo.png')},
   ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王', asset:commons('餃子の王将.svg')},
   joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J', asset:commons('Joyfull Restaurant.png')},
   yossix:        {name:'や台ずし', sub:'YATAIZUSHI', color:'#ac6543', symbol:'寿'}
@@ -77,7 +77,9 @@ export function createBrandMark(section, id) {
   sub.className = 'representative-mark-sub';
   sub.textContent = info.sub;
   wording.append(main, sub);
-  fallback.append(symbol, wording);
+  // Do not fabricate a symbol that could be mistaken for the brand's official mark.
+  // Without a verified image, the accurate store-brand name itself is the fallback.
+  fallback.append(wording);
   mark.append(fallback);
   if (info.asset) {
     const image = document.createElement('img');
@@ -86,7 +88,9 @@ export function createBrandMark(section, id) {
     image.alt = '';
     image.loading = 'lazy';
     image.decoding = 'async';
-    image.addEventListener('load', () => mark.classList.add('has-real-logo'), {once:true});
+    image.addEventListener('load', () => {
+      if (image.naturalWidth > 0) mark.classList.add('has-real-logo');
+    }, {once:true});
     image.addEventListener('error', () => image.remove(), {once:true});
     mark.append(image);
   }
