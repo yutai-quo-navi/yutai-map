@@ -1,0 +1,91 @@
+{
+  "id": "yossix",
+  "code": "3221",
+  "name": "ヨシックスホールディングス",
+  "fullName": "ヨシックスホールディングス",
+  "status": "public",
+  "sourceUrl": "https://yossix.co.jp/ir/stockholder.html",
+  "storeSearchUrl": "https://yossix-shop.com/all/",
+  "matchingMode": "official_store_filter",
+  "note": "公式店舗一覧の国内店舗を公式座標で掲載。株主優待券・割引券の利用条件と一部例外は公式案内をご確認ください。",
+  "aliases": [
+    "や台ずし",
+    "ニパチ",
+    "ひとくち餃子の頂",
+    "や台や",
+    "これや",
+    "焼とりてっぱん",
+    "玉鋼",
+    "海老どて食堂",
+    "華花",
+    "人氣万両"
+  ],
+  "aliasBrands": {
+    "や台ずし": "や台ずし",
+    "ニパチ": "ニパチ",
+    "ひとくち餃子の頂": "ひとくち餃子の頂",
+    "や台や": "や台や",
+    "これや": "これや",
+    "焼とりてっぱん": "焼とりてっぱん",
+    "玉鋼": "玉鋼",
+    "海老どて食堂": "海老どて食堂",
+    "華花": "華花",
+    "人氣万両": "人氣万両"
+  },
+  "categories": {
+    "や台ずし": "restaurant",
+    "ニパチ": "restaurant",
+    "ひとくち餃子の頂": "restaurant",
+    "や台や": "restaurant",
+    "これや": "restaurant",
+    "焼とりてっぱん": "restaurant",
+    "玉鋼": "restaurant",
+    "海老どて食堂": "restaurant",
+    "華花": "restaurant",
+    "人氣万両": "restaurant"
+  },
+  "searchNames": [
+    "ヨシックス",
+    "ヨシックスホールディングス",
+    "や台ずし",
+    "ニパチ",
+    "ひとくち餃子の頂",
+    "や台や",
+    "これや",
+    "焼とりてっぱん",
+    "玉鋼",
+    "海老どて食堂",
+    "華花",
+    "人氣万両"
+  ],
+  "catalogBrands": [
+    "や台ずし",
+    "ニパチ",
+    "ひとくち餃子の頂",
+    "や台や",
+    "これや",
+    "焼とりてっぱん",
+    "玉鋼",
+    "海老どて食堂",
+    "華花",
+    "人氣万両"
+  ],
+  "domesticOnly": true,
+  "verified": "2026-10-13",
+  "locationMode": "official_coordinates",
+  "storeDataPath": "./data/issuers/yossix/stores/current.json",
+  "health": {
+    "minStores": 350,
+    "maxStores": 500,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "yossix-shop.com"
+    ],
+    "maxAdded": 60,
+    "maxRemoved": 40,
+    "maxChanged": 150,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}
