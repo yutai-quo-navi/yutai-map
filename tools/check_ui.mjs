@@ -40,7 +40,7 @@ let browser;
 try{
   browser=await chromium.launch(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{});
   for(const viewport of policy.viewports){
-    const context=await browser.newContext({viewport,locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce',geolocation:{latitude:35.681,longitude:139.767},permissions:['geolocation']});
+    const context=await browser.newContext({viewport,hasTouch:viewport.width<=390,locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce',geolocation:{latitude:35.681,longitude:139.767},permissions:['geolocation']});
     const page=await context.newPage();
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.route('**/*',async route=>{
@@ -170,6 +170,22 @@ try{
     // The current ledger may have no near deadlines: test an actual future holding.
     const owned=page.locator('.expiry-owned').first();
     if(await owned.count()){
+      const ownFrame=page.locator('.expiry-own-button').first();
+      for(let i=0;i<4;i++){
+        if(viewport.width<=390)await ownFrame.tap();
+        else await ownFrame.click();
+        assert.equal(await ownFrame.evaluate(node=>getComputedStyle(node).outlineStyle),'none','pointer toggles must not leave an outer selection-like ring');
+      }
+      // A keyboard user still needs visible focus and a working Space toggle.
+      await owned.click();
+      await page.keyboard.press('Tab');
+      await owned.focus();
+      assert.equal(await ownFrame.evaluate(node=>getComputedStyle(node).outlineStyle),'solid','keyboard focus remains visible');
+      const before=await owned.isChecked();
+      await page.keyboard.press('Space');
+      assert.equal(await owned.isChecked(),!before,'keyboard Space toggles ownership');
+      assert.equal(await owned.evaluate(node=>node===document.activeElement),true,'keyboard focus survives the ownership update');
+      assert.equal(await ownFrame.evaluate(node=>getComputedStyle(node).outlineStyle),'solid','keyboard focus ring survives the ownership update');
       await owned.check();
       await page.locator('[data-view=owned]').click();
       assert.ok(await page.locator('.expiry-row').count()>0);

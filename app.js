@@ -2,7 +2,7 @@ import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js
 import {createBrandMark} from './representative-marks.js?v=20261014-kura';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
-import {initExpirySearch} from './expiry-search.js?v=20261013-reel';
+import {initExpirySearch} from './expiry-search.js?v=20261014-holding-focus';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-stable-logos';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
