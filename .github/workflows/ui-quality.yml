@@ -20,6 +20,8 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm test
+      - name: Diagnose remote representative logo URLs
+        run: node tools/probe_logo_sources.mjs
       # Findings are reviewable reports during the initial lintapple rollout.
       # Functional assertions and browser failures still fail this job.
       - run: npm run lint:ui
