@@ -1,0 +1,317 @@
+/* Logo-backed benefit choices, scoped to issuer/hotel selection only.
+   The grid, card heights and footer positions are invariant across brands. */
+#companyChips{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:112px;
+  align-items:stretch;
+  gap:8px;
+}
+#companyChips .selected-issuer-group{width:100%;min-width:0;height:112px}
+#companyChips .benefit-choice{
+  position:relative;
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  height:112px;
+  min-height:112px;
+  max-height:112px;
+  padding:10px 8px 8px;
+  text-align:left;
+  overflow:hidden;
+  border-radius:12px;
+  isolation:isolate;
+}
+#companyChips .benefit-choice:has(.t-badge){
+  height:112px;
+  min-height:112px;
+  max-height:112px;
+  padding:10px 8px 8px;
+}
+#companyChips .benefit-choice-copy{
+  position:relative;
+  z-index:2;
+  display:block;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+#companyChips .benefit-choice-name{
+  display:block;
+  width:100%;
+  max-width:100%;
+  padding-right:19px;
+  box-sizing:border-box;
+  font-size:13px;
+  line-height:1.4;
+  text-align:left;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+#companyChips .issuer-check,#hotelFeatures .issuer-check{
+  z-index:4;
+  width:16px;
+  height:16px;
+  top:9px;
+  right:8px;
+}
+#companyChips .benefit-choice-status,
+#hotelFeatures .benefit-choice-status{
+  position:absolute;
+  left:8px;
+  bottom:8px;
+  z-index:4;
+  display:inline-flex;
+  align-items:center;
+  min-height:17px;
+  padding:2px 5px;
+  border-radius:6px;
+  background:#fff8edeb;
+  color:var(--issuer,var(--accent-text));
+  font-size:11px;
+  font-weight:700;
+  line-height:1.3;
+  white-space:nowrap;
+}
+#companyChips .benefit-choice[aria-pressed=true] .benefit-choice-status{
+  background:color-mix(in srgb,var(--issuer-soft,#fff0db) 80%,#fff);
+}
+#companyChips .t-badge.voucher-deadline-bubble{
+  position:absolute;
+  bottom:8px;
+  right:7px;
+  z-index:4;
+  max-width:52%;
+  margin:0;
+}
+#companyChips .t-badge-dot{
+  width:20px;
+  height:20px;
+  min-height:20px;
+}
+.representative-mark{
+  --mark-color:#896f59;
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  pointer-events:none;
+  overflow:hidden;
+  user-select:none;
+  opacity:.24;
+  transition:opacity .2s ease;
+  z-index:1;
+}
+.benefit-choice[aria-pressed=true]>.representative-mark{opacity:.82}
+.representative-mark-fallback{
+  width:100%;
+  min-width:0;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  color:var(--mark-color);
+  text-align:center;
+}
+.representative-mark-symbol{
+  flex:none;
+  display:grid;
+  place-items:center;
+  width:33px;
+  height:33px;
+  max-width:32%;
+  box-sizing:border-box;
+  padding:2px;
+  border:2px solid currentColor;
+  border-radius:50%;
+  font-size:15px;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-.08em;
+}
+.representative-mark-wording{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  max-width:100%;
+}
+.representative-mark-name{
+  color:inherit;
+  font-size:16px;
+  line-height:1.16;
+  font-weight:900;
+  letter-spacing:-.05em;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.representative-mark-sub{
+  margin-top:2px;
+  font-family:Arial,sans-serif;
+  font-size:8px;
+  line-height:1.2;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+.representative-mark--compact .representative-mark-name{font-size:12px}
+.representative-mark--large .representative-mark-symbol{font-size:22px}
+.representative-mark-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+}
+.representative-mark.has-real-logo .representative-mark-fallback{visibility:hidden}
+#companyChips .representative-mark{
+  top:30px;
+  bottom:26px;
+  left:8px;
+  right:8px;
+}
+#companyChips .representative-mark-name{font-size:14px}
+#companyChips .representative-mark-symbol{
+  width:28px;
+  height:28px;
+  font-size:13px;
+}
+#companyChips .representative-mark--compact .representative-mark-name{font-size:11px}
+#companyChips .representative-mark--large .representative-mark-symbol{font-size:20px}
+
+/* Hotel cards: fixed two-column rows with right-side identity watermark. */
+#hotelFeatures .feature-buttons{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:146px;
+  align-items:stretch;
+  gap:8px;
+}
+#hotelFeatures .feature-item{
+  height:146px;
+  min-height:146px;
+  max-height:146px;
+  min-width:0;
+}
+#hotelFeatures .feature-button{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+  box-sizing:border-box;
+  width:100%;
+  height:146px;
+  min-height:146px;
+  max-height:146px;
+  padding:12px 9px 27px;
+  overflow:hidden;
+  border-radius:12px;
+  isolation:isolate;
+}
+#hotelFeatures .benefit-choice-copy{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-width:0;
+  height:auto;
+  align-items:flex-start;
+  justify-content:flex-start;
+  padding-right:0;
+  pointer-events:none;
+}
+#hotelFeatures .benefit-choice-heading{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:100%;
+  max-width:100%;
+}
+#hotelFeatures .benefit-choice-name{
+  box-sizing:border-box;
+  max-width:100%;
+  padding-right:18px;
+  font-size:12px;
+  line-height:1.38;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+#hotelFeatures .benefit-choice-count .motion-number{font-size:22px}
+#hotelFeatures .benefit-choice-count{line-height:1.15}
+#hotelFeatures .benefit-choice-detail{
+  width:100%;
+  max-width:100%;
+  font-size:11px;
+  line-height:1.35;
+  align-items:flex-start;
+}
+#hotelFeatures .feature-caption{
+  position:relative;
+  z-index:2;
+  max-width:70%;
+  font-size:11px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+#hotelFeatures .representative-mark{
+  right:8px;
+  top:45px;
+  bottom:15px;
+  width:48%;
+  max-width:48%;
+  opacity:.27;
+}
+#hotelFeatures .benefit-choice[aria-pressed=true]>.representative-mark{opacity:.75}
+#hotelFeatures .representative-mark-fallback{
+  flex-direction:column;
+  gap:3px;
+}
+#hotelFeatures .representative-mark-symbol{
+  width:26px;
+  height:26px;
+  font-size:12px;
+}
+#hotelFeatures .representative-mark-name{font-size:12px}
+#hotelFeatures .representative-mark-sub{font-size:8px}
+#hotelFeatures .representative-mark--compact .representative-mark-name{font-size:10px}
+#hotelFeatures .feature-deadline{z-index:2;position:relative;max-width:65%}
+#hotelFeatures .benefit-choice-status{color:var(--choice-ink,var(--accent-text))}
+@media(max-width:520px){
+  #companyChips{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;grid-auto-rows:108px}
+  #companyChips .selected-issuer-group,
+  #companyChips .benefit-choice,
+  #companyChips .benefit-choice:has(.t-badge){
+    height:108px;
+    min-height:108px;
+    max-height:108px;
+  }
+  #companyChips .benefit-choice-name{font-size:11px;padding-right:16px}
+  #companyChips .representative-mark{left:4px;right:4px;top:27px;bottom:26px}
+  #companyChips .representative-mark-fallback{gap:3px}
+  #companyChips .representative-mark-symbol{width:22px;height:22px;font-size:10px}
+  #companyChips .representative-mark-name{font-size:12px}
+  #companyChips .representative-mark-sub{font-size:7px}
+  #companyChips .representative-mark--compact .representative-mark-name{font-size:10px}
+  #companyChips .benefit-choice-status{font-size:10px;padding:2px 4px;bottom:7px;left:6px}
+  #companyChips .t-badge.voucher-deadline-bubble{bottom:7px;right:5px}
+  #hotelFeatures .feature-buttons{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:148px}
+  #hotelFeatures .feature-item,#hotelFeatures .feature-button{
+    height:148px;min-height:148px;max-height:148px;
+  }
+  #hotelFeatures .feature-button{padding:10px 7px 26px}
+  #hotelFeatures .benefit-choice-name{font-size:11px;padding-right:14px}
+  #hotelFeatures .benefit-choice-count .motion-number{font-size:21px}
+  #hotelFeatures .feature-caption{font-size:10px}
+  #hotelFeatures .representative-mark{right:4px;width:51%;max-width:51%;top:50px;bottom:17px}
+  #hotelFeatures .representative-mark-name{font-size:11px}
+  #hotelFeatures .representative-mark-sub{font-size:7px}
+}
+@media(max-width:350px){
+  #companyChips{gap:5px}
+  #companyChips .benefit-choice{padding-left:5px;padding-right:5px}
+  #companyChips .representative-mark-name{font-size:10px}
+  #hotelFeatures .benefit-choice-name{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.representative-mark{transition:none}}
