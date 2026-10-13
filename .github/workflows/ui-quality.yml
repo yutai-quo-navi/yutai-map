@@ -5,7 +5,7 @@ on:
     paths: ['index.html', '*.css', '*.js', 'assets/brand.css', 'ui-policy.json', 'tools/check_ui.mjs', 'package*.json', '.github/workflows/ui-quality.yml']
   push:
     branches: [main]
-    paths: ['index.html', '*.css', '*.js', 'assets/brand.css', 'ui-policy.json', 'tools/check_ui.mjs', 'package*.json', '.github/workflows/ui-quality.yml']
+    paths: ['index.html', '*.css', '*.js', 'assets/brand.css', 'ui-policy.json', 'tools/check_ui.mjs', 'tests/**', 'package*.json', '.github/workflows/ui-quality.yml']
 permissions:
   contents: read
 jobs:
