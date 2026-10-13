@@ -54,6 +54,10 @@ class OfficialLocatorTests(unittest.TestCase):
         self.assertEqual(rows[0]['store_id'],'official:joyfull:1')
         self.assertEqual(rows[0]['lat'],35.68)
 
+    def test_joyfull_express_name_has_no_duplicate_prefix(self):
+        rows,_=joyfull_page(joyfull_html().replace('テスト店','ジョイフルEXPRESS テスト店'))
+        self.assertEqual(rows[0]['name'],'ジョイフルEXPRESS テスト店')
+
     def test_joyfull_incomplete_duplicate_bad_coordinates(self):
         for html in [joyfull_html(2),joyfull_html(lat='0'),joyfull_html().replace('shop/1','shop/2')]:
             with self.assertRaises(ValueError): joyfull_page(html)

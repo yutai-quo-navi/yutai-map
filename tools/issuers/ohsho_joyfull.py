@@ -117,7 +117,8 @@ def joyfull_page(text):
             raise ValueError('Joyfull name mismatch')
         if re.search(r'オープン予定|開店予定',name):
             raise ValueError('Future Joyfull opening in locator')
-        row=store('official:joyfull:'+match[1],'ジョイフル','ジョイフル '+name,item['data-shop-address'],'',item['data-latitude'],item['data-longitude'],item['href'],'restaurant')
+        display_name = name if name.startswith('ジョイフル') else 'ジョイフル '+name
+        row=store('official:joyfull:'+match[1],'ジョイフル',display_name,item['data-shop-address'],'',item['data-latitude'],item['data-longitude'],item['href'],'restaurant')
         row['eligibility_source']='https://corporate.joyfull.co.jp/ir-complimentary'
         rows.append(row)
     if len({r['store_id'] for r in rows}) != total:
