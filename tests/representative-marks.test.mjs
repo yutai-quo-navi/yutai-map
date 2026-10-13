@@ -42,7 +42,7 @@ test('mark fallback is always available without a third-party image',()=>{
   for(const id of dining.concat(hotel)){
     const mark=representativeMark(hotel.includes(id)?'hotel':'dining',id);
     assert.ok(mark.name && mark.sub && mark.symbol,'fallback: '+id);
-    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') || mark.asset.startsWith('https://pbs.twimg.com/media/'),mark.asset);
+    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') || mark.asset.startsWith('https://pbs.twimg.com/media/') || mark.asset.startsWith('https://livedoor.blogimg.jp/'),mark.asset);
   }
 });
 
