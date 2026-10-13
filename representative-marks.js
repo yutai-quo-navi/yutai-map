@@ -37,18 +37,18 @@ const dining = {
 };
 
 const hotel = {
-  'kyoritsu-hotel-discount':{name:'dormy inn', sub:'ドーミーイン', color:'#555d74', symbol:'d', asset:'https://media.sauna-ikitai.com/kb/tonttu/dormyin_kawasaki/logo.jpg'},
-  'greens-hotels':         {name:'Comfort HOTEL', sub:'コンフォートホテル', color:'#8c7c9a', symbol:'C', asset:'https://www.choice-hotels.jp/ogp.jpg'},
-  'daiwa-house-hotels':    {name:'Daiwa Roynet Hotel', sub:'ダイワロイネットホテル', color:'#6367a3', symbol:'DR', compact:true},
-  'seibu-free-hotels':     {name:'Prince Hotel', sub:'プリンスホテル', color:'#9d8063', symbol:'P', asset:commons('PrinceHotels logo.svg')},
-  'kyoritsu-resort-plan':  {name:'共立リゾート', sub:'KYORITSU RESORT', color:'#8c8268', symbol:'♨', asset:'https://dormy-hotels.com/resort/ogp.jpg'},
+  'kyoritsu-hotel-discount':{name:'dormy inn', sub:'ドーミーイン', color:'#555d74', symbol:'d', asset:'./assets/hotel-logo-kyoritsu-hotel-discount.svg'} ,
+  'greens-hotels':         {name:'Comfort HOTEL', sub:'コンフォートホテル', color:'#8c7c9a', symbol:'C', asset:'./assets/hotel-logo-greens-hotels.svg'} ,
+  'daiwa-house-hotels':    {name:'Daiwa Roynet Hotel', sub:'ダイワロイネットホテル', color:'#6367a3', symbol:'DR', compact:true, asset:'./assets/hotel-logo-daiwa-house-hotels.svg'} ,
+  'seibu-free-hotels':     {name:'Prince Hotel', sub:'プリンスホテル', color:'#9d8063', symbol:'P', asset:'./assets/hotel-logo-seibu-free-hotels.svg'} ,
+  'kyoritsu-resort-plan':  {name:'共立リゾート', sub:'KYORITSU RESORT', color:'#8c8268', symbol:'♨'},
   'sunfrontier-hotels':    {name:'たびのホテル', sub:'TABINO HOTEL', color:'#637488', symbol:'H', asset:'https://foodslabo-app-prod.s3.ap-northeast-1.amazonaws.com/store/uploads/brands/4170/original-brand/4170/logo/cfb27bdb4b70a7ec720f70d1fd03bb5b.png'},
-  'resol-hotels':          {name:'HOTEL RESOL', sub:'ホテルリソル', color:'#578477', symbol:'R', asset:'https://www.resol.jp/common/img/og_image.png'},
-  'tosei-hotels':          {name:'TOSEI HOTEL', sub:'COCONE', color:'#788a98', symbol:'C', asset:'https://tosei-hotel.co.jp/files/ogp.jpg'},
-  'tkp-hotels':            {name:'TKP', sub:'ホテル・宿泊優待', color:'#cd525d', symbol:'TKP', large:true, asset:'https://www.ishinoya.jp/atami/images/home/about.jpg'},
-  'wealth-hotels':         {name:'HOTEL EMISIA', sub:'ホテルエミシア', color:'#9a757a', symbol:'E', asset:'https://www.hotel-emisia.com/sapporo/ogp.jpg'},
-  'wakita-hotels':         {name:'HOTEL CORDIA', sub:'ホテルコルディア', color:'#aa8b6a', symbol:'HC', asset:'https://image.jimcdn.com/app/cms/image/transf/dimension%3D2048x2048%3Aformat%3Djpg/path/sb0a7af9f18ef4727/image/i9276edc2076cfada/version/1495000658/image.jpg'},
-  'vision-hotels':         {name:'VISION GLAMPING', sub:'ビジョングランピング', color:'#677b66', symbol:'V', asset:'https://vision-glamping.com/yamanakako/img/ogp_img/OGP_7_FAQ.jpg'},
+  'resol-hotels':          {name:'HOTEL RESOL', sub:'ホテルリソル', color:'#578477', symbol:'R', asset:'./assets/hotel-logo-resol-hotels.svg'} ,
+  'tosei-hotels':          {name:'TOSEI HOTEL', sub:'COCONE', color:'#788a98', symbol:'C', asset:'./assets/hotel-logo-tosei-hotels.svg'} ,
+  'tkp-hotels':            {name:'TKP', sub:'ホテル・宿泊優待', color:'#cd525d', symbol:'TKP', large:true, asset:'./assets/hotel-logo-tkp-hotels.svg'} ,
+  'wealth-hotels':         {name:'HOTEL EMISIA', sub:'ホテルエミシア', color:'#9a757a', symbol:'E', asset:'./assets/hotel-logo-wealth-hotels.svg'} ,
+  'wakita-hotels':         {name:'HOTEL CORDIA', sub:'ホテルコルディア', color:'#aa8b6a', symbol:'HC', asset:'./assets/hotel-logo-wakita-hotels.svg'} ,
+  'vision-hotels':         {name:'VISION GLAMPING', sub:'ビジョングランピング', color:'#677b66', symbol:'V'},
 };
 
 export function representativeMark(section, id) {

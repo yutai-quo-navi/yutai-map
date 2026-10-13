@@ -12,7 +12,7 @@ const dining = [
 const hotel = [
   'daiwa-house-hotels','seibu-free-hotels','kyoritsu-hotel-discount',
   'kyoritsu-resort-plan','resol-hotels','sunfrontier-hotels','tosei-hotels',
-  'greens-hotels','wealth-hotels','tkp-hotels','wakita-hotels','vision-hotels'
+  'greens-hotels','wealth-hotels','tkp-hotels','vision-hotels','wakita-hotels'
 ];
 
 test('every currently public dining issuer has a representative brand mark', async()=>{
@@ -124,8 +124,8 @@ test('restaurant identities use intrinsic image proportions rather than stretche
 test('hotel logo image sources and selected card behavior are configured',async()=>{
   const imageBacked=[
     'kyoritsu-hotel-discount','greens-hotels','seibu-free-hotels',
-    'kyoritsu-resort-plan','sunfrontier-hotels','resol-hotels',
-    'tosei-hotels','tkp-hotels','wealth-hotels','wakita-hotels','vision-hotels'
+    'sunfrontier-hotels','resol-hotels','daiwa-house-hotels',
+    'tosei-hotels','tkp-hotels','wealth-hotels','wakita-hotels'
   ];
   for(const id of imageBacked) assert.ok(representativeMark('hotel',id)?.asset,id);
   const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');

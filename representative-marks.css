@@ -491,3 +491,47 @@
 #companyChips [data-issuer="monogatari"]{--logo-width:86%;--logo-height:88%}
 #companyChips [data-issuer="matsuya"],
 #companyChips [data-issuer="hiday"]{--logo-width:80%;--logo-height:82%}
+
+/* Center logos in the entire cell; hidden fallback must not occupy flex space. */
+.representative-mark.has-real-logo .representative-mark-fallback{display:none}
+#companyChips .representative-mark,
+#hotelFeatures .representative-mark{
+  inset:0;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  align-items:center;
+  justify-content:center;
+}
+#companyChips .representative-mark-image{max-height:48%;max-width:var(--logo-width,80%)}
+#hotelFeatures .representative-mark{opacity:.7}
+#hotelFeatures .benefit-choice[aria-pressed=true]>.representative-mark{opacity:1}
+#hotelFeatures .representative-mark-image{max-width:72%;max-height:40%}
+#hotelFeatures [data-feature="greens-hotels"] .representative-mark-image,
+#hotelFeatures [data-feature="wakita-hotels"] .representative-mark-image{max-height:42%;max-width:54%}
+#hotelFeatures [data-feature="tkp-hotels"] .representative-mark-image{max-width:56%;max-height:36%}
+#hotelFeatures .benefit-choice-copy{height:100%;position:relative}
+#hotelFeatures .benefit-choice-count{position:absolute;left:0;bottom:1px}
+#hotelFeatures .benefit-choice-detail{position:absolute;left:0;top:calc(100% + 7px);width:100%;display:block}
+#hotelFeatures .feature-caption{max-width:100%;display:block;white-space:nowrap;font-size:10px}
+#hotelFeatures .feature-deadline{position:absolute;right:0;bottom:24px;max-width:65%;font-size:10px}
+#hotelFeatures .representative-mark-fallback{height:auto;width:72%}
+@media(max-width:520px){
+ #hotelFeatures .feature-caption{font-size:9px}
+}
+
+/* Hotel identities sit beside the left text, vertically centered in the cell. */
+#hotelFeatures .representative-mark{
+ inset:0 7px 0 auto;
+ width:48%;max-width:48%;height:100%;
+}
+#hotelFeatures .representative-mark-image{max-width:94%;max-height:45%}
+#hotelFeatures [data-feature="greens-hotels"] .representative-mark-image,
+#hotelFeatures [data-feature="wakita-hotels"] .representative-mark-image{max-width:78%;max-height:49%}
+#hotelFeatures [data-feature="tkp-hotels"] .representative-mark-image{max-width:85%;max-height:38%}
+#hotelFeatures .benefit-choice-copy{height:auto}
+#hotelFeatures .benefit-choice-count{position:static}
+#hotelFeatures .benefit-choice-detail{position:static;display:flex;width:48%}
+#hotelFeatures .feature-caption{max-width:100%;white-space:normal;font-size:11px}
+#hotelFeatures .feature-deadline{position:relative;inset:auto;max-width:100%;font-size:11px}
+@media(max-width:520px){#hotelFeatures .feature-caption,#hotelFeatures .feature-deadline{font-size:10px}}
