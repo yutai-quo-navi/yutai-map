@@ -61,7 +61,7 @@ test('the restaurant representative marks are not holding-company logos',()=>{
   assert.equal(representativeMark('dining','create').name,'しゃぶ菜');
   assert.equal(representativeMark('dining','colowide').name,'牛角');
   assert.equal(representativeMark('dining','balnibarbi').name,'GARB');
-  assert.match(representativeMark('dining','chikaranomoto').asset,/Ippudo_Logo\.png/);
+  assert.match(decodeURIComponent(representativeMark('dining','chikaranomoto').asset),/Ippudo Logo\.png/);
 });
 
 test('optical logo sizing keeps all card heights fixed',async()=>{
