@@ -204,6 +204,13 @@
       "name": "ジョイフル",
       "status": "public",
       "config": "./data/issuers/joyfull/config.json"
+    },
+    {
+      "id": "yossix",
+      "code": "3221",
+      "name": "ヨシックスホールディングス",
+      "status": "public",
+      "config": "./data/issuers/yossix/config.json"
     }
   ]
 }
