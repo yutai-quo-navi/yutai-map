@@ -1,5 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
-import {createBrandMark} from './representative-marks.js?v=20261014-kura';
+import {createBrandMark} from './representative-marks.js?v=20261014-supplied-four-logos';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
@@ -91,7 +91,13 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   const heading = section === 'hotel' ? '宿泊・ホテル優待 特集' : 'レア優待店 特集';
   const currentRadius = feature => getRadius ? getRadius() : selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
+  const fitHotelName = name => {
+    const line=parseFloat(getComputedStyle(name).lineHeight);
+    name.closest('.feature-button').classList.toggle('hotel-name-wrap',name.getBoundingClientRect().height>line*1.5);
+  };
+  const nameObserver=section==='hotel'?new ResizeObserver(entries=>entries.forEach(({target})=>fitHotelName(target))):null;
   const render = () => {
+    nameObserver?.disconnect();
     const existingMarks=new Map([...root.querySelectorAll('[data-feature]')]
       .map(button=>[button.dataset.feature,button.querySelector('.representative-mark')]));
     const displayed = visibleFeatures(features, today(), preview)
@@ -176,6 +182,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         radiusLabel.append(select); item.append(radiusLabel);
       }
       root.querySelector('.feature-buttons').append(item);
+      if(nameObserver){fitHotelName(name);nameObserver.observe(name);}
     }
     root.querySelector('.feature-results').id = resultsId;
     const chosen = displayed.filter(feature => selectedFeatures.has(feature.id));
@@ -225,6 +232,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
   return {
+    destroy() { nameObserver?.disconnect(); },
     refresh() { render(); },
     invalidate() { hasSearched = false; render(); },
     search() {

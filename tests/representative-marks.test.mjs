@@ -57,7 +57,7 @@ test('selected labels are absent but deadline badges stay in both selection view
 
 test('the restaurant representative marks are not holding-company logos',()=>{
   assert.equal(representativeMark('dining','ichibanya').name,'CoCo壱番屋');
-  assert.match(representativeMark('dining','ichibanya').asset,/ES9CSLQUwAAS2Sc/);
+  assert.match(representativeMark('dining','ichibanya').asset,/logo-user-ichibanya\.jpg/);
   assert.equal(representativeMark('dining','create').name,'磯丸水産');
   assert.equal(representativeMark('dining','colowide').name,'牛角');
   assert.equal(representativeMark('dining','balnibarbi').name,'BALNIBARBI');

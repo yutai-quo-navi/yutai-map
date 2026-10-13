@@ -11,6 +11,7 @@ const output=resolve(root,'ui-reports');
 const policy=JSON.parse(await readFile(resolve(root,'ui-policy.json'),'utf8'));
 const manifest=JSON.parse(await readFile(resolve(root,'data/issuers/index.json'),'utf8'));
 const publicIssuerCount=manifest.issuers.filter(issuer=>issuer.status==='public').length;
+const realHotelNames=JSON.parse(await readFile(resolve(root,'data/features/index.json'),'utf8')).features.filter(feature=>feature.section==='hotel');
 const strict=process.argv.includes('--strict');
 const fontDir=process.env.UI_TEST_FONT_DIRECTORY;
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2'};
@@ -23,7 +24,7 @@ const gasFiles=new Map(await Promise.all(['index.html','assets/brand.css','asset
 })));
 assert.equal(gasFiles.get('assets/header-align.css'),await readFile(resolve(root,'assets/header-align.css'),'utf8'),'Both sites must share identical header geometry rules');
 const gasSource=gasFiles.get('index.html');
-gasFiles.set('index.html','<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+'</body></html>');
+gasFiles.set('index.html','<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+gasSource.match(/<main class="wrap">/)[0]+'<div style="height:100px"></div></main></body></html>');
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(pathname.startsWith('/__gas-header/')){
@@ -53,7 +54,7 @@ const reports=[];
 const hotelFixture={id:'ui-hotel',section:'hotel',title:'テスト宿泊優待',shortName:'表示確認ホテル',subtitle:'宿泊券で泊まる',issuer:{id:'ui-hotel',code:'9999',name:'表示確認ホテル'},updateMode:'manual',status:'public',availability:'continuous',radiusMeters:'all',sourceUrl:'https://example.com/benefit',checkedOn:'2026-10-12',description:'表示確認用の宿泊優待です。',stores:[{id:'ui-hotel-1',name:'表示検証用ホテル・長いホテル名とリゾート施設',address:'東京都○○区○○町（テスト用）',lat:35.682,lng:139.768,conditions:'事前予約が必要です。宿泊券の対象プランと除外日を公式情報でご確認ください。',verified:true}]};
 let browser;
 try{
-  browser=await chromium.launch(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{});
+  browser=await chromium.launch({...(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{}),ignoreDefaultArgs:['--hide-scrollbars']});
   for(const viewport of policy.viewports){
     const context=await browser.newContext({viewport,hasTouch:viewport.width<=390,locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce',geolocation:{latitude:35.681,longitude:139.767},permissions:['geolocation']});
     const page=await context.newPage();
@@ -90,18 +91,34 @@ try{
       }
     }
     await page.locator('body[data-app-ready=true]').waitFor();
+    await page.evaluate(async()=>{
+      for(const id of ['matsuya','royal','hiday','create','ichibanya']){
+        const card=document.querySelector('#companyChips [data-issuer="'+id+'"]');
+        const image=card.querySelector('img');
+        await image.decode();
+        if(!image.getAttribute('src').includes('logo-user-'))throw new Error('User-provided logo missing: '+id);
+        const c=card.getBoundingClientRect(),r=image.getBoundingClientRect();
+        if(Math.abs((r.top+r.height/2)-(c.top+c.height/2))>1)throw new Error('Dining logo is not vertically centered: '+id);
+        if(Math.abs((r.left+r.width/2)-(c.left+c.width/2))>1)throw new Error('Dining logo is not horizontally centered: '+id);
+      }
+    });
     const headerGeometry=()=>{
       const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height};};
       const name=document.querySelector('.site-header .site-brand-name');
       const {x,y,height}=rect(name.firstElementChild);
-      return {logo:rect(document.querySelector('.site-header .site-logo')),nameStart:{x,y,height},nameFont:['fontFamily','fontSize','lineHeight','fontWeight','letterSpacing'].map(key=>getComputedStyle(name)[key])};
+      return {header:rect(document.querySelector('.site-header')),wrap:rect(document.querySelector('main.wrap')),logo:rect(document.querySelector('.site-header .site-logo')),nameStart:{x,y,height},nameFont:['fontFamily','fontSize','lineHeight','fontWeight','letterSpacing'].map(key=>getComputedStyle(name)[key])};
     };
     const foodHeader=await page.evaluate(headerGeometry);
+    delete foodHeader.wrap.height;
     const gasPage=await context.newPage();
     await gasPage.goto(url+'/__gas-header/index.html');
     assert.equal(await gasPage.locator('.site-brand-name').textContent(),'株主優待券店舗とQUOガソリン給油検索','companion title renders as Japanese');
-    assert.deepEqual(await gasPage.evaluate(headerGeometry),foodHeader,`${viewport.width}px: both tools must align their header icon and first title line`);
-    assert.equal(await gasPage.locator('.site-logo svg circle').count(),1,'gas identity includes a magnifying glass');
+    const gasHeader=await gasPage.evaluate(headerGeometry);delete gasHeader.wrap.height;
+    assert.deepEqual(gasHeader,foodHeader,`${viewport.width}px: a short gas page and long benefit page must align their full header and main container`);
+    assert.equal(await gasPage.locator('.site-logo svg circle').count(),0,'gas identity uses the fuel dispenser without a magnifying glass');
+    await gasPage.locator('main.wrap').evaluate(node=>node.firstElementChild.style.height='2500px');
+    const longGasHeader=await gasPage.evaluate(headerGeometry);delete longGasHeader.wrap.height;
+    assert.deepEqual(longGasHeader,gasHeader,'adding a scrollbar must not move or resize the gas container');
     await gasPage.screenshot({path:resolve(output,`${viewport.width}-gas-header.png`)});
     await gasPage.close();
     // Repeated toggles must retain decoded image nodes, including other cards.
@@ -182,6 +199,27 @@ try{
     await page.locator('#hotelTab').click();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').waitFor();
     await audit('hotel-selection');
+    await page.evaluate(async names=>{
+      const original=document.getElementById('hotelFeatures');original.id='originalHotelFeatures';original.hidden=true;
+      const fixture=document.createElement('div');fixture.id='hotelFeatures';fixture.setAttribute('data-tab-panel','');original.parentElement.append(fixture);
+      const {initSpecialFeatures}=await import('/special-features.js?v=20261014-supplied-four-logos');
+      const features=names.map(feature=>({...feature,availability:'continuous',status:'public',checkedOn:'2026-10-14',updateMode:'manual',stores:Array.from({length:147},(_,i)=>({id:'test-'+i,name:'Hotel',address:'東京都',conditions:'検証',lat:35,lng:139,verified:true}))}));
+      const controller=await initSpecialFeatures({root:fixture,section:'hotel',getOrigin:()=>null,getCenterLabel:()=>'',getRadius:()=>10000,getDeadline:()=>({days:47}),createDeadlineBubble:()=>{const b=document.createElement('span');b.className='voucher-deadline-bubble';b.textContent='47日で失効';return b;},catalog:Promise.resolve(features)});
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      if(fixture.querySelectorAll('.feature-button').length!==names.length)throw new Error('Real hotel layout fixture failed to render every company');
+      for(const card of fixture.querySelectorAll('.feature-button')){
+        const c=card.getBoundingClientRect(),copy=card.querySelector('.benefit-choice-copy').getBoundingClientRect();
+        if(copy.bottom>c.bottom-5)throw new Error('Five-line hotel copy clips: '+card.dataset.feature+' '+JSON.stringify({copyBottom:copy.bottom,cardBottom:c.bottom,nameHeight:card.querySelector('.benefit-choice-name').offsetHeight,detailHeight:card.querySelector('.benefit-choice-detail').offsetHeight,countHeight:card.querySelector('.benefit-choice-count').offsetHeight}));
+        if(c.height!==(innerWidth<=520?124:132))throw new Error('Hotel card is not compact');
+        const logo=card.querySelector('.representative-mark');
+        if(logo){const r=logo.getBoundingClientRect(),expected=innerWidth<=520?53:56.5;
+          if(Math.abs((r.top+r.height/2)-c.top-expected)>1.5)throw new Error('Hotel logo does not center on four text lines: '+card.dataset.feature);
+        }
+      }
+      window.hotelLayoutCleanup=()=>{controller.destroy();fixture.remove();original.id='hotelFeatures';original.hidden=false;};
+    },realHotelNames);
+    await audit('hotel-five-line-layout');
+    await page.evaluate(()=>{window.hotelLayoutCleanup();delete window.hotelLayoutCleanup;});
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').scrollIntoViewIfNeeded();
     const hotelGeometry=await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').click();
