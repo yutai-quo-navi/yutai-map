@@ -1,10 +1,10 @@
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
-import {createBrandMark} from './representative-marks.js?v=20261013-centered-hotel-logos';
+import {createBrandMark} from './representative-marks.js?v=20261013-foodlife-logo';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261013-reel';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261013-centered-hotel-logos';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261013-foodlife-logo';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
@@ -351,7 +351,7 @@ const issuerDisplayNames = {
   skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
-  komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード',
+  komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード', foodlife:'F&LC',
   yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル', yossix:'ヨシックスHD'
 };
 function shortIssuerName(company){

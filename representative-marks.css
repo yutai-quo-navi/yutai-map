@@ -535,3 +535,6 @@
 #hotelFeatures .feature-caption{max-width:100%;white-space:normal;font-size:11px}
 #hotelFeatures .feature-deadline{position:relative;inset:auto;max-width:100%;font-size:11px}
 @media(max-width:520px){#hotelFeatures .feature-caption,#hotelFeatures .feature-deadline{font-size:10px}}
+
+/* Official Sushiro round mark: preserve its square proportions and center. */
+#companyChips [data-issuer="foodlife"]{--logo-width:78%;--logo-height:88%}

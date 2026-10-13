@@ -41,7 +41,7 @@
       "id": "foodlife",
       "code": "3563",
       "name": "FOOD & LIFE COMPANIES",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/foodlife/config.json"
     },
     {

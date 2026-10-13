@@ -6,6 +6,7 @@ const commons = filename => 'https://commons.wikimedia.org/wiki/Special:FilePath
 
 const dining = {
   skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:commons('Gusto Logo.svg')},
+  foodlife:      {name:'スシロー', sub:'SUSHIRO', color:'#a9151a', symbol:'寿', asset:'./assets/brand-logo-foodlife.svg'},
   colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛', asset:'https://livedoor.blogimg.jp/line_jp/imgs/2/9/29dbd189.png'},
   create:        {name:'磯丸水産', sub:'ISOMARU SUISAN', color:'#be3038', symbol:'磯', asset:'./assets/logo-original-create.png'},
   zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:commons('Sukiya logo.svg')},
