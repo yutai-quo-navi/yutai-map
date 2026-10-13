@@ -1274,6 +1274,75 @@
         }
       ]
     },
+    "foodlife": {
+      "revision": 946,
+      "brands": [
+        {
+          "brand_name": "Sushi Avenue K's",
+          "store_count": 1
+        },
+        {
+          "brand_name": "すしのみさきや",
+          "store_count": 1
+        },
+        {
+          "brand_name": "すしみさき",
+          "store_count": 13
+        },
+        {
+          "brand_name": "すし三崎港",
+          "store_count": 1
+        },
+        {
+          "brand_name": "スシロー",
+          "store_count": 671
+        },
+        {
+          "brand_name": "京樽",
+          "store_count": 76
+        },
+        {
+          "brand_name": "京樽・すし三崎港",
+          "store_count": 1
+        },
+        {
+          "brand_name": "京樽・持ち帰り寿司みさき",
+          "store_count": 1
+        },
+        {
+          "brand_name": "京樽・重吉",
+          "store_count": 2
+        },
+        {
+          "brand_name": "回転寿司みさき",
+          "store_count": 66
+        },
+        {
+          "brand_name": "日本橋 粋",
+          "store_count": 2
+        },
+        {
+          "brand_name": "杉玉",
+          "store_count": 106
+        },
+        {
+          "brand_name": "江戸前鮨みさき",
+          "store_count": 1
+        },
+        {
+          "brand_name": "立食い寿司みさき",
+          "store_count": 2
+        },
+        {
+          "brand_name": "重吉",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鮨小路京",
+          "store_count": 1
+        }
+      ]
+    },
     "yoshinoya": {
       "revision": 0,
       "brands": [

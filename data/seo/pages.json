@@ -1764,6 +1764,70 @@
       "hash": "a2e0630d04665370cd4718414f4eee4702a52052dac4a25784a31c5a347a9705",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/foodlife/111a55e643680738/index.html": {
+      "hash": "dd900e44fb089d3a46a8be94a8728bdc330b27000f3e316c4068e7c3cd305a95",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/179153e84b608fc7/index.html": {
+      "hash": "a1b73108a3903584ade31b961edf3a5cd178bccc17401b643be4fdeea0af2e0d",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/23c9ff91c404d649/index.html": {
+      "hash": "6051f3afe7e8ad9c89693bbfe82c95450c40f63252577e8ba13475061be8d812",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/2c01d78838a15dfe/index.html": {
+      "hash": "cd327e82c6a857b57b86c0a1d071e972a7add03ef15b350f76278b2e96fa0f57",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/2f09be9458b034bc/index.html": {
+      "hash": "ec7e4cf94ba4a3d315064ddf81af6bd55c66d1cda01a1f2c77577e06f3a2bc89",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/349eae041bc08658/index.html": {
+      "hash": "949a1e1755ee43cb23940dd5fcd855475614ac2a1e5c60573ed16c96c536defa",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/3738813c961a015e/index.html": {
+      "hash": "eeb34a667db2d6383ec8b01911cdd3a8435901ffe8b1fe23fc0e8f4f8fcc174a",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/499123bb495701e9/index.html": {
+      "hash": "4e7ada6ad91db2b7fabe4ac5fa246d3fe8ddb6e6a7dd92fd48d2a064ef998d2e",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/4d2b1a288562bb6f/index.html": {
+      "hash": "d9c9ca9e1096a4c5d3cda7fa684f712fe50d52f23746f8149a208b085d518471",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/553ff366f4a3713e/index.html": {
+      "hash": "f1eb38ea014a579c338ac417be1d67e8e09eac52b14c031eee16985069a429b9",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/726809e8479034cc/index.html": {
+      "hash": "2d1555f2636ac1ce908776ed0cc8f4795cf77b6ec671e77a98f1674a30596fe5",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/7aa083af0f87379f/index.html": {
+      "hash": "b65b6219dd089b97eba92e18e73ae6b7b2b56d450b9ef72283a9ae2bb83f3983",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/958cb005ea9cb51a/index.html": {
+      "hash": "87e3d87508ee8bdc3800c859b9b3fe9466f67cc7aa90c7d05ed09e8d4ac0ae9a",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/bb0eff0da00714a1/index.html": {
+      "hash": "5b7b859ae2c77354157d925c714845eab66be76d001ea8f703a6b20de7a1bae0",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/bc6dca1b39894cea/index.html": {
+      "hash": "e6fa40a19ad5680fb08b9fb3f6c38c8f3a95d314a1afbce0e7e358afd583f30c",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/foodlife/e951eb27546021e2/index.html": {
+      "hash": "c35dadd1ed54f2859aad0942422b4bb489bdf8af9ec8b8b42fe7036fd425fe90",
+      "lastmod": "2026-10-13"
+    },
     "guides/dining/brands/fujio/0e56d6cb4170457d/index.html": {
       "hash": "d627dcdd7395db59f67ada3be3bf0174ae5f89db646113a80be955c9a43e62c7",
       "lastmod": "2026-10-11"
@@ -3141,7 +3205,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "7ff4182cf040221029976da1b0c9716e3d05b75a4532de9b5dee10171c77dc2d",
+      "hash": "67f4d99e5f40b428d4d87cb4e54852a82f595af56e0d8dcb0b9f89df3a0b49ff",
       "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/arclands/index.html": {
@@ -3175,6 +3239,10 @@
     "guides/dining/issuers/dnh/index.html": {
       "hash": "e42ebc1a42ac31906ff56d122f2bd8f8fdaad6cf9598d26ec279c9c4652fddbc",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/foodlife/index.html": {
+      "hash": "244222b3abe9a05c691b651f39bfb612a237d0ae761c2ecf7d472cf222c95896",
+      "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/fujio/index.html": {
       "hash": "e274336caf85d0cd30a8b8c00395269102bd4fe2422684e349d558fbe8e07415",
