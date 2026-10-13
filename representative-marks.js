@@ -26,12 +26,12 @@ const dining = {
   hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日'},
   ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:commons('ICHIBANYA Logo.svg')},
   komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
-  dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D'},
+  dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:commons('Doutor Coffee Logo.png')},
   mos:           {name:'MOS BURGER', sub:'モスバーガー', color:'#4d9b69', symbol:'M', asset:commons('MOS-Burger-Logo.svg')},
   yamaokaya:     {name:'ラーメン山岡家', sub:'YAMAOKAYA', color:'#c7414a', symbol:'山'},
   chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一'},
-  ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王'},
-  joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J'},
+  ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王', asset:commons('餃子の王将.svg')},
+  joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J', asset:commons('Joyfull Restaurant.png')},
   yossix:        {name:'や台ずし', sub:'YATAIZUSHI', color:'#ac6543', symbol:'寿'}
 };
 
