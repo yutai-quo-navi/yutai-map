@@ -35,6 +35,11 @@ class OfficialLocatorTests(unittest.TestCase):
         items,_=ohsho_page(ohsho_list())
         with self.assertRaises(ValueError): ohsho_detail(items[0],ohsho_html('2'))
 
+    def test_ohsho_javascript_escape_in_unrelated_field(self):
+        items,_=ohsho_page(ohsho_list())
+        html=ohsho_html().replace('"poi_status":', '"memo":"shop\\\'s menu", "poi_status":')
+        self.assertEqual(ohsho_detail(items[0],html)['official_id'],'1')
+
     def test_other_ohsho_is_not_eligible(self):
         with self.assertRaises(ValueError): ohsho_page(ohsho_list(name='大阪王将 テスト店'))
 

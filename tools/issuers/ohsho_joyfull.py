@@ -47,12 +47,20 @@ def ohsho_detail(item, text):
     match = re.search(r'window\.infoJSON\s*=\s*', text)
     if not match:
         raise ValueError('Missing Ohsho official status')
-    data = json.JSONDecoder().raw_decode(text[match.end():])[0]
-    if fields['code'] != item['id']+'_ohsho' or str(data['id']) != item['id'] or fields['name'] != data['name'] or not item['name'].endswith(fields['name']):
+    # This is a JavaScript object, not strict JSON: unrelated text fields may
+    # contain JS-only escapes (e.g. \\'). Read only its plain ID/status/date
+    # literals; coordinates and names come from the structured HTML above.
+    script = next(s.get_text() for s in soup.find_all('script') if 'window.infoJSON' in s.get_text())
+    def literal(key):
+        values=re.findall(r'"'+re.escape(key)+r'"\s*:\s*"([^"\\]*)"',script)
+        if len(values) != 1:
+            raise ValueError('Missing or ambiguous Ohsho '+key)
+        return values[0]
+    if fields['code'] != item['id']+'_ohsho' or literal('id') != item['id'] or not item['name'].endswith(fields['name']):
         raise ValueError('Ohsho list/detail identity mismatch')
-    if data['poi_status'] != '1':
+    if literal('poi_status') != '1':
         raise ValueError('Inactive Ohsho store in official results')
-    if str(data.get('print_start_date', DATE))[:10] > DATE or re.search(r'オープン予定|開店予定',item['name']):
+    if literal('print_start_date')[:10] > DATE or re.search(r'オープン予定|開店予定',item['name']):
         return None
     # infoJSON latitude/longitude and route daddr use Tokyo datum. The schema's
     # latitude/longitude are already WGS84; never use latitudeTky/longitudeTky.
