@@ -63,6 +63,9 @@ body.food-tool{--brand-accent:#ab481d;--brand-soft:#fff0db;--brand-line:#edddc9;
 #expiryPanel .expiry-urgency{font-weight:600;font-size:12px}
 #expiryPanel .expiry-own-button{grid-row:2;grid-column:1/-1;justify-self:end;min-width:112px;padding:8px 12px;background:#fffaf3}
 #expiryPanel .expiry-own-button:has(input:checked){background:var(--accent);border-color:var(--accent-border);color:var(--accent-text)}
+#expiryPanel .expiry-own-button:focus-within{outline:none}
+#expiryPanel .expiry-own-button:has(input:focus-visible){outline:3px solid var(--accent-text);outline-offset:3px}
+#expiryPanel .expiry-own-button input:focus-visible{outline:none}
 #expiryPanel .expiry-register{background:#fff5e6;border-radius:12px}
 #expiryPanel .expiry-day-options label:has(input:checked){background:var(--accent);border-color:var(--accent-border);color:var(--accent-text)}
 .food-tool .expiry-alerts{background:#fff5f1;border-color:#edc9bc;color:var(--text)}

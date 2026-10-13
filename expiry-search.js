@@ -143,7 +143,10 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     root.querySelectorAll('.expiry-owned').forEach(input=>input.onchange=()=>{
       const id=input.closest('[data-expiry]').dataset.expiry,next={...settings,[id]:{owned:input.checked,days:settings[id]?.days||[0,1,2,3]}};
       if(!saveSettings(next)){input.checked=!input.checked;return;}
-      render();renderAlerts();root.querySelector(`[data-expiry="${id}"] .expiry-owned`)?.focus();
+      // Restore focus for keyboard navigation, without leaving a touch focus ring.
+      const keyboardFocus=input.matches(':focus-visible');
+      render();renderAlerts();
+      if(keyboardFocus)root.querySelector(`[data-expiry="${id}"] .expiry-owned`)?.focus({preventScroll:true});
     });
     root.querySelectorAll('[data-view]').forEach(button=>button.onclick=()=>{ownedOnly=button.dataset.view==='owned';render();root.querySelector(`[data-view="${ownedOnly?'owned':'all'}"]`).focus();});
     const filter=event=>{query=event.target.value;if(event.isComposing)return;render();root.querySelector('#expiryKeyword').focus();};
