@@ -538,3 +538,8 @@
 
 /* Official Sushiro round mark: preserve its square proportions and center. */
 #companyChips [data-issuer="foodlife"]{--logo-width:78%;--logo-height:88%}
+
+/* Supplied-logo pass: visually center the artwork, 2px below the previous position.
+   This is a positioning-only adjustment; optical logo scaling is reserved for review. */
+#companyChips .representative-mark-image,
+#hotelFeatures .representative-mark-image{transform:translateY(2px)}
