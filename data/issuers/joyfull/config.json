@@ -3,7 +3,7 @@
   "code": "9942",
   "name": "ジョイフル",
   "fullName": "ジョイフル",
-  "status": "development",
+  "status": "public",
   "sourceUrl": "https://corporate.joyfull.co.jp/ir-complimentary",
   "matchingMode": "official_store_filter",
   "note": "ジョイフルの国内店舗を公式店舗情報・座標から掲載しています。優待対象の喜楽や・並木街珈琲・二五十・キッチンジローは現在未掲載です。割引券とお食事券は併用できません。",
@@ -26,7 +26,7 @@
   "domesticOnly": true,
   "verified": "2026-10-13",
   "storeSearchUrl": "https://www.joyfull.co.jp/shop",
-  "locationMode": "pending_official_coordinates",
+  "locationMode": "official_coordinates",
   "storeDataPath": "./data/issuers/joyfull/stores/current.json",
   "health": {
     "minStores": 500,

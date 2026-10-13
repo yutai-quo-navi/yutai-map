@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-12",
+  "updated": "2026-10-13",
   "issuers": [
     {
       "id": "skylark",
@@ -202,7 +202,7 @@
       "id": "joyfull",
       "code": "9942",
       "name": "ジョイフル",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/joyfull/config.json"
     }
   ]
