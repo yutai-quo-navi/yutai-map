@@ -58,7 +58,7 @@ test('selected labels are absent but deadline badges stay in both selection view
 test('the restaurant representative marks are not holding-company logos',()=>{
   assert.equal(representativeMark('dining','ichibanya').name,'CoCo壱番屋');
   assert.match(representativeMark('dining','ichibanya').asset,/ES9CSLQUwAAS2Sc/);
-  assert.equal(representativeMark('dining','create').name,'しゃぶ菜');
+  assert.equal(representativeMark('dining','create').name,'磯丸水産');
   assert.equal(representativeMark('dining','colowide').name,'牛角');
   assert.equal(representativeMark('dining','balnibarbi').name,'GARB');
   assert.match(decodeURIComponent(representativeMark('dining','chikaranomoto').asset),/Ippudo Logo\.png/);
@@ -79,4 +79,34 @@ test('dining and hotel cards use fixed grid heights and accessible name',async()
   assert.match(css,/pointer-events:none/);
   const js=await readFile(new URL('../representative-marks.js',import.meta.url),'utf8');
   assert.match(js,/setAttribute\('aria-hidden', 'true'\)/);
+});
+
+
+const suppliedLogos = {
+  yamaokaya: 'ラーメン山岡家',
+  yossix: 'や台ずし',
+  srs: '和食さと',
+  arclands: 'かつや',
+  create: '磯丸水産',
+  chimney: 'はなの舞'
+};
+test('every supplied issuer is backed by a readable local webp image',async()=>{
+  for(const [id,brand] of Object.entries(suppliedLogos)){
+    const info=representativeMark('dining',id);
+    assert.equal(info.name,brand,id);
+    assert.equal(info.asset,'./assets/brand-logo-'+id+'.webp',id);
+    const bytes=await readFile(new URL('../assets/brand-logo-'+id+'.webp',import.meta.url));
+    assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF',id);
+    assert.equal(bytes.subarray(8,12).toString('ascii'),'WEBP',id);
+    assert.ok(bytes.byteLength>=900 && bytes.byteLength<8000,id);
+  }
+});
+test('sizing rules keep provided image proportions and grid row heights',async()=>{
+  const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
+  for(const id of Object.keys(suppliedLogos)){
+    assert.match(css,new RegExp('data-issuer="'+id+'"'),id);
+  }
+  assert.match(css,/\\.representative-mark-image\\{object-fit:contain\\}/);
+  assert.match(css,/grid-auto-rows:112px/);
+  assert.match(css,/grid-auto-rows:146px/);
 });
