@@ -430,3 +430,38 @@
   [data-issuer="create"],
   [data-issuer="chimney"]
 ) .representative-mark-image{object-fit:contain}
+
+
+/* Nine user-provided authentic store marks: single lightweight local sprite. */
+#companyChips .representative-mark-sprite{
+  display:block;
+  inset:auto;
+  left:50%;
+  top:50%;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  transform:translate(-50%,-50%);
+  background-image:url("./assets/dining-extra-logo-sprite.webp");
+  background-repeat:no-repeat;
+  background-size:300% 300%;
+  mix-blend-mode:multiply;
+}
+#companyChips [data-issuer="fujio"]{--logo-width:94%;--logo-height:98%}
+#companyChips [data-issuer="balnibarbi"]{--logo-width:95%;--logo-height:88%}
+#companyChips [data-issuer="saintmarc"]{--logo-width:96%;--logo-height:98%}
+#companyChips [data-issuer="matsuya"]{--logo-width:96%;--logo-height:94%}
+#companyChips [data-issuer="hiday"]{--logo-width:98%;--logo-height:100%}
+#companyChips [data-issuer="kineya"]{--logo-width:95%;--logo-height:93%}
+#companyChips [data-issuer="ringerhut"]{--logo-width:96%;--logo-height:95%}
+#companyChips [data-issuer="daiichikosho"]{--logo-width:98%;--logo-height:90%}
+#companyChips [data-issuer="monogatari"]{--logo-width:99%;--logo-height:94%}
+#hotelFeatures .representative-mark-image{
+  object-fit:contain;
+  object-position:center;
+  max-width:100%;
+  max-height:100%;
+}
+/* Keep readable hotel image identities below headers and counts. */
+#hotelFeatures .representative-mark{top:50px;bottom:11px;}

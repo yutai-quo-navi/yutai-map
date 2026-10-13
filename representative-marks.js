@@ -12,19 +12,19 @@ const dining = {
   toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:commons('Marugame Seimen logo.svg')},
   yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:commons('Yoshinoya Logo.svg')},
   mcd:           {name:'McDonald’s', sub:'マクドナルド', color:'#e5a91e', symbol:'M', large:true, asset:'./assets/mcdonalds-mark.svg'},
-  monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉'},
-  matsuya:       {name:'松屋', sub:'MATSUYA', color:'#38639b', symbol:'松'},
+  monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉', spriteIndex:8},
+  matsuya:       {name:'松屋', sub:'MATSUYA', color:'#38639b', symbol:'松', spriteIndex:3},
   royal:         {name:'ロイヤルホスト', sub:'Royal Host', color:'#be6d27', symbol:'R', asset:commons('Royal Host Logo.png')},
-  balnibarbi:    {name:'GARB', sub:'ガーブ', color:'#58757b', symbol:'G'},
-  daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE'},
-  fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true},
+  balnibarbi:    {name:'BALNIBARBI', sub:'ガーブ', color:'#58757b', symbol:'G', spriteIndex:1},
+  daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE', spriteIndex:7},
+  fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true, spriteIndex:0},
   srs:           {name:'和食さと', sub:'SATO', color:'#db273a', symbol:'さ', asset:'./assets/brand-logo-srs.webp'},
   arclands:      {name:'かつや', sub:'KATSUYA', color:'#ee8843', symbol:'か', asset:'./assets/brand-logo-arclands.webp'},
-  kineya:        {name:'杵屋', sub:'KINEYA', color:'#9a4445', symbol:'杵'},
-  saintmarc:     {name:'サンマルクカフェ', sub:'ST-MARC CAFÉ', color:'#704c3d', symbol:'S'},
+  kineya:        {name:'そじ坊', sub:'KINEYA', color:'#9a4445', symbol:'杵', spriteIndex:5},
+  saintmarc:     {name:'サンマルクカフェ', sub:'ST-MARC CAFÉ', color:'#704c3d', symbol:'S', spriteIndex:2},
   chimney:       {name:'はなの舞', sub:'HANANOMAI', color:'#e60021', symbol:'花', asset:'./assets/brand-logo-chimney.webp'},
-  ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R'},
-  hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日'},
+  ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R', spriteIndex:6},
+  hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日', spriteIndex:4},
   ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:'https://pbs.twimg.com/media/ES9CSLQUwAAS2Sc.png'},
   komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
   dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:commons('Doutor Coffee Logo.png')},
@@ -37,18 +37,18 @@ const dining = {
 };
 
 const hotel = {
-  'kyoritsu-hotel-discount':{name:'dormy inn', sub:'ドーミーイン', color:'#555d74', symbol:'d'},
-  'greens-hotels':         {name:'Comfort HOTEL', sub:'コンフォートホテル', color:'#8c7c9a', symbol:'C'},
+  'kyoritsu-hotel-discount':{name:'dormy inn', sub:'ドーミーイン', color:'#555d74', symbol:'d', asset:'https://media.sauna-ikitai.com/kb/tonttu/dormyin_kawasaki/logo.jpg'},
+  'greens-hotels':         {name:'Comfort HOTEL', sub:'コンフォートホテル', color:'#8c7c9a', symbol:'C', asset:'https://www.choice-hotels.jp/ogp.jpg'},
   'daiwa-house-hotels':    {name:'Daiwa Roynet Hotel', sub:'ダイワロイネットホテル', color:'#6367a3', symbol:'DR', compact:true},
   'seibu-free-hotels':     {name:'Prince Hotel', sub:'プリンスホテル', color:'#9d8063', symbol:'P', asset:commons('PrinceHotels logo.svg')},
-  'kyoritsu-resort-plan':  {name:'共立リゾート', sub:'KYORITSU RESORT', color:'#8c8268', symbol:'♨'},
-  'sunfrontier-hotels':    {name:'たびのホテル', sub:'TABINO HOTEL', color:'#637488', symbol:'H'},
-  'resol-hotels':          {name:'HOTEL RESOL', sub:'ホテルリソル', color:'#578477', symbol:'R'},
-  'tosei-hotels':          {name:'TOSEI HOTEL', sub:'COCONE', color:'#788a98', symbol:'C'},
-  'tkp-hotels':            {name:'TKP', sub:'ホテル・宿泊優待', color:'#cd525d', symbol:'TKP', large:true},
-  'wealth-hotels':         {name:'HOTEL EMISIA', sub:'ホテルエミシア', color:'#9a757a', symbol:'E'},
-  'wakita-hotels':         {name:'HOTEL CORDIA', sub:'ホテルコルディア', color:'#aa8b6a', symbol:'HC'},
-  'vision-hotels':         {name:'VISION GLAMPING', sub:'ビジョングランピング', color:'#677b66', symbol:'V'}
+  'kyoritsu-resort-plan':  {name:'共立リゾート', sub:'KYORITSU RESORT', color:'#8c8268', symbol:'♨', asset:'https://dormy-hotels.com/resort/ogp.jpg'},
+  'sunfrontier-hotels':    {name:'たびのホテル', sub:'TABINO HOTEL', color:'#637488', symbol:'H', asset:'https://foodslabo-app-prod.s3.ap-northeast-1.amazonaws.com/store/uploads/brands/4170/original-brand/4170/logo/cfb27bdb4b70a7ec720f70d1fd03bb5b.png'},
+  'resol-hotels':          {name:'HOTEL RESOL', sub:'ホテルリソル', color:'#578477', symbol:'R', asset:'https://www.resol.jp/common/img/og_image.png'},
+  'tosei-hotels':          {name:'TOSEI HOTEL', sub:'COCONE', color:'#788a98', symbol:'C', asset:'https://tosei-hotel.co.jp/files/ogp.jpg'},
+  'tkp-hotels':            {name:'TKP', sub:'ホテル・宿泊優待', color:'#cd525d', symbol:'TKP', large:true, asset:'https://www.ishinoya.jp/atami/images/home/about.jpg'},
+  'wealth-hotels':         {name:'HOTEL EMISIA', sub:'ホテルエミシア', color:'#9a757a', symbol:'E', asset:'https://www.hotel-emisia.com/sapporo/ogp.jpg'},
+  'wakita-hotels':         {name:'HOTEL CORDIA', sub:'ホテルコルディア', color:'#aa8b6a', symbol:'HC', asset:'https://image.jimcdn.com/app/cms/image/transf/dimension%3D2048x2048%3Aformat%3Djpg/path/sb0a7af9f18ef4727/image/i9276edc2076cfada/version/1495000658/image.jpg'},
+  'vision-hotels':         {name:'VISION GLAMPING', sub:'ビジョングランピング', color:'#677b66', symbol:'V', asset:'https://vision-glamping.com/yamanakako/img/ogp_img/OGP_7_FAQ.jpg'},
 };
 
 export function representativeMark(section, id) {
@@ -82,7 +82,14 @@ export function createBrandMark(section, id) {
   // Without a verified image, the accurate store-brand name itself is the fallback.
   fallback.append(wording);
   mark.append(fallback);
-  if (info.asset) {
+  if (Number.isInteger(info.spriteIndex)) {
+    const sprite = document.createElement('span');
+    sprite.className = 'representative-mark-image representative-mark-sprite';
+    sprite.style.backgroundPosition = `${(info.spriteIndex % 3) * 50}% ${Math.floor(info.spriteIndex / 3) * 50}%`;
+    mark.append(sprite);
+    mark.classList.add('has-real-logo');
+  }
+  if (info.asset && !Number.isInteger(info.spriteIndex)) {
     const image = document.createElement('img');
     image.className = 'representative-mark-image';
     image.src = info.asset;

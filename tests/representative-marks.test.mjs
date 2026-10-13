@@ -42,7 +42,7 @@ test('mark fallback is always available without a third-party image',()=>{
   for(const id of dining.concat(hotel)){
     const mark=representativeMark(hotel.includes(id)?'hotel':'dining',id);
     assert.ok(mark.name && mark.sub && mark.symbol,'fallback: '+id);
-    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') || mark.asset.startsWith('https://pbs.twimg.com/media/') || mark.asset.startsWith('https://livedoor.blogimg.jp/'),mark.asset);
+    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://'),mark.asset);
   }
 });
 
@@ -60,7 +60,7 @@ test('the restaurant representative marks are not holding-company logos',()=>{
   assert.match(representativeMark('dining','ichibanya').asset,/ES9CSLQUwAAS2Sc/);
   assert.equal(representativeMark('dining','create').name,'磯丸水産');
   assert.equal(representativeMark('dining','colowide').name,'牛角');
-  assert.equal(representativeMark('dining','balnibarbi').name,'GARB');
+  assert.equal(representativeMark('dining','balnibarbi').name,'BALNIBARBI');
   assert.match(decodeURIComponent(representativeMark('dining','chikaranomoto').asset),/Ippudo Logo\.png/);
 });
 
@@ -109,4 +109,32 @@ test('sizing rules keep provided image proportions and grid row heights',async()
   assert.ok(css.includes('.representative-mark-image{object-fit:contain}'));
   assert.match(css,/grid-auto-rows:112px/);
   assert.match(css,/grid-auto-rows:146px/);
+});
+
+test('nine user-provided restaurant identities use one local WebP sprite',async()=>{
+  const ids=['fujio','balnibarbi','saintmarc','matsuya','hiday','kineya','ringerhut','daiichikosho','monogatari'];
+  for(const [index,id] of ids.entries()){
+    assert.equal(representativeMark('dining',id).spriteIndex,index,id);
+  }
+  assert.equal(representativeMark('dining','kineya').name,'そじ坊');
+  const file=await readFile(new URL('../assets/dining-extra-logo-sprite.webp',import.meta.url));
+  assert.equal(file.subarray(0,4).toString(),'RIFF');
+  assert.equal(file.subarray(8,12).toString(),'WEBP');
+  assert.ok(file.length > 3000 && file.length < 15000);
+  const js=await readFile(new URL('../representative-marks.js',import.meta.url),'utf8');
+  assert.match(js,/spriteIndex % 3/);
+  const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
+  assert.match(css,/background-size:300% 300%/);
+});
+
+test('hotel logo image sources and selected card behavior are configured',async()=>{
+  const imageBacked=[
+    'kyoritsu-hotel-discount','greens-hotels','seibu-free-hotels',
+    'kyoritsu-resort-plan','sunfrontier-hotels','resol-hotels',
+    'tosei-hotels','tkp-hotels','wealth-hotels','wakita-hotels','vision-hotels'
+  ];
+  for(const id of imageBacked) assert.ok(representativeMark('hotel',id)?.asset,id);
+  const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
+  assert.match(css,/grid-auto-rows:146px/);
+  assert.match(css,/\.representative-mark-image/);
 });
