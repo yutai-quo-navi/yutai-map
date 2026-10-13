@@ -576,9 +576,10 @@
 #hotelFeatures .benefit-choice-heading{gap:4px}
 #hotelFeatures .benefit-choice-name{line-height:var(--hotel-copy-line)}
 #hotelFeatures .benefit-choice-count{line-height:28px}
+#hotelFeatures .benefit-choice-count .motion-number{height:28px;line-height:28px}
 #hotelFeatures .benefit-choice-detail{gap:3px}
 #hotelFeatures .feature-caption{line-height:var(--hotel-detail-line)}
-#hotelFeatures .feature-deadline{line-height:18px}
+#hotelFeatures .feature-deadline{line-height:18px;white-space:nowrap;max-width:none}
 #hotelFeatures .hotel-name-wrap .benefit-choice-detail{width:100%}
 @media(max-width:520px){
   #hotelFeatures{

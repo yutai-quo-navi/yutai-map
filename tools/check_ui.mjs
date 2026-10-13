@@ -209,7 +209,7 @@ try{
       if(fixture.querySelectorAll('.feature-button').length!==names.length)throw new Error('Real hotel layout fixture failed to render every company');
       for(const card of fixture.querySelectorAll('.feature-button')){
         const c=card.getBoundingClientRect(),copy=card.querySelector('.benefit-choice-copy').getBoundingClientRect();
-        if(copy.bottom>c.bottom-5)throw new Error('Five-line hotel copy clips: '+card.dataset.feature);
+        if(copy.bottom>c.bottom-5)throw new Error('Five-line hotel copy clips: '+card.dataset.feature+' '+JSON.stringify({copyBottom:copy.bottom,cardBottom:c.bottom,nameHeight:card.querySelector('.benefit-choice-name').offsetHeight,detailHeight:card.querySelector('.benefit-choice-detail').offsetHeight,countHeight:card.querySelector('.benefit-choice-count').offsetHeight}));
         if(c.height!==(innerWidth<=520?124:132))throw new Error('Hotel card is not compact');
         const logo=card.querySelector('.representative-mark');
         if(logo){const r=logo.getBoundingClientRect(),expected=innerWidth<=520?53:56.5;
