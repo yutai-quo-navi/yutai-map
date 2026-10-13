@@ -1,4 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
+import {createBrandMark} from './representative-marks.js?v=20261013-brand-cards';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
@@ -120,6 +121,10 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const copy = document.createElement('span'); copy.className = 'benefit-choice-copy';
       nameRow.append(name,count); copy.append(nameRow);
       button.append(check,copy);
+      if (section === 'hotel') {
+        const mark=createBrandMark('hotel',feature.id);
+        if (mark) button.append(mark);
+      }
       count.setAttribute('data-ui-number','');
       button.title=feature.title;
       button.setAttribute('aria-controls', resultsId);
@@ -144,7 +149,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         detail.append(subtitle);
       }
       if (bubble) detail.append(bubble);
-      else if (selectedFeatures.has(feature.id)) {
+      // Always keep the selected state visible, including with a deadline.
+      if (selectedFeatures.has(feature.id)) {
         const state = document.createElement('span'); state.className = 'benefit-choice-status';
         state.textContent = '選択中'; detail.append(state);
       }
