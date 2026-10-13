@@ -51,8 +51,10 @@ def ohsho_detail(item, text):
     # contain JS-only escapes (e.g. \\'). Read only its plain ID/status/date
     # literals; coordinates and names come from the structured HTML above.
     script = next(s.get_text() for s in soup.find_all('script') if 'window.infoJSON' in s.get_text())
-    def literal(key):
+    def literal(key, default=None):
         values=re.findall(r'"'+re.escape(key)+r'"\s*:\s*"([^"\\]*)"',script)
+        if not values and default is not None:
+            return default
         if len(values) != 1:
             raise ValueError('Missing or ambiguous Ohsho '+key)
         return values[0]
@@ -60,7 +62,7 @@ def ohsho_detail(item, text):
         raise ValueError('Ohsho list/detail identity mismatch')
     if literal('poi_status') != '1':
         raise ValueError('Inactive Ohsho store in official results')
-    if literal('print_start_date')[:10] > DATE or re.search(r'オープン予定|開店予定',item['name']):
+    if literal('print_start_date', DATE)[:10] > DATE or re.search(r'オープン予定|開店予定',item['name']):
         return None
     # infoJSON latitude/longitude and route daddr use Tokyo datum. The schema's
     # latitude/longitude are already WGS84; never use latitudeTky/longitudeTky.

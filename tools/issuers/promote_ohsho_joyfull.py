@@ -1,7 +1,7 @@
 """Promote the new issuers only after their verified D1 imports succeed."""
 import json
 from pathlib import Path
-NOTES = {'ohsho': '公式店舗情報・座標に基づき、国内の餃子の王将・GYOZA OHSHO・JoyNahoを掲載しています。優待電子チケットの利用条件は公式情報をご確認ください。', 'joyfull': 'ジョイフルの国内店舗を公式店舗情報・座標から掲載しています。優待対象の喜楽や・並木街珈琲・二五十・キッチンジローは現在未掲載です。割引券とお食事券は併用できません。'}
+NOTES = {'ohsho': '公式店舗情報・座標に基づき、国内の餃子の王将・GYOZA OHSHOを掲載しています。JoyNahoは現在未掲載です。優待電子チケットの利用条件は公式情報をご確認ください。', 'joyfull': 'ジョイフルの国内店舗を公式店舗情報・座標から掲載しています。優待対象の喜楽や・並木街珈琲・二五十・キッチンジローは現在未掲載です。割引券とお食事券は併用できません。'}
 
 def promote(issuers=None):
     configs = []

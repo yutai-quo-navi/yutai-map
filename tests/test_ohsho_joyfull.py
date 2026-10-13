@@ -40,6 +40,11 @@ class OfficialLocatorTests(unittest.TestCase):
         html=ohsho_html().replace('"poi_status":', '"memo":"shop\\\'s menu", "poi_status":')
         self.assertEqual(ohsho_detail(items[0],html)['official_id'],'1')
 
+    def test_ohsho_optional_publication_date(self):
+        items,_=ohsho_page(ohsho_list())
+        html=ohsho_html().replace(', "print_start_date": "2020-01-01"','')
+        self.assertEqual(ohsho_detail(items[0],html)['official_id'],'1')
+
     def test_other_ohsho_is_not_eligible(self):
         with self.assertRaises(ValueError): ohsho_page(ohsho_list(name='大阪王将 テスト店'))
 
