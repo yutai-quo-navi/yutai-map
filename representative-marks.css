@@ -538,3 +538,55 @@
 
 /* Official Sushiro round mark: preserve its square proportions and center. */
 #companyChips [data-issuer="foodlife"]{--logo-width:78%;--logo-height:88%}
+
+/* Anchor identity frames to the cell midpoint, independent of label padding. */
+#companyChips .representative-mark{
+  inset:auto;
+  left:50%;
+  top:50%;
+  width:100%;
+  height:100%;
+  transform:translate(-50%,-50%);
+}
+#hotelFeatures .representative-mark{
+  top:var(--hotel-logo-center);
+  bottom:auto;
+  height:var(--hotel-four-line-height);
+  transform:translateY(-50%);
+}
+
+/* Five text lines fit; hotel logos center on the first four text lines. */
+#hotelFeatures{
+  --hotel-choice-height:132px;
+  --hotel-copy-line:17px;
+  --hotel-detail-line:16px;
+  --hotel-top:12px;
+  --hotel-four-line-height:89px;
+  --hotel-logo-center:calc(var(--hotel-top) + var(--hotel-four-line-height) / 2);
+}
+#hotelFeatures .feature-buttons{grid-auto-rows:var(--hotel-choice-height)}
+#hotelFeatures .feature-item,
+#hotelFeatures .feature-button{
+  height:var(--hotel-choice-height);
+  min-height:var(--hotel-choice-height);
+  max-height:var(--hotel-choice-height);
+}
+#hotelFeatures .feature-button{padding:var(--hotel-top) 9px 12px}
+#hotelFeatures .benefit-choice-copy{gap:3px}
+#hotelFeatures .benefit-choice-heading{gap:4px}
+#hotelFeatures .benefit-choice-name{line-height:var(--hotel-copy-line)}
+#hotelFeatures .benefit-choice-count{line-height:28px}
+#hotelFeatures .benefit-choice-detail{gap:3px}
+#hotelFeatures .feature-caption{line-height:var(--hotel-detail-line)}
+#hotelFeatures .feature-deadline{line-height:18px}
+#hotelFeatures .hotel-name-wrap .benefit-choice-detail{width:100%}
+@media(max-width:520px){
+  #hotelFeatures{
+    --hotel-choice-height:124px;
+    --hotel-copy-line:16px;
+    --hotel-detail-line:14px;
+    --hotel-top:10px;
+    --hotel-four-line-height:86px;
+  }
+  #hotelFeatures .feature-button{padding:var(--hotel-top) 7px 10px}
+}

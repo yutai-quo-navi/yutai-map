@@ -11,6 +11,7 @@ const output=resolve(root,'ui-reports');
 const policy=JSON.parse(await readFile(resolve(root,'ui-policy.json'),'utf8'));
 const manifest=JSON.parse(await readFile(resolve(root,'data/issuers/index.json'),'utf8'));
 const publicIssuerCount=manifest.issuers.filter(issuer=>issuer.status==='public').length;
+const realHotelNames=JSON.parse(await readFile(resolve(root,'data/features/index.json'),'utf8')).features.filter(feature=>feature.section==='hotel');
 const strict=process.argv.includes('--strict');
 const fontDir=process.env.UI_TEST_FONT_DIRECTORY;
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2'};
@@ -90,6 +91,17 @@ try{
       }
     }
     await page.locator('body[data-app-ready=true]').waitFor();
+    await page.evaluate(async()=>{
+      for(const id of ['matsuya','royal','hiday','create','ichibanya']){
+        const card=document.querySelector('#companyChips [data-issuer="'+id+'"]');
+        const image=card.querySelector('img');
+        await image.decode();
+        if(!image.getAttribute('src').includes('logo-user-'))throw new Error('User-provided logo missing: '+id);
+        const c=card.getBoundingClientRect(),r=image.getBoundingClientRect();
+        if(Math.abs((r.top+r.height/2)-(c.top+c.height/2))>1)throw new Error('Dining logo is not vertically centered: '+id);
+        if(Math.abs((r.left+r.width/2)-(c.left+c.width/2))>1)throw new Error('Dining logo is not horizontally centered: '+id);
+      }
+    });
     const headerGeometry=()=>{
       const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height};};
       const name=document.querySelector('.site-header .site-brand-name');
@@ -187,6 +199,26 @@ try{
     await page.locator('#hotelTab').click();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').waitFor();
     await audit('hotel-selection');
+    await page.evaluate(async names=>{
+      const original=document.getElementById('hotelFeatures');original.id='originalHotelFeatures';original.hidden=true;
+      const fixture=document.createElement('div');fixture.id='hotelFeatures';fixture.setAttribute('data-tab-panel','');original.parentElement.append(fixture);
+      const {initSpecialFeatures}=await import('/special-features.js?v=20261014-supplied-four-logos');
+      const features=names.map(feature=>({...feature,availability:'continuous',status:'public',updateMode:'manual',stores:Array.from({length:147},(_,i)=>({id:'test-'+i,name:'Hotel',address:'東京都',conditions:'検証',lat:35,lng:139,verified:true}))}));
+      const controller=await initSpecialFeatures({root:fixture,section:'hotel',getOrigin:()=>null,getCenterLabel:()=>'',getRadius:()=>10000,getDeadline:()=>({days:47}),createDeadlineBubble:()=>{const b=document.createElement('span');b.className='voucher-deadline-bubble';b.textContent='47日で失効';return b;},catalog:Promise.resolve(features)});
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      for(const card of fixture.querySelectorAll('.feature-button')){
+        const c=card.getBoundingClientRect(),copy=card.querySelector('.benefit-choice-copy').getBoundingClientRect();
+        if(copy.bottom>c.bottom-5)throw new Error('Five-line hotel copy clips: '+card.dataset.feature);
+        if(c.height!==(innerWidth<=520?124:132))throw new Error('Hotel card is not compact');
+        const logo=card.querySelector('.representative-mark');
+        if(logo){const r=logo.getBoundingClientRect(),expected=innerWidth<=520?53:56.5;
+          if(Math.abs((r.top+r.height/2)-c.top-expected)>1.5)throw new Error('Hotel logo does not center on four text lines: '+card.dataset.feature);
+        }
+      }
+      window.hotelLayoutCleanup=()=>{controller.destroy();fixture.remove();original.id='hotelFeatures';original.hidden=false;};
+    },realHotelNames);
+    await audit('hotel-five-line-layout');
+    await page.evaluate(()=>{window.hotelLayoutCleanup();delete window.hotelLayoutCleanup;});
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').scrollIntoViewIfNeeded();
     const hotelGeometry=await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').click();
