@@ -1,0 +1,66 @@
+/* One warm selection language for dining and hotel choices.
+   A constant one-pixel border plus an inset line never changes card geometry. */
+#companyChips .benefit-choice,
+#hotelFeatures .benefit-choice{
+  box-sizing:border-box;
+  border:1px solid #edddc9;
+  background:#fff;
+  color:var(--text);
+  box-shadow:none;
+  transition:background-color .18s,border-color .18s,box-shadow .18s;
+}
+#companyChips .benefit-choice[aria-pressed=true],
+#hotelFeatures .benefit-choice[aria-pressed=true]{
+  border-color:#ab481d;
+  background:#fff0db;
+  box-shadow:inset 0 0 0 1px #ab481d;
+}
+#companyChips .benefit-choice:active,
+#hotelFeatures .benefit-choice:active{transform:none}
+#companyChips .issuer-check,
+#hotelFeatures .issuer-check{display:none}
+#companyChips .benefit-choice-name,
+#hotelFeatures .benefit-choice-name{padding-right:0}
+#companyChips .representative-mark,
+#companyChips .benefit-choice[aria-pressed=true]>.representative-mark,
+#hotelFeatures .representative-mark,
+#hotelFeatures .benefit-choice[aria-pressed=true]>.representative-mark{
+  opacity:1;
+  transition:none;
+}
+
+/* Reserve space for the overhanging badge without widening any grid track.
+   The logo still clips inside its own wrapper; only the card allows overflow. */
+#companyChips{
+  column-gap:12px;
+  row-gap:20px;
+  padding-top:16px;
+  padding-right:5px;
+}
+#companyChips .benefit-choice{overflow:visible}
+#companyChips .t-badge.voucher-deadline-bubble{
+  top:-12px;
+  right:-5px;
+  bottom:auto;
+  left:auto;
+  width:auto;
+  max-width:none;
+  z-index:5;
+  gap:0;
+  color:#fff;
+  pointer-events:none;
+}
+#companyChips .t-badge-dot{
+  width:auto;
+  min-width:22px;
+  height:22px;
+  min-height:22px;
+  padding:0 4px;
+  border:2px solid #fff;
+  border-radius:999px;
+  background:#c7353a;
+  box-sizing:border-box;
+}
+#companyChips .t-badge-unit{display:none}
+#companyChips .t-badge.is-urgent .t-badge-dot{border-color:#fff;background:#bf3b32}
+#companyChips .t-badge.is-expired .t-badge-dot{border-color:#fff}

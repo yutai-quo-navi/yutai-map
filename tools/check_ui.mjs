@@ -80,11 +80,36 @@ try{
       const card=document.querySelector('#companyChips [data-issuer="foodlife"]');
       const image=card.querySelector('.representative-mark-image');
       const neighbor=document.querySelector('#companyChips [data-issuer="yossix"] .representative-mark');
+      const rect=node=>{
+        const {x,y,width,height}=node.getBoundingClientRect();
+        return {x:x+scrollX,y:y+scrollY,width,height};
+      };
+      const geometry=()=>JSON.stringify([...document.querySelectorAll('#companyChips [data-issuer]')]
+        .map(button=>[rect(button),rect(button.querySelector('.representative-mark'))]));
+      const initialGeometry=geometry();
+      const {makeDeadlineBadge}=await import('/notification-badge.js');
+      const fixture=document.createElement('span');fixture.className='voucher-deadline-bubble';fixture.textContent='128日で失効';
+      card.append(makeDeadlineBadge(fixture,'layout-regression'));fixture.dataset.open='true';
+      const initialBadge=JSON.stringify(rect(fixture));
+      if(fixture.offsetParent!==card)throw new Error('Deadline badge is not anchored to its card');
+      if(fixture.getBoundingClientRect().top>=card.getBoundingClientRect().top)throw new Error('Deadline badge does not overhang the top edge');
+      if(getComputedStyle(card).overflow!=='visible')throw new Error('Deadline badge is clipped by its card');
+      const chipGrid=document.querySelector('#companyChips');
+      if(getComputedStyle(chipGrid).gridTemplateColumns.split(' ').length!==3)throw new Error('Dining grid lost its three columns');
       for(let i=0;i<10;i++){
         card.click();
+        if(geometry()!==initialGeometry)throw new Error('Selection moved a dining cell or logo: '+initialGeometry+' -> '+geometry());
+        if(JSON.stringify(rect(fixture))!==initialBadge)throw new Error('Selection moved the deadline badge');
+        if(getComputedStyle(card).borderTopWidth!=='1px')throw new Error('Selection changed the structural border width');
+        const selected=card.getAttribute('aria-pressed')==='true';
+        if(getComputedStyle(card).backgroundColor!==(selected?'rgb(255, 240, 219)':'rgb(255, 255, 255)'))throw new Error('Selection is not using the shared warm palette');
         if(card.querySelector('.representative-mark-image')!==image)throw new Error('Dining toggle replaced its logo');
         if(document.querySelector('#companyChips [data-issuer="yossix"] .representative-mark')!==neighbor)throw new Error('Dining toggle replaced another logo');
       }
+      const badgeRect=fixture.getBoundingClientRect();
+      if(badgeRect.left<0||badgeRect.right>innerWidth)throw new Error('Three-digit deadline badge overflows the screen');
+      if(getComputedStyle(image.parentElement).opacity!=='1')throw new Error('Selection changes logo contrast');
+      fixture.remove();
       const {createBrandMark}=await import('../representative-marks.js?v=20261014-stable-logos');
       const pending=createBrandMark('dining','foodlife');
       if(!pending.classList.contains('has-real-logo'))throw new Error('Loading image exposes text fallback');
@@ -128,7 +153,11 @@ try{
     await page.locator('#hotelTab').click();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').waitFor();
     await audit('hotel-selection');
+    await page.locator('#hotelFeatures [data-feature="ui-hotel"]').scrollIntoViewIfNeeded();
+    const hotelGeometry=await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox();
     await page.locator('#hotelFeatures [data-feature="ui-hotel"]').click();
+    assert.deepEqual(await page.locator('#hotelFeatures [data-feature="ui-hotel"]').boundingBox(),hotelGeometry,'hotel selection must not move or resize the cell');
+    assert.equal(await page.locator('#hotelFeatures .issuer-check').first().isVisible(),false,'selection check must be absent');
     assert.equal(await page.locator('#hotelFeatures [aria-pressed=true]').count(),1);
     await page.locator('#locateButton').click();
     await page.locator('#hotelFeatures .feature-card').waitFor();

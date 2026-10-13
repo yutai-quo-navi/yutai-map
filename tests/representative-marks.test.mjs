@@ -51,7 +51,7 @@ test('selected labels are absent but deadline badges stay in both selection view
   const features=await readFile(new URL('../special-features.js',import.meta.url),'utf8');
   assert.doesNotMatch(app,/state\.textContent='選択中'/);
   assert.doesNotMatch(features,/state\.textContent = '選択中'/);
-  assert.match(app,/if\(bubble\) copy\.appendChild\(makeDeadlineBadge\(/);
+  assert.match(app,/if\(bubble\) badge\.appendChild\(makeDeadlineBadge\(/);
   assert.match(features,/if \(bubble\) detail\.append\(bubble\)/);
 });
 
