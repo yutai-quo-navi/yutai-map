@@ -23,7 +23,7 @@ const gasFiles=new Map(await Promise.all(['index.html','assets/brand.css','asset
 })));
 assert.equal(gasFiles.get('assets/header-align.css'),await readFile(resolve(root,'assets/header-align.css'),'utf8'),'Both sites must share identical header geometry rules');
 const gasSource=gasFiles.get('index.html');
-gasFiles.set('index.html','<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+'</body></html>');
+gasFiles.set('index.html','<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+gasSource.match(/<main class="wrap">/)[0]+'<div style="height:100px"></div></main></body></html>');
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(pathname.startsWith('/__gas-header/')){
@@ -53,7 +53,7 @@ const reports=[];
 const hotelFixture={id:'ui-hotel',section:'hotel',title:'テスト宿泊優待',shortName:'表示確認ホテル',subtitle:'宿泊券で泊まる',issuer:{id:'ui-hotel',code:'9999',name:'表示確認ホテル'},updateMode:'manual',status:'public',availability:'continuous',radiusMeters:'all',sourceUrl:'https://example.com/benefit',checkedOn:'2026-10-12',description:'表示確認用の宿泊優待です。',stores:[{id:'ui-hotel-1',name:'表示検証用ホテル・長いホテル名とリゾート施設',address:'東京都○○区○○町（テスト用）',lat:35.682,lng:139.768,conditions:'事前予約が必要です。宿泊券の対象プランと除外日を公式情報でご確認ください。',verified:true}]};
 let browser;
 try{
-  browser=await chromium.launch(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{});
+  browser=await chromium.launch({...(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{}),ignoreDefaultArgs:['--hide-scrollbars']});
   for(const viewport of policy.viewports){
     const context=await browser.newContext({viewport,hasTouch:viewport.width<=390,locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce',geolocation:{latitude:35.681,longitude:139.767},permissions:['geolocation']});
     const page=await context.newPage();
@@ -94,14 +94,19 @@ try{
       const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height};};
       const name=document.querySelector('.site-header .site-brand-name');
       const {x,y,height}=rect(name.firstElementChild);
-      return {logo:rect(document.querySelector('.site-header .site-logo')),nameStart:{x,y,height},nameFont:['fontFamily','fontSize','lineHeight','fontWeight','letterSpacing'].map(key=>getComputedStyle(name)[key])};
+      return {header:rect(document.querySelector('.site-header')),wrap:rect(document.querySelector('main.wrap')),logo:rect(document.querySelector('.site-header .site-logo')),nameStart:{x,y,height},nameFont:['fontFamily','fontSize','lineHeight','fontWeight','letterSpacing'].map(key=>getComputedStyle(name)[key])};
     };
     const foodHeader=await page.evaluate(headerGeometry);
+    delete foodHeader.wrap.height;
     const gasPage=await context.newPage();
     await gasPage.goto(url+'/__gas-header/index.html');
     assert.equal(await gasPage.locator('.site-brand-name').textContent(),'株主優待券店舗とQUOガソリン給油検索','companion title renders as Japanese');
-    assert.deepEqual(await gasPage.evaluate(headerGeometry),foodHeader,`${viewport.width}px: both tools must align their header icon and first title line`);
-    assert.equal(await gasPage.locator('.site-logo svg circle').count(),1,'gas identity includes a magnifying glass');
+    const gasHeader=await gasPage.evaluate(headerGeometry);delete gasHeader.wrap.height;
+    assert.deepEqual(gasHeader,foodHeader,`${viewport.width}px: a short gas page and long benefit page must align their full header and main container`);
+    assert.equal(await gasPage.locator('.site-logo svg circle').count(),0,'gas identity uses the fuel dispenser without a magnifying glass');
+    await gasPage.locator('main.wrap').evaluate(node=>node.firstElementChild.style.height='2500px');
+    const longGasHeader=await gasPage.evaluate(headerGeometry);delete longGasHeader.wrap.height;
+    assert.deepEqual(longGasHeader,gasHeader,'adding a scrollbar must not move or resize the gas container');
     await gasPage.screenshot({path:resolve(output,`${viewport.width}-gas-header.png`)});
     await gasPage.close();
     // Repeated toggles must retain decoded image nodes, including other cards.
