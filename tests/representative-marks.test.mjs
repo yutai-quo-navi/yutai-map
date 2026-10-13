@@ -42,7 +42,7 @@ test('mark fallback is always available without a third-party image',()=>{
   for(const id of dining.concat(hotel)){
     const mark=representativeMark(hotel.includes(id)?'hotel':'dining',id);
     assert.ok(mark.name && mark.sub && mark.symbol,'fallback: '+id);
-    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://'),mark.asset);
+    if(mark.asset) assert.ok(mark.asset.startsWith('./assets/'),mark.asset);
   }
 });
 
@@ -51,17 +51,17 @@ test('selected labels are absent but deadline badges stay in both selection view
   const features=await readFile(new URL('../special-features.js',import.meta.url),'utf8');
   assert.doesNotMatch(app,/state\.textContent='選択中'/);
   assert.doesNotMatch(features,/state\.textContent = '選択中'/);
-  assert.match(app,/if\(bubble\) badge\.appendChild\(makeDeadlineBadge\(/);
+  assert.match(app,/if\s*\(bubble\)\s*badge\.appendChild\(makeDeadlineBadge\(/);
   assert.match(features,/if \(bubble\) detail\.append\(bubble\)/);
 });
 
 test('the restaurant representative marks are not holding-company logos',()=>{
   assert.equal(representativeMark('dining','ichibanya').name,'CoCo壱番屋');
-  assert.match(representativeMark('dining','ichibanya').asset,/ES9CSLQUwAAS2Sc/);
+  assert.match(representativeMark('dining','ichibanya').asset,/logo-ichibanya-20261014\.webp/);
   assert.equal(representativeMark('dining','create').name,'磯丸水産');
   assert.equal(representativeMark('dining','colowide').name,'牛角');
   assert.equal(representativeMark('dining','balnibarbi').name,'BALNIBARBI');
-  assert.match(decodeURIComponent(representativeMark('dining','chikaranomoto').asset),/Ippudo Logo\.png/);
+  assert.match(representativeMark('dining','chikaranomoto').asset,/logo-local-chikaranomoto\.webp/);
 });
 
 test('optical logo sizing keeps all card heights fixed',async()=>{
@@ -124,11 +124,32 @@ test('restaurant identities use intrinsic image proportions rather than stretche
 test('hotel logo image sources and selected card behavior are configured',async()=>{
   const imageBacked=[
     'kyoritsu-hotel-discount','greens-hotels','seibu-free-hotels',
-    'sunfrontier-hotels','resol-hotels','daiwa-house-hotels',
+    'sunfrontier-hotels','kyoritsu-resort-plan','resol-hotels','daiwa-house-hotels',
     'tosei-hotels','tkp-hotels','wealth-hotels','wakita-hotels'
   ];
   for(const id of imageBacked) assert.ok(representativeMark('hotel',id)?.asset,id);
   const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
   assert.match(css,/grid-auto-rows:146px/);
   assert.match(css,/\.representative-mark-image/);
+});
+
+test('all selected image files are self-hosted and available within the repository', async()=>{
+  for(const id of dining.concat(hotel)){
+    const info = representativeMark(hotel.includes(id)?'hotel':'dining',id);
+    const file = info.spriteIndex != null ? './assets/logo-sprite-cell-'+info.spriteIndex+'.webp' : info.asset;
+    if (!file) continue;
+    assert.match(file,/^\.\/assets\/[^/?#]+$/,id);
+    const bytes = await readFile(new URL('../'+file,import.meta.url));
+    assert.ok(bytes.length>0,id);
+  }
+  const source = await readFile(new URL('../representative-marks.js',import.meta.url),'utf8');
+  assert.doesNotMatch(source,/commons\.wikimedia\.org|upload\.wikimedia\.org|pbs\.twimg\.com|livedoor\.blogimg\.jp/);
+});
+test('rendering preserves existing cards when selection or counts update', async()=>{
+  const app = await readFile(new URL('../app.js',import.meta.url),'utf8');
+  const features = await readFile(new URL('../special-features.js',import.meta.url),'utf8');
+  assert.match(app,/existingGroups = new Map/);
+  assert.doesNotMatch(app,/els\.chips\.innerHTML\s*=\s*''/);
+  assert.match(features,/existingItems = new Map/);
+  assert.doesNotMatch(features,/root\.innerHTML\s*=\s*''/);
 });

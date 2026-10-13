@@ -1,4 +1,4 @@
-# Representative store logo asset audit (2026-10-13)
+# Representative store logo asset audit (2026-10-14)
 
 The issuer card shows a **recognizable store identity**, not the issuer's holding-company logo. The logo is a navigation aid, **not** an assertion that every store in that chain accepts a voucher.
 
@@ -24,19 +24,17 @@ These local WebP assets were compressed from **the six actual logo image files t
 - クリエイト・レストランツ / 磯丸水産: https://www.createrestaurants.com/company/history/ and https://www.createrestaurants.com/ir/stock/shareholder/
 - チムニー / はなの舞: https://www.chimney.co.jp/
 
-## Other displayed dining identifiers
+## Current image delivery (2026-10-14)
 
-Source image references currently configured in `representative-marks.js` should be checked before declaring them verified; remote logos can change or be blocked. Do not assume that a plausible-looking image is the correct store logo.
+Every actual logo rendered in the dining and hotel **selection cards** is served as a same-origin `./assets/` file from GitHub Pages. There is no runtime image fetch to Wikimedia Commons, social image hosts, blogs, or external hotel-brand servers.
 
-**Store-brand name fallback still in use (no image asset configured):**
-- monogatari — 焼肉きんぐ
-- matsuya — 松屋
-- balnibarbi — GARB
-- daiichikosho — BIG ECHO
-- fujio — まいどおおきに食堂
-- kineya — 杵屋
-- saintmarc — サンマルクカフェ
-- ringerhut — リンガーハット
-- hiday — 日高屋
+A one-time image migration saved 12 previously external reference images as compressed local WebP files named `assets/logo-local-<issuer-or-feature>.webp`. Source artwork remains a recognizable store/hotel identity and retains its intrinsic aspect ratio. The one-time import workflow was removed after successful import.
 
-For future additions, favor an actual local image with verified brand association. Do not substitute a corporate or guessed logo. Cropping may remove white outer margins but must not remove interior art. The selected and unselected cards keep consistent dimensions.
+### Repaint performance
+
+- `app.js` reconciles the existing issuer card DOM nodes and moves them only if their order changes. Selection toggles only update state and classes.
+- `special-features.js` likewise preserves hotel card nodes and logos when selection changes.
+- Existing image nodes remain mounted, avoiding image decode/repaint flashes during selection.
+- `index.html` preloads three likely first-row logos, and static issuer configuration requests use normal browser caching.
+
+Do not add direct remote URLs to `representative-marks.js` again. For any future logo, download and optimize the authentic artwork at development time, add it to `assets/`, and reference a local path. Avoid guessed symbols or arbitrary holding-company logos.
