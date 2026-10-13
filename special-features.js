@@ -120,6 +120,34 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       if (existing) {
         const button = existing.querySelector('[data-feature]');
         button.setAttribute('aria-pressed',String(selectedFeatures.has(feature.id)));
+        if (!button.dataset.logoCardHydrated) {
+          button.addEventListener('click', () => {
+            selectedFeatures.has(feature.id) ? selectedFeatures.delete(feature.id) : selectedFeatures.add(feature.id);
+            track('benefit_select', {section, benefit_id: feature.id, selected: selectedFeatures.has(feature.id)});
+            hasSearched = false; render();
+            root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
+          });
+          button.dataset.logoCardHydrated = 'true';
+        }
+        // The initial HTML intentionally omits a fabricated count; add verified
+        // totals and deadline data when the feature snapshot actually arrives.
+        const count = button.querySelector('.benefit-choice-count');
+        if (count) count.innerHTML = numberHTML('feature:'+feature.id,feature.stores.length)+'<span class="number-unit">件</span>';
+        const name = button.querySelector('.benefit-choice-name');
+        if (name) name.textContent = feature.shortName || feature.issuer.name;
+        const detail = button.querySelector('.benefit-choice-detail');
+        if (detail) {
+          const caption = detail.querySelector('.feature-caption');
+          if (caption) caption.textContent = feature.subtitle || '';
+          detail.querySelector('.feature-deadline')?.remove();
+          const bubble = feature.status === 'ended' ? document.createElement('span') : createDeadlineBubble(feature.issuer.id,feature.deadlineBenefitPattern,feature.deadlineExpiryType);
+          if (feature.status === 'ended') {
+            bubble.className = 'voucher-deadline-bubble';
+            bubble.textContent = '今回分は終了';
+            bubble.setAttribute('aria-label', `利用期限終了：${feature.validThrough}`);
+          }
+          if (bubble) { bubble.classList.add('feature-deadline'); detail.append(bubble); }
+        }
         if (buttons.children[index] !== existing) buttons.insertBefore(existing,buttons.children[index] || null);
         existingItems.delete(feature.id);
         continue;
@@ -157,6 +185,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         hasSearched = false; render();
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
+      button.dataset.logoCardHydrated = 'true';
       const detail = document.createElement('span'); detail.className = 'benefit-choice-detail';
       if (feature.subtitle) {
         const subtitle = document.createElement('span'); subtitle.className = 'feature-caption';

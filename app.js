@@ -112,8 +112,31 @@ const categoryLabels = {
   foodcourt:'フードコート',
   other:'その他'
 };
-const selectedSaved = readJSON('yutai-selected', null);
+let selectedSaved = readJSON('yutai-selected', null);
 const selected = new Set(Array.isArray(selectedSaved) ? selectedSaved.filter(x => typeof x==='string') : []);
+// This HTML already contains the logo cards. Synchronize saved selection and
+// attach interactions *before* waiting for the issuer/store/expiry API calls.
+const initialIssuerButtons = [...els.chips.querySelectorAll('[data-issuer]')];
+if (!Array.isArray(selectedSaved)) {
+  for (const button of initialIssuerButtons) selected.add(button.dataset.issuer);
+}
+for (const button of initialIssuerButtons) {
+  const id = button.dataset.issuer;
+  button.setAttribute('aria-pressed',String(selected.has(id)));
+  button.dataset.logoCardHydrated = 'true';
+  button.addEventListener('click', () => {
+    if (visibleCompanyIds.has(id)) { toggleIssuer(id); return; }
+    selected.has(id) ? selected.delete(id) : selected.add(id);
+    selectedSaved = [...selected]; // prevent a later default-selection reset
+    persistSelection();
+    button.setAttribute('aria-pressed',String(selected.has(id)));
+    button.classList.toggle('is-unselected',!selected.has(id));
+    const summary = qs('#selectionSummary');
+    if (summary) summary.textContent = selected.size+'社 選択中';
+  });
+}
+const initialSummary = qs('#selectionSummary');
+if (initialSummary) initialSummary.textContent = selected.size+'社 選択中';
 let brandCatalog = [];
 let activeBrand = readSetting('yutai-brand', '');
 let brandRequest = 0;

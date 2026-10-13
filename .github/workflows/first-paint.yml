@@ -1,0 +1,20 @@
+name: Verify first-visit logo paint
+on:
+  push:
+    branches: [main]
+    paths: [index.html, app.js, special-features.js, representative-marks.js, tests/first-paint.test.mjs, tools/first-paint-smoke.mjs, .github/workflows/first-paint.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  first-visit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22', cache: 'npm'}
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - run: node tools/first-paint-smoke.mjs
