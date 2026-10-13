@@ -1,12 +1,13 @@
 // Representative store and hotel identity marks for the benefit-selection cards.
-// When a verified logo asset is unavailable, show a readable branded wordmark
-// instead of a guessed or mislabeled corporate logo. No store/benefit data changes.
+// Use local, real store logos supplied for the UI. Where imagery is unavailable,
+// show a readable brand name; never present a synthetic mark as an official logo.
+// The representative logo does not imply that every store in that brand accepts benefits.
 const commons = filename => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(filename);
 
 const dining = {
   skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:commons('Gusto Logo.svg')},
   colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛', asset:'https://livedoor.blogimg.jp/line_jp/imgs/2/9/29dbd189.png'},
-  create:        {name:'しゃぶ菜', sub:'SHABUSAI', color:'#a9643b', symbol:'菜'},
+  create:        {name:'磯丸水産', sub:'ISOMARU SUISAN', color:'#be3038', symbol:'磯', asset:'./assets/brand-logo-create.webp'},
   zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:commons('Sukiya logo.svg')},
   toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:commons('Marugame Seimen logo.svg')},
   yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:commons('Yoshinoya Logo.svg')},
@@ -17,22 +18,22 @@ const dining = {
   balnibarbi:    {name:'GARB', sub:'ガーブ', color:'#58757b', symbol:'G'},
   daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE'},
   fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true},
-  srs:           {name:'和食さと', sub:'SATO', color:'#ba4e61', symbol:'さ'},
-  arclands:      {name:'かつや', sub:'KATSUYA', color:'#9a5637', symbol:'か'},
+  srs:           {name:'和食さと', sub:'SATO', color:'#db273a', symbol:'さ', asset:'./assets/brand-logo-srs.webp'},
+  arclands:      {name:'かつや', sub:'KATSUYA', color:'#ee8843', symbol:'か', asset:'./assets/brand-logo-arclands.webp'},
   kineya:        {name:'杵屋', sub:'KINEYA', color:'#9a4445', symbol:'杵'},
   saintmarc:     {name:'サンマルクカフェ', sub:'ST-MARC CAFÉ', color:'#704c3d', symbol:'S'},
-  chimney:       {name:'はなの舞', sub:'HANANOMAI', color:'#8a5161', symbol:'花'},
+  chimney:       {name:'はなの舞', sub:'HANANOMAI', color:'#e60021', symbol:'花', asset:'./assets/brand-logo-chimney.webp'},
   ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R'},
   hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日'},
   ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:'https://pbs.twimg.com/media/ES9CSLQUwAAS2Sc.png'},
   komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
   dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:commons('Doutor Coffee Logo.png')},
   mos:           {name:'MOS BURGER', sub:'モスバーガー', color:'#4d9b69', symbol:'M', asset:commons('MOS-Burger-Logo.svg')},
-  yamaokaya:     {name:'ラーメン山岡家', sub:'YAMAOKAYA', color:'#c7414a', symbol:'山'},
+  yamaokaya:     {name:'ラーメン山岡家', sub:'YAMAOKAYA', color:'#dc4013', symbol:'山', asset:'./assets/brand-logo-yamaokaya.webp'},
   chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一', asset:commons('Ippudo Logo.png')},
   ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王', asset:commons('餃子の王将.svg')},
   joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J', asset:commons('Joyfull Restaurant.png')},
-  yossix:        {name:'や台ずし', sub:'YATAIZUSHI', color:'#ac6543', symbol:'寿'}
+  yossix:        {name:'や台ずし', sub:'YATAIZUSHI', color:'#281a13', symbol:'寿', asset:'./assets/brand-logo-yossix.webp'}
 };
 
 const hotel = {
