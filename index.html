@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#fffaf3">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'sha256-iCOurntPSr0kNoBfWEQoW3UKNjTxW9p6BsSk6Mvu8kU='; style-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://api.openpoiapi.com https://yutai-map-api.yutaisamurai.workers.dev; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'sha256-iCOurntPSr0kNoBfWEQoW3UKNjTxW9p6BsSk6Mvu8kU='; style-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://commons.wikimedia.org https://upload.wikimedia.org; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://api.openpoiapi.com https://yutai-map-api.yutaisamurai.workers.dev; object-src 'none'; base-uri 'none'; form-action 'self'; media-src 'none'; frame-src 'none'; worker-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
   <meta name="description" content="株主優待が使える飲食店・ホテルを、現在地や指定した場所から検索。優待会社・ブランド別ガイドと宿泊優待ガイドで、対象店の探し方や利用条件、公式情報を確認できます。">
@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="./ui-quality.css?v=20261012-hotel-two-columns">
   <link rel="stylesheet" href="./soft-ui.css?v=20261013-warm-benefits">
   <link rel="stylesheet" href="./notification-badge.css?v=20261013-small-badge">
+  <link rel="stylesheet" href="./representative-marks.css?v=20261013-brand-cards">
 </head>
 <body class="food-tool">
 <header class="site-header">
@@ -279,7 +280,7 @@
       </div></div>
   <footer class="footer site-footer"><div class="site-footer-brand">株主優待券店舗とQUOガソリン給油検索</div><div class="footer-links"><a href="./guides/dining/">優待・ブランドガイド</a><a href="./guides/hotels/">宿泊優待ガイド</a><button id="feedbackButton" type="button">情報提供</button><a href="./privacy.html">プライバシー</a><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener noreferrer">出典: OpenPOI API</a></div><p>店舗・優待情報は変更される場合があります。ご利用前に各社公式情報をご確認ください。</p><a class="creator-link" href="https://x.com/yutai_samurai" target="_blank" rel="noopener noreferrer" aria-label="運営者 yutai_samurai のX"><img src="./assets/yutai-samurai.png" width="17" height="17" alt="" loading="lazy"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-7.4L5.5 22H2.3l7.3-8.5L.8 2h6.5l4.4 6.7L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg><span>@yutai_samurai</span></a></footer>
 
-  <script src="./app.js?v=20261013-small-badge" type="module"></script>
+  <script src="./app.js?v=20261013-brand-cards" type="module"></script>
 </body>
 </html>
 
