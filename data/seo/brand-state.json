@@ -3240,6 +3240,51 @@
           "store_count": 608
         }
       ]
+    },
+    "yossix": {
+      "revision": 413,
+      "brands": [
+        {
+          "brand_name": "これや",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ひとくち餃子の頂",
+          "store_count": 20
+        },
+        {
+          "brand_name": "や台ずし",
+          "store_count": 372
+        },
+        {
+          "brand_name": "や台や",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ニパチ",
+          "store_count": 8
+        },
+        {
+          "brand_name": "人氣万両",
+          "store_count": 2
+        },
+        {
+          "brand_name": "海老どて食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "焼とりてっぱん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "玉鋼",
+          "store_count": 1
+        },
+        {
+          "brand_name": "華花",
+          "store_count": 5
+        }
+      ]
     }
   }
 }
