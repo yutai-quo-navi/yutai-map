@@ -2356,6 +2356,14 @@
       "hash": "847ad47439ee90be971c451e86d4a1b057955a764e99e5255348c51f66050186",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/kura/09df869dacba0929/index.html": {
+      "hash": "50524cc9be639ff7475cb47151e3e7d556c8ff808d2b7b47d2be05d833c73d0e",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/kura/2d9ae9e1b720cb0c/index.html": {
+      "hash": "2859e74cb127e5ce7fd502dbf8c7f7062fdabcebb05914a739fbc2042ac7ba76",
+      "lastmod": "2026-10-14"
+    },
     "guides/dining/brands/matsuya/2a41f6f21c784efa/index.html": {
       "hash": "f23c0053a38055318c7f0b6f7e3e7e85a439ffe871c558d0a6b7aa20e0702ade",
       "lastmod": "2026-10-11"
@@ -3205,8 +3213,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "67f4d99e5f40b428d4d87cb4e54852a82f595af56e0d8dcb0b9f89df3a0b49ff",
-      "lastmod": "2026-10-13"
+      "hash": "25529612ca737aa87369df1e2c87b4fc32852c55017b36b8cc0cc732de898cd8",
+      "lastmod": "2026-10-14"
     },
     "guides/dining/issuers/arclands/index.html": {
       "hash": "7b79d46adf3238605fbab6e0851eda3d5a6d4e48fb401c334677ed93d69f35eb",
@@ -3267,6 +3275,10 @@
     "guides/dining/issuers/komeda/index.html": {
       "hash": "87971017baf2cd30193a4b8b1ef44ec3cae44b15c14c893da7527c2d4582a59e",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/kura/index.html": {
+      "hash": "69c67ead6c3cd13b07a021b947a35f250c2dbecd0901cfe1de92d80b5a6f68ce",
+      "lastmod": "2026-10-14"
     },
     "guides/dining/issuers/matsuya/index.html": {
       "hash": "3c96286e26e6f5327c85043621e43cfa73ac639ac6f4dde343841b9315db6a9e",

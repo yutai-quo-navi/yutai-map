@@ -3354,6 +3354,19 @@
           "store_count": 5
         }
       ]
+    },
+    "kura": {
+      "revision": 558,
+      "brands": [
+        {
+          "brand_name": "くら寿司",
+          "store_count": 552
+        },
+        {
+          "brand_name": "無添蔵",
+          "store_count": 6
+        }
+      ]
     }
   }
 }
