@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-13",
+  "updated": "2026-10-14",
   "issuers": [
     {
       "id": "skylark",
@@ -211,6 +211,13 @@
       "name": "ヨシックスホールディングス",
       "status": "public",
       "config": "./data/issuers/yossix/config.json"
+    },
+    {
+      "id": "kura",
+      "code": "2695",
+      "name": "くら寿司",
+      "status": "public",
+      "config": "./data/issuers/kura/config.json"
     }
   ]
 }

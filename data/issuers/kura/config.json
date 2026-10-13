@@ -1,0 +1,56 @@
+{
+  "id": "kura",
+  "code": "2695",
+  "name": "くら寿司",
+  "fullName": "くら寿司",
+  "status": "public",
+  "sourceUrl": "https://www.kurasushi.co.jp/company/ir/stock/yutai.html",
+  "storeSearchUrl": "https://shop.kurasushi.co.jp/all",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-14",
+  "domesticOnly": true,
+  "aliases": [
+    "くら寿司",
+    "無添くら寿司",
+    "KURA SUSHI",
+    "無添蔵"
+  ],
+  "aliasBrands": {
+    "くら寿司": "くら寿司",
+    "無添くら寿司": "くら寿司",
+    "KURA SUSHI": "くら寿司",
+    "無添蔵": "無添蔵"
+  },
+  "categories": {
+    "くら寿司": "restaurant",
+    "無添くら寿司": "restaurant",
+    "KURA SUSHI": "restaurant",
+    "無添蔵": "restaurant"
+  },
+  "catalogBrands": [
+    "くら寿司",
+    "無添蔵"
+  ],
+  "searchNames": [
+    "くら寿司",
+    "無添くら寿司",
+    "KURA SUSHI",
+    "無添蔵"
+  ],
+  "note": "日本国内のくら寿司・無添蔵が対象。持ち帰りは店頭精算時に利用可能。スマホ持ち帰りの事前決済・海外店舗・ネット通販は対象外です。",
+  "health": {
+    "minStores": 450,
+    "maxStores": 700,
+    "maxAgeDays": 40,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "shop.kurasushi.co.jp"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 40,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

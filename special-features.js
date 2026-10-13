@@ -1,5 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
-import {createBrandMark} from './representative-marks.js?v=20261014-stable-logos';
+import {createBrandMark} from './representative-marks.js?v=20261014-kura';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
