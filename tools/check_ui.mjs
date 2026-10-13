@@ -23,7 +23,7 @@ const gasFiles=new Map(await Promise.all(['index.html','assets/brand.css','asset
 })));
 assert.equal(gasFiles.get('assets/header-align.css'),await readFile(resolve(root,'assets/header-align.css'),'utf8'),'Both sites must share identical header geometry rules');
 const gasSource=gasFiles.get('index.html');
-gasFiles.set('index.html','<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+'</body></html>');
+gasFiles.set('index.html','<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+gasSource.match(/<style>([\s\S]*?)<\/style>/)[1]+'</style><link rel="stylesheet" href="./assets/brand.css"><link rel="stylesheet" href="./assets/header-align.css"></head><body class="gs-tool">'+gasSource.match(/<header class="site-header">[\s\S]*?<\/header>/)[0]+'</body></html>');
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(pathname.startsWith('/__gas-header/')){
@@ -99,6 +99,7 @@ try{
     const foodHeader=await page.evaluate(headerGeometry);
     const gasPage=await context.newPage();
     await gasPage.goto(url+'/__gas-header/index.html');
+    assert.equal(await gasPage.locator('.site-brand-name').textContent(),'株主優待券店舗とQUOガソリン給油検索','companion title renders as Japanese');
     assert.deepEqual(await gasPage.evaluate(headerGeometry),foodHeader,`${viewport.width}px: both tools must align their header icon and first title line`);
     assert.equal(await gasPage.locator('.site-logo svg circle').count(),1,'gas identity includes a magnifying glass');
     await gasPage.screenshot({path:resolve(output,`${viewport.width}-gas-header.png`)});
