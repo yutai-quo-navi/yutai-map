@@ -3218,6 +3218,15 @@
           "store_count": 3
         }
       ]
+    },
+    "joyfull": {
+      "revision": 608,
+      "brands": [
+        {
+          "brand_name": "ジョイフル",
+          "store_count": 608
+        }
+      ]
     }
   }
 }

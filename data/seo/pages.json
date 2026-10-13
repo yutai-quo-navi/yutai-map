@@ -2008,6 +2008,10 @@
       "hash": "ef5d052833cba6c848c614390467a5d43c2326cc261fa76b45d8de7f6ddc06cb",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/joyfull/4defdee3f379d4f7/index.html": {
+      "hash": "0cb8d6214831ecf85fb59574ef9bf12138fe67c3a9e1cbefc0fa1092b9a2bb20",
+      "lastmod": "2026-10-13"
+    },
     "guides/dining/brands/kineya/08992b5a5e5552d3/index.html": {
       "hash": "f33e5ad5e71467ecce1ba0d1a48c25d129ac5eda6e4cabacfb78052f32d8368a",
       "lastmod": "2026-10-11"
@@ -3089,8 +3093,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "2cd3a683dd9c99dfa85d79a55010e3e4acdcd9bb6a0620e60d8e33dcb670dc92",
-      "lastmod": "2026-10-12"
+      "hash": "f095b803fa29cd13df72151544213574a2bd514b3bf852413395019854cd7342",
+      "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/arclands/index.html": {
       "hash": "7b79d46adf3238605fbab6e0851eda3d5a6d4e48fb401c334677ed93d69f35eb",
@@ -3135,6 +3139,10 @@
     "guides/dining/issuers/ichibanya/index.html": {
       "hash": "6c0532ded3813229cb81924de378299d2b520940857c906d281d4edea3ae1e5e",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/joyfull/index.html": {
+      "hash": "178e197d2bbd4aab96d3cdeab5456d13b17b3453b2b1a890a5e57e78428039c7",
+      "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/kineya/index.html": {
       "hash": "3dc71b8cdf7bc820b77aa52d9f839a3c103466ec2ae1f2f9a2cae5d7c9276f42",
