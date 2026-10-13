@@ -315,3 +315,98 @@
   #hotelFeatures .benefit-choice-name{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.representative-mark{transition:none}}
+
+
+/* 2026-10-13 optical-size pass. Label-less cards need one central logo area,
+   not a grid of different native image dimensions. All cards keep fixed height. */
+#companyChips .representative-mark{
+  top:29px;
+  bottom:21px;
+  left:6px;
+  right:6px;
+}
+#companyChips .representative-mark-fallback{
+  gap:0;
+  padding-inline:5px;
+  box-sizing:border-box;
+}
+#companyChips .representative-mark-fallback .representative-mark-symbol{
+  display:none; /* Never synthesize what looks like an official company logo. */
+}
+#companyChips .representative-mark-fallback .representative-mark-wording{
+  width:100%;
+  max-width:100%;
+}
+#companyChips .representative-mark-name{
+  font-size:19px;
+  line-height:1.18;
+  letter-spacing:-.055em;
+}
+#companyChips .representative-mark--compact .representative-mark-name{
+  font-size:16px;
+}
+#companyChips .representative-mark-sub{font-size:9px;letter-spacing:.015em}
+#companyChips .representative-mark-image{
+  inset:auto;
+  top:50%;
+  left:50%;
+  width:var(--logo-width,90%);
+  height:var(--logo-height,100%);
+  max-width:var(--logo-width,90%);
+  max-height:var(--logo-height,100%);
+  object-fit:contain;
+  object-position:center;
+  mix-blend-mode:multiply;
+  transform:translate(-50%,-50%) scale(var(--logo-scale,1));
+  transform-origin:center;
+}
+/* Real store logos are sized by occupied visual area, not the source canvas. */
+#companyChips [data-issuer="yoshinoya"]{--logo-width:94%;--logo-height:100%}
+#companyChips [data-issuer="zensho"]{--logo-width:86%;--logo-height:100%}
+#companyChips [data-issuer="ohsho"]{--logo-width:86%;--logo-height:100%}
+#companyChips [data-issuer="mcd"]{--logo-width:72%;--logo-height:94%}
+#companyChips [data-issuer="mos"]{--logo-width:86%;--logo-height:100%}
+#companyChips [data-issuer="komeda"]{--logo-width:72%;--logo-height:72%}
+#companyChips [data-issuer="toridoll"]{--logo-width:75%;--logo-height:78%}
+#companyChips [data-issuer="dnh"]{--logo-width:71%;--logo-height:81%}
+#companyChips [data-issuer="ichibanya"]{--logo-width:90%;--logo-height:90%}
+#companyChips [data-issuer="royal"]{--logo-width:83%;--logo-height:78%}
+#companyChips [data-issuer="chikaranomoto"]{--logo-width:91%;--logo-height:100%}
+#companyChips [data-issuer="skylark"]{--logo-width:76%;--logo-height:88%}
+#companyChips [data-issuer="joyfull"]{--logo-width:82%;--logo-height:86%}
+/* The source photo is square with a horizontally centred real CoCoICHIBANYA
+   wordmark: cropping only its white vertical canvas keeps the mark legible. */
+#companyChips [data-issuer="ichibanya"] .representative-mark-image{
+  object-fit:cover;
+}
+/* Wide/short fallback store names: make them recognizable at the same glance. */
+#companyChips [data-issuer="matsuya"] .representative-mark-name,
+#companyChips [data-issuer="kineya"] .representative-mark-name{font-size:28px}
+#companyChips [data-issuer="yossix"] .representative-mark-name,
+#companyChips [data-issuer="arclands"] .representative-mark-name,
+#companyChips [data-issuer="create"] .representative-mark-name{font-size:22px}
+#companyChips [data-issuer="colowide"] .representative-mark-name{font-size:25px}
+#companyChips [data-issuer="fujio"] .representative-mark-name{font-size:16px}
+/* Selected is conveyed by color,  check control, and logo contrast. */
+#companyChips .benefit-choice-status,
+#hotelFeatures .benefit-choice-status{display:none!important}
+#companyChips .representative-mark{opacity:.23}
+#companyChips .benefit-choice[aria-pressed=true]>.representative-mark{opacity:.82}
+@media(max-width:520px){
+  #companyChips .representative-mark{
+    top:26px;
+    bottom:21px;
+    left:3px;
+    right:3px;
+  }
+  #companyChips .representative-mark-name{font-size:14px}
+  #companyChips .representative-mark--compact .representative-mark-name{font-size:12px}
+  #companyChips .representative-mark-sub{font-size:7px}
+  #companyChips [data-issuer="matsuya"] .representative-mark-name,
+  #companyChips [data-issuer="kineya"] .representative-mark-name{font-size:21px}
+  #companyChips [data-issuer="yossix"] .representative-mark-name,
+  #companyChips [data-issuer="arclands"] .representative-mark-name,
+  #companyChips [data-issuer="create"] .representative-mark-name{font-size:16px}
+  #companyChips [data-issuer="colowide"] .representative-mark-name{font-size:19px}
+  #companyChips [data-issuer="fujio"] .representative-mark-name{font-size:12px}
+}

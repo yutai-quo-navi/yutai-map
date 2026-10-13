@@ -42,15 +42,34 @@ test('mark fallback is always available without a third-party image',()=>{
   for(const id of dining.concat(hotel)){
     const mark=representativeMark(hotel.includes(id)?'hotel':'dining',id);
     assert.ok(mark.name && mark.sub && mark.symbol,'fallback: '+id);
-    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/'),mark.asset);
+    if(mark.asset)assert.ok(mark.asset.startsWith('./assets/') || mark.asset.startsWith('https://commons.wikimedia.org/wiki/Special:FilePath/') || mark.asset.startsWith('https://pbs.twimg.com/media/') || mark.asset.startsWith('https://livedoor.blogimg.jp/'),mark.asset);
   }
 });
 
-test('selection labels are independent from deadline badges',async()=>{
+test('selected labels are absent but deadline badges stay in both selection views',async()=>{
   const app=await readFile(new URL('../app.js',import.meta.url),'utf8');
   const features=await readFile(new URL('../special-features.js',import.meta.url),'utf8');
-  assert.match(app,/if\(active\)[\s\S]*?state\.textContent='選択中'[\s\S]*?if\(bubble\) copy\.appendChild/);
-  assert.match(features,/if \(bubble\) detail\.append\(bubble\);[\s\S]*?if \(selectedFeatures\.has\(feature\.id\)\)/);
+  assert.doesNotMatch(app,/state\.textContent='選択中'/);
+  assert.doesNotMatch(features,/state\.textContent = '選択中'/);
+  assert.match(app,/if\(bubble\) copy\.appendChild\(makeDeadlineBadge\(/);
+  assert.match(features,/if \(bubble\) detail\.append\(bubble\)/);
+});
+
+test('the restaurant representative marks are not holding-company logos',()=>{
+  assert.equal(representativeMark('dining','ichibanya').name,'CoCo壱番屋');
+  assert.match(representativeMark('dining','ichibanya').asset,/ES9CSLQUwAAS2Sc/);
+  assert.equal(representativeMark('dining','create').name,'しゃぶ菜');
+  assert.equal(representativeMark('dining','colowide').name,'牛角');
+  assert.equal(representativeMark('dining','balnibarbi').name,'GARB');
+  assert.match(decodeURIComponent(representativeMark('dining','chikaranomoto').asset),/Ippudo Logo\.png/);
+});
+
+test('optical logo sizing keeps all card heights fixed',async()=>{
+  const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
+  for (const id of ['komeda','toridoll','dnh','matsuya','kineya','chikaranomoto','yossix']){
+    assert.ok(css.includes('[data-issuer="'+id+'"]'),id);
+  }
+  assert.match(css,/\.benefit-choice-status\{display:none!important\}/);
 });
 
 test('dining and hotel cards use fixed grid heights and accessible name',async()=>{

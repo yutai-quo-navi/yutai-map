@@ -352,7 +352,7 @@ const issuerDisplayNames = {
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
   komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード',
-  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル'
+  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル', yossix:'ヨシックスHD'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
@@ -408,10 +408,8 @@ function renderChips(){
     copy.appendChild(name);
     // The selected label and expiry badge occupy different footer corners.
     // Keep the text label visible even when there is an expiration badge.
-    if(active) {
-      const state=document.createElement('span'); state.className='benefit-choice-status';
-      state.textContent='選択中'; copy.appendChild(state);
-    }
+    // Selected state is conveyed by the check icon, surface tint and logo contrast.
+    // Keep the deadline badge without adding a redundant "選択中" text label.
     if(bubble) copy.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
     badge.append(check,copy);
     const mark=createBrandMark('dining',c.id);
