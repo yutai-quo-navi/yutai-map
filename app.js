@@ -352,7 +352,7 @@ const issuerDisplayNames = {
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
   komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード',
-  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル'
+  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル', yossix:'ヨシックスHD'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
