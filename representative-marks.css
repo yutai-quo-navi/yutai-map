@@ -465,3 +465,29 @@
 }
 /* Keep readable hotel image identities below headers and counts. */
 #hotelFeatures .representative-mark{top:50px;bottom:11px;}
+
+/* Intrinsic proportions and optical spacing: never stretch logo artwork. */
+#companyChips .representative-mark-image,
+#hotelFeatures .representative-mark-image {
+  position:static;
+  inset:auto;
+  width:auto;
+  height:auto;
+  max-width:var(--logo-width,86%);
+  max-height:var(--logo-height,88%);
+  object-fit:contain;
+  transform:none;
+  mix-blend-mode:normal;
+}
+#companyChips .representative-mark{opacity:.65}
+#companyChips .benefit-choice[aria-pressed=true]>.representative-mark{opacity:1}
+#companyChips [data-issuer="create"]{--logo-width:76%;--logo-height:88%}
+#companyChips [data-issuer="fujio"]{--logo-width:76%;--logo-height:88%}
+#companyChips [data-issuer="saintmarc"]{--logo-width:82%;--logo-height:90%}
+#companyChips [data-issuer="kineya"]{--logo-width:86%;--logo-height:90%}
+#companyChips [data-issuer="ringerhut"]{--logo-width:86%;--logo-height:90%}
+#companyChips [data-issuer="daiichikosho"]{--logo-width:86%;--logo-height:88%}
+#companyChips [data-issuer="balnibarbi"]{--logo-width:84%;--logo-height:88%}
+#companyChips [data-issuer="monogatari"]{--logo-width:86%;--logo-height:88%}
+#companyChips [data-issuer="matsuya"],
+#companyChips [data-issuer="hiday"]{--logo-width:80%;--logo-height:82%}

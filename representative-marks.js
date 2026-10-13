@@ -7,23 +7,23 @@ const commons = filename => 'https://commons.wikimedia.org/wiki/Special:FilePath
 const dining = {
   skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:commons('Gusto Logo.svg')},
   colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛', asset:'https://livedoor.blogimg.jp/line_jp/imgs/2/9/29dbd189.png'},
-  create:        {name:'磯丸水産', sub:'ISOMARU SUISAN', color:'#be3038', symbol:'磯', asset:'./assets/brand-logo-create.webp'},
+  create:        {name:'磯丸水産', sub:'ISOMARU SUISAN', color:'#be3038', symbol:'磯', asset:'./assets/logo-original-create.png'},
   zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:commons('Sukiya logo.svg')},
   toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:commons('Marugame Seimen logo.svg')},
   yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:commons('Yoshinoya Logo.svg')},
   mcd:           {name:'McDonald’s', sub:'マクドナルド', color:'#e5a91e', symbol:'M', large:true, asset:'./assets/mcdonalds-mark.svg'},
-  monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉', spriteIndex:8},
+  monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉', asset:'./assets/logo-original-monogatari.jpg'},
   matsuya:       {name:'松屋', sub:'MATSUYA', color:'#38639b', symbol:'松', spriteIndex:3},
   royal:         {name:'ロイヤルホスト', sub:'Royal Host', color:'#be6d27', symbol:'R', asset:commons('Royal Host Logo.png')},
-  balnibarbi:    {name:'BALNIBARBI', sub:'ガーブ', color:'#58757b', symbol:'G', spriteIndex:1},
-  daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE', spriteIndex:7},
-  fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true, spriteIndex:0},
+  balnibarbi:    {name:'BALNIBARBI', sub:'ガーブ', color:'#58757b', symbol:'G', asset:'./assets/logo-original-balnibarbi.png'},
+  daiichikosho:  {name:'BIG ECHO', sub:'カラオケ ビッグエコー', color:'#d75070', symbol:'BE', asset:'./assets/logo-original-daiichikosho.gif'},
+  fujio:         {name:'まいどおおきに食堂', sub:'FUJIO FOOD', color:'#ac7138', symbol:'食', compact:true, asset:'./assets/logo-original-fujio.png'},
   srs:           {name:'和食さと', sub:'SATO', color:'#db273a', symbol:'さ', asset:'./assets/brand-logo-srs.webp'},
   arclands:      {name:'かつや', sub:'KATSUYA', color:'#ee8843', symbol:'か', asset:'./assets/brand-logo-arclands.webp'},
-  kineya:        {name:'そじ坊', sub:'KINEYA', color:'#9a4445', symbol:'杵', spriteIndex:5},
-  saintmarc:     {name:'サンマルクカフェ', sub:'ST-MARC CAFÉ', color:'#704c3d', symbol:'S', spriteIndex:2},
+  kineya:        {name:'そじ坊', sub:'KINEYA', color:'#9a4445', symbol:'杵', asset:'./assets/logo-original-kineya.webp'},
+  saintmarc:     {name:'サンマルクカフェ', sub:'ST-MARC CAFÉ', color:'#704c3d', symbol:'S', asset:'./assets/logo-original-saintmarc.png'},
   chimney:       {name:'はなの舞', sub:'HANANOMAI', color:'#e60021', symbol:'花', asset:'./assets/brand-logo-chimney.webp'},
-  ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R', spriteIndex:6},
+  ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R', asset:'./assets/logo-original-ringerhut.jpeg'},
   hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日', spriteIndex:4},
   ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:'https://pbs.twimg.com/media/ES9CSLQUwAAS2Sc.png'},
   komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
@@ -83,9 +83,10 @@ export function createBrandMark(section, id) {
   fallback.append(wording);
   mark.append(fallback);
   if (Number.isInteger(info.spriteIndex)) {
-    const sprite = document.createElement('span');
-    sprite.className = 'representative-mark-image representative-mark-sprite';
-    sprite.style.backgroundPosition = `${(info.spriteIndex % 3) * 50}% ${Math.floor(info.spriteIndex / 3) * 50}%`;
+    const sprite = document.createElement('img');
+    sprite.className = 'representative-mark-image';
+    sprite.src = `./assets/logo-sprite-cell-${info.spriteIndex}.webp`;
+    sprite.alt = ''; 
     mark.append(sprite);
     mark.classList.add('has-real-logo');
   }

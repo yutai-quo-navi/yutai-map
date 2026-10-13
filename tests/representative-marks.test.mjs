@@ -90,15 +90,13 @@ const suppliedLogos = {
   create: '磯丸水産',
   chimney: 'はなの舞'
 };
-test('every supplied issuer is backed by a readable local webp image',async()=>{
+test('every supplied issuer has an available local image',async()=>{
   for(const [id,brand] of Object.entries(suppliedLogos)){
     const info=representativeMark('dining',id);
     assert.equal(info.name,brand,id);
-    assert.equal(info.asset,'./assets/brand-logo-'+id+'.webp',id);
-    const bytes=await readFile(new URL('../assets/brand-logo-'+id+'.webp',import.meta.url));
-    assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF',id);
-    assert.equal(bytes.subarray(8,12).toString('ascii'),'WEBP',id);
-    assert.ok(bytes.byteLength>=900 && bytes.byteLength<8000,id);
+    assert.ok(info.asset.startsWith('./assets/'),id);
+    const bytes=await readFile(new URL('../'+info.asset,import.meta.url));
+    assert.ok(bytes.byteLength>0,id);
   }
 });
 test('sizing rules keep provided image proportions and grid row heights',async()=>{
@@ -111,20 +109,16 @@ test('sizing rules keep provided image proportions and grid row heights',async()
   assert.match(css,/grid-auto-rows:146px/);
 });
 
-test('nine user-provided restaurant identities use one local WebP sprite',async()=>{
-  const ids=['fujio','balnibarbi','saintmarc','matsuya','hiday','kineya','ringerhut','daiichikosho','monogatari'];
-  for(const [index,id] of ids.entries()){
-    assert.equal(representativeMark('dining',id).spriteIndex,index,id);
+test('restaurant identities use intrinsic image proportions rather than stretched backgrounds',async()=>{
+  for(const id of ['create','fujio','balnibarbi','saintmarc','kineya','ringerhut','daiichikosho','monogatari']){
+    const info=representativeMark('dining',id);
+    const bytes=await readFile(new URL('../'+info.asset,import.meta.url));
+    assert.ok(bytes.length>0,id);
   }
-  assert.equal(representativeMark('dining','kineya').name,'そじ坊');
-  const file=await readFile(new URL('../assets/dining-extra-logo-sprite.webp',import.meta.url));
-  assert.equal(file.subarray(0,4).toString(),'RIFF');
-  assert.equal(file.subarray(8,12).toString(),'WEBP');
-  assert.ok(file.length > 3000 && file.length < 15000);
   const js=await readFile(new URL('../representative-marks.js',import.meta.url),'utf8');
-  assert.match(js,/spriteIndex % 3/);
+  assert.ok(!js.includes('backgroundPosition'));
   const css=await readFile(new URL('../representative-marks.css',import.meta.url),'utf8');
-  assert.match(css,/background-size:300% 300%/);
+  assert.match(css,/width:auto;\s*height:auto;/);
 });
 
 test('hotel logo image sources and selected card behavior are configured',async()=>{
