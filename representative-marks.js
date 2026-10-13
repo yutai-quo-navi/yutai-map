@@ -2,17 +2,16 @@
 // Use local, real store logos supplied for the UI. Where imagery is unavailable,
 // show a readable brand name; never present a synthetic mark as an official logo.
 // The representative logo does not imply that every store in that brand accepts benefits.
-const commons = filename => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(filename);
 
 const dining = {
-  skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:commons('Gusto Logo.svg')},
+  skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:'./assets/logo-local-skylark.webp'},
   kura:          {name:'くら寿司', sub:'KURA', color:'#191919', symbol:'く', asset:'./assets/logo-original-kura.jpg'},
   foodlife:      {name:'スシロー', sub:'SUSHIRO', color:'#a9151a', symbol:'寿', asset:'./assets/brand-logo-foodlife.svg'},
-  colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛', asset:'https://livedoor.blogimg.jp/line_jp/imgs/2/9/29dbd189.png'},
+  colowide:      {name:'牛角', sub:'GYU-KAKU', color:'#8b3830', symbol:'牛', asset:'./assets/logo-local-colowide.webp'},
   create:        {name:'磯丸水産', sub:'ISOMARU SUISAN', color:'#be3038', symbol:'磯', asset:'./assets/logo-isomaru-20261014.webp'},
-  zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:commons('Sukiya logo.svg')},
-  toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:commons('Marugame Seimen logo.svg')},
-  yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:commons('Yoshinoya Logo.svg')},
+  zensho:        {name:'すき家', sub:'SUKIYA', color:'#c43b43', symbol:'S', asset:'./assets/logo-local-zensho.webp'},
+  toridoll:      {name:'丸亀製麺', sub:'MARUGAME SEIMEN', color:'#a3302c', symbol:'丸', asset:'./assets/logo-local-toridoll.webp'},
+  yoshinoya:     {name:'吉野家', sub:'YOSHINOYA', color:'#df7029', symbol:'吉', asset:'./assets/logo-local-yoshinoya.webp'},
   mcd:           {name:'McDonald’s', sub:'マクドナルド', color:'#e5a91e', symbol:'M', large:true, asset:'./assets/mcdonalds-mark.svg'},
   monogatari:    {name:'焼肉きんぐ', sub:'YAKINIKU KING', color:'#71452c', symbol:'肉', asset:'./assets/logo-original-monogatari.jpg'},
   matsuya:       {name:'松屋', sub:'MATSUYA', color:'#38639b', symbol:'松', asset:'./assets/logo-matsuya-20261014.webp'},
@@ -28,13 +27,13 @@ const dining = {
   ringerhut:     {name:'Ringer Hut', sub:'リンガーハット', color:'#b24756', symbol:'R', asset:'./assets/logo-original-ringerhut.jpeg'},
   hiday:         {name:'日高屋', sub:'熱烈中華食堂', color:'#b64447', symbol:'日', spriteIndex:4},
   ichibanya:     {name:'CoCo壱番屋', sub:'CURRY HOUSE', color:'#ad6d34', symbol:'Co', asset:'./assets/logo-ichibanya-20261014.webp'},
-  komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:commons("Komeda's Coffee Shop logo.svg")},
-  dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:commons('Doutor Coffee Logo.png')},
-  mos:           {name:'MOS BURGER', sub:'モスバーガー', color:'#4d9b69', symbol:'M', asset:commons('MOS-Burger-Logo.svg')},
+  komeda:        {name:'コメダ珈琲店', sub:'KOMEDA’S Coffee', color:'#5481a9', symbol:'☕', asset:'./assets/logo-local-komeda.webp'},
+  dnh:           {name:'ドトールコーヒー', sub:'DOUTOR COFFEE', color:'#87603b', symbol:'D', asset:'./assets/logo-local-dnh.webp'},
+  mos:           {name:'MOS BURGER', sub:'モスバーガー', color:'#4d9b69', symbol:'M', asset:'./assets/logo-local-mos.webp'},
   yamaokaya:     {name:'ラーメン山岡家', sub:'YAMAOKAYA', color:'#dc4013', symbol:'山', asset:'./assets/brand-logo-yamaokaya.webp'},
-  chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一', asset:commons('Ippudo Logo.png')},
-  ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王', asset:commons('餃子の王将.svg')},
-  joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J', asset:commons('Joyfull Restaurant.png')},
+  chikaranomoto: {name:'一風堂', sub:'IPPUDO', color:'#c44946', symbol:'一', asset:'./assets/logo-local-chikaranomoto.webp'},
+  ohsho:         {name:'餃子の王将', sub:'OHSHO', color:'#a83838', symbol:'王', asset:'./assets/logo-local-ohsho.webp'},
+  joyfull:       {name:'ジョイフル', sub:'JOYFULL', color:'#46836b', symbol:'J', asset:'./assets/logo-local-joyfull.webp'},
   yossix:        {name:'や台ずし', sub:'YATAIZUSHI', color:'#281a13', symbol:'寿', asset:'./assets/brand-logo-yossix.webp'}
 };
 
@@ -44,7 +43,7 @@ const hotel = {
   'daiwa-house-hotels':    {name:'Daiwa Roynet Hotel', sub:'ダイワロイネットホテル', color:'#6367a3', symbol:'DR', compact:true, asset:'./assets/hotel-logo-daiwa-house-hotels.svg'} ,
   'seibu-free-hotels':     {name:'Prince Hotel', sub:'プリンスホテル', color:'#9d8063', symbol:'P', asset:'./assets/hotel-logo-seibu-free-hotels.svg'} ,
   'kyoritsu-resort-plan':  {name:'共立リゾート', sub:'KYORITSU RESORT', color:'#8c8268', symbol:'♨', asset:'./assets/hotel-logo-kyoritsu-resort-20261014.png'},
-  'sunfrontier-hotels':    {name:'たびのホテル', sub:'TABINO HOTEL', color:'#637488', symbol:'H', asset:'https://foodslabo-app-prod.s3.ap-northeast-1.amazonaws.com/store/uploads/brands/4170/original-brand/4170/logo/cfb27bdb4b70a7ec720f70d1fd03bb5b.png'},
+  'sunfrontier-hotels':    {name:'たびのホテル', sub:'TABINO HOTEL', color:'#637488', symbol:'H', asset:'./assets/logo-local-sunfrontier-hotels.webp'},
   'resol-hotels':          {name:'HOTEL RESOL', sub:'ホテルリソル', color:'#578477', symbol:'R', asset:'./assets/hotel-logo-resol-hotels.svg'} ,
   'tosei-hotels':          {name:'TOSEI HOTEL', sub:'COCONE', color:'#788a98', symbol:'C', asset:'./assets/hotel-logo-tosei-hotels.svg'} ,
   'tkp-hotels':            {name:'TKP', sub:'ホテル・宿泊優待', color:'#cd525d', symbol:'TKP', large:true, asset:'./assets/hotel-logo-tkp-hotels.svg'} ,
@@ -101,7 +100,7 @@ export function createBrandMark(section, id) {
     image.src = info.asset;
     image.alt = '';
     image.loading = 'eager';
-    image.decoding = 'async';
+    image.decoding = 'sync';
     image.addEventListener('load', () => {
       if (image.naturalWidth > 0) mark.classList.add('has-real-logo');
     }, {once:true});

@@ -1,5 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
-import {createBrandMark} from './representative-marks.js?v=20261014-provided-logos';
+import {createBrandMark} from './representative-marks.js?v=20261014-local-assets';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
@@ -92,8 +92,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   const currentRadius = feature => getRadius ? getRadius() : selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
-    const existingMarks=new Map([...root.querySelectorAll('[data-feature]')]
-      .map(button=>[button.dataset.feature,button.querySelector('.representative-mark')]));
+    const existingItems = new Map([...root.querySelectorAll('.feature-buttons > .feature-item')]
+      .map(item=>[item.querySelector('[data-feature]')?.dataset.feature,item]));
     const displayed = visibleFeatures(features, today(), preview)
       .map(feature => ({feature, priority:{
         days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
@@ -106,11 +106,24 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     const available = new Set(displayed.map(feature => feature.id));
     for (const id of selectedFeatures) if (!available.has(id)) selectedFeatures.delete(id);
     root.hidden = !displayed.length;
-    root.innerHTML = '';
-    if (!displayed.length) return;
+    if (!displayed.length) { root.replaceChildren(); return; }
     const integrated = root.hasAttribute('data-tab-panel');
-    root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary" aria-live="polite">${numberHTML(section+':selected',selectedFeatures.size)}件 選択中</span><span class="selection-hint">複数選択できます</span></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
-    for (const feature of displayed) {
+    if (!root.querySelector('.feature-buttons')) {
+      root.innerHTML = `${integrated ? `<div class="benefit-selection-meta"><span class="selection-summary" aria-live="polite">${numberHTML(section+':selected',selectedFeatures.size)}件 選択中</span><span class="selection-hint">複数選択できます</span></div>` : `<h2 class="selection-heading">${heading}</h2>`}<div class="feature-buttons"></div><div class="feature-results" aria-live="polite"></div>`;
+    } else {
+      const summary = root.querySelector('.selection-summary');
+      if (summary) summary.innerHTML = numberHTML(section+':selected',selectedFeatures.size)+'件 選択中';
+    }
+    const buttons = root.querySelector('.feature-buttons');
+    for (const [index,feature] of displayed.entries()) {
+      const existing = existingItems.get(feature.id);
+      if (existing) {
+        const button = existing.querySelector('[data-feature]');
+        button.setAttribute('aria-pressed',String(selectedFeatures.has(feature.id)));
+        if (buttons.children[index] !== existing) buttons.insertBefore(existing,buttons.children[index] || null);
+        existingItems.delete(feature.id);
+        continue;
+      }
       const item = document.createElement('div'); item.className = 'feature-item';
       const button = document.createElement('button'); button.type = 'button';
       button.className = 'feature-button benefit-choice';
@@ -124,7 +137,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       nameRow.append(name,count); copy.append(nameRow);
       button.append(check,copy);
       if (section === 'hotel') {
-        const mark=existingMarks.get(feature.id) || createBrandMark('hotel',feature.id);
+        const mark=createBrandMark('hotel',feature.id);
         if (mark) button.append(mark);
       }
       count.setAttribute('data-ui-number','');
@@ -175,8 +188,9 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         });
         radiusLabel.append(select); item.append(radiusLabel);
       }
-      root.querySelector('.feature-buttons').append(item);
+      buttons.insertBefore(item,buttons.children[index] || null);
     }
+    for (const oldItem of existingItems.values()) oldItem.remove();
     root.querySelector('.feature-results').id = resultsId;
     const chosen = displayed.filter(feature => selectedFeatures.has(feature.id));
     if (!chosen.length) return;

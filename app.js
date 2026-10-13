@@ -1,10 +1,10 @@
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
-import {createBrandMark} from './representative-marks.js?v=20261014-provided-logos';
+import {createBrandMark} from './representative-marks.js?v=20261014-local-assets';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261014-holding-focus';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-provided-logos';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-dom-reconcile';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
@@ -134,17 +134,17 @@ async function init(){
     if (section === 'dining' && lastResults.length) renderFilteredResults(Number(els.radius.value));
   }});
   try {
-    const manifest = await fetch('./data/issuers/index.json', {cache:'no-store'}).then(r => r.json());
+    const manifest = await fetch('./data/issuers/index.json').then(r => r.json());
     const dev = new URLSearchParams(location.search).get('dev');
     const visibleIssuers = manifest.issuers.filter(x =>
       x.status === 'public' || (x.status === 'development' && (dev === x.id || dev === 'all'))
     );
     companies = await Promise.all(
       visibleIssuers.map(async x => {
-        const c = await fetch(x.config, {cache:'no-store'}).then(r => r.json());
+        const c = await fetch(x.config).then(r => r.json());
         if(c.storeDataPath && !['official_coordinates','worker_reference','openpoi'].includes(c.locationMode)){
           try{
-            const db = await fetch(c.storeDataPath, {cache:'no-store'}).then(r => r.json());
+            const db = await fetch(c.storeDataPath).then(r => r.json());
             c.officialStores = db.stores || [];
           }catch(e){
             console.warn(`公式店舗DBを読み込めませんでした: ${c.id}`, e);
@@ -375,47 +375,67 @@ function invalidateDiningSearch(){
   renderCategoryFilters();
 }
 function renderChips(){
-  const existingMarks=new Map([...els.chips.querySelectorAll('[data-issuer]')]
-    .map(button=>[button.dataset.issuer,button.querySelector('.representative-mark')]));
-  els.chips.innerHTML = '';
+  // Reconcile cards instead of deleting their DOM nodes and decoding their images again.
+  const existingGroups = new Map([...els.chips.querySelectorAll('.selected-issuer-group')]
+    .map(group => [group.querySelector('[data-issuer]')?.dataset.issuer, group]));
   const counts = new Map();
   for (const brand of brandCatalog) counts.set(brand.issuer_id, (counts.get(brand.issuer_id) || 0) + (Number(brand.count) || 0));
   const entries = allVoucherDeadlines();
   const now = new Date();
+  const dayToken = japanDay();
   const priority = company => ({
     days: (nearestDeadline(entries, company.id, now) ||
       (company.showExpiredDeadline ? latestExpiredDeadline(entries, company.id, now) : null))?.days,
     count: counts.get(company.id) ?? company.officialStores.length
   });
-  const available=companies.filter(c=>visibleCompanyIds.has(c.id))
+  const available = companies.filter(c => visibleCompanyIds.has(c.id))
     .map(company => ({company, priority:priority(company)}))
-    .sort((a,b) => compareBenefitPriority(a.priority, b.priority))
+    .sort((a,b) => compareBenefitPriority(a.priority,b.priority))
     .map(item => item.company);
-  for(const c of available){
-    const active=selected.has(c.id);
-    const group=document.createElement('span');
-    group.className='selected-issuer-group';
-    const bubble=deadlineBubble(c.id);
-    const badge=document.createElement('button');
-    badge.type='button';
-    badge.dataset.issuer=c.id;
-    badge.className='selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
-    badge.setAttribute('aria-pressed',String(active));
-    badge.title=c.name;
-    const name=document.createElement('span'); name.className='selected-issuer-name benefit-choice-name';
-    name.textContent=shortIssuerName(c);
-    const copy=document.createElement('span'); copy.className='benefit-choice-copy';
-    copy.appendChild(name);
-    // The warm surface and inset frame show selection without a second badge.
-    // Anchor the deadline directly to the card, outside the upper-right corner.
-    badge.append(copy);
-    if(bubble) badge.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
-    const mark=existingMarks.get(c.id) || createBrandMark('dining',c.id);
-    if(mark) badge.append(mark);
-    badge.addEventListener('click',()=>toggleIssuer(c.id));
-    group.appendChild(badge);
-    els.chips.appendChild(group);
-  }
+  available.forEach((c,index) => {
+    const active = selected.has(c.id);
+    let group = existingGroups.get(c.id);
+    let badge = group?.querySelector('[data-issuer]');
+    if (!group || !badge) {
+      group = document.createElement('span');
+      group.className = 'selected-issuer-group';
+      badge = document.createElement('button');
+      badge.type = 'button';
+      badge.dataset.issuer = c.id;
+      badge.className = 'selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
+      badge.setAttribute('aria-pressed',String(active));
+      badge.title = c.name;
+      const name = document.createElement('span');
+      name.className = 'selected-issuer-name benefit-choice-name';
+      name.textContent = shortIssuerName(c);
+      const copy = document.createElement('span');
+      copy.className = 'benefit-choice-copy';
+      copy.appendChild(name);
+      badge.append(copy);
+      const bubble = deadlineBubble(c.id);
+      if (bubble) badge.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
+      badge.dataset.deadlineDay = dayToken;
+      const mark = createBrandMark('dining',c.id);
+      if (mark) badge.append(mark);
+      badge.addEventListener('click',()=>toggleIssuer(c.id));
+      group.appendChild(badge);
+    } else {
+      badge.className = 'selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
+      badge.setAttribute('aria-pressed',String(active));
+      // Only the deadline badge may need updating at a Japanese date change.
+      if (badge.dataset.deadlineDay !== dayToken) {
+        badge.querySelector('.t-badge')?.remove();
+        const bubble = deadlineBubble(c.id);
+        if (bubble) badge.appendChild(makeDeadlineBadge(bubble,'dining:'+c.id));
+        badge.dataset.deadlineDay = dayToken;
+      }
+    }
+    if (els.chips.children[index] !== group) {
+      els.chips.insertBefore(group,els.chips.children[index] || null);
+    }
+    existingGroups.delete(c.id);
+  });
+  for (const group of existingGroups.values()) group.remove();
   qs('#selectionSummary').innerHTML=numberHTML('dining:selected',available.filter(c=>selected.has(c.id)).length)+'社 選択中';
 }
 function updateChipSelection(id){
