@@ -2,7 +2,7 @@ name: Verify first-visit logo paint
 on:
   push:
     branches: [main]
-    paths: [index.html, app.js, special-features.js, representative-marks.js, tests/first-paint.test.mjs, tools/first-paint-smoke.mjs, .github/workflows/first-paint.yml]
+    paths: [index.html, app.js, special-features.js, representative-marks.js, tests/first-paint.test.mjs, tools/first-paint-smoke.mjs, tools/live-first-paint.mjs, .github/workflows/first-paint.yml]
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,3 +18,4 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: node tools/first-paint-smoke.mjs
+      - run: node tools/live-first-paint.mjs
