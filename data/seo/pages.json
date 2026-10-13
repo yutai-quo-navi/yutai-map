@@ -2420,6 +2420,14 @@
       "hash": "e7fb6aabb13ffa5a6578967d783755528c2bc3967625858bc05de728d2f38e2e",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/ohsho/2b4218fc581c5cb1/index.html": {
+      "hash": "ae175f77508b41e2c6d8becd98fb0fd3150af6a6a5c4f161c8a3f453bd4a5aa7",
+      "lastmod": "2026-10-13"
+    },
+    "guides/dining/brands/ohsho/f61bd0dd140ca13d/index.html": {
+      "hash": "91a750a762af38de069f3bfd432643c85dc96ed6c44435f3dc88d55d49323727",
+      "lastmod": "2026-10-13"
+    },
     "guides/dining/brands/ringerhut/28c70ea11318bc2a/index.html": {
       "hash": "9fec9ccf82a9c3a8d03bedb348163e3b9f1ad0c3f298b4458e26cdfa4c1384b9",
       "lastmod": "2026-10-11"
@@ -3093,7 +3101,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "f095b803fa29cd13df72151544213574a2bd514b3bf852413395019854cd7342",
+      "hash": "fb9cdcbc4d329bbf824abad84bb06c817545d124576b7a1c1eb0161bdd7868d9",
       "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/arclands/index.html": {
@@ -3167,6 +3175,10 @@
     "guides/dining/issuers/mos/index.html": {
       "hash": "96eec699405006992d8a5bf6d001ca68f7c30d95fd6104b0bdb647c4de95013c",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/ohsho/index.html": {
+      "hash": "12582fb13044b7fdb234249367ad98c5012925db32a363c25c3e446805bb0149",
+      "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/ringerhut/index.html": {
       "hash": "1ac4939718cada0c5c0938b36260e230b2d56dc0bad206e65a3d6228859bbfb8",
