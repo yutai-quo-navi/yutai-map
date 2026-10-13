@@ -43,6 +43,13 @@ jobs:
             url=base+urllib.parse.quote(location,safe='') if kind=='commons' else location
             try:
               response=session.get(url,timeout=35)
+              if response.status_code==429 and kind=='commons':
+                # Wikimedia throttles shared GitHub Actions IP addresses. Fetch a one-time
+                # resized derivative through a public image proxy, then store it locally.
+                from urllib.parse import urlsplit,quote
+                pathpart=urlsplit(response.url).netloc+urlsplit(response.url).path
+                proxy='https://wsrv.nl/?url='+quote(pathpart,safe='')+'&w=640'
+                response=session.get(proxy,timeout=35)
               response.raise_for_status()
               raw=response.content
               if raw.lstrip().startswith(b'<svg') or b'<svg' in raw[:2000]:
