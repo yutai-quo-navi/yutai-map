@@ -1,5 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
-import {createBrandMark} from './representative-marks.js?v=20261013-foodlife-logo';
+import {createBrandMark} from './representative-marks.js?v=20261014-stable-logos';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
 import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
@@ -92,6 +92,8 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   const currentRadius = feature => getRadius ? getRadius() : selectedRadii.get(feature.id) ?? featureRadius(feature);
   const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Tokyo'}).format(new Date());
   const render = () => {
+    const existingMarks=new Map([...root.querySelectorAll('[data-feature]')]
+      .map(button=>[button.dataset.feature,button.querySelector('.representative-mark')]));
     const displayed = visibleFeatures(features, today(), preview)
       .map(feature => ({feature, priority:{
         days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
@@ -122,7 +124,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       nameRow.append(name,count); copy.append(nameRow);
       button.append(check,copy);
       if (section === 'hotel') {
-        const mark=createBrandMark('hotel',feature.id);
+        const mark=existingMarks.get(feature.id) || createBrandMark('hotel',feature.id);
         if (mark) button.append(mark);
       }
       count.setAttribute('data-ui-number','');

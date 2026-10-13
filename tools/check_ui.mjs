@@ -75,6 +75,35 @@ try{
       }
     }
     await page.locator('body[data-app-ready=true]').waitFor();
+    // Repeated toggles must retain decoded image nodes, including other cards.
+    await page.evaluate(async()=>{
+      const card=document.querySelector('#companyChips [data-issuer="foodlife"]');
+      const image=card.querySelector('.representative-mark-image');
+      const neighbor=document.querySelector('#companyChips [data-issuer="yossix"] .representative-mark');
+      for(let i=0;i<10;i++){
+        card.click();
+        if(card.querySelector('.representative-mark-image')!==image)throw new Error('Dining toggle replaced its logo');
+        if(document.querySelector('#companyChips [data-issuer="yossix"] .representative-mark')!==neighbor)throw new Error('Dining toggle replaced another logo');
+      }
+      const {createBrandMark}=await import('../representative-marks.js?v=20261014-stable-logos');
+      const pending=createBrandMark('dining','foodlife');
+      if(!pending.classList.contains('has-real-logo'))throw new Error('Loading image exposes text fallback');
+      pending.querySelector('img').dispatchEvent(new Event('error'));
+      if(pending.classList.contains('has-real-logo')||pending.querySelector('img'))throw new Error('Failed image does not reveal fallback');
+      const {initSpecialFeatures}=await import('../special-features.js?v=20261014-stable-logos');
+      const root=document.createElement('div');document.body.append(root);
+      await initSpecialFeatures({root,section:'hotel',getOrigin:()=>null,getCenterLabel:()=>'',getRadius:()=>10000,
+        getDeadline:()=>null,createDeadlineBubble:()=>null,
+        catalog:Promise.resolve([{id:'kyoritsu-hotel-discount',section:'hotel',title:'Logo regression fixture',shortName:'ホテル',
+          status:'public',availability:'continuous',updateMode:'manual',checkedOn:'2026-10-14',sourceUrl:'https://example.com/benefit',issuer:{id:'fixture',code:'9999',name:'ホテル'},stores:[{id:'fixture',name:'ホテル',address:'東京都',conditions:'検証用',lat:35,lng:139,verified:true}]}])});
+      const hotelImage=root.querySelector('.representative-mark-image');
+      if(!hotelImage)throw new Error('Hotel logo fixture did not render');
+      for(let i=0;i<10;i++){
+        root.querySelector('[data-feature]').click();
+        if(root.querySelector('.representative-mark-image')!==hotelImage)throw new Error('Hotel toggle replaced its logo');
+      }
+      root.remove();
+    });
     await audit('home');
     await page.locator('#companyPickerButton').click();
     await page.locator('#companyPickerDialog').waitFor({state:'visible'});

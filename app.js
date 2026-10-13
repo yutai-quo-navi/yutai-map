@@ -1,10 +1,10 @@
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
-import {createBrandMark} from './representative-marks.js?v=20261013-foodlife-logo';
+import {createBrandMark} from './representative-marks.js?v=20261014-stable-logos';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261013-reel';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261013-foodlife-logo';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-stable-logos';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
@@ -362,7 +362,7 @@ function toggleIssuer(id){
   selected.has(id) ? selected.delete(id) : selected.add(id);
   track('benefit_select', {section: 'dining', benefit_id: id, selected: selected.has(id)});
   resetCategoryFilter();
-  persistSelection(); renderChips(); renderBrandOptions();
+  persistSelection(); updateChipSelection(id); renderBrandOptions();
   els.chips.querySelector('[data-issuer="'+id+'"]')?.focus();
   invalidateDiningSearch();
 }
@@ -375,6 +375,8 @@ function invalidateDiningSearch(){
   renderCategoryFilters();
 }
 function renderChips(){
+  const existingMarks=new Map([...els.chips.querySelectorAll('[data-issuer]')]
+    .map(button=>[button.dataset.issuer,button.querySelector('.representative-mark')]));
   els.chips.innerHTML = '';
   const counts = new Map();
   for (const brand of brandCatalog) counts.set(brand.issuer_id, (counts.get(brand.issuer_id) || 0) + (Number(brand.count) || 0));
@@ -412,13 +414,23 @@ function renderChips(){
     // Keep the deadline badge without adding a redundant "選択中" text label.
     if(bubble) copy.appendChild(makeDeadlineBadge(bubble, 'dining:'+c.id));
     badge.append(check,copy);
-    const mark=createBrandMark('dining',c.id);
+    const mark=existingMarks.get(c.id) || createBrandMark('dining',c.id);
     if(mark) badge.append(mark);
     badge.addEventListener('click',()=>toggleIssuer(c.id));
     group.appendChild(badge);
     els.chips.appendChild(group);
   }
   qs('#selectionSummary').innerHTML=numberHTML('dining:selected',available.filter(c=>selected.has(c.id)).length)+'社 選択中';
+}
+function updateChipSelection(id){
+  const button=els.chips.querySelector('[data-issuer="'+id+'"]');
+  const active=selected.has(id);
+  if(button){
+    button.className='selected-issuer benefit-choice '+(active ? issuerTone(id) : 'is-unselected');
+    button.setAttribute('aria-pressed',String(active));
+  }
+  const count=companies.filter(c=>visibleCompanyIds.has(c.id)&&selected.has(c.id)).length;
+  qs('#selectionSummary').innerHTML=numberHTML('dining:selected',count)+'社 選択中';
 }
 function refreshDeadlineDisplay(){
   const next=japanDay();

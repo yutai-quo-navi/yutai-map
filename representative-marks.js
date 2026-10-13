@@ -92,16 +92,22 @@ export function createBrandMark(section, id) {
     mark.classList.add('has-real-logo');
   }
   if (info.asset && !Number.isInteger(info.spriteIndex)) {
+    // A real image owns this slot from the start. Reveal text only on failure,
+    // never briefly while a cached image is being decoded.
+    mark.classList.add('has-real-logo');
     const image = document.createElement('img');
     image.className = 'representative-mark-image';
     image.src = info.asset;
     image.alt = '';
-    image.loading = 'lazy';
+    image.loading = 'eager';
     image.decoding = 'async';
     image.addEventListener('load', () => {
       if (image.naturalWidth > 0) mark.classList.add('has-real-logo');
     }, {once:true});
-    image.addEventListener('error', () => image.remove(), {once:true});
+    image.addEventListener('error', () => {
+      image.remove();
+      mark.classList.remove('has-real-logo');
+    }, {once:true});
     mark.append(image);
   }
   return mark;
