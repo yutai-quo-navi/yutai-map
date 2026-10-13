@@ -203,9 +203,10 @@ try{
       const original=document.getElementById('hotelFeatures');original.id='originalHotelFeatures';original.hidden=true;
       const fixture=document.createElement('div');fixture.id='hotelFeatures';fixture.setAttribute('data-tab-panel','');original.parentElement.append(fixture);
       const {initSpecialFeatures}=await import('/special-features.js?v=20261014-supplied-four-logos');
-      const features=names.map(feature=>({...feature,availability:'continuous',status:'public',updateMode:'manual',stores:Array.from({length:147},(_,i)=>({id:'test-'+i,name:'Hotel',address:'東京都',conditions:'検証',lat:35,lng:139,verified:true}))}));
+      const features=names.map(feature=>({...feature,availability:'continuous',status:'public',checkedOn:'2026-10-14',updateMode:'manual',stores:Array.from({length:147},(_,i)=>({id:'test-'+i,name:'Hotel',address:'東京都',conditions:'検証',lat:35,lng:139,verified:true}))}));
       const controller=await initSpecialFeatures({root:fixture,section:'hotel',getOrigin:()=>null,getCenterLabel:()=>'',getRadius:()=>10000,getDeadline:()=>({days:47}),createDeadlineBubble:()=>{const b=document.createElement('span');b.className='voucher-deadline-bubble';b.textContent='47日で失効';return b;},catalog:Promise.resolve(features)});
       await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      if(fixture.querySelectorAll('.feature-button').length!==names.length)throw new Error('Real hotel layout fixture failed to render every company');
       for(const card of fixture.querySelectorAll('.feature-button')){
         const c=card.getBoundingClientRect(),copy=card.querySelector('.benefit-choice-copy').getBoundingClientRect();
         if(copy.bottom>c.bottom-5)throw new Error('Five-line hotel copy clips: '+card.dataset.feature);
