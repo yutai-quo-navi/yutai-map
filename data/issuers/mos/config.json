@@ -116,7 +116,7 @@
     "玄米食堂あえん"
   ],
   "domesticOnly": true,
-  "verified": "2026-10-11",
+  "verified": "2026-10-14",
   "storeSearchUrl": "https://www.mos.jp/shop/",
   "locationMode": "official_coordinates",
   "referenceUrls": [
@@ -124,7 +124,7 @@
   ],
   "storeDataPath": "./data/issuers/mos/stores/current.json",
   "health": {
-    "minStores": 1200,
+    "minStores": 2000,
     "maxStores": 2700,
     "maxAgeDays": 40,
     "requireCoordinates": true,

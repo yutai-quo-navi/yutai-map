@@ -91,15 +91,7 @@ def collect_dnh():
         result.extend(doutor_row(row) for row in d['items']);offset+=200;time.sleep(.3)
     return result,{'source':'https://shop.doutor.co.jp/doutor/spot/list?c_d22=1','api_source':base,'official_store_universe_count':total,'eligible_filter':'official DOUTOR VALUE CARD flag 00022=true'}
 
-MBRANDS={'MOS_GREEN':'モスバーガー','MOS_RED':'モスバーガー','MOS_CF':'モスバーガー','MOS_PR':'モスプレミアム','MOSDO':'モスド','MLEAF':'マザーリーフ','MLEAF_TS':'マザーリーフティースタイル','YAMAUMITAIYO':'カフェ 山と海と太陽','AEN':'あえん','MOS_SH':'モッシュ バーガー & バル'}
 
-def mos_row(row):
-    brand=MBRANDS[row['bus_cd']]
-    if str(row['openingday'])>DATE or str(row['closingday'])<=DATE:return None
-    if not str(row['pref_cd']).isdigit() or not 1<=int(row['pref_cd'])<=47:raise ValueError('MOS non-domestic store')
-    if row['bus_cd']=='AEN' and '玄米食堂' in row['name']:brand='玄米食堂あえん'
-    code=row['shop_cd']
-    return store('official:mos:'+code,brand,row['name'],row['addr_all'],'-'.join(str(row[k]) for k in ['tel1','tel2','tel3'] if row.get(k)),row['lat'],row['lon'],'https://www.mos.jp/shop/detail/?shop_cd='+code,'cafe' if row['bus_cd'] in ('MLEAF','MLEAF_TS','YAMAUMITAIYO') else 'restaurant')
 
 def snapshot(issuer,stores,meta):
     cfg=json.loads(Path(f'data/issuers/{issuer}/config.json').read_text());health=cfg['health']
@@ -123,57 +115,3 @@ def snapshot(issuer,stores,meta):
     for path,obj in [(p,current),(base/'diffs'/f'{DATE}.json',diff)]:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
     (base/'last_diff.md').write_text(f'# {cfg["name"]}店舗DB 差分 {DATE}\n\n'+''.join(f'- {k}: {v}\n' for k,v in counts.items()))
     print(json.dumps({'issuer':issuer,**counts,'brands':current['brand_counts']},ensure_ascii=False),flush=True)
-
-def fetch_text(url):
-    path=CACHE/(hashlib.sha256(url.encode()).hexdigest()+'.html') if CACHE else None
-    if path and path.exists():return path.read_text()
-    for attempt in range(3):
-        try:
-            request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 yutai-map/1.0'})
-            with urllib.request.urlopen(request,timeout=35) as response:text=response.read().decode('utf-8')
-            if path:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text)
-            return text
-        except OSError:
-            if attempt==2:raise
-            time.sleep(attempt+1)
-
-def misdo_rows(text):
-    from html import unescape
-    blocks=re.split(r'<li class="list-item">',text)[1:]
-    result=[]
-    for block in blocks:
-        if 'list-content-name' not in block:continue
-        code=re.search(r'href="/b/misterdonut/info/(\d+)/"',block)
-        name=re.search(r'<h2 class="list-content-name">(.*?)</h2>',block)
-        coord=re.search(r'data-lat="([\d.]+)" data-lng="([\d.]+)"',block)
-        address=re.search(r'<div class="list-content-text">([^<]+)</div>',block)
-        if not all((code,name,coord,address)):raise ValueError('Misdo official list structure changed')
-        result.append(store('official:misdo:'+code[1],'ミスタードーナツ','ミスタードーナツ '+unescape(name[1].split('<span')[0]).strip(),unescape(address[1]),'',coord[1],coord[2],'https://md.mapion.co.jp/b/misterdonut/info/'+code[1]+'/',allow_partial_address=True))
-    return result
-
-def collect_misdo():
-    base='https://md.mapion.co.jp/b/misterdonut/attr/'
-    first=fetch_text(base+'?srt=citycode,poi_name_yomi')
-    total_match=re.search(r'(\d+)件のショップがあります',first)
-    pages_match=re.search(r'endPage:\s*(\d+)',first)
-    if not total_match or not pages_match:raise ValueError('Missing Misdo pagination totals')
-    total,pages=int(total_match[1]),int(pages_match[1])
-    if not 900<=total<=1300 or pages!=(total+19)//20:raise ValueError('Unexpected Misdo pagination')
-    result=misdo_rows(first)
-    if len(result)!=min(total,20):raise ValueError('Incomplete first Misdo page')
-    for page in range(2,pages+1):
-        time.sleep(.2)
-        rows=misdo_rows(fetch_text(base+'?'+urllib.parse.urlencode({'page':'more','start':page,'srt':'citycode,poi_name_yomi'})))
-        if len(rows)!=min(20,total-20*(page-1)):raise ValueError('Incomplete Misdo page')
-        result.extend(rows)
-        if page%10==0:print(f'Misdo pages: {page}/{pages}',flush=True)
-    if len({r['store_id'] for r in result})!=total:raise ValueError('Duplicate or missing Misdo shops')
-    return result
-
-def collect_mos():
-    base='https://www.mos.jp/data/shop/shop.json'
-    d=fetch(base);rows=d['shops']
-    if not 1200<=len(rows)<=1500 or any(r['bus_cd'] not in MBRANDS for r in rows):raise ValueError('MOS brand/source structure changed')
-    result=[s for row in rows if (s:=mos_row(row))]
-    result.extend(collect_misdo())
-    return result,{'source':'https://www.mos.jp/shop/','api_source':base,'additional_sources':['https://md.mapion.co.jp/b/misterdonut/attr/'],'official_store_universe_count':len(rows),'eligible_filter':'official domestic MOS brands and Mister Donut locator; exceptions require in-store confirmation'}

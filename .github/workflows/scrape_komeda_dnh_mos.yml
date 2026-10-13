@@ -1,4 +1,4 @@
-name: Build Komeda Doutor MOS official store DBs
+name: Build Komeda Doutor official store DBs
 on:
   workflow_dispatch:
   schedule:
@@ -9,7 +9,6 @@ on:
       - 'tools/issuers/official_api.py'
       - 'tools/issuers/komeda/**'
       - 'tools/issuers/dnh/**'
-      - 'tools/issuers/mos/**'
       - 'tests/test_official_apis.py'
       - 'tools/d1_client.py'
       - 'tests/test_d1_efficiency.py'
@@ -51,7 +50,7 @@ jobs:
           printf 'CLOUDFLARE_API_TOKEN=%s\n' "$CF_API_TOKEN" >> "$GITHUB_ENV"
       - name: Restore, collect and sync only issuer deltas
         run: |
-          for issuer in komeda dnh mos; do
+          for issuer in komeda dnh; do
             python tools/restore_d1_issuer.py "$issuer"
             python "tools/issuers/$issuer/scrape.py"
             python tools/build_d1_issuer_sql.py "$issuer"
@@ -62,14 +61,14 @@ jobs:
       - name: Merge public update history
         run: |
           python tools/build_updates.py
-          rm -rf data/issuers/komeda/stores data/issuers/dnh/stores data/issuers/mos/stores
+          rm -rf data/issuers/komeda/stores data/issuers/dnh/stores
       - name: Commit public update metadata
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/updates.json data/issuers/komeda/config.json data/issuers/dnh/config.json data/issuers/mos/config.json
+          git add data/updates.json data/issuers/komeda/config.json data/issuers/dnh/config.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Update Komeda Doutor MOS official store changes'
+            git commit -m 'Update Komeda Doutor official store changes'
             git pull --rebase origin main
             git push origin HEAD:main
           fi

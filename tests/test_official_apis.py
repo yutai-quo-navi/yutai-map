@@ -26,16 +26,6 @@ class OfficialSources(unittest.TestCase):
         self.assertEqual(m.doutor_row(row)['brand_name'],'神乃珈琲')
         row['details'][0]['flags'][0]['value']=False
         with self.assertRaises(ValueError):m.doutor_row(row)
-    def test_mos_closures_and_openings_are_not_searchable(self):
-        row={'bus_cd':'AEN','name':'玄米食堂あえん サンプル店','shop_cd':'123','openingday':'2000-01-01','closingday':'9999-12-31','pref_cd':'13','addr_all':'東京都千代田区丸の内1','lat':'35.68','lon':'139.76'}
-        self.assertEqual(m.mos_row(row)['brand_name'],'玄米食堂あえん')
-        row['closingday']='2001-01-01';self.assertIsNone(m.mos_row(row))
-        row['closingday']='9999-12-31';row['openingday']='2099-01-01';self.assertIsNone(m.mos_row(row))
-    def test_misdo_uses_official_decimal_coordinates_and_ignores_legend(self):
-        text='<li class="list-item"><a href="/b/misterdonut/info/0012/"><h2 class="list-content-name">サンプル ショップ</h2><div data-lat="35.68" data-lng="139.76"></div><div class="list-content-text">東京都千代田区丸の内1</div></a></li><li class="list-item">凡例</li>'
-        rows=m.misdo_rows(text);self.assertEqual(len(rows),1);self.assertEqual(rows[0]['lat'],35.68)
-        self.assertEqual(m.misdo_rows(text.replace('サンプル ショップ</h2>','サンプル ショップ <span>休店中</span></h2>'))[0]['name'],'ミスタードーナツ サンプル ショップ')
-        with self.assertRaises(ValueError):m.misdo_rows(text.replace('data-lat','invalid-lat'))
     def test_snapshot_second_import_does_not_rewrite_unchanged_stores(self):
         import os
         original=Path.cwd()
