@@ -3404,6 +3404,152 @@
           "store_count": 183
         }
       ]
+    },
+    "amiyaki": {
+      "revision": 211,
+      "brands": [
+        {
+          "brand_name": "あみやき亭",
+          "store_count": 85
+        },
+        {
+          "brand_name": "あみやき亭Plus",
+          "store_count": 7
+        },
+        {
+          "brand_name": "かるび家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶ亭 ふふふ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "すしまみれ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ほるたん屋",
+          "store_count": 12
+        },
+        {
+          "brand_name": "みの路",
+          "store_count": 8
+        },
+        {
+          "brand_name": "スエヒロレストラン",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ホルモン青木",
+          "store_count": 6
+        },
+        {
+          "brand_name": "レストランスエヒロ館",
+          "store_count": 13
+        },
+        {
+          "brand_name": "和牛一頭買い焼肉スエヒロ館",
+          "store_count": 3
+        },
+        {
+          "brand_name": "和牛焼肉ブラックホール",
+          "store_count": 1
+        },
+        {
+          "brand_name": "居酒屋 楽市",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼肉スエヒロ館",
+          "store_count": 19
+        },
+        {
+          "brand_name": "焼肉食べ放題 感激どんどん",
+          "store_count": 6
+        },
+        {
+          "brand_name": "焼肉食べ放題ブラックホール",
+          "store_count": 2
+        },
+        {
+          "brand_name": "美濃路",
+          "store_count": 36
+        },
+        {
+          "brand_name": "鶴松",
+          "store_count": 2
+        },
+        {
+          "brand_name": "黒豚しゃぶしゃぶ 島津",
+          "store_count": 1
+        }
+      ]
+    },
+    "towa": {
+      "revision": 108,
+      "brands": [
+        {
+          "brand_name": "Cheese Egg Garden",
+          "store_count": 2
+        },
+        {
+          "brand_name": "EggEggキッチン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "PRONTO",
+          "store_count": 4
+        },
+        {
+          "brand_name": "TSUBAKIYA Jiyugaoka",
+          "store_count": 1
+        },
+        {
+          "brand_name": "こてがえし",
+          "store_count": 9
+        },
+        {
+          "brand_name": "ぱすたかん",
+          "store_count": 3
+        },
+        {
+          "brand_name": "イタリアンダイニングDONA",
+          "store_count": 22
+        },
+        {
+          "brand_name": "ダッキーダック",
+          "store_count": 9
+        },
+        {
+          "brand_name": "ダッキーダック ケーキショップ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ダッキーダックキッチン",
+          "store_count": 5
+        },
+        {
+          "brand_name": "ツバキcafé",
+          "store_count": 1
+        },
+        {
+          "brand_name": "椿屋カフェ",
+          "store_count": 19
+        },
+        {
+          "brand_name": "椿屋珈琲",
+          "store_count": 23
+        },
+        {
+          "brand_name": "椿屋茶房",
+          "store_count": 6
+        },
+        {
+          "brand_name": "茶寮SIKI TSUBAKIYA",
+          "store_count": 2
+        }
+      ]
     }
   }
 }
