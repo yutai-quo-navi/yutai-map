@@ -1,8 +1,840 @@
 {
   "version": 1,
-  "generated_at": "2026-10-15T05:21:10+09:00",
-  "event_count": 8,
+  "generated_at": "2026-10-15T06:31:23+09:00",
+  "event_count": 54,
   "events": [
+    {
+      "event_id": "42f8e389a07498aa34fb7a492670d0e6301d06a3",
+      "at": "2026-10-15T06:24:02+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "toridoll",
+      "issuer_code": "3397",
+      "issuer_name": "トリドールホールディングス",
+      "store_id": "official:id:111568",
+      "name": "丸亀製麺岩見沢",
+      "address": "北海道岩見沢市大和２条９丁目３７番地",
+      "brand_name": "丸亀製麺"
+    },
+    {
+      "event_id": "c3c02011a695c2154d0ba56e878f167f85497c08",
+      "at": "2026-10-15T06:23:53+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "monogatari",
+      "issuer_code": "3097",
+      "issuer_name": "物語コーポレーション",
+      "store_id": "official:id:2514",
+      "name": "ゆず庵 小牧店",
+      "address": "愛知県小牧市常普請3-195",
+      "brand_name": "寿司･しゃぶしゃぶ ゆず庵",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0568-42-1336",
+          "after": "050-1792-3391"
+        }
+      ]
+    },
+    {
+      "event_id": "3861b608070c69dc2d7cc02089f1ef502fa96443",
+      "at": "2026-10-15T06:23:53+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "monogatari",
+      "issuer_code": "3097",
+      "issuer_name": "物語コーポレーション",
+      "store_id": "official:id:3127",
+      "name": "丸源ラーメン イオンモール甲府昭和店",
+      "address": "山梨県昭和町昭和町飯喰1505-1 イオンモール甲府昭和 1F",
+      "brand_name": "丸源ラーメン",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "055-287-8265"
+        }
+      ]
+    },
+    {
+      "event_id": "c1348df7d2c075bab5ec5fd62cf868b0605ecd8c",
+      "at": "2026-10-15T06:18:39+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:612",
+      "name": "ジョイフルEXPRESS イオンモール高岡店＜2026年10月27日オープン！＞",
+      "address": "富山県高岡市下伏間江383 イオンモール高岡 フードコート内",
+      "brand_name": "ジョイフル"
+    },
+    {
+      "event_id": "33f6920b0363500b29d05146cb26b2b63a1aeed9",
+      "at": "2026-10-15T06:18:39+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:389",
+      "name": "ジョイフル 奄美入舟店",
+      "address": "鹿児島県奄美市名瀬入舟町10-8レクストンホテル奄美内2F",
+      "brand_name": "ジョイフル",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "鹿児島県奄美市名瀬入舟町10-8",
+          "after": "鹿児島県奄美市名瀬入舟町10-8レクストンホテル奄美内2F"
+        }
+      ]
+    },
+    {
+      "event_id": "46f80ba11fedf07f59cb43dfa7965ef31fe757a3",
+      "at": "2026-10-15T06:17:02+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "kineya",
+      "issuer_code": "9850",
+      "issuer_name": "グルメ杵屋",
+      "store_id": "official:gmo:24631",
+      "name": "うま勝陽東店",
+      "address": "栃木県宇都宮市陽東7丁目8-21",
+      "brand_name": "うま勝"
+    },
+    {
+      "event_id": "137fab09d624829bec0ada75c3b6c94a06f1bcbf",
+      "at": "2026-10-15T06:17:02+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "kineya",
+      "issuer_code": "9850",
+      "issuer_name": "グルメ杵屋",
+      "store_id": "official:gmo:23744",
+      "name": "GELATERIA solege 北加賀屋店",
+      "address": "大阪府大阪市住之江区北加賀屋3-1-20",
+      "brand_name": "GELATERIA solege",
+      "changed_fields": [
+        {
+          "key": "coordinate_source",
+          "label": "coordinate_source",
+          "before": null,
+          "after": "https://gourmet-kineya.co.jp/search/2150"
+        },
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": null,
+          "after": 34.62533973
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": null,
+          "after": 135.47848461
+        },
+        {
+          "key": "official_url",
+          "label": "公式URL",
+          "before": "https://g-kineya.app.gmo-housepay.jp/#/shop/23744/",
+          "after": "https://gourmet-kineya.co.jp/search/2150"
+        }
+      ]
+    },
+    {
+      "event_id": "dcb8460e66c7c48e15223593869fa52ea741439d",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8909",
+      "name": "くし葉 ららぽーと湘南平塚店",
+      "address": "神奈川県平塚市天沼１０ー１　ららぽーと湘南平塚１階",
+      "brand_name": "くし葉"
+    },
+    {
+      "event_id": "c241c65c1363126b880ae8287b00a1c4cc1bbb82",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8849",
+      "name": "ガスト ららぽーと甲子園店（から好し取扱店）",
+      "address": "兵庫県西宮市甲子園八番町１－１００",
+      "brand_name": "ガスト",
+      "changed_fields": [
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2049.12.31",
+          "after": ""
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": "2026.04.09",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "8e00535cf8e2be3f522c4fa9abf23613bcf2fc19",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8899",
+      "name": "八郎そば 練馬土支田店",
+      "address": "東京都練馬区土支田３丁目２７－２２",
+      "brand_name": "八郎そば"
+    },
+    {
+      "event_id": "7acd178d48974639139332d38b04f652c606532d",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8854",
+      "name": "しゃぶ葉 センテラス天文館店",
+      "address": "鹿児島県鹿児島市千日町１番１号　　２階",
+      "brand_name": "しゃぶ葉",
+      "changed_fields": [
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2049.12.31",
+          "after": ""
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": "2026.04.18",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "6ffc615b7566ee25f1919afa08e964b44ec38209",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8903",
+      "name": "ペルティカ 市川店",
+      "address": "千葉県市川市国分１丁目４－１０",
+      "brand_name": "ペルティカ"
+    },
+    {
+      "event_id": "218faf198a0e7e9cfd37c13ac318479aa300d303",
+      "at": "2026-10-15T06:16:27+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8893",
+      "name": "ガスト 秋田アルス店（から好し取扱店）",
+      "address": "秋田県秋田市中通７丁目２番１号　　地下１階",
+      "brand_name": "ガスト",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "018-893-6326"
+        }
+      ]
+    },
+    {
+      "event_id": "81dc499acc4b3fbf10c50e2a528fb30fd7bcd4e7",
+      "at": "2026-10-15T06:15:32+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "royal",
+      "issuer_code": "8179",
+      "issuer_name": "ロイヤルホールディングス",
+      "store_id": "official:id:0000000281",
+      "name": "ロイヤルスイーツ福岡空港店",
+      "address": "福岡県福岡市博多区大字下臼井778-1 福岡空港国内線旅客ターミナルビル２Ｆ",
+      "brand_name": "空港・高速道路店内および専門店等",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "092-611-5686",
+          "after": "092-409-4956"
+        }
+      ]
+    },
+    {
+      "event_id": "34dc4fcd7831d32b051adc3ee523f40820ca1d70",
+      "at": "2026-10-15T06:15:32+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "royal",
+      "issuer_code": "8179",
+      "issuer_name": "ロイヤルホールディングス",
+      "store_id": "official:id:0000000902",
+      "name": "リッチモンドホテル八戸スクエア",
+      "address": "青森県　八戸市大字十三日町17番10",
+      "brand_name": "リッチモンドホテル"
+    },
+    {
+      "event_id": "d04117f24182403ace38a342abf985c95a22e43c",
+      "at": "2026-10-15T06:15:25+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3121",
+      "name": "天丼・天ぷら本舗 さん天 奈良香芝店",
+      "address": "奈良県香芝市上中774-1",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "acf0c2fabdb23c6249e7d9503e4096e9b0774775",
+      "at": "2026-10-15T06:15:25+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3125",
+      "name": "天丼・天ぷら本舗 さん天 大東店",
+      "address": "大阪府大東市新田本町1-11",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "8289af4c0fd50e837e30aff7f04bb5994925332c",
+      "at": "2026-10-15T06:15:25+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3233",
+      "name": "和食さと 東習志野店",
+      "address": "千葉県習志野市東習志野5丁目30-5",
+      "brand_name": "和食さと"
+    },
+    {
+      "event_id": "7fd5f5801c3d51ff9a528edc418e7ff864b41de3",
+      "at": "2026-10-15T06:15:25+09:00",
+      "run_date": "2026-10-15",
+      "kind": "removed",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3132",
+      "name": "天丼・天ぷら本舗 さん天 金剛店",
+      "address": "大阪府大阪狭山市半田6丁目1183-1",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "201e420eb7418104a5fb3744c0b1420987b330f6",
+      "at": "2026-10-15T06:15:25+09:00",
+      "run_date": "2026-10-15",
+      "kind": "removed",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3126",
+      "name": "天丼・天ぷら本舗 さん天 明石大久保店",
+      "address": "兵庫県明石市大久保町大窪330-1",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "b9edd94aca37baf261d7f0947a5185ca87a01353",
+      "at": "2026-10-15T06:15:15+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "arclands",
+      "issuer_code": "9842",
+      "issuer_name": "アークランズ",
+      "store_id": "official:code:478",
+      "name": "かつや 伊勢崎宮子町店",
+      "address": "群馬県伊勢崎市宮子町2919",
+      "brand_name": "かつや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 36.32849,
+          "after": 36.328489
+        }
+      ]
+    },
+    {
+      "event_id": "6d355f3b440774750fe5ad8f00d69533edfba493",
+      "at": "2026-10-15T06:15:15+09:00",
+      "run_date": "2026-10-15",
+      "kind": "removed",
+      "issuer_id": "arclands",
+      "issuer_code": "9842",
+      "issuer_name": "アークランズ",
+      "store_id": "official:code:391",
+      "name": "かつや 宮崎一の宮店",
+      "address": "宮崎県宮崎市吉村町長田甲2365-4",
+      "brand_name": "かつや"
+    },
+    {
+      "event_id": "fc7fdc2a37f1c7bde46dd88b945e12c27fa81ad0",
+      "at": "2026-10-15T06:15:04+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "fujio",
+      "issuer_code": "2752",
+      "issuer_name": "フジオフードグループ本社",
+      "store_id": "official:id:4322",
+      "name": "チャンピーニ 南森町店",
+      "address": "大阪府大阪市北区天神橋2丁目17番４ 1F・2F",
+      "brand_name": "チャンピーニ"
+    },
+    {
+      "event_id": "8810d25a740ec335c6168d3e3256d3b36dfb79a5",
+      "at": "2026-10-15T06:14:55+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23999",
+      "name": "北の味紀行と地酒 北海道 津田沼駅前店",
+      "address": "千葉県船橋市前原西2-14-8津田沼パスタビル7F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "北の味紀行と地酒 北海道 津田沼店",
+          "after": "北の味紀行と地酒 北海道 津田沼駅前店"
+        }
+      ]
+    },
+    {
+      "event_id": "fba49284b45daa63c1e9e2ee9f4ec94bc8cdb1ef",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000380",
+      "name": "吉野家 明石魚住町店",
+      "address": "兵庫県明石市魚住町清水２３６０－５",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "aae4a6f8bd2a80390b1c1f556cacd0a96450098f",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000333",
+      "name": "吉野家 佐渡佐和田店",
+      "address": "新潟県佐渡市長木７６７－１",
+      "brand_name": "吉野家",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 38.003246,
+          "after": 38.003321
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 138.338952,
+          "after": 138.338941
+        }
+      ]
+    },
+    {
+      "event_id": "69d7babbb5fe18b878b7f45d6f3f0eba62ff8f6c",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012738",
+      "name": "吉野家 由利本荘店",
+      "address": "秋田県由利本荘市一番堰１５５－１",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "66f82898b4516516297084e3af6b341ec95ac0cd",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012739",
+      "name": "吉野家 明石魚住町店",
+      "address": "兵庫県明石市魚住町清水２３６０－５",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "4c39f7bb321339853e3ad0daf1c1b11dc2ecbfb8",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012740",
+      "name": "吉野家 ミーナ津田沼店",
+      "address": "千葉県習志野市津田沼１丁目３－１",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "3af95ddcd7c407f74d0fd14b7ffeeb7ceaac468f",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000301",
+      "name": "吉野家 由利本荘店",
+      "address": "秋田県由利本荘市一番堰１５５－１",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "24c3b260fbbf0ea1975871b87f207d7893d8cbd1",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000001591",
+      "name": "うまげな イトーヨーカドー三郷店",
+      "address": "埼玉県三郷市ピアラシティ1-1-1 1F",
+      "brand_name": "うまげな",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "048-949-1102",
+          "after": "070-7464-7578"
+        }
+      ]
+    },
+    {
+      "event_id": "1e4abf7eec9e0a878db965d7f6f379b104fef024",
+      "at": "2026-10-15T06:14:44+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012688",
+      "name": "吉野家 熊本駅店",
+      "address": "熊本県熊本市西区春日３丁目１５－３０",
+      "brand_name": "吉野家",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0120-695-114",
+          "after": "096-321-7029"
+        }
+      ]
+    },
+    {
+      "event_id": "dd7067555ebd994725fc7739fbf0b793d9c27285",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000000139",
+      "name": "松屋 千葉店 ※10月26日15時より一時閉店、11月2日15時オープン",
+      "address": "千葉県千葉市中央区富士見2-5-16",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 千葉店",
+          "after": "松屋 千葉店 ※10月26日15時より一時閉店、11月2日15時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "c5dd0d2e57de45613fb172566a42f1e041b0b762",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002224",
+      "name": "松屋 8号長浜店（松のや併設）",
+      "address": "滋賀県長浜市小堀町402-1",
+      "brand_name": "松屋・松のや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.383874,
+          "after": 35.383868
+        }
+      ]
+    },
+    {
+      "event_id": "c3cdb79c69260b6f848bd96b08a741c1e7ebafd1",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002260",
+      "name": "松屋 仙台一番町店（松のや併設）",
+      "address": "宮城県仙台市青葉区一番町3-10-17 慶和ビル1F",
+      "brand_name": "松屋・松のや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 38.259151,
+          "after": 38.259146
+        }
+      ]
+    },
+    {
+      "event_id": "bc71556824036402ede5be26b62abe1bdeb1235c",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002214",
+      "name": "松屋 都島友渕町店（松のや併設）",
+      "address": "大阪府大阪市都島区友渕町2-1-15",
+      "brand_name": "松屋・松のや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 34.70911,
+          "after": 34.709104
+        }
+      ]
+    },
+    {
+      "event_id": "bb3450142a49ffa009582482cee60cbf0e28d4c6",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002537",
+      "name": "松のや 小阪店 ※10月29日15時より一時閉店、11月10日15時オープン",
+      "address": "大阪府東大阪市御厨栄町2-17-9",
+      "brand_name": "松のや",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松のや 小阪店",
+          "after": "松のや 小阪店 ※10月29日15時より一時閉店、11月10日15時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "74920599b9359342c0b8b3738d03de84732db551",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000001865",
+      "name": "松屋 加古川野口町店 ※10月19日22時より一時閉店、10月27日9時オープン",
+      "address": "兵庫県加古川市野口町坂元45-1",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 加古川野口町店",
+          "after": "松屋 加古川野口町店 ※10月19日22時より一時閉店、10月27日9時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "70b9656378f426b697f7c6670176e9bcff100751",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000000857",
+      "name": "松屋 南林間店",
+      "address": "神奈川県大和市南林間1-8-1",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 南林間店 ※9月28日15時より一時閉店、10月6日15時オープン",
+          "after": "松屋 南林間店"
+        }
+      ]
+    },
+    {
+      "event_id": "6b2362cdce78c91d9576d87d3f38a4fa2fd9e64c",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002213",
+      "name": "松屋 茨城那珂店（松のや併設）",
+      "address": "茨城県那珂市竹ノ内2-10-2",
+      "brand_name": "松屋・松のや",
+      "changed_fields": [
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 140.504571,
+          "after": 140.504568
+        }
+      ]
+    },
+    {
+      "event_id": "546c8b028bcbf3e66b956217731cd1accbe43b56",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000000920",
+      "name": "松屋 北赤羽店 ※10月23日15時より一時閉店、11月5日15時オープン",
+      "address": "東京都北区浮間3-1-38 近藤ビル",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 北赤羽店",
+          "after": "松屋 北赤羽店 ※10月23日15時より一時閉店、11月5日15時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "46a28b4eeb530ceac5ac7e624601aee5ae4941df",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002328",
+      "name": "松屋 宇治弐番店（松のや併設）",
+      "address": "京都府宇治市宇治弐番96-1",
+      "brand_name": "松屋・松のや"
+    },
+    {
+      "event_id": "214362eba2bf8d981f6da1e2e1d8b0ec545841db",
+      "at": "2026-10-15T06:14:42+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000001953",
+      "name": "松屋 幕張インター店（松のや・マイカリー食堂併設）",
+      "address": "千葉県習志野市鷺沼5-6-5",
+      "brand_name": "松屋・松のや・マイカリー食堂",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 幕張インター店（松のや・マイカリー食堂併設） ※10月4日15時より一時閉店、10月9日15時オープン",
+          "after": "松屋 幕張インター店（松のや・マイカリー食堂併設）"
+        }
+      ]
+    },
+    {
+      "event_id": "ede7958250ad28f6f86545fe9828b009fd3017ce",
+      "at": "2026-10-15T06:14:41+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1574",
+      "name": "ラーメンBOX　関西国際空港第2ターミナルビル（国内線）",
+      "address": "大阪府泉南郡 田尻町泉州空港中13番地及び11-1番地 関西国際空港第2ターミナルビル（国内線）",
+      "brand_name": "ラーメンBOX　関西国際空港第2ターミナルビル（国内線）"
+    },
+    {
+      "event_id": "ba74f585b8780b0807461c0e57368d3fe0545733",
+      "at": "2026-10-15T06:14:41+09:00",
+      "run_date": "2026-10-15",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1276",
+      "name": "磯丸水産 松本駅前店",
+      "address": "長野県松本市中央1丁目2-22 土田ビル1・2階",
+      "brand_name": "磯丸水産",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 36.232287,
+          "after": 36.23173530911208
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 137.965219,
+          "after": 137.9654087730041
+        }
+      ]
+    },
+    {
+      "event_id": "a2fa16e614c7751df0b30a4d0686932070492215",
+      "at": "2026-10-15T06:14:41+09:00",
+      "run_date": "2026-10-15",
+      "kind": "added",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1575",
+      "name": "ごっつええ本舗　関西国際空港第２ターミナルビル（国内線）",
+      "address": "大阪府泉南郡 田尻町泉州空港中13番地及び11-1番地 関西国際空港第2ターミナルビル（国内線）",
+      "brand_name": "ごっつええ本舗"
+    },
     {
       "event_id": "6bc7867dbb07ab29afc02c05fe2998bfa2d26690",
       "at": "2026-10-12T13:38:42+09:00",

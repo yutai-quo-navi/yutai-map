@@ -2,7 +2,7 @@
   "version": 1,
   "issuers": {
     "skylark": {
-      "revision": 0,
+      "revision": 3,
       "brands": [
         {
           "brand_name": "chawan",
@@ -14,7 +14,7 @@
         },
         {
           "brand_name": "くし葉",
-          "store_count": 1
+          "store_count": 2
         },
         {
           "brand_name": "しゃぶ葉",
@@ -94,7 +94,7 @@
         },
         {
           "brand_name": "ペルティカ",
-          "store_count": 11
+          "store_count": 12
         },
         {
           "brand_name": "ラ・オハナ",
@@ -110,7 +110,7 @@
         },
         {
           "brand_name": "八郎そば",
-          "store_count": 3
+          "store_count": 4
         },
         {
           "brand_name": "包包點心",
@@ -252,7 +252,7 @@
       ]
     },
     "create": {
-      "revision": 0,
+      "revision": 2,
       "brands": [
         {
           "brand_name": "AW55",
@@ -508,7 +508,7 @@
         },
         {
           "brand_name": "ごっつええ本舗",
-          "store_count": 5
+          "store_count": 6
         },
         {
           "brand_name": "しゃぶしゃぶ すき焼き ステーキ  籠乃屋  本店",
@@ -724,6 +724,10 @@
         },
         {
           "brand_name": "ホームベース　伊勢佐木町店",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ラーメンBOX　関西国際空港第2ターミナルビル（国内線）",
           "store_count": 1
         },
         {
@@ -1190,7 +1194,7 @@
       ]
     },
     "toridoll": {
-      "revision": 0,
+      "revision": 1,
       "brands": [
         {
           "brand_name": "KNOWS COFFEE",
@@ -1234,7 +1238,7 @@
         },
         {
           "brand_name": "丸亀製麺",
-          "store_count": 901
+          "store_count": 902
         },
         {
           "brand_name": "天ぷらまきの",
@@ -1344,7 +1348,7 @@
       ]
     },
     "yoshinoya": {
-      "revision": 0,
+      "revision": 5,
       "brands": [
         {
           "brand_name": "うまげな",
@@ -1392,7 +1396,7 @@
         },
         {
           "brand_name": "クッキング＆コンフォート",
-          "store_count": 538
+          "store_count": 541
         },
         {
           "brand_name": "テイクアウト・デリバリー専門店",
@@ -1400,7 +1404,7 @@
         },
         {
           "brand_name": "吉野家",
-          "store_count": 691
+          "store_count": 689
         },
         {
           "brand_name": "吉野家×はなまるうどん",
@@ -1503,7 +1507,7 @@
       ]
     },
     "matsuya": {
-      "revision": 0,
+      "revision": 1,
       "brands": [
         {
           "brand_name": "松のや",
@@ -1523,7 +1527,7 @@
         },
         {
           "brand_name": "松屋・松のや",
-          "store_count": 471
+          "store_count": 472
         },
         {
           "brand_name": "松屋・松のや・マイカリー食堂",
@@ -1532,7 +1536,7 @@
       ]
     },
     "royal": {
-      "revision": 0,
+      "revision": 1,
       "brands": [
         {
           "brand_name": "てんや",
@@ -1560,7 +1564,7 @@
         },
         {
           "brand_name": "リッチモンドホテル",
-          "store_count": 56
+          "store_count": 57
         },
         {
           "brand_name": "ロイヤルガーデンカフェ",
@@ -2083,7 +2087,7 @@
       ]
     },
     "fujio": {
-      "revision": 0,
+      "revision": 1,
       "brands": [
         {
           "brand_name": "OG CAFE",
@@ -2175,7 +2179,7 @@
         },
         {
           "brand_name": "チャンピーニ",
-          "store_count": 1
+          "store_count": 2
         },
         {
           "brand_name": "デリス タルト＆カフェ",
@@ -2292,7 +2296,7 @@
       ]
     },
     "srs": {
-      "revision": 0,
+      "revision": 5,
       "brands": [
         {
           "brand_name": "CHOJIRO",
@@ -2356,7 +2360,7 @@
         },
         {
           "brand_name": "和食さと",
-          "store_count": 200
+          "store_count": 201
         },
         {
           "brand_name": "回転すし北海道",
@@ -2409,7 +2413,7 @@
       ]
     },
     "arclands": {
-      "revision": 0,
+      "revision": 1,
       "brands": [
         {
           "brand_name": "Cento per Cento",
@@ -2421,7 +2425,7 @@
         },
         {
           "brand_name": "かつや",
-          "store_count": 501
+          "store_count": 500
         },
         {
           "brand_name": "からあげ縁",
@@ -2478,7 +2482,7 @@
       ]
     },
     "kineya": {
-      "revision": 0,
+      "revision": 3,
       "brands": [
         {
           "brand_name": "BAR心斎橋1923",
@@ -2506,7 +2510,7 @@
         },
         {
           "brand_name": "うま勝",
-          "store_count": 3
+          "store_count": 4
         },
         {
           "brand_name": "おらがそば",
@@ -3302,11 +3306,11 @@
       ]
     },
     "joyfull": {
-      "revision": 608,
+      "revision": 609,
       "brands": [
         {
           "brand_name": "ジョイフル",
-          "store_count": 608
+          "store_count": 609
         }
       ]
     },

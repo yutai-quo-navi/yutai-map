@@ -1,10 +1,10 @@
 {
   "source": "https://www.create-restaurants.co.jp/",
-  "generated_at": "2026-10-06T07:38:13+09:00",
+  "generated_at": "2026-10-15T06:14:41+09:00",
   "rule": "Official restaurant search shareholder flag is not available",
   "shareholder_value_counts": {
     "": 193,
-    "available": 828,
+    "available": 830,
     "aveilable": 1,
     "not available": 22
   },
@@ -351,13 +351,13 @@
       "reason": "eligibility_blank"
     },
     {
-      "store_id": "1588",
-      "name": "伊之瀬",
+      "store_id": "1368",
+      "name": "みのりカフェ　京都ポルタ",
       "reason": "eligibility_blank"
     },
     {
-      "store_id": "1368",
-      "name": "みのりカフェ　京都ポルタ",
+      "store_id": "1588",
+      "name": "伊之瀬",
       "reason": "eligibility_blank"
     },
     {
@@ -531,14 +531,14 @@
       "reason": "not available"
     },
     {
-      "store_id": "1584",
-      "name": "こいけのいえけい",
-      "reason": "eligibility_blank"
-    },
-    {
       "store_id": "949",
       "name": "神戸プレジール三宮本店",
       "reason": "not available"
+    },
+    {
+      "store_id": "1584",
+      "name": "こいけのいえけい",
+      "reason": "eligibility_blank"
     },
     {
       "store_id": "1256",
@@ -549,6 +549,11 @@
       "store_id": "153",
       "name": "JA全農ながさき直営 長崎和牛焼肉 ぴゅあ",
       "reason": "not available"
+    },
+    {
+      "store_id": "1255",
+      "name": "芳賀カントリークラブレストラン",
+      "reason": "eligibility_blank"
     },
     {
       "store_id": "129",
@@ -563,11 +568,6 @@
     {
       "store_id": "137",
       "name": "龍野西SA【下り線】",
-      "reason": "eligibility_blank"
-    },
-    {
-      "store_id": "1255",
-      "name": "芳賀カントリークラブレストラン",
       "reason": "eligibility_blank"
     },
     {
@@ -671,6 +671,11 @@
       "reason": "not available"
     },
     {
+      "store_id": "135",
+      "name": "三芳PA（上り線）",
+      "reason": "eligibility_blank"
+    },
+    {
       "store_id": "1571",
       "name": "そばと丼 よしの",
       "reason": "eligibility_blank"
@@ -678,11 +683,6 @@
     {
       "store_id": "1572",
       "name": "武蔵野うどん みよし",
-      "reason": "eligibility_blank"
-    },
-    {
-      "store_id": "135",
-      "name": "三芳PA（上り線）",
       "reason": "eligibility_blank"
     },
     {
@@ -711,6 +711,11 @@
       "reason": "eligibility_blank"
     },
     {
+      "store_id": "133",
+      "name": "豊田上郷SA",
+      "reason": "eligibility_blank"
+    },
+    {
       "store_id": "1568",
       "name": "陳林",
       "reason": "eligibility_blank"
@@ -728,11 +733,6 @@
     {
       "store_id": "1573",
       "name": "キッチン杏",
-      "reason": "eligibility_blank"
-    },
-    {
-      "store_id": "133",
-      "name": "豊田上郷SA",
       "reason": "eligibility_blank"
     },
     {
