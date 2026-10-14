@@ -2,7 +2,7 @@
 
 - In every chat, new brand/issuer scraping, collection, source validation, D1 sync and scheduled update programs must be added to and operated in the private `yutai-quo-navi/yutai-data-private` repository by default. Confirm that repository remains private before starting.
 - This public repository may receive the application, issuer configurations and public update metadata. Do not add new scraping/sync programs or their Actions workflows here.
-- Existing public programs remain unchanged unless the user explicitly requests migration. Authorized migrations cover Ohsho, Joyfull and MOS Food Service (8153), explicitly requested on 2026-10-13. Preserve the shared Komeda and Doutor pipeline; other earlier public pipelines are outside this migration.
+- User authorization, 2026-10-15: all store/feature collection, parser tests, D1 maintenance and scheduled DB monitoring have moved to yutai-data-private after successful production verification. Public code is limited to the application, deployment, expiry editing and public static publishing. New maintenance belongs in private. Do not recreate a public collector.
 - Start and verify the private pipeline before removing an authorized public counterpart. Preserve working D1 data and public search. Do not rewrite public Git history without a separate explicit instruction.
 
 # Store data rules

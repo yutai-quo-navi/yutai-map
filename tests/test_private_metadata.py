@@ -28,7 +28,8 @@ class PrivateMetadataTests(unittest.TestCase):
 
     def query(self, data):
         def get(sql, params):
-            self.assertEqual(params, ['zensho'])
+            self.assertIn(params[0], metadata.ISSUERS)
+            if params[0] != 'zensho': return []
             self.assertEqual(sql, 'SELECT current_meta_json FROM issuer_state WHERE issuer_id=?')
             return [{'current_meta_json': json.dumps(data)}]
         return get
@@ -62,6 +63,15 @@ class PrivateMetadataTests(unittest.TestCase):
         path.write_text(json.dumps({'generated_at': '2026-10-16T05:00:00+09:00'}))
         metadata.publish_private_metadata(self.root, self.query({'public_release': release()}))
         self.assertEqual(before, self.updates.read_text())
+
+    def test_generic_private_release_publishes_only_registered_public_files(self):
+        data = {'version':2,'issuer_id':'zensho','generated_at':'2026-10-15T05:00:00+09:00',
+                'events':release()['events'],'files':{'brands.json':{'brands':[{'name':'test','count':1}]}}}
+        metadata.publish_private_metadata(self.root,self.query({'public_release':data}))
+        self.assertEqual(json.loads((self.root/'data/issuers/zensho/brands.json').read_text())['brands'][0]['count'],1)
+        for name, payload in [('current.json',{}),('brands.json',{'stores':[{'address':'private'}]})]:
+            invalid=copy.deepcopy(data);invalid['files']={name:payload}
+            with self.assertRaises(ValueError):metadata.validate_release('zensho',invalid)
 
 
 if __name__ == '__main__':
