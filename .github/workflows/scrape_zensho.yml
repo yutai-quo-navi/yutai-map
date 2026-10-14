@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: main
           fetch-depth: 0
           persist-credentials: false
 
@@ -98,28 +99,46 @@ jobs:
       - name: Merge public update history
         run: python tools/build_updates.py
 
-      - name: Remove private working database
-        run: rm -rf data/issuers/zensho/stores
-
       - name: Commit public metadata only
         env:
           GH_PUSH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/updates.json
-          git add data/issuers/zensho/brands.json
-          git diff --cached --quiet && exit 0
-          git commit -m "Update ゼンショー store changes: $(date -u +%Y-%m-%d)"
+          # Rebuild on the latest main instead of rebasing generated JSON.
+          # Preserve this run's events even if another updater pushes meanwhile.
+          cp data/updates.json "$RUNNER_TEMP/zensho-updates.json"
+          cp data/issuers/zensho/brands.json "$RUNNER_TEMP/zensho-brands.json"
+          auth=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
           for attempt in 1 2 3; do
-            git pull --rebase origin main
-            auth=$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64 -w0)
-            if git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin main; then
+            git fetch origin main
+            git reset --hard origin/main
+            cp "$RUNNER_TEMP/zensho-brands.json" data/issuers/zensho/brands.json
+            python - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path("data/updates.json")
+          latest = json.loads(path.read_text())
+          generated = json.loads((Path(os.environ["RUNNER_TEMP"]) / "zensho-updates.json").read_text())
+          events = {e["event_id"]: e for e in generated.get("events", [])}
+          events.update({e["event_id"]: e for e in latest.get("events", [])})
+          latest["events"] = list(events.values())
+          path.write_text(json.dumps(latest, ensure_ascii=False, indent=2) + "\n")
+          PY
+            python tools/build_updates.py
+            git add data/updates.json data/issuers/zensho/brands.json
+            git diff --cached --quiet && exit 0
+            git commit -m "Update ゼンショー store changes: $(date -u +%Y-%m-%d)"
+            if git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:main; then
               exit 0
             fi
             sleep 5
           done
           exit 1
+
+      - name: Remove private working database
+        if: always()
+        run: rm -rf data/issuers/zensho/stores
 
       - name: Notify DB failure
         if: failure()
