@@ -3367,6 +3367,43 @@
           "store_count": 6
         }
       ]
+    },
+    "genki": {
+      "revision": 199,
+      "brands": [
+        {
+          "brand_name": "GENKI SUSHI×魚べい",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GINZA SEN-RYO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うま勝",
+          "store_count": 3
+        },
+        {
+          "brand_name": "てっか丸",
+          "store_count": 1
+        },
+        {
+          "brand_name": "京都千両",
+          "store_count": 1
+        },
+        {
+          "brand_name": "元気寿司",
+          "store_count": 6
+        },
+        {
+          "brand_name": "千両",
+          "store_count": 3
+        },
+        {
+          "brand_name": "魚べい",
+          "store_count": 183
+        }
+      ]
     }
   }
 }

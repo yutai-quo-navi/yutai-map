@@ -2032,6 +2032,38 @@
       "hash": "54e677f7d53afdc7bda2a5f9d3bc35d2730cf175d76c5fd8259ac37ade4cb993",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/genki/1f620cdaef75d494/index.html": {
+      "hash": "195ff6fa5a625bcdcb9c84631175fee3ba5eeb40ee62163350e9e1a371f28807",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/9faf205b82940a7a/index.html": {
+      "hash": "965c9829afb42b99ccbb53a186d5a171ac67a84a8b457b9b236ed0aba892a682",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/ad05f0c1609ac114/index.html": {
+      "hash": "f6b75e5267414d51fb5fbe473a68bbf4dfb53ed69d009b06ba1e9217b0239e01",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/b4572f70c29017b8/index.html": {
+      "hash": "8155ccb8b5f552387db9b80cfb59bc551250128e675bad174116c8bb1b53e822",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/c8d7d8d13aa7180a/index.html": {
+      "hash": "a4a42dbdaf7295156ff45f99c1fb9ec2985f82a7653b40b80165812bfa29f1f8",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/cb7243c3e0cca9d5/index.html": {
+      "hash": "ab0cef68fc46a808be6a645122410c825f6cfbd580fe044857b4bea484692479",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/e65c8bf68060c3ef/index.html": {
+      "hash": "05431ae078dc0bcabc9619989c8b60647a419fee3d6291020b524a172071b325",
+      "lastmod": "2026-10-14"
+    },
+    "guides/dining/brands/genki/fd7f2ba55e50153d/index.html": {
+      "hash": "303742aad3217dddcfd29ac9c62030c5cf990dc7da33f5b2c0f809df66215d4d",
+      "lastmod": "2026-10-14"
+    },
     "guides/dining/brands/hiday/017f9d103766f83e/index.html": {
       "hash": "42d30fa9da9ef64aadd6c09643dc8b6082c69f6af6b696c846196d3213400ce8",
       "lastmod": "2026-10-11"
@@ -3213,7 +3245,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "25529612ca737aa87369df1e2c87b4fc32852c55017b36b8cc0cc732de898cd8",
+      "hash": "e98f663b404e39013433b74d42a50019aa2086d5367565fdb30b2dcd889c98c3",
       "lastmod": "2026-10-14"
     },
     "guides/dining/issuers/arclands/index.html": {
@@ -3255,6 +3287,10 @@
     "guides/dining/issuers/fujio/index.html": {
       "hash": "e274336caf85d0cd30a8b8c00395269102bd4fe2422684e349d558fbe8e07415",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/genki/index.html": {
+      "hash": "5edebf0241e252390d67f0eadaa834451ed0e7936a7736f6ee2b4bef06ac8d14",
+      "lastmod": "2026-10-14"
     },
     "guides/dining/issuers/hiday/index.html": {
       "hash": "f55b8b46fc900645bf117190c16d3d51f2549997dd210e6b44281deb4d366477",
