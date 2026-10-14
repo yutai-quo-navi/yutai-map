@@ -3,7 +3,7 @@
 No collector, store snapshot, SQL generator or D1 write runs here.
 """
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 ISSUERS = ('arclands', 'chikaranomoto', 'colowide', 'create', 'daiichikosho', 'dnh', 'fujio', 'joyfull', 'kineya', 'komeda', 'matsuya', 'monogatari', 'ohsho', 'royal', 'skylark', 'srs', 'toridoll', 'yamaokaya', 'yoshinoya', 'zensho')
 EVENT_FIELDS = {
@@ -15,6 +15,11 @@ CHANGE_KEYS = {
     'prefecture', 'postal_code', 'phone', 'lat', 'lng', 'open_date', 'close_date',
     'benefits', 'benefit_status', 'official_url',
 }
+
+
+def timestamp(value):
+    parsed = datetime.fromisoformat(value)
+    return parsed.replace(tzinfo=timezone.utc) if parsed.tzinfo is None else parsed
 
 
 def validate_release(issuer, release):
@@ -48,7 +53,20 @@ def validate_release(issuer, release):
                 for item in value.values(): safe(item)
             elif isinstance(value, list):
                 for item in value: safe(item)
-        for payload in files.values(): safe(payload)
+        for name, payload in files.items():
+            if name == 'exclusions.json' and issuer == 'create':
+                # Existing public exclusion report contains only identity and reason.
+                if set(payload) != {'source', 'generated_at', 'rule', 'shareholder_value_counts', 'excluded_count', 'stores'}:
+                    raise ValueError('Unexpected public exclusion fields')
+                rows = payload['stores']
+                if not isinstance(rows, list) or type(payload['excluded_count']) is not int or payload['excluded_count'] != len(rows):
+                    raise ValueError('Invalid exclusion count')
+                for row in rows:
+                    if not isinstance(row, dict) or set(row) != {'store_id', 'name', 'reason'} or any(not isinstance(v, str) for v in row.values()):
+                        raise ValueError('Private fields in public exclusion row')
+                safe({k: v for k, v in payload.items() if k != 'stores'})
+            else:
+                safe(payload)
     for event in release['events']:
         if set(event) - EVENT_FIELDS or event.get('issuer_id') != issuer or not event.get('event_id'):
             raise ValueError('Invalid or foreign public change event')
@@ -78,14 +96,14 @@ def publish_private_metadata(root, query):
         if published_brands.exists():
             prior = json.loads(published_brands.read_text())
             prior_date = prior.get('generated_at') if isinstance(prior, dict) else None
-            if prior_date and datetime.fromisoformat(prior_date) > datetime.fromisoformat(release['generated_at']):
+            if prior_date and timestamp(prior_date) > timestamp(release['generated_at']):
                 continue
         files = {'brands.json': release['brands']} if release['version'] == 1 else release['files']
         for name, payload in files.items():
             path = root / f'data/issuers/{issuer}/{name}'
             existing = json.loads(path.read_text()) if path.exists() else {}
             old_date = existing.get('generated_at') if isinstance(existing, dict) else None
-            if old_date and datetime.fromisoformat(old_date) > datetime.fromisoformat(release['generated_at']):
+            if old_date and timestamp(old_date) > timestamp(release['generated_at']):
                 continue
             writes[path] = payload
         for event in release['events']:

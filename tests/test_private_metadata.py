@@ -73,6 +73,14 @@ class PrivateMetadataTests(unittest.TestCase):
             invalid=copy.deepcopy(data);invalid['files']={name:payload}
             with self.assertRaises(ValueError):metadata.validate_release('zensho',invalid)
 
+    def test_only_public_create_exclusion_shape_is_allowed(self):
+        payload = json.loads((Path(__file__).resolve().parents[1] / 'data/issuers/create/exclusions.json').read_text())
+        data = {'version': 2, 'issuer_id': 'create', 'generated_at': '2026-10-15T05:00:00+09:00', 'events': [], 'files': {'exclusions.json': payload}}
+        metadata.validate_release('create', data)
+        payload['stores'][0]['address'] = 'private snapshot address'
+        with self.assertRaises(ValueError): metadata.validate_release('create', data)
+        self.assertLess(metadata.timestamp('2026-10-14'), metadata.timestamp('2026-10-15T05:00:00+09:00'))
+
 
 if __name__ == '__main__':
     unittest.main()
