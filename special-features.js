@@ -94,14 +94,24 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   const render = () => {
     const existingItems = new Map([...root.querySelectorAll('.feature-buttons > .feature-item')]
       .map(item=>[item.querySelector('[data-feature]')?.dataset.feature,item]));
+    // Static HTML determines the initial visual order. Never reshuffle mounted
+    // hotel logos when the remote feature snapshots supply their store counts.
+    // Future features not present in HTML still follow the original priority.
+    const stableOrder = new Map([...root.querySelectorAll('[data-feature]')]
+      .map((button,index) => [button.dataset.feature,index]));
     const displayed = visibleFeatures(features, today(), preview)
-      .map(feature => ({feature, priority:{
+      .map(feature => ({feature,position:stableOrder.get(feature.id),priority:{
         days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
         ended:feature.status === 'ended', count:feature.stores.length
       }}))
-      .sort((a,b) => section === 'hotel'
-        ? b.feature.stores.length - a.feature.stores.length
-        : compareBenefitPriority(a.priority, b.priority))
+      .sort((a,b) => {
+        if (a.position != null && b.position != null) return a.position-b.position;
+        if (a.position != null) return -1;
+        if (b.position != null) return 1;
+        return section === 'hotel'
+          ? b.feature.stores.length-a.feature.stores.length
+          : compareBenefitPriority(a.priority,b.priority);
+      })
       .map(item => item.feature);
     const available = new Set(displayed.map(feature => feature.id));
     for (const id of selectedFeatures) if (!available.has(id)) selectedFeatures.delete(id);

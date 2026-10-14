@@ -411,9 +411,21 @@ function renderChips(){
       (company.showExpiredDeadline ? latestExpiredDeadline(entries, company.id, now) : null))?.days,
     count: counts.get(company.id) ?? company.officialStores.length
   });
+  // HTML already displays the complete grid on first paint. Keep that exact
+  // visual order when asynchronous deadlines and store counts arrive. Otherwise
+  // the same cards jump twice: once after issuer/expiry loading and again after
+  // /v1/brands responds. New/unlisted issuers are appended after the existing
+  // positions, with their existing priority comparator used only among newcomers.
+  const stableOrder = new Map([...els.chips.querySelectorAll('[data-issuer]')]
+    .map((button,index) => [button.dataset.issuer,index]));
   const available = companies.filter(c => visibleCompanyIds.has(c.id))
-    .map(company => ({company, priority:priority(company)}))
-    .sort((a,b) => compareBenefitPriority(a.priority,b.priority))
+    .map(company => ({company, position:stableOrder.get(company.id), priority:priority(company)}))
+    .sort((a,b) => {
+      if (a.position != null && b.position != null) return a.position-b.position;
+      if (a.position != null) return -1;
+      if (b.position != null) return 1;
+      return compareBenefitPriority(a.priority,b.priority);
+    })
     .map(item => item.company);
   available.forEach((c,index) => {
     const active = selected.has(c.id);
