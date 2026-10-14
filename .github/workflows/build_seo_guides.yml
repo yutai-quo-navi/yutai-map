@@ -44,7 +44,6 @@ on:
       - 'Update Wakita hotel benefits'
       - 'Update Wealth Management hotel benefits'
       - 'Build Yoshinoya store DB'
-      - 'Build Zensho store DB'
     types: [completed]
     branches: [main]
 
@@ -78,6 +77,7 @@ jobs:
       - name: Verify generation, removals, metadata and selection links
         run: |
           python -m unittest discover -s tests -p 'test_seo_guides.py'
+          python -m unittest discover -s tests -p 'test_private_metadata.py'
           node --test tests/guide-search.test.mjs tests/special-features.test.mjs
           node --check app.js
       - name: Build from existing verified aggregates and snapshots
@@ -90,7 +90,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add guides data/seo sitemap.xml
+          git add guides data/seo sitemap.xml data/updates.json data/issuers/zensho/brands.json
           if ! git diff --cached --quiet; then
             git commit -m 'Generate verified benefit guides and sitemap'
             git pull --rebase origin main

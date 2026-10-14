@@ -308,6 +308,8 @@ def main():
     query = D1()
     source = collect(args.root, query)
     publish(args.root, source)
+    from private_metadata import publish_private_metadata
+    publish_private_metadata(args.root, query)
     record = f'SEO generation: D1 rows_read={query.rows_read}; rows_written=0. No nationwide store scan.\n'
     print(record)
     if os.environ.get('GITHUB_STEP_SUMMARY'):
