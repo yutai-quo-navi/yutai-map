@@ -1,0 +1,93 @@
+{
+  "id": "genki",
+  "code": "9828",
+  "name": "Genki Global Dining Concepts",
+  "sourceUrl": "https://www.genki-gdc.co.jp/stock/dividend/",
+  "aliases": [
+    "Genki Global Dining Concepts",
+    "元気寿司",
+    "魚べい",
+    "GENKI SUSHI×魚べい",
+    "GENKI SUSHI",
+    "千両",
+    "京都千両",
+    "GINZA SEN-RYO",
+    "銀座千両",
+    "うま勝",
+    "大阪焼肉うま勝",
+    "てっか丸"
+  ],
+  "health": {
+    "minStores": 180,
+    "maxStores": 260,
+    "maxAdded": 30,
+    "maxRemoved": 30,
+    "maxChanged": 40,
+    "maxChangeRatio": 0.15,
+    "minGroupSize": 3,
+    "maxGroupDropRatio": 0.5,
+    "maxAgeDays": 3,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "api.genki-gdc.co.jp",
+      "api.uobei.info",
+      "genki-gdc.app.gmo-housepay.jp"
+    ],
+    "japanOnlyCoordinates": true
+  },
+  "fullName": "Genki Global Dining Concepts",
+  "status": "public",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-14",
+  "domesticOnly": true,
+  "storeSearchUrl": "https://genki-gdc.app.gmo-housepay.jp/#/kabunushiyutai/search",
+  "catalogBrands": [
+    "GENKI SUSHI×魚べい",
+    "GINZA SEN-RYO",
+    "うま勝",
+    "てっか丸",
+    "京都千両",
+    "元気寿司",
+    "千両",
+    "魚べい"
+  ],
+  "searchNames": [
+    "Genki Global Dining Concepts",
+    "Genki GDC",
+    "元気寿司",
+    "魚べい",
+    "千両",
+    "うま勝",
+    "てっか丸"
+  ],
+  "showStoreNote": true,
+  "note": "国内の自社運営店舗を公式店舗API・電子優待対象店舗と照合して掲載。開店前・閉店済み・公式に告知された休業期間中は除外。グルメ杵屋・JBイレブン系の相互利用先はグルメ杵屋の掲載もご参照ください。南芦屋浜店とてっか丸人形町店は公式住所から位置を照合します。",
+  "aliasBrands": {
+    "GENKI SUSHI×魚べい": "GENKI SUSHI×魚べい",
+    "GINZA SEN-RYO": "GINZA SEN-RYO",
+    "うま勝": "うま勝",
+    "てっか丸": "てっか丸",
+    "京都千両": "京都千両",
+    "元気寿司": "元気寿司",
+    "千両": "千両",
+    "魚べい": "魚べい",
+    "GENKI SUSHI": "GENKI SUSHI×魚べい",
+    "銀座千両": "GINZA SEN-RYO",
+    "大阪焼肉うま勝": "うま勝"
+  },
+  "categories": {
+    "Genki Global Dining Concepts": "restaurant",
+    "元気寿司": "restaurant",
+    "魚べい": "restaurant",
+    "GENKI SUSHI×魚べい": "restaurant",
+    "GENKI SUSHI": "restaurant",
+    "千両": "restaurant",
+    "京都千両": "restaurant",
+    "GINZA SEN-RYO": "restaurant",
+    "銀座千両": "restaurant",
+    "うま勝": "restaurant",
+    "大阪焼肉うま勝": "restaurant",
+    "てっか丸": "restaurant"
+  }
+}

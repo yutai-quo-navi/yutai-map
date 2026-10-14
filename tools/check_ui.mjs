@@ -101,9 +101,17 @@ try{
     await gasPage.goto(url+'/__gas-header/index.html');
     assert.equal(await gasPage.locator('.site-brand-name').textContent(),'株主優待券店舗とQUOガソリン給油検索','companion title renders as Japanese');
     assert.deepEqual(await gasPage.evaluate(headerGeometry),foodHeader,`${viewport.width}px: both tools must align their header icon and first title line`);
-    assert.equal(await gasPage.locator('.site-logo svg circle').count(),1,'gas identity includes a magnifying glass');
+    assert.equal(await gasPage.locator('.site-logo svg rect').count(),1,'gas identity includes the current fuel pump mark');
     await gasPage.screenshot({path:resolve(output,`${viewport.width}-gas-header.png`)});
     await gasPage.close();
+    await page.evaluate(async()=>{
+      const card=document.querySelector('#companyChips [data-issuer=genki]');
+      const img=card?.querySelector('.representative-mark-image');
+      if(!img)throw new Error('Genki company cell has no supplied logo');
+      await img.decode();
+      if(img.naturalWidth!==1418 || img.naturalHeight!==709)throw new Error('Supplied Genki image dimensions changed');
+      for(let i=0;i<10;i++){card.click();if(card.querySelector('.representative-mark-image')!==img)throw new Error('Genki logo changed on repeated toggles');}
+    });
     // Repeated toggles must retain decoded image nodes, including other cards.
     await page.evaluate(async()=>{
       const card=document.querySelector('#companyChips [data-issuer="foodlife"]');

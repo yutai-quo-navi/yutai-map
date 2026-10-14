@@ -218,6 +218,13 @@
       "name": "くら寿司",
       "status": "public",
       "config": "./data/issuers/kura/config.json"
+    },
+    {
+      "id": "genki",
+      "code": "9828",
+      "name": "Genki Global Dining Concepts",
+      "status": "public",
+      "config": "./data/issuers/genki/config.json"
     }
   ]
 }

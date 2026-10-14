@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  genki: {name:'元気寿司・魚べい',sub:'Genki GDC',color:'#efb600',symbol:'元',asset:'./assets/logo-original-genki-uobei.png'},
   skylark:       {name:'ガスト', sub:'Cafe Restaurant', color:'#aa343a', symbol:'G', asset:'./assets/logo-local-skylark.webp'},
   kura:          {name:'くら寿司', sub:'KURA', color:'#191919', symbol:'く', asset:'./assets/logo-original-kura.jpg'},
   foodlife:      {name:'スシロー', sub:'SUSHIRO', color:'#a9151a', symbol:'寿', asset:'./assets/brand-logo-foodlife.svg'},
