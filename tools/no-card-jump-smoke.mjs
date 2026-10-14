@@ -5,6 +5,7 @@ import {resolve,extname,sep} from 'node:path';
 import assert from 'node:assert/strict';
 
 const root = resolve(import.meta.dirname,'..');
+const publicIssuers = JSON.parse(await readFile(resolve(root,'data/issuers/index.json'),'utf8')).issuers.filter(issuer => issuer.status === 'public');
 const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json',
   '.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif'};
 const sourceFeatures = JSON.parse(await readFile(resolve(root,'data/features/index.json'),'utf8')).features
@@ -21,8 +22,8 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin='http://127.0.0.1:'+server.address().port;
 let browser;
 try{
-  browser=await chromium.launch({headless:true});
-  const context=await browser.newContext({viewport:{width:390,height:844},locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce'});
+  browser=await chromium.launch({headless:true,...(process.env.UI_CHROMIUM_EXECUTABLE ? {executablePath:process.env.UI_CHROMIUM_EXECUTABLE} : {})});
+  const context=await browser.newContext({viewport:{width:390,height:844},locale:'ja-JP',timezoneId:'Asia/Tokyo',reducedMotion:'reduce',...(process.env.UI_CHROMIUM_EXECUTABLE ? {bypassCSP:true} : {})});
   const page=await context.newPage();
   const errors=[];
   page.on('pageerror',error=>errors.push(error.message));
@@ -35,11 +36,7 @@ try{
     }
     if(url.pathname==='/v1/brands'){
       await new Promise(resolve=>setTimeout(resolve,1400));
-      const list=Array.from({length:31},(_,i)=>({issuer_id:[
-        'skylark','colowide','create','zensho','toridoll','yoshinoya','mcd','monogatari','matsuya',
-        'royal','balnibarbi','daiichikosho','fujio','srs','arclands','kineya','saintmarc','chimney',
-        'ringerhut','hiday','ichibanya','komeda','dnh','mos','yamaokaya','chikaranomoto','ohsho',
-        'joyfull','yossix','foodlife','kura'][i],name:'テスト店'+i,count:99999-i*3311}));
+      const list=publicIssuers.map((issuer,i)=>({issuer_id:issuer.id,name:'テスト店'+i,count:99999-i*2500}));
       await route.fulfill({status:200,json:{brands:list}});return;
     }
     const match=url.pathname.match(/^\/v1\/features\/([a-z0-9-]+)$/);
@@ -70,8 +67,8 @@ try{
     window.__cardOrderMotion={initial,counts};
     return initial;
   });
-  assert.equal(baseline.dining.length,31);
-  assert.equal(baseline.hotel.length,12);
+  assert.equal(baseline.dining.length,publicIssuers.length);
+  assert.equal(baseline.hotel.length,sourceFeatures.length);
   await page.waitForFunction(()=>document.body.dataset.appReady==='true',undefined,{timeout:25000});
   await page.waitForFunction(()=>[...document.querySelectorAll('#hotelFeatures [data-feature] .benefit-choice-count')]
     .filter(x=>x.textContent.includes('件')).length>=10,undefined,{timeout:25000});
