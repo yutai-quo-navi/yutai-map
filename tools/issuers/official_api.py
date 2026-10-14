@@ -115,3 +115,17 @@ def snapshot(issuer,stores,meta):
     for path,obj in [(p,current),(base/'diffs'/f'{DATE}.json',diff)]:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
     (base/'last_diff.md').write_text(f'# {cfg["name"]}店舗DB 差分 {DATE}\n\n'+''.join(f'- {k}: {v}\n' for k,v in counts.items()))
     print(json.dumps({'issuer':issuer,**counts,'brands':current['brand_counts']},ensure_ascii=False),flush=True)
+
+def fetch_text(url):
+    path=CACHE/(hashlib.sha256(url.encode()).hexdigest()+'.html') if CACHE else None
+    if path and path.exists():return path.read_text()
+    for attempt in range(3):
+        try:
+            request=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 yutai-map/1.0'})
+            with urllib.request.urlopen(request,timeout=35) as response:text=response.read().decode('utf-8')
+            if path:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text)
+            return text
+        except OSError:
+            if attempt==2:raise
+            time.sleep(attempt+1)
+

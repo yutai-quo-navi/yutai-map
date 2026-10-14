@@ -225,6 +225,20 @@
       "name": "Genki Global Dining Concepts",
       "status": "public",
       "config": "./data/issuers/genki/config.json"
+    },
+    {
+      "id": "amiyaki",
+      "code": "2753",
+      "name": "あみやき亭",
+      "status": "public",
+      "config": "./data/issuers/amiyaki/config.json"
+    },
+    {
+      "id": "towa",
+      "code": "3329",
+      "name": "東和フードサービス",
+      "status": "public",
+      "config": "./data/issuers/towa/config.json"
     }
   ]
 }

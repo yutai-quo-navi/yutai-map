@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {resolve,extname,sep} from 'node:path';
 import assert from 'node:assert/strict';
 const root=resolve(import.meta.dirname,'..');
+const publicIssuerCount=JSON.parse(await readFile(resolve(root,'data/issuers/index.json'),'utf8')).issuers.filter(x=>x.status==='public').length;
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif'};
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
@@ -16,7 +17,7 @@ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const origin='http://127.0.0.1:'+server.address().port;
 let browser;
 try {
-  browser=await chromium.launch({headless:true});
+  browser=await chromium.launch({headless:true,...(process.env.UI_CHROMIUM_EXECUTABLE?{executablePath:process.env.UI_CHROMIUM_EXECUTABLE}:{})});
   const context=await browser.newContext({viewport:{width:390,height:844},locale:'ja-JP',timezoneId:'Asia/Tokyo'});
   const page=await context.newPage();
   const pageErrors=[];
@@ -44,7 +45,7 @@ try {
   });
   const ms=Math.round(performance.now()-start);
   console.log(JSON.stringify({event:'first_logo_render',elapsed_ms:ms,configRequests,...metrics}));
-  assert.equal(metrics.cards,31,'31 issuer cards must appear without waiting for config responses');
+  assert.equal(metrics.cards,publicIssuerCount,'All issuer cards must appear without waiting for config responses');
   assert.ok(metrics.loaded>=9,'the first three rows of logos should already be loaded');
   assert.equal(metrics.appReady,'','first paint should precede async API completion');
   assert.ok(ms<4500,'first logos should appear even while config responses take 6 seconds');
