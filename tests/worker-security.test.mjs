@@ -88,7 +88,7 @@ test('search limiter failure also stops DB reads without an unhandled exception'
   }finally{globalThis.caches=old;}
 });
 
-async function withReferenceFixture(aliasGroups, upstream, check, searchLimiter=permit){
+async function withReferenceFixture(aliasGroups, upstream, check, searchLimiter=permit, geoRows=[]){
   const oldFetch=globalThis.fetch, oldCache=globalThis.caches, oldError=console.error;
   const locks=new Map(), calls=[], dbReads=[];
   globalThis.caches={default:{match:async key=>locks.get(key.url)?.clone(),put:async(key,value)=>{locks.set(key.url,value.clone());}}};
@@ -102,7 +102,7 @@ async function withReferenceFixture(aliasGroups, upstream, check, searchLimiter=
         ? Object.keys(aliasGroups).filter(id=>this.args.includes(id)).map(issuer_id=>({issuer_id,aliases_json:JSON.stringify(aliasGroups[issuer_id])}))
         : sql.includes('FROM reference_stores\n')
           ? [{issuer_id:this.args[0],store_id:'target',name:'Target Store',address:'東京都千代田区',brand_name:'Target',category:'restaurant'}]
-          : []};}
+          : sql.includes('FROM stores') ? geoRows : []};}
     };
   }}};
   try{await check({env,calls,dbReads});}
@@ -172,9 +172,26 @@ test('a single user search can include 44 issuers without a 20-company truncatio
     const data=await response.json();
     assert.equal(data.incomplete,true);
     assert.equal(data.reference_chunks_total,44);
-    assert.equal(data.reference_chunks_checked,40);
-    assert.equal(calls.length,40);
+    assert.equal(data.reference_chunks_checked,24);
+    assert.equal(calls.length,24);
   });
+});
+
+test('44-company search still displays verified nearby stores when upstream matches are unavailable',async()=>{
+  const aliases=Object.fromEntries(Array.from({length:44},(_,i)=>['company'+i,['brand'+i]]));
+  const geoRows=[{issuer_id:'company43',store_id:'nearby',name:'実店舗',lat:35.6813,lng:139.7671,brand_name:'お店',category:'restaurant'}];
+  await withReferenceFixture(aliases,()=>new Response('',{status:429}),async({env,calls})=>{
+    const response=await worker.fetch(referenceRequest(Object.keys(aliases).join(',')),env);
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.equal(data.results.length,1);
+    assert.equal(data.results[0].issuer_id,'company43');
+    assert.equal(data.category_counts.all,1);
+    assert.equal(data.incomplete,true);
+    assert.equal(data.reference_chunks_total,44);
+    assert.equal(data.reference_chunks_checked,24);
+    assert.equal(calls.length,24);
+  },permit,geoRows);
 });
 
 test('upstream outages, redirects and malformed replies return failure without retry or false zero results',async()=>{
