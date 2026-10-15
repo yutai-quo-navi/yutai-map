@@ -68,3 +68,14 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* Deliberate page loading: no scroll-triggered or background fetches. */
+.dining-pagination { margin: 12px 0 20px; }
+#loadMoreDining { margin: 0; }
+.pagination-status {
+  margin: 8px 2px 0;
+  text-align: center;
+  color: var(--muted, #796a59);
+  font-size: 12px;
+  line-height: 1.6;
+}
