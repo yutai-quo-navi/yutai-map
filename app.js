@@ -156,12 +156,14 @@ function updateResultNavigation(section, count){
   const hint = hotel ? els.hotelHint : els.diningHint;
   if (!actions || !hint) return;
   actions.hidden = false;
+  const unit = hotel ? '施設' : '店舗';
   hint.textContent = count === 0
-    ? '該当する店舗が0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。'
+    ? `該当する${unit}は0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。`
     : count === 1
-      ? '1件見つかりました。もっと探したい場合は優待を追加・変更できます。'
-      : `${count}件見つかりました。ここから優待の選び直しや再検索ができます。`;
-  const canExpand = Number(els.radius.value) < 30000;
+      ? `1${unit === '施設' ? '施設' : '件'}見つかりました。もっと探したい場合は優待を追加・変更できます。`
+      : `${count}${unit === '施設' ? '施設' : '件'}見つかりました。ここから優待の選び直しや再検索ができます。`;
+  const options = [...els.radius.options].map(option=>option.value);
+  const canExpand = options.indexOf(els.radius.value) < options.length - 1;
   qs(hotel ? '#extendHotelSearch' : '#extendDiningSearch').hidden = !canExpand;
   qs(hotel ? '#changeHotelOrigin' : '#changeDiningOrigin').hidden = count !== 0;
   if (hotel) els.hotelSearchAgain.hidden = false;
@@ -172,10 +174,10 @@ function rerunFromResults(){
   searchNearby(lastPosition, lastCenterLabel);
 }
 function extendResultSearch(){
-  const options = [...els.radius.options].map(o=>Number(o.value)).filter(Number.isFinite).sort((a,b)=>a-b);
-  const next = options.find(v=>v>Number(els.radius.value));
+  const options = [...els.radius.options].map(option=>option.value);
+  const next = options[options.indexOf(els.radius.value) + 1];
   if (!next) return;
-  els.radius.value=String(next);
+  els.radius.value = next;
   els.radius.dispatchEvent(new Event('change',{bubbles:true}));
   rerunFromResults();
 }
@@ -874,7 +876,9 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     );
     const responses = await Promise.allSettled(batches.map(batch => queryOpenPOI(batch, pos, radius, operation.signal)));
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
+    const failures = responses.filter(result=>result.status==='rejected').length;
     const raw = [...d1Results, ...responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value)];
+    if (failures && !raw.length) throw new Error('一部の店舗情報を取得できませんでした');
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
     categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
     for (const group of d1Groups) {
@@ -888,7 +892,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
-    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
+    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${failures ? '・一部の検索先から情報を取得できませんでした' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
     updateResultNavigation('dining', els.results.querySelectorAll('.card').length);
   } catch (error) {
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
