@@ -9,6 +9,7 @@ import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
 import {initSearchRadius} from './search-radius.js?v=20261009-vision';
+import {createSmoothNavigator} from './smooth-scroll.js?v=20261016-soft-scroll';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
 initNumberMotion(document.body);
 initNotificationBadges(document.querySelector('#companyChips'));
@@ -132,6 +133,7 @@ function resetSearchFeedback(){
   });
 }
 function cancelActiveSearch(){
+  smoothNavigator.stop();
   if (!searchController) return;
   searchOperationId++;
   searchController.abort();
@@ -146,9 +148,7 @@ function cancelActiveSearch(){
   setStatus('検索を中止しました。条件を変えてもう一度検索できます。');
 }
 function scrollToSearchTarget(target){
-  if (!target || document.hidden) return;
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  target.scrollIntoView({behavior:reducedMotion ? 'auto' : 'smooth', block:'start'});
+  smoothNavigator.scrollTo(target);
 }
 function updateResultNavigation(section, count){
   const hotel = section === 'hotel';
@@ -237,6 +237,7 @@ const savedFavorites = readJSON('yutai-favorites', []);
 let favorites = Array.isArray(savedFavorites) ? savedFavorites.filter(x => x && typeof x.key==='string' && typeof x.name==='string').slice(0,500) : [];
 let activeBenefit = 'dining';
 const searchRadius = initSearchRadius(els.radius, {read: readSetting, write: writeSetting});
+const smoothNavigator = createSmoothNavigator(window, document);
 
 init();
 
