@@ -40,7 +40,7 @@ function fixture(){
   };
   const url=(cursor,additional='')=>{
     const q=new URLSearchParams({lat:'35.6812',lng:'139.7671',radius:'30000',
-      issuers:'company1',...cursor?{cursor}:{},...additional?{limit:additional}:{}});
+      issuers:'company1',...(cursor ? {cursor} : {}),...(additional ? {limit:additional} : {})});
     return new Request('https://worker.example.com/v1/stores/search?'+q,{headers:{Origin:origin,'CF-Connecting-IP':'192.0.2.42'}});
   };
   return {env,queries,upstream,url};
