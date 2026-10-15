@@ -115,7 +115,10 @@ async function handleRequest(request, env, usage) {
       ))).filter(Boolean);
       // One visitor search may select dozens of companies. Spread the upstream
       // budget fairly across issuers instead of rejecting the entire search.
-      const budget = allocateReferenceBudget(referenceSearches, OPENPOI_MAX_REQUESTS);
+      // Broad searches must leave headroom for Worker subrequests and upstream limits.
+      // The selected companies still share a single server-side rate-limit slot.
+      const upstreamBudget = issuers.length > 20 ? 24 : OPENPOI_MAX_REQUESTS;
+      const budget = allocateReferenceBudget(referenceSearches, upstreamBudget);
       const [geo, outcomes] = await Promise.all([
         searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand, usage),
         Promise.allSettled(budget.searches.map(search =>
