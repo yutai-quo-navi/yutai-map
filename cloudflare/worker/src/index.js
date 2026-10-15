@@ -231,36 +231,75 @@ async function searchGeoStores(env, issuers, lat, lng, radius, category, brand, 
   const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
   const lngDelta = radius / (111320 * cos);
   const placeholders = issuers.map(() => '?').join(',');
-  const sql = `SELECT issuer_id, store_id, name, address, phone, brand_name, category, lat, lng, official_url
+  // Calculate the precise great-circle distance in D1. A wide 44-issuer,
+  // 30-km search can have tens of thousands of candidates. Returning all
+  // candidates to the Worker before sorting can exhaust its CPU/memory budget.
+  // A single CTE returns the nearest 30 *and* complete category counts,
+  // including when the current category has no matching stores.
+  const sql = `WITH candidates AS (
+    SELECT issuer_id, store_id, name, address, phone, brand_name, category,
+      lat, lng, official_url,
+      2 * 6371000 * asin(min(1, sqrt(
+        pow(sin(radians(lat - ?) / 2), 2)
+        + cos(radians(?)) * cos(radians(lat))
+        * pow(sin(radians(lng - ?) / 2), 2)
+      ))) AS exact_distance
     FROM stores
     WHERE issuer_id IN (${placeholders})
       AND lat BETWEEN ? AND ?
       AND lng BETWEEN ? AND ?
-      ${brand ? 'AND brand_name = ?' : ''}`;
+      ${brand ? 'AND brand_name = ?' : ''}
+  ), nearby AS (
+    SELECT * FROM candidates WHERE exact_distance <= ?
+  ), totals AS (
+    SELECT
+      COUNT(*) AS all_count,
+      COUNT(*) FILTER (WHERE COALESCE(category,'restaurant') = 'restaurant') AS restaurant_count,
+      COUNT(*) FILTER (WHERE category = 'cafe') AS cafe_count,
+      COUNT(*) FILTER (WHERE category = 'bakery') AS bakery_count,
+      COUNT(*) FILTER (WHERE category = 'foodcourt') AS foodcourt_count,
+      COUNT(*) FILTER (WHERE category = 'other') AS other_count
+    FROM nearby
+  ), closest AS (
+    SELECT * FROM nearby
+    ${category ? "WHERE category = ?" : ''}
+    ORDER BY exact_distance, issuer_id, store_id
+    LIMIT ${MAX_RESULTS}
+  )
+  SELECT closest.*, totals.all_count AS __all_count,
+    totals.restaurant_count AS __restaurant_count,
+    totals.cafe_count AS __cafe_count,
+    totals.bakery_count AS __bakery_count,
+    totals.foodcourt_count AS __foodcourt_count,
+    totals.other_count AS __other_count
+  FROM totals LEFT JOIN closest ON 1=1
+  ORDER BY closest.exact_distance, closest.issuer_id, closest.store_id`;
 
-  const results = await readRows(env, sql, [
-    ...issuers,
+  const rows = await readRows(env, sql, [
+    lat, lat, lng, ...issuers,
     lat-latDelta, lat+latDelta,
     lng-lngDelta, lng+lngDelta,
-    ...(brand ? [brand] : [])
+    ...(brand ? [brand] : []),
+    radius,
+    ...(category ? [category] : [])
   ], usage);
 
-  const nearby = results
-    .map(s => ({
-      ...s,
-      distance: haversine(lat, lng, Number(s.lat), Number(s.lng))
-    }))
-    .filter(s => s.distance <= radius)
-    .map(s => ({...s,distance:Math.round(s.distance)}));
-  const counts = {};
-  for (const s of nearby) {
-    const key=s.category || 'restaurant';
-    counts[key]=(counts[key] || 0)+1;
-  }
-  return {counts, results:nearby
-    .filter(s => !category || s.category === category)
-    .sort((a,b) => a.distance - b.distance)
-    .slice(0, MAX_RESULTS)};
+  const first = rows[0] || {};
+  const counts = {
+    all:Number(first.__all_count || 0),
+    restaurant:Number(first.__restaurant_count || 0),
+    cafe:Number(first.__cafe_count || 0),
+    bakery:Number(first.__bakery_count || 0),
+    foodcourt:Number(first.__foodcourt_count || 0),
+    other:Number(first.__other_count || 0)
+  };
+  const results = rows.filter(row => row.store_id != null).map(row => ({
+    issuer_id:row.issuer_id, store_id:row.store_id, name:row.name,
+    address:row.address, phone:row.phone, brand_name:row.brand_name,
+    category:row.category, lat:row.lat, lng:row.lng,
+    official_url:row.official_url, distance:Math.round(Number(row.exact_distance))
+  }));
+  return {counts,results};
 }
 
 async function prepareReferenceSearch(env, config, brand, usage){
