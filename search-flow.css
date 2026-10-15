@@ -19,6 +19,7 @@
   border-color: #eed6d2;
   background: #fff8f7;
 }
+.search-repeat-button[hidden] { display: none; }
 .search-repeat-button {
   display: block;
   width: 100%;
