@@ -52,7 +52,11 @@ const els = {
   brandSuggestions: qs('#brandSuggestions'), brandSelection: qs('#brandSelection'),
   brandReset: qs('#brandReset'), brandCandidateStatus: qs('#brandCandidateStatus'),
   favorites: qs('#favoritesDialog'), favoritesList: qs('#favoritesList'),
-  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount')
+  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount'),
+  cancelSearch: qs('#cancelSearchButton'),
+  diningActions: qs('#resultActions'), diningHint: qs('#resultHint'),
+  hotelActions: qs('#hotelResultActions'), hotelHint: qs('#hotelResultHint'),
+  hotelSearchAgain: qs('#hotelSearchAgain')
 };
 
 const expirySearch = initExpirySearch({root:qs('#expiryPanel'), alertsRoot:qs('#expiryAlerts'), read:readJSON, write:writeSetting});
@@ -71,10 +75,12 @@ let lastPosition = null;
 let lastCenterLabel = '現在地';
 let searching = false;
 let searchFeedbackDepth = 0;
+let searchFeedbackGeneration = 0;
 let searchFeedbackTimer = null;
 const searchButtons = [els.locate, qs('#placeSearchActions button')].filter(Boolean);
 const searchButtonLabels = searchButtons.map(button => button.textContent);
 function beginSearchFeedback(){
+  const generation = searchFeedbackGeneration;
   if (searchFeedbackDepth++ === 0) {
     for (const button of searchButtons) {
       button.disabled = true;
@@ -85,6 +91,7 @@ function beginSearchFeedback(){
     }, 250);
   }
   return () => {
+    if (generation !== searchFeedbackGeneration) return;
     if (--searchFeedbackDepth !== 0) return;
     clearTimeout(searchFeedbackTimer);
     searchButtons.forEach((button, index) => {
@@ -95,6 +102,87 @@ function beginSearchFeedback(){
   };
 }
 let pendingSearch = null;
+let searchOperationId = 0;
+let searchController = null;
+let editingFromResults = false;
+function beginSearchOperation(){
+  searchController?.abort();
+  const controller = new AbortController();
+  searchController = controller;
+  const operation = {id:++searchOperationId, signal:controller.signal};
+  els.cancelSearch.hidden = false;
+  return operation;
+}
+function isSearchCurrent(operation){
+  return !!operation && operation.id === searchOperationId && !operation.signal.aborted;
+}
+function finishSearchOperation(operation){
+  if (!isSearchCurrent(operation)) return;
+  searchController = null;
+  els.cancelSearch.hidden = true;
+}
+function resetSearchFeedback(){
+  searchFeedbackGeneration++;
+  searchFeedbackDepth = 0;
+  clearTimeout(searchFeedbackTimer);
+  searchButtons.forEach((button,index)=>{
+    button.disabled = false;
+    button.textContent = searchButtonLabels[index];
+    button.removeAttribute('aria-busy');
+  });
+}
+function cancelActiveSearch(){
+  if (!searchController) return;
+  searchOperationId++;
+  searchController.abort();
+  searchController = null;
+  pendingSearch = null;
+  searching = false;
+  resetSearchFeedback();
+  els.cancelSearch.hidden = true;
+  els.diningActions.hidden = true;
+  els.hotelActions.hidden = true;
+  invalidateDiningSearch();
+  setStatus('検索を中止しました。条件を変えてもう一度検索できます。');
+}
+function scrollToSearchTarget(target){
+  if (!target || document.hidden) return;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({behavior:reducedMotion ? 'instant' : 'smooth', block:'start'});
+}
+function updateResultNavigation(section, count){
+  const hotel = section === 'hotel';
+  const actions = hotel ? els.hotelActions : els.diningActions;
+  const hint = hotel ? els.hotelHint : els.diningHint;
+  if (!actions || !hint) return;
+  actions.hidden = false;
+  hint.textContent = count === 0
+    ? '該当する店舗が0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。'
+    : count === 1
+      ? '1件見つかりました。もっと探したい場合は優待を追加・変更できます。'
+      : `${count}件見つかりました。ここから優待の選び直しや再検索ができます。`;
+  const canExpand = Number(els.radius.value) < 30000;
+  qs(hotel ? '#extendHotelSearch' : '#extendDiningSearch').hidden = !canExpand;
+  qs(hotel ? '#changeHotelOrigin' : '#changeDiningOrigin').hidden = count !== 0;
+  if (hotel) els.hotelSearchAgain.hidden = false;
+  scrollToSearchTarget(hotel ? actions : qs('.results-section'));
+}
+function rerunFromResults(){
+  if (!lastPosition || searchController) return;
+  searchNearby(lastPosition, lastCenterLabel);
+}
+function extendResultSearch(){
+  const options = [...els.radius.options].map(o=>Number(o.value)).filter(Number.isFinite).sort((a,b)=>a-b);
+  const next = options.find(v=>v>Number(els.radius.value));
+  if (!next) return;
+  els.radius.value=String(next);
+  els.radius.dispatchEvent(new Event('change',{bubbles:true}));
+  rerunFromResults();
+}
+function changeResultOrigin(){
+  setSearchMode('place');
+  scrollToSearchTarget(qs('.hero'));
+}
 let lastResults = [];
 let categoryCounts = null;
 let suggestTimer = null;
@@ -149,6 +237,7 @@ init();
 
 async function init(){
   initBenefitTabs({initialSection: guideSearchSelection(location.search).section, onChange(section) {
+    if (activeBenefit !== section) cancelActiveSearch();
     activeBenefit = section;
     track('benefit_tab', {section});
     if (section !== 'expiry') searchRadius.setSection(section);
@@ -217,6 +306,19 @@ async function init(){
   }
 
   els.locate.addEventListener('click', requestLocation);
+  els.cancelSearch?.addEventListener('click', cancelActiveSearch);
+  qs('#editDiningSearch')?.addEventListener('click',()=>{
+    editingFromResults = true;
+    openCompanyPicker();
+  });
+  qs('#extendDiningSearch')?.addEventListener('click',extendResultSearch);
+  qs('#extendHotelSearch')?.addEventListener('click',extendResultSearch);
+  qs('#changeDiningOrigin')?.addEventListener('click',changeResultOrigin);
+  qs('#changeHotelOrigin')?.addEventListener('click',changeResultOrigin);
+  qs('#editHotelSearch')?.addEventListener('click',()=>{
+    scrollToSearchTarget(qs('#hotelFeatures .feature-buttons'));
+  });
+  els.hotelSearchAgain?.addEventListener('click',rerunFromResults);
   els.searchMode?.querySelectorAll('.search-mode-button').forEach(btn => btn.addEventListener('click', () => setSearchMode(btn.dataset.mode)));
   els.placeSearchPanel?.addEventListener('submit', submitPlaceSearch);
   els.placeInput?.addEventListener('input', () => {
@@ -233,6 +335,7 @@ async function init(){
     if(!event.target.closest('button')) openCompanyPicker();
   });
   qs('#companyPickerClose').addEventListener('click', () => els.picker.close());
+  els.picker.addEventListener('close',()=>{editingFromResults=false;});
   els.pickerSearch.addEventListener('input', renderCompanyPicker);
   qs('#companyPickerAll').addEventListener('click', () => {
     pickerCompanies.forEach(c => draftSelection.add(c.id)); renderCompanyPicker();
@@ -243,8 +346,11 @@ async function init(){
   els.pickerApply.addEventListener('click', () => {
     selected.clear(); draftSelection.forEach(id => selected.add(id));
     resetCategoryFilter();
+    const rerun = editingFromResults && !!lastPosition;
+    editingFromResults = false;
     persistSelection(); renderChips(); renderBrandOptions(); els.picker.close();
     invalidateDiningSearch();
+    if (rerun) rerunFromResults();
   });
   els.headerSearchButton?.addEventListener('click', () => {
     closeNavMenu();
@@ -394,6 +500,7 @@ function invalidateDiningSearch(){
   diningSearchRevision++;
   lastResults = []; categoryCounts = null;
   els.count.textContent = '';
+  els.diningActions.hidden = true;
   els.results.className = 'results empty-state';
   els.results.textContent = '条件を選んで「現在地から探す」または「この場所で探す」を押してください';
   renderCategoryFilters();
