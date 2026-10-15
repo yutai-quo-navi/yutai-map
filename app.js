@@ -1,5 +1,5 @@
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
-import {createBrandMark} from './representative-marks.js?v=20261016-kisoji';
+import {createBrandMark} from './representative-marks.js?v=20261016-tenpos';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261014-holding-focus';
@@ -371,7 +371,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   return bubble;
 }
 const issuerDisplayNames = {
-  kisoji:'木曽路', bronco:'ブロンコビリー', tenallied:'テンアライド', kourakuen:'幸楽苑', hotland:'ホットランドHD', eternal:'エターナルHG', gift:'ギフトHD', hikari:'光フードサービス', genki:'Genki GDC', amiyaki:'あみやき亭', towa:'東和フード',
+  tenpos:'テンポスHD', kisoji:'木曽路', bronco:'ブロンコビリー', tenallied:'テンアライド', kourakuen:'幸楽苑', hotland:'ホットランドHD', eternal:'エターナルHG', gift:'ギフトHD', hikari:'光フードサービス', genki:'Genki GDC', amiyaki:'あみやき亭', towa:'東和フード',
   skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',

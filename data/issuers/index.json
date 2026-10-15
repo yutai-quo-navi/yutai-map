@@ -295,6 +295,13 @@
       "name": "木曽路",
       "status": "public",
       "config": "./data/issuers/kisoji/config.json"
+    },
+    {
+      "id": "tenpos",
+      "code": "2751",
+      "name": "テンポスホールディングス",
+      "status": "public",
+      "config": "./data/issuers/tenpos/config.json"
     }
   ]
 }
