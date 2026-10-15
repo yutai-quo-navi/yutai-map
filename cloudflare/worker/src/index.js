@@ -113,16 +113,25 @@ async function handleRequest(request, env, usage) {
       const referenceSearches = (await Promise.all(referenceConfigs.map(config =>
         prepareReferenceSearch(env, config, brand, usage)
       ))).filter(Boolean);
-      const upstreamRequests = referenceSearches.reduce((total, search) => total + search.aliasChunks.length, 0);
-      if (upstreamRequests > OPENPOI_MAX_REQUESTS) throw new Error('OpenPOI request budget exceeded');
-
-      const [geo, referenceResults] = await Promise.all([
+      // One visitor search may select dozens of companies. Spread the upstream
+      // budget fairly across issuers instead of rejecting the entire search.
+      // Broad searches must leave headroom for Worker subrequests and upstream limits.
+      // The selected companies still share a single server-side rate-limit slot.
+      const upstreamBudget = issuers.length > 20 ? 24 : OPENPOI_MAX_REQUESTS;
+      const budget = allocateReferenceBudget(referenceSearches, upstreamBudget);
+      const [geo, outcomes] = await Promise.all([
         searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand, usage),
-        Promise.all(referenceSearches.map(search =>
+        Promise.allSettled(budget.searches.map(search =>
           searchReferenceIssuer(search, lat, lng, radius)
-        )).then(groups => groups.flat())
+        ))
       ]);
-
+      const successful = outcomes.filter(result => result.status === 'fulfilled').map(result => result.value);
+      const failures = outcomes.length - successful.length;
+      // When the sole reference source fails, keep the existing explicit error.
+      if (failures && failures === outcomes.length && !geo.results.length) throw new Error('OpenPOI unavailable');
+      const referenceResults = successful.flatMap(result => result.results);
+      const incomplete = budget.truncated || failures > 0 ||
+        successful.some(result => result.failedChunks > 0);
       const categoryCounts = {...geo.counts};
       for(const s of referenceResults){ const key=s.category || 'restaurant'; categoryCounts[key]=(categoryCounts[key] || 0)+1; }
       categoryCounts.all=Object.values(categoryCounts).reduce((a,b)=>a+b,0);
@@ -130,7 +139,13 @@ async function handleRequest(request, env, usage) {
         .sort((a,b) => a.distance - b.distance)
         .slice(0, MAX_RESULTS);
 
-      return json({ results: combined, count: combined.length, limit: MAX_RESULTS, category_counts: categoryCounts }, 200, {
+      return json({
+        results: combined, count: combined.length, limit: MAX_RESULTS,
+        category_counts: categoryCounts,
+        incomplete,
+        reference_chunks_checked: budget.checked,
+        reference_chunks_total: budget.total
+      }, 200, {
         ...cors,
         'Cache-Control': 'public, max-age=30'
       });
@@ -271,6 +286,26 @@ async function prepareReferenceSearch(env, config, brand, usage){
   return {issuer, refs, aliasChunks};
 }
 
+// Preserve some coverage for every selected reference issuer. A hard limit
+// protects upstream capacity, but exceeding it must not blank out geo results.
+function allocateReferenceBudget(searches, maxRequests){
+  const total=searches.reduce((sum,search)=>sum+search.aliasChunks.length,0);
+  const scheduled=searches.map(search=>({...search,aliasChunks:[]}));
+  let checked=0, round=0;
+  while(checked<maxRequests){
+    let progressed=false;
+    for(let i=0;i<searches.length && checked<maxRequests;i++){
+      if(round>=searches[i].aliasChunks.length) continue;
+      scheduled[i].aliasChunks.push(searches[i].aliasChunks[round]);
+      checked++;
+      progressed=true;
+    }
+    if(!progressed) break;
+    round++;
+  }
+  return {searches:scheduled.filter(search=>search.aliasChunks.length),checked,total,truncated:checked<total};
+}
+
 async function searchReferenceIssuer({issuer, refs, aliasChunks}, lat, lng, radius){
   const responses = await Promise.allSettled(aliasChunks.map(async group => {
     const params = new URLSearchParams({
@@ -331,8 +366,10 @@ async function searchReferenceIssuer({issuer, refs, aliasChunks}, lat, lng, radi
     });
   }
 
-  return dedupeResults(matched)
-    .sort((a,b) => a.distance - b.distance);
+  return {
+    results:dedupeResults(matched).sort((a,b) => a.distance - b.distance),
+    failedChunks:responses.filter(response=>response.status==='rejected').length
+  };
 }
 
 function matchReferenceStore(p, refs){
@@ -480,5 +517,5 @@ function json(body,status,headers){
 }
 
 function parseIssuers(raw){
-  return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,20);
+  return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,60);
 }
