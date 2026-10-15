@@ -2850,6 +2850,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "3561-2027-01-1",
+      "code": "3561",
+      "company_name": "力の源ホールディングス",
+      "benefit_name": "株主優待券",
+      "issue": "",
+      "expiry_date": "2027-01-31",
+      "research_month": "2027-01",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-15",
+      "status": "confirmed",
+      "notes": "2026-10-15 ユーザー確認：株主優待券の有効期限2027年1月31日。",
+      "issuer_id": "chikaranomoto",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "exp-511e517e-290b-4d89-82c8-284e8a9a965e",
       "code": "8136",
       "company_name": "サンリオ",
