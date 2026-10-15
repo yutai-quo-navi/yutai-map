@@ -3814,6 +3814,143 @@
           "store_count": 5
         }
       ]
+    },
+    "tenpos": {
+      "revision": 227,
+      "brands": [
+        {
+          "brand_name": "THE漁師DON",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ええねん",
+          "store_count": 3
+        },
+        {
+          "brand_name": "おさかな食堂やまと",
+          "store_count": 2
+        },
+        {
+          "brand_name": "つきじ海賓",
+          "store_count": 50
+        },
+        {
+          "brand_name": "とみうら亭",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とろ家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "やまでん丸",
+          "store_count": 3
+        },
+        {
+          "brand_name": "やまと寿司",
+          "store_count": 14
+        },
+        {
+          "brand_name": "エビス参",
+          "store_count": 8
+        },
+        {
+          "brand_name": "カレーのあさくま",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ステーキのあさくま",
+          "store_count": 72
+        },
+        {
+          "brand_name": "ニューやまと",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ハッケン酒場",
+          "store_count": 15
+        },
+        {
+          "brand_name": "ミサキイチバ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ヤマトサカナ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ワヤンバリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "八剣伝",
+          "store_count": 13
+        },
+        {
+          "brand_name": "八右衛門",
+          "store_count": 1
+        },
+        {
+          "brand_name": "大衆餃子酒場ニューマルケン",
+          "store_count": 3
+        },
+        {
+          "brand_name": "天丼",
+          "store_count": 1
+        },
+        {
+          "brand_name": "居心伝",
+          "store_count": 1
+        },
+        {
+          "brand_name": "心八剣伝",
+          "store_count": 1
+        },
+        {
+          "brand_name": "浜焼き屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "海心丸",
+          "store_count": 1
+        },
+        {
+          "brand_name": "温泉つけ麺維新",
+          "store_count": 1
+        },
+        {
+          "brand_name": "炭火のでん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "炭火焼鳥てんちゃん",
+          "store_count": 2
+        },
+        {
+          "brand_name": "焼そばセンター",
+          "store_count": 3
+        },
+        {
+          "brand_name": "越後つけ麺どんどこ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "越後つけ麺維新",
+          "store_count": 2
+        },
+        {
+          "brand_name": "越後維新",
+          "store_count": 2
+        },
+        {
+          "brand_name": "酔虎伝",
+          "store_count": 3
+        },
+        {
+          "brand_name": "餃子食堂マルケン",
+          "store_count": 14
+        }
+      ]
     }
   }
 }
