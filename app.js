@@ -870,11 +870,13 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
       ['official_coordinates','worker_reference'].includes(company.locationMode)
     );
     const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
-    const d1Groups = d1Targets.length
-      ? await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius, operation.signal)))
-      : [];
+    // All selected D1 issuers belong to one visitor search. Sending one
+    // request prevents a 44-company search from spending 3 rate-limit slots.
+    const d1Group = d1Targets.length
+      ? await queryD1StoreApi(d1Targets, pos, radius, operation.signal)
+      : {results:[],categoryCounts:{},incomplete:false};
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
-    const d1Results = d1Groups.flatMap(g=>g.results);
+    const d1Results = d1Group.results;
     const batches = openPoiTargets.flatMap(company =>
       (company.poiSearchGroups || chunk(company.poiSearchNames || company.aliases, 14)).map(aliases => ({company,aliases}))
     );
@@ -885,8 +887,8 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     if (failures && !raw.length) throw new Error('一部の店舗情報を取得できませんでした');
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
     categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
-    for (const group of d1Groups) {
-      for (const id of Object.keys(categoryLabels)) categoryCounts[id] += Number(group.categoryCounts[id] || 0);
+    for (const id of Object.keys(categoryLabels)) {
+      categoryCounts[id] += Number(d1Group.categoryCounts[id] || 0);
     }
     for (const item of dedupe(responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value))) {
       categoryCounts.all++;
@@ -896,8 +898,15 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
-    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${failures ? '・一部の検索先から情報を取得できませんでした' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
+    const incomplete = !!d1Group.incomplete || failures > 0;
+    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${incomplete ? '・一部の系列店舗情報は照合できていません' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
     updateResultNavigation('dining', els.results.querySelectorAll('.card').length);
+    if (incomplete) {
+      els.diningHint.textContent = (els.results.querySelectorAll('.card').length
+        ? '近隣店舗の一部を表示しています。'
+        : '今回の結果は暫定的な0件です。') +
+        '一部の優待会社の店舗照合が未完了です。会社を絞って再検索してください。';
+    }
   } catch (error) {
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
     console.error(error);
@@ -993,7 +1002,7 @@ async function queryD1StoreApi(targets, pos, radius, signal){
     };
   }).filter(Boolean);
   const counts=data.category_counts || results.reduce((out,s)=>{out.all++;out[s.category]=(out[s.category] || 0)+1;return out;},{all:0});
-  return {results,categoryCounts:counts};
+  return {results,categoryCounts:counts,incomplete:data.incomplete === true};
 }
 
 async function queryOpenPOI(batch, pos, radius, signal){
