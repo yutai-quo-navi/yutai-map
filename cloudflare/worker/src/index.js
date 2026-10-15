@@ -226,6 +226,46 @@ async function findReferenceConfigs(env, issuers, usage){
 
 async function searchGeoStores(env, issuers, lat, lng, radius, category, brand, usage){
   if (!issuers.length) return {results:[],counts:{}};
+  if (issuers.length > 20) return searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage);
+
+  const latDelta = radius / 111320;
+  const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
+  const lngDelta = radius / (111320 * cos);
+  const placeholders = issuers.map(() => '?').join(',');
+  const sql = `SELECT issuer_id, store_id, name, address, phone, brand_name, category, lat, lng, official_url
+    FROM stores
+    WHERE issuer_id IN (${placeholders})
+      AND lat BETWEEN ? AND ?
+      AND lng BETWEEN ? AND ?
+      ${brand ? 'AND brand_name = ?' : ''}`;
+
+  const results = await readRows(env, sql, [
+    ...issuers,
+    lat-latDelta, lat+latDelta,
+    lng-lngDelta, lng+lngDelta,
+    ...(brand ? [brand] : [])
+  ], usage);
+
+  const nearby = results
+    .map(s => ({
+      ...s,
+      distance: haversine(lat, lng, Number(s.lat), Number(s.lng))
+    }))
+    .filter(s => s.distance <= radius)
+    .map(s => ({...s,distance:Math.round(s.distance)}));
+  const counts = {};
+  for (const s of nearby) {
+    const key=s.category || 'restaurant';
+    counts[key]=(counts[key] || 0)+1;
+  }
+  return {counts, results:nearby
+    .filter(s => !category || s.category === category)
+    .sort((a,b) => a.distance - b.distance)
+    .slice(0, MAX_RESULTS)};
+}
+
+async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage){
+  if (!issuers.length) return {results:[],counts:{}};
 
   const latDelta = radius / 111320;
   const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
