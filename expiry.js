@@ -1,7 +1,7 @@
-// Dining: usable deadlines first; undated and expired benefits share store-count order.
+// Dining: only visible urgent deadlines (<60 days) take priority; all others use store counts.
 // A visible expired badge (e.g. Balnibarbi) does not force its card to the bottom.
 export function compareDiningPriority(a,b) {
-  const active = item => Number.isFinite(item.days) && item.days >= 0 && !item.ended;
+  const active = item => Number.isFinite(item.days) && item.days >= 0 && item.days < 60 && !item.ended;
   return Number(active(b))-Number(active(a)) ||
     (active(a) && active(b) ? a.days-b.days : 0) || (b.count || 0)-(a.count || 0);
 }

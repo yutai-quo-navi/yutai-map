@@ -8,7 +8,7 @@ test('dining uses deadlines then actual counts; expired Balnibarbi shares undate
     {id:'major',count:3000},{id:'today',days:0,count:1},{id:'later',days:136,count:59},
     {id:'near-small',days:46,count:831},{id:'near-large',days:46,count:1229}];
   assert.deepEqual(rows.sort(compareDiningPriority).map(x=>x.id),
-    ['today','near-large','near-small','later','major','balnibarbi','tiny']);
+    ['today','near-large','near-small','major','balnibarbi','later','tiny']);
 });
 
 test('published HTML is already ordered using complete public aggregate counts',async()=>{
@@ -32,4 +32,10 @@ test('Hikari expiry is the confirmed user supplied electronic dining coupon',asy
  const row=ledger.entries.find(e=>e.issuer_id==='hikari');
  assert.equal(row.expiry_date,'2027-02-28');assert.equal(row.benefit_name,'電子利用クーポン');
  assert.equal(row.category,'dining');assert.equal(row.verification_method,'user');
+});
+
+test('a distant Hikari expiry never outranks McDonalds; 60-day boundary matches badges',()=>{
+ const rows=[{id:'hikari',days:136,count:59},{id:'mcd',days:167,count:3040},
+ {id:'urgent',days:59,count:1},{id:'boundary',days:60,count:100}];
+ assert.deepEqual(rows.sort(compareDiningPriority).map(x=>x.id),['urgent','mcd','boundary','hikari']);
 });
