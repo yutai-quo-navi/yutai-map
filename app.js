@@ -157,15 +157,18 @@ function updateResultNavigation(section, count){
   if (!actions || !hint) return;
   actions.hidden = false;
   const unit = hotel ? '施設' : '店舗';
+  const nationwideHotel = hotel && els.radius.value === 'all';
   hint.textContent = count === 0
-    ? `該当する${unit}は0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。`
+    ? nationwideHotel
+      ? '全国の対象施設が0件でした。宿泊優待の選択を変更して再検索してください。'
+      : `該当する${unit}は0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。`
     : count === 1
       ? `1${unit === '施設' ? '施設' : '件'}見つかりました。もっと探したい場合は優待を追加・変更できます。`
       : `${count}${unit === '施設' ? '施設' : '件'}見つかりました。ここから優待の選び直しや再検索ができます。`;
   const options = [...els.radius.options].map(option=>option.value);
   const canExpand = options.indexOf(els.radius.value) < options.length - 1;
   qs(hotel ? '#extendHotelSearch' : '#extendDiningSearch').hidden = !canExpand;
-  qs(hotel ? '#changeHotelOrigin' : '#changeDiningOrigin').hidden = count !== 0;
+  qs(hotel ? '#changeHotelOrigin' : '#changeDiningOrigin').hidden = count !== 0 || nationwideHotel;
   if (hotel) els.hotelSearchAgain.hidden = false;
   scrollToSearchTarget(hotel ? actions : qs('.results-section'));
 }
