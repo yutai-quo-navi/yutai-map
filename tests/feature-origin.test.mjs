@@ -9,6 +9,7 @@ function setup({place=false, denied=false} = {}) {
   const context=vm.createContext({
     requestCurrentPosition,lastPosition:null,lastCenterLabel:'現在地',
     specialFeatures:{refresh(){calls.refresh++;},invalidate(){calls.refresh++;}},
+    smoothNavigator:{stop(){},scrollTo(){}},
     els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false,textContent:'現在地から探す',setAttribute(){},removeAttribute(){}},
       cancelSearch:{hidden:true},diningActions:{hidden:true},hotelActions:{hidden:true},radius:{value:'3000',options:[]}},
     navigator:{geolocation:{getCurrentPosition(success,failure){calls.geo++;denied ? failure({code:1}) : success({coords:{latitude:43.06,longitude:141.35}});}}},
