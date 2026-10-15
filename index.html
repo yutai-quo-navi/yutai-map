@@ -23,6 +23,7 @@
   <title>株主優待券が使えるお店検索｜優待券使えるお店検索 α</title>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://yutai-quo-navi.github.io/yutai-map/#website","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","description":"株主優待が使える飲食店・ホテルを、現在地や指定した場所から検索。優待会社・ブランド別ガイドと宿泊優待ガイドで、対象店の探し方や利用条件、公式情報を確認できます。","inLanguage":"ja-JP"},{"@type":"WebApplication","@id":"https://yutai-quo-navi.github.io/yutai-map/#app","url":"https://yutai-quo-navi.github.io/yutai-map/","name":"優待券使えるお店検索 α","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","isAccessibleForFree":true,"description":"株主優待が使える飲食店・ホテルを、現在地や指定した場所から検索。優待会社・ブランド別ガイドと宿泊優待ガイドで、対象店の探し方や利用条件、公式情報を確認できます。","inLanguage":"ja-JP","isPartOf":{"@id":"https://yutai-quo-navi.github.io/yutai-map/#website"}}]}</script>
   <link rel="stylesheet" href="./style.css?v=20261012-ui-quality">
+  <link rel="stylesheet" href="./search-flow.css?v=20261016-search-navigation">
   <link rel="stylesheet" href="./assets/brand.css?v=20261005-brand2">
   <link rel="preload" as="image" href="./assets/logo-local-yoshinoya.webp">
   <link rel="preload" as="image" href="./assets/logo-ichibanya-20261014.webp">
@@ -96,6 +97,7 @@
       </form>
 
       <p id="status" class="status" aria-live="polite">ボタンを押すまで現在地は取得しません</p>
+      <button id="cancelSearchButton" class="search-cancel-button" type="button" hidden>検索を中止する</button>
     </section>
 
     <section id="benefitSelection" class="benefit-window" aria-label="検索条件">
@@ -183,7 +185,17 @@
             <div class="feature-item"><button class="feature-button benefit-choice" type="button" data-feature="wealth-hotels" aria-pressed="false" title="ウェルス・マネジメント・株主様ご優待券"><span class="benefit-choice-copy"><span class="benefit-choice-heading"><span class="benefit-choice-name">ウェルスマネジメント</span><span class="benefit-choice-count" data-ui-number></span></span><span class="benefit-choice-detail"><span class="feature-caption">株主優待券で宿泊</span></span></span><span class="representative-mark has-real-logo" aria-hidden="true" data-representative-brand="HOTEL EMISIA"><img class="representative-mark-image" src="./assets/hotel-logo-wealth-hotels.svg" alt="" loading="lazy" decoding="async"></span></button></div>
             <div class="feature-item"><button class="feature-button benefit-choice" type="button" data-feature="wakita-hotels" aria-pressed="false" title="ワキタ・ホテルコルディア利用券（電子チケット）"><span class="benefit-choice-copy"><span class="benefit-choice-heading"><span class="benefit-choice-name">ワキタ</span><span class="benefit-choice-count" data-ui-number></span></span><span class="benefit-choice-detail"><span class="feature-caption">株主優待券で宿泊</span></span></span><span class="representative-mark has-real-logo" aria-hidden="true" data-representative-brand="HOTEL CORDIA"><img class="representative-mark-image" src="./assets/hotel-logo-wakita-hotels.svg" alt="" loading="lazy" decoding="async"></span></button></div>
             <div class="feature-item"><button class="feature-button benefit-choice" type="button" data-feature="vision-hotels" aria-pressed="false" title="ビジョン・株主優待券（クーポンコード）"><span class="benefit-choice-copy"><span class="benefit-choice-heading"><span class="benefit-choice-name">ビジョン</span><span class="benefit-choice-count" data-ui-number></span></span><span class="benefit-choice-detail"><span class="feature-caption">株主優待券で宿泊</span></span></span><span class="representative-mark" aria-hidden="true"><span class="representative-mark-fallback"><span class="representative-mark-wording"><span class="representative-mark-name">VISION GLAMPING</span><span class="representative-mark-sub">ビジョングランピング</span></span></span></span></button></div>
-          </div><div class="feature-results" aria-live="polite"></div></section>
+          </div>
+          <button id="hotelSearchAgain" class="search-repeat-button" type="button" hidden>この条件で再検索</button>
+          <div id="hotelResultActions" class="search-result-actions" hidden>
+            <p id="hotelResultHint" class="search-result-hint" role="status"></p>
+            <div class="search-result-buttons">
+              <button id="editHotelSearch" type="button">宿泊優待を追加・変更</button>
+              <button id="extendHotelSearch" type="button" hidden>検索範囲を広げて再検索</button>
+              <button id="changeHotelOrigin" type="button" hidden>場所を変える</button>
+            </div>
+          </div>
+          <div class="feature-results" aria-live="polite"></div></section>
       </div>
       <div id="expiryPanel" role="tabpanel" aria-labelledby="expiryTab" hidden></div>
       </div>
@@ -196,6 +208,14 @@
       <div class="section-title-row sticky-title">
         <h2>近い順</h2>
         <span id="resultCount" class="result-count" data-ui-number></span>
+      </div>
+      <div id="resultActions" class="search-result-actions" hidden>
+        <p id="resultHint" class="search-result-hint" role="status"></p>
+        <div class="search-result-buttons">
+          <button id="editDiningSearch" type="button">外食優待を追加・変更</button>
+          <button id="extendDiningSearch" type="button" hidden>検索範囲を広げて再検索</button>
+          <button id="changeDiningOrigin" type="button" hidden>場所を変える</button>
+        </div>
       </div>
       <div id="results" class="results empty-state">
         <p>現在地から探すと<br>ここに近い優待店が表示されます</p>
@@ -343,7 +363,7 @@
       </div></div>
   <footer class="footer site-footer"><div class="site-footer-brand">株主優待券店舗とQUOガソリン給油検索</div><div class="footer-links"><a href="./guides/dining/">優待・ブランドガイド</a><a href="./guides/hotels/">宿泊優待ガイド</a><button id="feedbackButton" type="button">情報提供</button><a href="./privacy.html">プライバシー</a><a href="https://openpoiapi.com/attribution.html" target="_blank" rel="noopener noreferrer">出典: OpenPOI API</a></div><p>店舗・優待情報は変更される場合があります。ご利用前に各社公式情報をご確認ください。</p><a class="creator-link" href="https://x.com/yutai_samurai" target="_blank" rel="noopener noreferrer" aria-label="運営者 yutai_samurai のX"><img src="./assets/yutai-samurai.png" width="17" height="17" alt="" loading="lazy"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-7.4L5.5 22H2.3l7.3-8.5L.8 2h6.5l4.4 6.7L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg><span>@yutai_samurai</span></a></footer>
 
-  <script src="./app.js?v=20261016-anrakutei" type="module"></script>
+  <script src="./app.js?v=20261016-search-navigation" type="module"></script>
 </body>
 </html>
 
