@@ -3174,6 +3174,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "3087-2027-05-1",
+      "code": "3087",
+      "company_name": "ドトール・日レスホールディングス",
+      "benefit_name": "株主優待券",
+      "issue": "",
+      "expiry_date": "2027-05-31",
+      "research_month": "2027-05",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-15",
+      "status": "confirmed",
+      "notes": "2026-10-15 ユーザー確認：有効期限2027年5月31日。対象発行回・券種詳細は未確認。",
+      "issuer_id": "dnh",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "7611-2027-05-1",
       "code": "7611",
       "company_name": "ハイデイ日高",
