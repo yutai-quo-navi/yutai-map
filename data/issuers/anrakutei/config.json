@@ -1,0 +1,83 @@
+{
+  "id": "anrakutei",
+  "code": "7562",
+  "name": "安楽亭",
+  "fullName": "安楽亭",
+  "status": "public",
+  "sourceUrl": "https://www.anrakutei.co.jp/ir/youtaitenpo/ichiran.pdf",
+  "storeSearchUrl": "https://anrakutei.jp/map/result/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式の株主優待券取扱店舗一覧（2026年6月1日版）の500円割引券対象店を掲載。ぼたん店・コスモス店、優待可否未確認の新店は掲載対象外。指定商品引換券は安楽亭東戸塚店・からくに屋・上海菜館・カフェビーンズでは使えません。",
+  "note": "公式の株主優待券取扱店舗一覧（2026年6月1日版）の500円割引券対象店を掲載。ぼたん店・コスモス店、優待可否未確認の新店は掲載対象外。指定商品引換券は安楽亭東戸塚店・からくに屋・上海菜館・カフェビーンズでは使えません。",
+  "aliases": [
+    "安楽亭",
+    "七輪房",
+    "ステーキのどん",
+    "しゃぶしゃぶどん亭",
+    "フォルクス",
+    "からくに屋",
+    "花炎亭",
+    "上海菜館",
+    "カフェ ビーンズ",
+    "どん亭",
+    "カフェビーンズ"
+  ],
+  "catalogBrands": [
+    "安楽亭",
+    "七輪房",
+    "ステーキのどん",
+    "しゃぶしゃぶどん亭",
+    "フォルクス",
+    "からくに屋",
+    "花炎亭",
+    "上海菜館",
+    "カフェ ビーンズ"
+  ],
+  "searchNames": [
+    "安楽亭",
+    "七輪房",
+    "ステーキのどん",
+    "しゃぶしゃぶどん亭",
+    "フォルクス",
+    "からくに屋",
+    "花炎亭",
+    "上海菜館",
+    "カフェ ビーンズ",
+    "どん亭",
+    "カフェビーンズ"
+  ],
+  "categories": {
+    "安楽亭": "restaurant",
+    "七輪房": "restaurant",
+    "ステーキのどん": "restaurant",
+    "しゃぶしゃぶどん亭": "restaurant",
+    "フォルクス": "restaurant",
+    "からくに屋": "restaurant",
+    "花炎亭": "restaurant",
+    "上海菜館": "restaurant",
+    "カフェ ビーンズ": "restaurant",
+    "どん亭": "restaurant",
+    "カフェビーンズ": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-16",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 250,
+    "maxStores": 350,
+    "maxAgeDays": 25,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "www.anrakutei.co.jp",
+      "anrakutei.jp",
+      "www.steak-don.jp",
+      "www.don-tei.jp",
+      "www.volks-steak.jp"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

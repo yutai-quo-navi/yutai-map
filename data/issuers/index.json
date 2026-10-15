@@ -302,6 +302,13 @@
       "name": "テンポスホールディングス",
       "status": "public",
       "config": "./data/issuers/tenpos/config.json"
+    },
+    {
+      "id": "anrakutei",
+      "code": "7562",
+      "name": "安楽亭",
+      "status": "public",
+      "config": "./data/issuers/anrakutei/config.json"
     }
   ]
 }
