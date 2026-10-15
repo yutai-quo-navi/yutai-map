@@ -1,0 +1,70 @@
+/* Result navigation: keep search controls close to the results, not behind the long issuer grid. */
+.search-cancel-button,
+.search-repeat-button,
+.search-result-buttons button {
+  appearance: none;
+  min-height: 42px;
+  border: 1px solid var(--line, #e5d8c7);
+  border-radius: 12px;
+  background: var(--surface, #fff);
+  color: var(--text, #36291d);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.search-cancel-button {
+  margin-top: 8px;
+  color: #9b3c32;
+  border-color: #eed6d2;
+  background: #fff8f7;
+}
+.search-repeat-button {
+  display: block;
+  width: 100%;
+  margin: 12px 0 4px;
+  border-color: var(--accent-border, #ebc99d);
+  background: var(--surface-soft, #fff7eb);
+}
+.search-result-actions {
+  margin: 12px 0 14px;
+  padding: 12px 13px;
+  border: 1px solid var(--line, #ebdcc6);
+  border-radius: 15px;
+  background: var(--surface-soft, #fff7eb);
+}
+.search-result-hint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.65;
+  font-weight: 600;
+}
+.search-result-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.search-result-buttons button {
+  flex: 1 1 180px;
+  background: var(--surface, #fff);
+}
+.search-result-buttons button:first-child {
+  border-color: var(--accent-border, #ebc99d);
+}
+.search-result-buttons button:disabled,
+.search-repeat-button:disabled {
+  cursor: wait;
+  opacity: .55;
+}
+.results-section,
+#hotelResultActions,
+#hotelFeatures .feature-buttons {
+  scroll-margin-top: 20px;
+}
+@media (max-width: 480px) {
+  .search-result-buttons button { flex-basis: 100%; }
+  .search-result-actions { padding: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
