@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-14",
+  "updated": "2026-10-15",
   "issuers": [
     {
       "id": "skylark",
@@ -239,6 +239,13 @@
       "name": "東和フードサービス",
       "status": "public",
       "config": "./data/issuers/towa/config.json"
+    },
+    {
+      "id": "hikari",
+      "code": "138A",
+      "name": "光フードサービス",
+      "status": "public",
+      "config": "./data/issuers/hikari/config.json"
     }
   ]
 }

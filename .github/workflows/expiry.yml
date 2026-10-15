@@ -33,6 +33,10 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12.14'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
       - name: Install parser test dependencies
         run: python -m pip install --require-hashes -r tools/requirements-colowide.txt
       - name: Validate history and build
@@ -77,7 +81,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/expiry.json
+          node tools/build_dining_order.mjs
+          git add data/expiry.json index.html
           if ! git diff --cached --quiet; then
             git commit -m 'Build public expiry ledger from CSV'
             git push origin HEAD:main

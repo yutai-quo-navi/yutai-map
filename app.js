@@ -1,9 +1,9 @@
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
-import {createBrandMark} from './representative-marks.js?v=20261014-restaurants';
+import {createBrandMark} from './representative-marks.js?v=20261015-hikari';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261014-holding-focus';
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareBenefitPriority} from './expiry.js?v=20261009-chimney-public';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority} from './expiry.js?v=20261015-dining-order';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-dom-reconcile';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
@@ -371,7 +371,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   return bubble;
 }
 const issuerDisplayNames = {
-  genki:'Genki GDC', amiyaki:'あみやき亭', towa:'東和フード',
+  hikari:'光フードサービス', genki:'Genki GDC', amiyaki:'あみやき亭', towa:'東和フード',
   skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
@@ -412,6 +412,8 @@ function renderChips(){
       (company.showExpiredDeadline ? latestExpiredDeadline(entries, company.id, now) : null))?.days,
     count: counts.get(company.id) ?? company.officialStores.length
   });
+  // HTML is published in deadline/store-count order from existing D1 aggregates.
+  // Keep that published order while remote catalogues load (no logo jumps).
   // HTML already displays the complete grid on first paint. Keep that exact
   // visual order when asynchronous deadlines and store counts arrive. Otherwise
   // the same cards jump twice: once after issuer/expiry loading and again after
@@ -425,7 +427,7 @@ function renderChips(){
       if (a.position != null && b.position != null) return a.position-b.position;
       if (a.position != null) return -1;
       if (b.position != null) return 1;
-      return compareBenefitPriority(a.priority,b.priority);
+      return compareDiningPriority(a.priority,b.priority);
     })
     .map(item => item.company);
   available.forEach((c,index) => {

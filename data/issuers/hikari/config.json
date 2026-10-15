@@ -1,0 +1,64 @@
+{
+  "id": "hikari",
+  "code": "138A",
+  "name": "光フードサービス",
+  "fullName": "光フードサービス",
+  "status": "public",
+  "sourceUrl": "https://hikari-food-service.jp/ir/benefit.html",
+  "storeSearchUrl": "https://shop.hikari-food-service.jp/stores",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式の優待対象店舗表示があり営業中の国内店舗。金山家・対象表示なし・開業前店舗を除外。",
+  "note": "大黒・大国・魚椿などのうち公式の優待対象店舗のみ掲載。金山家では利用できません。",
+  "aliases": [
+    "大黒/大国",
+    "魚椿",
+    "寿司魚椿",
+    "酔い処 ニュー大黒",
+    "立喰焼肉 大黒",
+    "どての大黒",
+    "大黒",
+    "大国",
+    "焼きとん大黒",
+    "焼きとん大国",
+    "光フードサービス"
+  ],
+  "catalogBrands": [
+    "大黒/大国",
+    "魚椿",
+    "寿司魚椿",
+    "酔い処 ニュー大黒",
+    "立喰焼肉 大黒",
+    "どての大黒"
+  ],
+  "searchNames": [
+    "光フードサービス",
+    "大黒",
+    "大国",
+    "魚椿"
+  ],
+  "categories": {
+    "大黒/大国": "restaurant",
+    "魚椿": "restaurant",
+    "寿司魚椿": "restaurant",
+    "酔い処 ニュー大黒": "restaurant",
+    "立喰焼肉 大黒": "restaurant",
+    "どての大黒": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 40,
+    "maxStores": 120,
+    "maxAgeDays": 25,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "shop.hikari-food-service.jp"
+    ],
+    "maxAdded": 20,
+    "maxRemoved": 8,
+    "maxChanged": 50,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

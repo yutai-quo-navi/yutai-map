@@ -7,7 +7,7 @@ const dining = [
   'skylark','colowide','create','zensho','toridoll','yoshinoya','mcd',
   'monogatari','matsuya','royal','balnibarbi','daiichikosho','fujio','srs',
   'arclands','kineya','saintmarc','chimney','ringerhut','hiday','ichibanya',
-  'komeda','dnh','mos','yamaokaya','chikaranomoto','ohsho','joyfull','yossix','foodlife','kura','genki','amiyaki','towa'
+  'komeda','dnh','mos','yamaokaya','chikaranomoto','ohsho','joyfull','yossix','foodlife','kura','genki','amiyaki','towa','hikari'
 ];
 const hotel = [
   'daiwa-house-hotels','seibu-free-hotels','kyoritsu-hotel-discount',

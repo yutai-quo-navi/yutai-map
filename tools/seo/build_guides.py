@@ -133,7 +133,9 @@ def collect(root, query):
     # Detect a collector finishing mid-build before committing a mismatched brand projection.
     if refreshed and stats != {row['issuer_id']: row for row in query('SELECT issuer_id,catalog_revision,geo_count,reference_count FROM issuer_stats')}:
         raise RuntimeError('Brand catalogue changed during generation; retry on the next run')
-    return {'issuers': issuers, 'features': projected, 'state': state}
+    return {'issuers': issuers, 'features': projected, 'state': state,
+            'store_counts': {c['id']: stats[c['id']]['geo_count'] + stats[c['id']]['reference_count']
+                             for c in issuers if c['id'] in stats}}
 
 
 def search_url(**params):
@@ -308,6 +310,10 @@ def main():
     query = D1()
     source = collect(args.root, query)
     publish(args.root, source)
+    if set(source['store_counts']) != {c['id'] for c in source['issuers']}:
+        raise ValueError('Incomplete dining aggregate counts; preserve published grid')
+    (args.root / 'data/issuers/store-counts.json').write_text(
+        json.dumps(source['store_counts'], ensure_ascii=False, indent=2, sort_keys=True) + '\n')
     from private_metadata import publish_private_metadata
     publish_private_metadata(args.root, query)
     record = f'SEO generation: D1 rows_read={query.rows_read}; rows_written=0. No nationwide store scan.\n'

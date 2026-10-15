@@ -2854,6 +2854,30 @@
       "expiry_year": 2027
     },
     {
+      "id": "138a-2027-02-1",
+      "code": "138A",
+      "company_name": "光フードサービス",
+      "benefit_name": "電子利用クーポン",
+      "issue": "",
+      "expiry_date": "2027-02-28",
+      "research_month": "2027-02",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [
+        "大黒／大国／魚椿（公式指定店舗）"
+      ],
+      "source_url": "https://hikari-food-service.jp/ir/benefit.html",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-15",
+      "status": "confirmed",
+      "notes": "2026-10-15 ユーザー確認：直近の有効期限。金山家など優待対象外店舗は掲載しない。",
+      "issuer_id": "hikari",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "3479-2027-02-1",
       "code": "3479",
       "company_name": "TKP",

@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  hikari: {name:'立呑み 焼きとん 大黒',sub:'大黒',color:'#252525',symbol:'大',asset:'./assets/logo-hikari-daikoku.webp'},
   amiyaki: {name:"あみやき亭",sub:"あみやき亭",color:"#da252b",symbol:'店',asset:"./assets/logo-original-amiyaki.png"},
   towa: {name:"椿屋珈琲",sub:"椿屋珈琲",color:"#253c20",symbol:'店',asset:"./assets/logo-original-towa.png"},
 
