@@ -3062,6 +3062,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "8153-2027-03-1",
+      "code": "8153",
+      "company_name": "モスフードサービス",
+      "benefit_name": "株主優待券",
+      "issue": "",
+      "expiry_date": "2027-03-31",
+      "research_month": "2027-03",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-15",
+      "status": "confirmed",
+      "notes": "2026-10-15 ユーザー確認：株主優待券の有効期限2027年3月31日。",
+      "issuer_id": "mos",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "9416-2027-03-booking",
       "code": "9416",
       "company_name": "ビジョン",
