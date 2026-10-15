@@ -132,9 +132,12 @@ async function handleRequest(request, env, usage) {
       const referenceResults = successful.flatMap(result => result.results);
       const incomplete = budget.truncated || failures > 0 ||
         successful.some(result => result.failedChunks > 0);
+      const geoTotal=Number(geo.counts.all ?? Object.values(geo.counts).reduce((a,b)=>a+b,0));
       const categoryCounts = {...geo.counts};
       for(const s of referenceResults){ const key=s.category || 'restaurant'; categoryCounts[key]=(categoryCounts[key] || 0)+1; }
-      categoryCounts.all=Object.values(categoryCounts).reduce((a,b)=>a+b,0);
+      // The wide SQL query already supplies an "all" total. Do not count it
+      // again as a category when merging reference-only store results.
+      categoryCounts.all=geoTotal+referenceResults.length;
       const combined = dedupeResults([...geo.results, ...referenceResults.filter(s=>!category || s.category===category)])
         .sort((a,b) => a.distance - b.distance)
         .slice(0, MAX_RESULTS);
