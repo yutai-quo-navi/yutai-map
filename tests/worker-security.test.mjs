@@ -151,12 +151,29 @@ test('the OpenPOI budget applies to all selected issuers and accepts its boundar
   });
 });
 
-test('an oversized aggregate OpenPOI plan stops before making any upstream request',async()=>{
+test('an oversized aggregate OpenPOI plan returns partial results within the hard upstream budget',async()=>{
   await withReferenceFixture({colowide:syntheticAliases(294),other:syntheticAliases(280,'other')},emptyUpstream,async({env,calls})=>{
     const response=await worker.fetch(referenceRequest('colowide,other'),env);
-    assert.equal(response.status,502);
-    assert.deepEqual(await response.json(),{error:'search_failed'});
-    assert.equal(calls.length,0);
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.equal(data.incomplete,true);
+    assert.equal(data.reference_chunks_total,41);
+    assert.equal(data.reference_chunks_checked,40);
+    assert.equal(calls.length,40);
+  });
+});
+
+test('a single user search can include 44 issuers without a 20-company truncation',async()=>{
+  const aliases=Object.fromEntries(Array.from({length:44},(_,i)=>['company'+i,['brand'+i]]));
+  await withReferenceFixture(aliases,emptyUpstream,async({env,calls})=>{
+    const ids=Object.keys(aliases).join(',');
+    const response=await worker.fetch(referenceRequest(ids),env);
+    assert.equal(response.status,200);
+    const data=await response.json();
+    assert.equal(data.incomplete,true);
+    assert.equal(data.reference_chunks_total,44);
+    assert.equal(data.reference_chunks_checked,40);
+    assert.equal(calls.length,40);
   });
 });
 
