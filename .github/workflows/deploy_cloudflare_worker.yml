@@ -30,7 +30,12 @@ jobs:
         run: node --test tests/worker-security.test.mjs tests/feature-api.test.mjs tests/reference-matching.test.mjs tests/d1-efficiency.test.mjs
 
       - name: Verify D1 migrations and update pagination
-        run: python -m unittest discover -s tests -p "test_d1_*.py"
+        run: |
+          if find tests -type f -name 'test_d1_*.py' -print -quit | grep -q .; then
+            python -m unittest discover -s tests -p 'test_d1_*.py'
+          else
+            echo "No D1 migration tests present; skipping empty unittest discovery."
+          fi
 
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
