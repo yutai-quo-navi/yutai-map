@@ -3723,6 +3723,64 @@
           "store_count": 1
         }
       ]
+    },
+    "bronco": {
+      "revision": 165,
+      "brands": [
+        {
+          "brand_name": "かつひろ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "かつ雅",
+          "store_count": 13
+        },
+        {
+          "brand_name": "ブロンコビリー",
+          "store_count": 148
+        },
+        {
+          "brand_name": "信貴や",
+          "store_count": 1
+        }
+      ]
+    },
+    "tenallied": {
+      "revision": 133,
+      "brands": [
+        {
+          "brand_name": "てんぐ大ホール",
+          "store_count": 41
+        },
+        {
+          "brand_name": "ジュークステーキ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "テング酒場",
+          "store_count": 15
+        },
+        {
+          "brand_name": "ミートキッチンlog50",
+          "store_count": 2
+        },
+        {
+          "brand_name": "和食れすとらん天狗",
+          "store_count": 14
+        },
+        {
+          "brand_name": "旬鮮酒場天狗",
+          "store_count": 5
+        },
+        {
+          "brand_name": "湊や磯吉食堂",
+          "store_count": 32
+        },
+        {
+          "brand_name": "神田屋",
+          "store_count": 23
+        }
+      ]
     }
   }
 }

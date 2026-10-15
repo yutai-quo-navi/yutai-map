@@ -516,6 +516,22 @@
       "hash": "ab2ebf940effad168c74b4872e4d21a5075f6d9cacc248dce1714dabeed5089e",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/bronco/2edc36a11049ce01/index.html": {
+      "hash": "f4833202b4b1865fdf2555f101507fb9dce8785babcbb3721a370bbf0f5538b5",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/bronco/7a8f4f3439c06ba8/index.html": {
+      "hash": "bf9df3bfc7418f35bff33ed555c64393ecff56bb31c234fb140a1a5c999a3a3f",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/bronco/a36e57b1bb4906f7/index.html": {
+      "hash": "98f3ecd8c8961773ea95b9503f20bd35e084ffcad5af2a071bd431d45a0de8db",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/bronco/ebfe17646ee3f82d/index.html": {
+      "hash": "afa0b0f2fb3a577409ce229fad1ecf9dbc19538c3c3f285d863b1e4521944dae",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/brands/chikaranomoto/29604200e261979f/index.html": {
       "hash": "adfeebcdb1034a3a6bf4fbc02cace5562a6151ad4fe502ea35834944cbaa46d8",
       "lastmod": "2026-10-12"
@@ -3200,6 +3216,38 @@
       "hash": "cdf509c9e5988622c3969394c87a6bf4569719c897341e6c0ca7243aa6827a2b",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/tenallied/10af82240d156506/index.html": {
+      "hash": "a97ab5416b02e2ba3ba1634e43c96f46614df9307869bc04bead48a3b2a90e3a",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/3d7b2999fd1a6072/index.html": {
+      "hash": "72f1d069134e2221031eea555e5a6bc302f4c47e858ff65f0e452d11c7f74d18",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/5c4fd3ae67a1c02a/index.html": {
+      "hash": "c002e8d113ffb8b60741f58f2707d09d098b55d265b61224326c2b98aca29b4e",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/8c95a4d5ce41b688/index.html": {
+      "hash": "3bb651f42cdab7a78285f611426e9baac363a8ac2a75fb86f844b5a31d6e06ea",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/8c96158ecb401344/index.html": {
+      "hash": "d91de981576a7ccf78c1c84ede6d2f7eccdeeaca80447be074b7495bbedcb2b8",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/e40f66102ca5cd51/index.html": {
+      "hash": "8e882afb634db9240cbe177f944b481cd5b073ac35d4e608f2bf604a9d7e3e79",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/ee1b0c80b8d8af14/index.html": {
+      "hash": "986935fc1b024c4f10ba915f86dcb3814a145d74e1d83246203be8700905a79d",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/tenallied/f6982b086867b692/index.html": {
+      "hash": "d1090319d798875074834ae6a426fe141ea8b93a2450ab0dc96bc428332fbdbd",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/brands/toridoll/117443b0908e626c/index.html": {
       "hash": "5f42ebd5a3bf2508c57d4b4555c175becbfa50999a5d1cbf23aa9dcd39946763",
       "lastmod": "2026-10-11"
@@ -3529,7 +3577,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "7864cdcc480ab8f219cddbf77e6b3372be26ee8719a1ca7b0021ee239579bbb3",
+      "hash": "59c97e8b1c93e019577c776b96df024a91cd722e1dcd94626deb1bb80a91b405",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -3543,6 +3591,10 @@
     "guides/dining/issuers/balnibarbi/index.html": {
       "hash": "0cb4007eca899d34bfa4a922bc6818a81802dd8720bbac863d8f97f7a34a297d",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/bronco/index.html": {
+      "hash": "42974ecc2356144bb8aceb67028300348cc4a84e527350397044ef6c0473cc71",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/chikaranomoto/index.html": {
       "hash": "0b399653c0ef5d66b50b480d49ef76915370c342e87d34b49a153c51ac1360ce",
@@ -3662,6 +3714,10 @@
     },
     "guides/dining/issuers/srs/index.html": {
       "hash": "af9138a73624a04dbd7de9cc6efa77785f81fb0f55ace8ff363868e440fdd13f",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/tenallied/index.html": {
+      "hash": "64f82c1f16860deb6c06b6eb45e07e50f905b1d7d16b1e7c2d7084c258e4b431",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/toridoll/index.html": {
