@@ -271,7 +271,7 @@ test('44-company wide D1 query returns only nearest stores with complete counts'
     issuer_id:i===29?'company43':'company0',
     store_id:String(i),name:'store '+i,
     lat:35.6812,lng:139.7671,category:'restaurant',
-    exact_distance:i*70,
+    exact_distance:i*70,rounded_distance:i*70,
     __all_count:9191,__restaurant_count:7832,__cafe_count:1282,
     __bakery_count:20,__foodcourt_count:10,__other_count:47
   }));

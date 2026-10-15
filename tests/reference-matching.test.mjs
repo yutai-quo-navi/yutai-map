@@ -119,7 +119,7 @@ test('one issuer returns both official coordinates and matched references with c
     return {first:async()=>({aliases_json:'["ラパウザ"]'}),all:async()=>({results:
       sql.includes('FROM issuer_stats') ? [{issuer_id:'fujio',aliases_json:'["ラパウザ"]'}] :
       sql.includes('FROM reference_stores') ? [ref] :
-      sql.includes('FROM stores') ? [located] : []})};
+      sql.includes('FROM stores') ? [{...located,rounded_distance:80,__all_count:1,__restaurant_count:1,__cafe_count:0,__bakery_count:0,__foodcourt_count:0,__other_count:0}] : []})};
   }};}}};
   try{
     const response=await worker.fetch(new Request('https://api.example.com/v1/stores/search?lat=43.055&lng=141.455&radius=10000&issuers=fujio'),env);

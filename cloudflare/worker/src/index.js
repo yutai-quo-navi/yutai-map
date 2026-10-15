@@ -90,6 +90,9 @@ async function handleRequest(request, env, usage) {
     const lng = Number(rawLng);
     const radius = Math.min(Number(url.searchParams.get('radius') || 3000), MAX_RADIUS);
     const issuers = parseIssuers(url.searchParams.get('issuers'));
+    const requestedCursor = url.searchParams.get('cursor');
+    const cursor = parseStoreCursor(requestedCursor);
+    if (requestedCursor !== null && !cursor) return json({error:'invalid_cursor'},400,cors);
     const brand=(url.searchParams.get('brand') || '').trim().slice(0,200);
     const requestedCategory = (url.searchParams.get('category') || '').trim();
     const category = ['restaurant','cafe','bakery','foodcourt','other'].includes(requestedCategory)
@@ -107,6 +110,17 @@ async function handleRequest(request, env, usage) {
     } catch { return json({error:'rate_limit_unavailable'},503,cors); }
 
     try {
+      if (cursor) {
+        // Pagination is an explicit request for one more D1 page. No reference
+        // upsteam requests, prefetches, or large row transfers occur here.
+        const geo = await searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage, cursor);
+        const rows = geo.results;
+        const next = rows.length === MAX_RESULTS ? storeCursor(rows.at(-1)) : null;
+        return json({
+          results:rows,count:rows.length,limit:MAX_RESULTS,category_counts:geo.counts,
+          next_cursor:next,has_more:!!next,geo_only:true
+        },200,{...cors,'Cache-Control':'no-store'});
+      }
       const referenceConfigs = await findReferenceConfigs(env, issuers, usage);
       // One issuer can have both official coordinates and unlocated references.
       const geoIssuers = issuers;
@@ -141,13 +155,22 @@ async function handleRequest(request, env, usage) {
       const combined = dedupeResults([...geo.results, ...referenceResults.filter(s=>!category || s.category===category)])
         .sort((a,b) => a.distance - b.distance)
         .slice(0, MAX_RESULTS);
+      const visibleGeo = new Set(geo.results.map(item=>item.issuer_id+'|'+item.store_id));
+      const displayedGeo = combined.filter(item=>visibleGeo.has(item.issuer_id+'|'+item.store_id));
+      const categoryTotal=Number(geo.counts[category || 'all'] ?? geoTotal);
+      const hasMoreGeo = categoryTotal > displayedGeo.length;
+      const nextCursor = hasMoreGeo
+        ? (displayedGeo.length ? storeCursor(displayedGeo.at(-1)) : 'start')
+        : null;
 
       return json({
         results: combined, count: combined.length, limit: MAX_RESULTS,
         category_counts: categoryCounts,
         incomplete,
         reference_chunks_checked: budget.checked,
-        reference_chunks_total: budget.total
+        reference_chunks_total: budget.total,
+        next_cursor:nextCursor,
+        has_more:!!nextCursor
       }, 200, {
         ...cors,
         'Cache-Control': 'public, max-age=30'
@@ -228,46 +251,10 @@ async function findReferenceConfigs(env, issuers, usage){
 }
 
 async function searchGeoStores(env, issuers, lat, lng, radius, category, brand, usage){
-  if (!issuers.length) return {results:[],counts:{}};
-  if (issuers.length > 20) return searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage);
-
-  const latDelta = radius / 111320;
-  const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
-  const lngDelta = radius / (111320 * cos);
-  const placeholders = issuers.map(() => '?').join(',');
-  const sql = `SELECT issuer_id, store_id, name, address, phone, brand_name, category, lat, lng, official_url
-    FROM stores
-    WHERE issuer_id IN (${placeholders})
-      AND lat BETWEEN ? AND ?
-      AND lng BETWEEN ? AND ?
-      ${brand ? 'AND brand_name = ?' : ''}`;
-
-  const results = await readRows(env, sql, [
-    ...issuers,
-    lat-latDelta, lat+latDelta,
-    lng-lngDelta, lng+lngDelta,
-    ...(brand ? [brand] : [])
-  ], usage);
-
-  const nearby = results
-    .map(s => ({
-      ...s,
-      distance: haversine(lat, lng, Number(s.lat), Number(s.lng))
-    }))
-    .filter(s => s.distance <= radius)
-    .map(s => ({...s,distance:Math.round(s.distance)}));
-  const counts = {};
-  for (const s of nearby) {
-    const key=s.category || 'restaurant';
-    counts[key]=(counts[key] || 0)+1;
-  }
-  return {counts, results:nearby
-    .filter(s => !category || s.category === category)
-    .sort((a,b) => a.distance - b.distance)
-    .slice(0, MAX_RESULTS)};
+  return searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage);
 }
 
-async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage){
+async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage, cursor = null){
   if (!issuers.length) return {results:[],counts:{}};
 
   const latDelta = radius / 111320;
@@ -293,7 +280,8 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
       AND lng BETWEEN ? AND ?
       ${brand ? 'AND brand_name = ?' : ''}
   ), nearby AS (
-    SELECT * FROM candidates WHERE exact_distance <= ?
+    SELECT *, CAST(exact_distance + 0.5 AS INTEGER) AS rounded_distance
+    FROM candidates WHERE exact_distance <= ?
   ), totals AS (
     SELECT
       COUNT(*) AS all_count,
@@ -305,8 +293,15 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     FROM nearby
   ), closest AS (
     SELECT * FROM nearby
-    ${category ? "WHERE category = ?" : ''}
-    ORDER BY exact_distance, issuer_id, store_id
+    WHERE 1=1
+    ${category ? "AND category = ?" : ''}
+    ${cursor && !cursor.start ? `AND (
+      rounded_distance > ? OR
+      (rounded_distance = ? AND (
+        issuer_id > ? OR (issuer_id = ? AND store_id > ?)
+      ))
+    )` : ''}
+    ORDER BY rounded_distance, issuer_id, store_id
     LIMIT ${MAX_RESULTS}
   )
   SELECT closest.*, totals.all_count AS __all_count,
@@ -316,7 +311,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     totals.foodcourt_count AS __foodcourt_count,
     totals.other_count AS __other_count
   FROM totals LEFT JOIN closest ON 1=1
-  ORDER BY closest.exact_distance, closest.issuer_id, closest.store_id`;
+  ORDER BY closest.rounded_distance, closest.issuer_id, closest.store_id`;
 
   const rows = await readRows(env, sql, [
     lat, lat, lng, ...issuers,
@@ -324,7 +319,10 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     lng-lngDelta, lng+lngDelta,
     ...(brand ? [brand] : []),
     radius,
-    ...(category ? [category] : [])
+    ...(category ? [category] : []),
+    ...(cursor && !cursor.start ? [
+      cursor.distance, cursor.distance, cursor.issuer, cursor.issuer, cursor.store
+    ] : [])
   ], usage);
 
   const first = rows[0] || {};
@@ -340,7 +338,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     issuer_id:row.issuer_id, store_id:row.store_id, name:row.name,
     address:row.address, phone:row.phone, brand_name:row.brand_name,
     category:row.category, lat:row.lat, lng:row.lng,
-    official_url:row.official_url, distance:Math.round(Number(row.exact_distance))
+    official_url:row.official_url, distance:Number(row.rounded_distance)
   }));
   return {counts,results};
 }
@@ -598,6 +596,25 @@ function json(body,status,headers){
   });
 }
 
+// Stateless cursor: small, validated and stable even when many stores are at
+// the same rounded distance. A cursor never permits larger page sizes.
+function parseStoreCursor(raw){
+  if(raw === null) return null;
+  if(raw === 'start') return {start:true};
+  if(raw.length > 320) return null;
+  try{
+    const values=JSON.parse(raw);
+    if(!Array.isArray(values) || values.length!==3) return null;
+    const [distance,issuer,store]=values;
+    if(!Number.isInteger(distance) || distance<0 || distance>MAX_RADIUS+1) return null;
+    if(typeof issuer!=='string' || !/^[a-z0-9_-]{1,40}$/.test(issuer)) return null;
+    if(typeof store!=='string' || !store || store.length>180) return null;
+    return {distance,issuer,store};
+  }catch{return null;}
+}
+function storeCursor(row){
+  return JSON.stringify([Math.round(Number(row.distance)),String(row.issuer_id),String(row.store_id)]);
+}
 function parseIssuers(raw){
   return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,60);
 }

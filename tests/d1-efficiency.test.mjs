@@ -38,18 +38,28 @@ test('reference cache is reused, invalidated on change and does not cache upstre
  }finally{globalThis.caches=old;globalThis.fetch=oldFetch;}
 });
 
-test('one geo read gives all category counts beyond 600 candidates and the nearest 30',async()=>{
+test('wide 30-row query gives complete category counts without transferring 701 candidates',async()=>{
  const old=globalThis.caches;globalThis.caches={default:cache()};let geoReads=0;
- const rows=Array.from({length:701},(_,i)=>({issuer_id:'a',store_id:String(i),name:'store',lat:35+i*.00001,lng:139,category:i%2?'cafe':'restaurant'})).reverse();
+ const rows=Array.from({length:30},(_,i)=>({
+  issuer_id:'a',store_id:String(i*2+1),name:'store',lat:35+i*.00001,lng:139,
+  category:'cafe',exact_distance:i*1.1,rounded_distance:i,
+  __all_count:701,__restaurant_count:351,__cafe_count:350,
+  __bakery_count:0,__foodcourt_count:0,__other_count:0
+ }));
  const env={API_RATE_LIMITER:permit,SEARCH_RATE_LIMITER:permit,SEARCH_COUNTER:counter,DB:{prepare(sql){return {bind(){return this;},all:async()=>{
   if(sql.includes('FROM issuer_stats'))return {results:[]};
-  assert.ok(sql.includes('FROM stores'));assert.ok(!sql.includes('LIMIT'));geoReads++;return {results:rows};
+  assert.ok(sql.includes('FROM stores'));
+  assert.match(sql,/LIMIT 30/);
+  geoReads++;
+  return {results:rows};
  }}}}};
  try{
   const response=await worker.fetch(req('/v1/stores/search?lat=35&lng=139&radius=10000&issuers=a&category=cafe'),env);
   assert.equal(response.status,200);const data=await response.json();assert.equal(geoReads,1);
-  assert.deepEqual(data.category_counts,{restaurant:351,cafe:350,all:701});assert.equal(data.results.length,30);
+  assert.deepEqual(data.category_counts,{all:701,restaurant:351,cafe:350,bakery:0,foodcourt:0,other:0});
+  assert.equal(data.results.length,30);
   assert.deepEqual(data.results.map(x=>x.store_id),Array.from({length:30},(_,i)=>String(i*2+1)));
+  assert.equal(data.has_more,true);
  }finally{globalThis.caches=old;}
 });
 
