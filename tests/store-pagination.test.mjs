@@ -12,6 +12,7 @@ const stores=Array.from({length:77},(_,i)=>({
 }));
 const count=()=>({all:77,restaurant:77,cafe:0,bakery:0,foodcourt:0,other:0});
 function fixture(){
+  globalThis.caches={default:{match:async()=>undefined,put:async()=>{}}};
   const queries=[],upstream=[];
   const env={
     API_RATE_LIMITER:{limit:async()=>({success:true})},
