@@ -1844,6 +1844,10 @@
       "hash": "a2e0630d04665370cd4718414f4eee4702a52052dac4a25784a31c5a347a9705",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/eternal/baee573651219f04/index.html": {
+      "hash": "d69c64877a1b81e85ca8a3cd3e71f8cb11ab9cdf8fcb3477def184ffc9b66d12",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/brands/foodlife/111a55e643680738/index.html": {
       "hash": "dd900e44fb089d3a46a8be94a8728bdc330b27000f3e316c4068e7c3cd305a95",
       "lastmod": "2026-10-13"
@@ -2144,6 +2148,34 @@
       "hash": "51f99281b02e3e447d5bbcba4f71fa2d9ba09203d9baaf7eadf3028423a14156",
       "lastmod": "2026-10-15"
     },
+    "guides/dining/brands/gift/225442c71c4aafbf/index.html": {
+      "hash": "f8b24094e8bae74d0dc75fa4fcf23f8609564cee4ffac520c34928a7d72f6edf",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/499c933767ccc21c/index.html": {
+      "hash": "194954093a638489ac9bd53734b9bd57daf73925eea2d5221bd200d258ab7f8c",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/53d86caa85c2ff5a/index.html": {
+      "hash": "d6df6220384537c5f797618f235a6e3b8ad3fd9c4b2a03e93959da0eaa0328ca",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/63c4505983726ccb/index.html": {
+      "hash": "145090a24a0a33319a7842dbb3c7f55da9259a7151bb303025e1a6331677e0a7",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/6e779a1a100e5f08/index.html": {
+      "hash": "108013a4d92e96ac24015284702d8433816ef11cf76d9d2c2a85bb2dcd00dce8",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/7b6fa508195a42ed/index.html": {
+      "hash": "507cad2f704f2433c501b7c6370b1e002a7f8b4e4c30110ce3d6884606eb350a",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/gift/974825d6b6a0e8f6/index.html": {
+      "hash": "81f2e9b222ac3d7e382bbb68efe728d2110f1cc1c9b0af1a6f32356b9a156d3e",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/brands/hiday/017f9d103766f83e/index.html": {
       "hash": "42d30fa9da9ef64aadd6c09643dc8b6082c69f6af6b696c846196d3213400ce8",
       "lastmod": "2026-10-11"
@@ -2190,6 +2222,90 @@
     },
     "guides/dining/brands/hikari/dc7af306ad5a2317/index.html": {
       "hash": "146296215746b2d3b81dab7fb9558fe461f6951d2bee883d42565ed700dfeee8",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/027f2e4e429212ae/index.html": {
+      "hash": "e78c53ddf7dd1edd87323df0aaf28f15cf5d115dabe8e90034590f6793aa714c",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/058ba68a9fdc337a/index.html": {
+      "hash": "0fec5de123d50d5fd44c6bba84ad313a30cf1f1862b8edcde7b399bd2198fa0c",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/0901cec66d765f5f/index.html": {
+      "hash": "033b04aaaf2788566baf1ac22738480b6d540db50d91b71ad0d456b547f4182f",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/25da34a84cb1c757/index.html": {
+      "hash": "b68da73f51ef3e3564cbd4993956f87f621111d80ea14a785615d46a8c18a82c",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/293dac849b881713/index.html": {
+      "hash": "5aaba998807bdd165a520302109d72172abbc5578e52af458a30f80fec81f9fc",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/2b42edf889cdfadf/index.html": {
+      "hash": "e7b208e6d6263c5c30b7b5ee6b94eac438f1276f22b150a2cad0dba2468adcd5",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/2f7b4ba55dbec661/index.html": {
+      "hash": "bcb58fe8f063ed1d3fe503b8adaf531653b5e3f6d40a3646ac46a896536931de",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/3cafb8d4b787f699/index.html": {
+      "hash": "cd9e01d8e508191a38efbb1922fb6dcad9c06e4a343e72b0198d59973bc8c338",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/4bd916d4ae2186c0/index.html": {
+      "hash": "719bda42e0e06d401efebd0dd254d372cf45bb79fd47ec49799b2c6ac9241eb1",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/4ce2800564430a28/index.html": {
+      "hash": "fd1bd935d6d2655e5a06e0f7f4d5cf729488a372b172811894450e0e8fecc9d1",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/5378b2b72181ce91/index.html": {
+      "hash": "529aa32fa86022974d248aaa04ca9396c66209986f799cfa69ad98c340bd59af",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/5f0afc8b73b427ab/index.html": {
+      "hash": "1ffef4c5b73ce3bdc579760843d68c42129da70bedf680f3cf33539c7e9c2ff5",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/751b4146b0de2da2/index.html": {
+      "hash": "953c3c1efcbec990358684f213f05793942726a9e398ca05b3c7d776122a30b0",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/98e289035965b33b/index.html": {
+      "hash": "ed09486dfb6eeb2f87f701c28b0750fa87b416c51c7c1198cfaa2da00e21ec94",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/9a4e9f3184006214/index.html": {
+      "hash": "08d459c308b228f2d5eebe4ce5ecf791fc3960af402355a8c82aa892aa141412",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/d97c9a33d868a0c1/index.html": {
+      "hash": "ebaefa9a649ce67d012368eeca66299a28e5a4ef7a14d08179fa2d38a744c1a7",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/da16fefad96f4430/index.html": {
+      "hash": "e6f3b6eac754ca176227d66960e138a90f9fe37d9a53b7274c8871121a6edcc7",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/dd995d7270477038/index.html": {
+      "hash": "ba25da5f3172917081253703a9b9639f8237e04d16cc241ea46d32f5d4b0af94",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/e48acefe0c7724bf/index.html": {
+      "hash": "ecafbaca07d368b76f1b6afe3dafc9b68523db5fdcd9d8d93fad588b1c9c58c8",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/e750b4bf992f56d6/index.html": {
+      "hash": "9cc3042b1a794e1ff88a6011c4141f8fc63d7d3e3e9f13352dba7c7d2b8891d1",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hotland/ff0fef9b75b3cbe6/index.html": {
+      "hash": "098da3beeb07354387758e49a866e5d10ccb678941e557e46ed005fdebaf08bb",
       "lastmod": "2026-10-15"
     },
     "guides/dining/brands/ichibanya/30620e27abf277c8/index.html": {
@@ -3405,7 +3521,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "e0a1bf8c2fcd3a35cb19287539cbd092115b9d5765a6fe19d09334e58cdef648",
+      "hash": "d9d3d6749723f5af9f7604f986d95cc60da4b20e1b30a952e9367975e7be0167",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -3444,6 +3560,10 @@
       "hash": "e42ebc1a42ac31906ff56d122f2bd8f8fdaad6cf9598d26ec279c9c4652fddbc",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/issuers/eternal/index.html": {
+      "hash": "3face0ee35603337ba8bcf0648c7f2433eeb7425cf7fbb29bd32dd33e3457351",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/issuers/foodlife/index.html": {
       "hash": "244222b3abe9a05c691b651f39bfb612a237d0ae761c2ecf7d472cf222c95896",
       "lastmod": "2026-10-13"
@@ -3456,12 +3576,20 @@
       "hash": "0821a286cd74b93bdcc55074f01f0a77c032890d40a189905320e1a8bbf3834e",
       "lastmod": "2026-10-15"
     },
+    "guides/dining/issuers/gift/index.html": {
+      "hash": "b1ad1a70518c99033c97885d5a473d91d44af8b08a9a25326d5ce0aa6dae8118",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/issuers/hiday/index.html": {
       "hash": "f55b8b46fc900645bf117190c16d3d51f2549997dd210e6b44281deb4d366477",
       "lastmod": "2026-10-11"
     },
     "guides/dining/issuers/hikari/index.html": {
       "hash": "32fad9f12253902b2093f15dca12eaf66176721f8fb410731cadbc7ced34c31a",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/hotland/index.html": {
+      "hash": "856a8984d9e92a9524751236ed22fca6d992fa7077485d640a43dc142158f61d",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/ichibanya/index.html": {

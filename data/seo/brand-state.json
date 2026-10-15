@@ -3579,6 +3579,137 @@
           "store_count": 9
         }
       ]
+    },
+    "gift": {
+      "revision": 313,
+      "brands": [
+        {
+          "brand_name": "がっとん",
+          "store_count": 5
+        },
+        {
+          "brand_name": "元祖油堂",
+          "store_count": 51
+        },
+        {
+          "brand_name": "四天王",
+          "store_count": 1
+        },
+        {
+          "brand_name": "町田商店",
+          "store_count": 193
+        },
+        {
+          "brand_name": "豚山",
+          "store_count": 57
+        },
+        {
+          "brand_name": "赤みそ家",
+          "store_count": 3
+        },
+        {
+          "brand_name": "長岡食堂",
+          "store_count": 3
+        }
+      ]
+    },
+    "hotland": {
+      "revision": 658,
+      "brands": [
+        {
+          "brand_name": "おでん屋たけし",
+          "store_count": 24
+        },
+        {
+          "brand_name": "ごっつい",
+          "store_count": 8
+        },
+        {
+          "brand_name": "もつやき処",
+          "store_count": 8
+        },
+        {
+          "brand_name": "よし平",
+          "store_count": 25
+        },
+        {
+          "brand_name": "コールドストーン",
+          "store_count": 3
+        },
+        {
+          "brand_name": "北斗",
+          "store_count": 6
+        },
+        {
+          "brand_name": "囲炉裏",
+          "store_count": 2
+        },
+        {
+          "brand_name": "大衆ビストロ コタロー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "大釜屋",
+          "store_count": 9
+        },
+        {
+          "brand_name": "日本再生酒場",
+          "store_count": 7
+        },
+        {
+          "brand_name": "日本橋からり",
+          "store_count": 3
+        },
+        {
+          "brand_name": "昇家",
+          "store_count": 6
+        },
+        {
+          "brand_name": "李昇",
+          "store_count": 3
+        },
+        {
+          "brand_name": "満天",
+          "store_count": 5
+        },
+        {
+          "brand_name": "築地銀だこ",
+          "store_count": 418
+        },
+        {
+          "brand_name": "築地銀だこハイボール酒場",
+          "store_count": 83
+        },
+        {
+          "brand_name": "米福",
+          "store_count": 9
+        },
+        {
+          "brand_name": "野郎めし",
+          "store_count": 4
+        },
+        {
+          "brand_name": "銀だこ横丁",
+          "store_count": 6
+        },
+        {
+          "brand_name": "銀だこ酒場",
+          "store_count": 20
+        },
+        {
+          "brand_name": "銀のあん",
+          "store_count": 8
+        }
+      ]
+    },
+    "eternal": {
+      "revision": 702,
+      "brands": [
+        {
+          "brand_name": "鳥貴族",
+          "store_count": 702
+        }
+      ]
     }
   }
 }
