@@ -3781,6 +3781,39 @@
           "store_count": 23
         }
       ]
+    },
+    "kisoji": {
+      "revision": 188,
+      "brands": [
+        {
+          "brand_name": "からしげ",
+          "store_count": 4
+        },
+        {
+          "brand_name": "くいどん",
+          "store_count": 32
+        },
+        {
+          "brand_name": "とりかく",
+          "store_count": 3
+        },
+        {
+          "brand_name": "大将軍",
+          "store_count": 12
+        },
+        {
+          "brand_name": "大穴",
+          "store_count": 7
+        },
+        {
+          "brand_name": "木曽路",
+          "store_count": 125
+        },
+        {
+          "brand_name": "鈴のれん",
+          "store_count": 5
+        }
+      ]
     }
   }
 }

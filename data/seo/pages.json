@@ -2592,6 +2592,34 @@
       "hash": "30866260c2cd5e447680e3830cb729ef95ccbeddefe774004b350f40ae1cbac6",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/kisoji/2d128cc13f9faa9a/index.html": {
+      "hash": "bdff3d36775e57ad1f17f1b3d45bc6cfb3b23a2359aa244fa2585d7a65a75e6a",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/5974d3f355a26cd6/index.html": {
+      "hash": "2f889e959bfb4f8b8a70ed558c67ee1fcdb2912382aa198469f2c812884b9fe9",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/9895b5852809467b/index.html": {
+      "hash": "d9dd62a9f64924c2a00e1affc167b01aeb3651674d7555579b933c5deb6fbe60",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/aa758e2f8ebf15d3/index.html": {
+      "hash": "1787eefe4eca994d2a5ef419c580a9b64fbac508fa47e57aa7b5385404c3efe6",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/accab741b5899c60/index.html": {
+      "hash": "88a9482a8fb3451e891ec263e6a736052ef598d6611faa66bbf1272534d16c35",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/b6416215ecb554fe/index.html": {
+      "hash": "5fe64add23bb5283569debbb7748abab272199c4171347a8c830205ba8671142",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/kisoji/f5946c3b44f1f62b/index.html": {
+      "hash": "15b0b9a779fec1603560664afe58deec524ae5ec0062888d3102c6d50a6856d0",
+      "lastmod": "2026-10-16"
+    },
     "guides/dining/brands/komeda/058a9a20224cbf9f/index.html": {
       "hash": "7357d85ff2333b9b85e6d896db31a59117059cede9aaf04b5b61247e95859ca4",
       "lastmod": "2026-10-11"
@@ -3577,8 +3605,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "59c97e8b1c93e019577c776b96df024a91cd722e1dcd94626deb1bb80a91b405",
-      "lastmod": "2026-10-15"
+      "hash": "690034a0174e386e91107674bf41cb0221a75ec525da8d84cc2ed7cd4ffe0651",
+      "lastmod": "2026-10-16"
     },
     "guides/dining/issuers/amiyaki/index.html": {
       "hash": "a5ee74caaef2d137e334733ac67dd23ad8118e9d10983826515abe3c3874a649",
@@ -3663,6 +3691,10 @@
     "guides/dining/issuers/kineya/index.html": {
       "hash": "3b3380bc5a91706150959c4e890bca56a083ad0b2f00ffc7ff90931b3e286932",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/kisoji/index.html": {
+      "hash": "1a33db8a738ef3ecb5a0f1048bf84fd756e7570a0886b80a0bfafdd59b0892cb",
+      "lastmod": "2026-10-16"
     },
     "guides/dining/issuers/komeda/index.html": {
       "hash": "87971017baf2cd30193a4b8b1ef44ec3cae44b15c14c893da7527c2d4582a59e",
