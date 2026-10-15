@@ -222,15 +222,13 @@ async function loadNextDiningPage(){
     const page = await queryD1StoreApi(state.targets, state.origin, state.radius, operation.signal, state.cursor);
     if(!isSearchCurrent(operation) || revision !== diningSearchRevision || diningPageState !== state) return;
     const alreadyVisible = els.results.querySelectorAll('.card').length;
-    const previousLength = lastResults.length;
-    lastResults = dedupe([...lastResults, ...page.results]).sort((a,b)=>a.distance-b.distance);
+    const oldResults = lastResults;
+    const previousLength = oldResults.length;
+    lastResults = dedupe([...oldResults, ...page.results]).sort((a,b)=>a.distance-b.distance);
     state.cursor = page.nextCursor || null;
     // Only the new thirty (or fewer) cards are inserted: old cards stay mounted.
     // Re-render when the old page's source interleaves with new distance ties.
-    const sortedBefore = lastResults.slice(0,previousLength);
-    const samePrefix = sortedBefore.every((item,i)=>
-      i < previousLength && lastResults[i] === item
-    );
+    const samePrefix = oldResults.every((item,i)=>lastResults[i] === item);
     if(samePrefix && alreadyVisible <= previousLength){
       renderFilteredResults(state.radius, alreadyVisible);
     }else{
