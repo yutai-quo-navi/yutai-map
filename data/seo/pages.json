@@ -76,6 +76,42 @@
       "hash": "c4445fbea4629df30459b26f45f1c73ebd158b773f2e52000c2274fb1be0be61",
       "lastmod": "2026-10-14"
     },
+    "guides/dining/brands/anrakutei/140d37b9df0a166b/index.html": {
+      "hash": "ff7c14a0d1360b55a9faf7fedfea522b90b8f9ffc9f3ad10a937021c004ffff1",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/1901013f3224d12a/index.html": {
+      "hash": "dbdea6921e2e3a1c7acd9c694acc4bf4c8b9e1e37a3190f1f4389190b1b7237a",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/1d5e0e72333dcc92/index.html": {
+      "hash": "7aa290501ca3e34dbdf8fa34f83fc8cedd7e0508d42448a09d634647b7f9fb59",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/797e07529bdccc63/index.html": {
+      "hash": "9fe67f77493ff3d2b93a13f93ceb64674d7aa2a78a459f74e41f070933ca7895",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/8aa5e32d3fc4a86e/index.html": {
+      "hash": "b228d7fb947d078a14f0958a022d5f3fcd0fb6adb0bb9704ba2062b4b1ed8411",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/9ed1c3bc57a26b48/index.html": {
+      "hash": "3d618f970f67d427a9818ef6d017fd5459004d430370d35a18956acfb1135231",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/a73fd16f844eb79a/index.html": {
+      "hash": "b729273350edbcd0384ac2b632cdddcf38552854394d3b0f6cbc88df9d879168",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/b2f7fb46de07b9bb/index.html": {
+      "hash": "0db98fdd7aaea3512a64fb131e265b7d1a8dc590012bbbf55b3039d0c28ee7f0",
+      "lastmod": "2026-10-16"
+    },
+    "guides/dining/brands/anrakutei/bc4b46bc00a58e0f/index.html": {
+      "hash": "a76408ada30ed9ecdceea704e5aa382c66db449380b2c26fff2fce5180576d31",
+      "lastmod": "2026-10-16"
+    },
     "guides/dining/brands/arclands/1124ce3b687ed35a/index.html": {
       "hash": "18cc9143c9b9f2dd0c76a3f6a4cafd02883da4eb8ff31723e5e32176d854a38d",
       "lastmod": "2026-10-11"
@@ -3737,12 +3773,16 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "29bd8f5a8c53aeacb05b5abb92abd6d7cd07b63fa274a321ba2ddbe3f61c3fc7",
+      "hash": "2830db492af997e80e9a3099dae495a47e23f0fa42f64581436dc3059e40c304",
       "lastmod": "2026-10-16"
     },
     "guides/dining/issuers/amiyaki/index.html": {
       "hash": "a5ee74caaef2d137e334733ac67dd23ad8118e9d10983826515abe3c3874a649",
       "lastmod": "2026-10-14"
+    },
+    "guides/dining/issuers/anrakutei/index.html": {
+      "hash": "6b30ac696587e40bfb9cbb9d91d1e80c30561a6700f19743633f0f9aff7cf709",
+      "lastmod": "2026-10-16"
     },
     "guides/dining/issuers/arclands/index.html": {
       "hash": "00ad36318f750915730edcacf5c217f6d608f4a65e06037695ac6a8744d9e970",

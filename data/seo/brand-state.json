@@ -3951,6 +3951,47 @@
           "store_count": 14
         }
       ]
+    },
+    "anrakutei": {
+      "revision": 286,
+      "brands": [
+        {
+          "brand_name": "からくに屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "しゃぶしゃぶどん亭",
+          "store_count": 31
+        },
+        {
+          "brand_name": "カフェ ビーンズ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ステーキのどん",
+          "store_count": 62
+        },
+        {
+          "brand_name": "フォルクス",
+          "store_count": 40
+        },
+        {
+          "brand_name": "七輪房",
+          "store_count": 20
+        },
+        {
+          "brand_name": "上海菜館",
+          "store_count": 1
+        },
+        {
+          "brand_name": "安楽亭",
+          "store_count": 128
+        },
+        {
+          "brand_name": "花炎亭",
+          "store_count": 2
+        }
+      ]
     }
   }
 }
