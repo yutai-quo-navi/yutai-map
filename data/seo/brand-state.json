@@ -3373,7 +3373,7 @@
       ]
     },
     "genki": {
-      "revision": 199,
+      "revision": 200,
       "brands": [
         {
           "brand_name": "GENKI SUSHI×魚べい",
@@ -3385,7 +3385,7 @@
         },
         {
           "brand_name": "うま勝",
-          "store_count": 3
+          "store_count": 2
         },
         {
           "brand_name": "てっか丸",
@@ -3552,6 +3552,31 @@
         {
           "brand_name": "茶寮SIKI TSUBAKIYA",
           "store_count": 2
+        }
+      ]
+    },
+    "hikari": {
+      "revision": 59,
+      "brands": [
+        {
+          "brand_name": "大黒/大国",
+          "store_count": 45
+        },
+        {
+          "brand_name": "寿司魚椿",
+          "store_count": 3
+        },
+        {
+          "brand_name": "立喰焼肉 大黒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "酔い処 ニュー大黒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "魚椿",
+          "store_count": 9
         }
       ]
     }

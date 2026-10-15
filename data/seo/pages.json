@@ -2141,8 +2141,8 @@
       "lastmod": "2026-10-14"
     },
     "guides/dining/brands/genki/fd7f2ba55e50153d/index.html": {
-      "hash": "303742aad3217dddcfd29ac9c62030c5cf990dc7da33f5b2c0f809df66215d4d",
-      "lastmod": "2026-10-14"
+      "hash": "51f99281b02e3e447d5bbcba4f71fa2d9ba09203d9baaf7eadf3028423a14156",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/brands/hiday/017f9d103766f83e/index.html": {
       "hash": "42d30fa9da9ef64aadd6c09643dc8b6082c69f6af6b696c846196d3213400ce8",
@@ -2171,6 +2171,26 @@
     "guides/dining/brands/hiday/d5db86a7e5835cac/index.html": {
       "hash": "abe3d3df7c7f08e53cfc635f9f75f1c109a1b0e6e6badfaf563b9ef13ec9b833",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/brands/hikari/00766874b7b432b6/index.html": {
+      "hash": "af9806dd844e31215d0b17d3835091401e0c073e287ddfdec859a340f9720e58",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hikari/3e2cc54beb1f0db7/index.html": {
+      "hash": "d3e3f92356d37d14e5fed01c4ae81a7b3c4bc2b6fd5ec0b3ac484cdeb228f362",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hikari/7766931cd99e9eba/index.html": {
+      "hash": "03cc9acb34f4ad5ed4a95f15bbf11e401773332f645953712380bce88e8ab445",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hikari/9671425dcdbe3048/index.html": {
+      "hash": "46e30da9d2267ae345d5f5278d378c986a83374f54b2cd0c2a6698606b92a6c6",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hikari/dc7af306ad5a2317/index.html": {
+      "hash": "146296215746b2d3b81dab7fb9558fe461f6951d2bee883d42565ed700dfeee8",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/brands/ichibanya/30620e27abf277c8/index.html": {
       "hash": "12868cf92f7727d13b49c8063eedfe758db2205795042950785f688133945841",
@@ -3385,7 +3405,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "caa898e05c62bfea39d5f678007f807fe084263ef7a853d4651c5cc33d20b428",
+      "hash": "e0a1bf8c2fcd3a35cb19287539cbd092115b9d5765a6fe19d09334e58cdef648",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -3433,12 +3453,16 @@
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/genki/index.html": {
-      "hash": "5edebf0241e252390d67f0eadaa834451ed0e7936a7736f6ee2b4bef06ac8d14",
-      "lastmod": "2026-10-14"
+      "hash": "0821a286cd74b93bdcc55074f01f0a77c032890d40a189905320e1a8bbf3834e",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/hiday/index.html": {
       "hash": "f55b8b46fc900645bf117190c16d3d51f2549997dd210e6b44281deb4d366477",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/hikari/index.html": {
+      "hash": "32fad9f12253902b2093f15dca12eaf66176721f8fb410731cadbc7ced34c31a",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/ichibanya/index.html": {
       "hash": "6c0532ded3813229cb81924de378299d2b520940857c906d281d4edea3ae1e5e",
