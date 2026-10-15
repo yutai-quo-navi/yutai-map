@@ -52,7 +52,11 @@ const els = {
   brandSuggestions: qs('#brandSuggestions'), brandSelection: qs('#brandSelection'),
   brandReset: qs('#brandReset'), brandCandidateStatus: qs('#brandCandidateStatus'),
   favorites: qs('#favoritesDialog'), favoritesList: qs('#favoritesList'),
-  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount')
+  favoritesButton: qs('#favoritesButton'), favoritesCount: qs('#favoritesCount'),
+  cancelSearch: qs('#cancelSearchButton'),
+  diningActions: qs('#resultActions'), diningHint: qs('#resultHint'),
+  hotelActions: qs('#hotelResultActions'), hotelHint: qs('#hotelResultHint'),
+  hotelSearchAgain: qs('#hotelSearchAgain')
 };
 
 const expirySearch = initExpirySearch({root:qs('#expiryPanel'), alertsRoot:qs('#expiryAlerts'), read:readJSON, write:writeSetting});
@@ -71,10 +75,12 @@ let lastPosition = null;
 let lastCenterLabel = '現在地';
 let searching = false;
 let searchFeedbackDepth = 0;
+let searchFeedbackGeneration = 0;
 let searchFeedbackTimer = null;
 const searchButtons = [els.locate, qs('#placeSearchActions button')].filter(Boolean);
 const searchButtonLabels = searchButtons.map(button => button.textContent);
 function beginSearchFeedback(){
+  const generation = searchFeedbackGeneration;
   if (searchFeedbackDepth++ === 0) {
     for (const button of searchButtons) {
       button.disabled = true;
@@ -85,6 +91,7 @@ function beginSearchFeedback(){
     }, 250);
   }
   return () => {
+    if (generation !== searchFeedbackGeneration) return;
     if (--searchFeedbackDepth !== 0) return;
     clearTimeout(searchFeedbackTimer);
     searchButtons.forEach((button, index) => {
@@ -95,6 +102,92 @@ function beginSearchFeedback(){
   };
 }
 let pendingSearch = null;
+let searchOperationId = 0;
+let searchController = null;
+let editingFromResults = false;
+function beginSearchOperation(){
+  searchController?.abort();
+  const controller = new AbortController();
+  searchController = controller;
+  const operation = {id:++searchOperationId, signal:controller.signal};
+  els.cancelSearch.hidden = false;
+  return operation;
+}
+function isSearchCurrent(operation){
+  return !!operation && operation.id === searchOperationId && !operation.signal.aborted;
+}
+function finishSearchOperation(operation){
+  if (!isSearchCurrent(operation)) return;
+  searchController = null;
+  els.cancelSearch.hidden = true;
+}
+function resetSearchFeedback(){
+  searchFeedbackGeneration++;
+  searchFeedbackDepth = 0;
+  clearTimeout(searchFeedbackTimer);
+  searchButtons.forEach((button,index)=>{
+    button.disabled = false;
+    button.textContent = searchButtonLabels[index];
+    button.removeAttribute('aria-busy');
+  });
+}
+function cancelActiveSearch(){
+  if (!searchController) return;
+  searchOperationId++;
+  searchController.abort();
+  searchController = null;
+  pendingSearch = null;
+  searching = false;
+  resetSearchFeedback();
+  els.cancelSearch.hidden = true;
+  els.diningActions.hidden = true;
+  els.hotelActions.hidden = true;
+  invalidateDiningSearch();
+  setStatus('検索を中止しました。条件を変えてもう一度検索できます。');
+}
+function scrollToSearchTarget(target){
+  if (!target || document.hidden) return;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  target.scrollIntoView({behavior:reducedMotion ? 'auto' : 'smooth', block:'start'});
+}
+function updateResultNavigation(section, count){
+  const hotel = section === 'hotel';
+  const actions = hotel ? els.hotelActions : els.diningActions;
+  const hint = hotel ? els.hotelHint : els.diningHint;
+  if (!actions || !hint) return;
+  actions.hidden = false;
+  const unit = hotel ? '施設' : '店舗';
+  const nationwideHotel = hotel && els.radius.value === 'all';
+  hint.textContent = count === 0
+    ? nationwideHotel
+      ? '全国の対象施設が0件でした。宿泊優待の選択を変更して再検索してください。'
+      : `該当する${unit}は0件でした。優待を追加するか、検索範囲や場所を変更して再検索できます。`
+    : count === 1
+      ? `1${unit === '施設' ? '施設' : '件'}見つかりました。もっと探したい場合は優待を追加・変更できます。`
+      : `${count}${unit === '施設' ? '施設' : '件'}見つかりました。ここから優待の選び直しや再検索ができます。`;
+  const options = [...els.radius.options].map(option=>option.value);
+  const canExpand = options.indexOf(els.radius.value) < options.length - 1;
+  qs(hotel ? '#extendHotelSearch' : '#extendDiningSearch').hidden = !canExpand;
+  qs(hotel ? '#changeHotelOrigin' : '#changeDiningOrigin').hidden = count !== 0 || nationwideHotel;
+  if (hotel) els.hotelSearchAgain.hidden = false;
+  scrollToSearchTarget(hotel ? actions : qs('.results-section'));
+}
+function rerunFromResults(){
+  if (!lastPosition || searchController) return;
+  searchNearby(lastPosition, lastCenterLabel);
+}
+function extendResultSearch(){
+  const options = [...els.radius.options].map(option=>option.value);
+  const next = options[options.indexOf(els.radius.value) + 1];
+  if (!next) return;
+  els.radius.value = next;
+  els.radius.dispatchEvent(new Event('change',{bubbles:true}));
+  rerunFromResults();
+}
+function changeResultOrigin(){
+  setSearchMode('place');
+  scrollToSearchTarget(qs('.hero'));
+}
 let lastResults = [];
 let categoryCounts = null;
 let suggestTimer = null;
@@ -149,6 +242,7 @@ init();
 
 async function init(){
   initBenefitTabs({initialSection: guideSearchSelection(location.search).section, onChange(section) {
+    if (activeBenefit !== section) cancelActiveSearch();
     activeBenefit = section;
     track('benefit_tab', {section});
     if (section !== 'expiry') searchRadius.setSection(section);
@@ -217,6 +311,19 @@ async function init(){
   }
 
   els.locate.addEventListener('click', requestLocation);
+  els.cancelSearch?.addEventListener('click', cancelActiveSearch);
+  qs('#editDiningSearch')?.addEventListener('click',()=>{
+    editingFromResults = true;
+    openCompanyPicker();
+  });
+  qs('#extendDiningSearch')?.addEventListener('click',extendResultSearch);
+  qs('#extendHotelSearch')?.addEventListener('click',extendResultSearch);
+  qs('#changeDiningOrigin')?.addEventListener('click',changeResultOrigin);
+  qs('#changeHotelOrigin')?.addEventListener('click',changeResultOrigin);
+  qs('#editHotelSearch')?.addEventListener('click',()=>{
+    scrollToSearchTarget(qs('#hotelFeatures .feature-buttons'));
+  });
+  els.hotelSearchAgain?.addEventListener('click',rerunFromResults);
   els.searchMode?.querySelectorAll('.search-mode-button').forEach(btn => btn.addEventListener('click', () => setSearchMode(btn.dataset.mode)));
   els.placeSearchPanel?.addEventListener('submit', submitPlaceSearch);
   els.placeInput?.addEventListener('input', () => {
@@ -233,6 +340,7 @@ async function init(){
     if(!event.target.closest('button')) openCompanyPicker();
   });
   qs('#companyPickerClose').addEventListener('click', () => els.picker.close());
+  els.picker.addEventListener('close',()=>{editingFromResults=false;});
   els.pickerSearch.addEventListener('input', renderCompanyPicker);
   qs('#companyPickerAll').addEventListener('click', () => {
     pickerCompanies.forEach(c => draftSelection.add(c.id)); renderCompanyPicker();
@@ -243,8 +351,11 @@ async function init(){
   els.pickerApply.addEventListener('click', () => {
     selected.clear(); draftSelection.forEach(id => selected.add(id));
     resetCategoryFilter();
+    const rerun = editingFromResults && !!lastPosition;
+    editingFromResults = false;
     persistSelection(); renderChips(); renderBrandOptions(); els.picker.close();
     invalidateDiningSearch();
+    if (rerun) rerunFromResults();
   });
   els.headerSearchButton?.addEventListener('click', () => {
     closeNavMenu();
@@ -394,6 +505,7 @@ function invalidateDiningSearch(){
   diningSearchRevision++;
   lastResults = []; categoryCounts = null;
   els.count.textContent = '';
+  els.diningActions.hidden = true;
   els.results.className = 'results empty-state';
   els.results.textContent = '条件を選んで「現在地から探す」または「この場所で探す」を押してください';
   renderCategoryFilters();
@@ -603,151 +715,202 @@ function renderPlaceSuggestions(items){
 async function submitPlaceSearch(e, {search = true} = {}){
   e.preventDefault();
   const q = els.placeInput.value.trim();
-  if(!q) return;
-  if(searchFeedbackDepth) return;
-  if (lastPosition && normalize(q) === normalize(lastCenterLabel)) return applySearchOrigin(lastPosition, lastCenterLabel, search);
+  if (!q || searchFeedbackDepth) return;
+  if (lastPosition && normalize(q) === normalize(lastCenterLabel)) {
+    return applySearchOrigin(lastPosition, lastCenterLabel, search);
+  }
+  const operation = beginSearchOperation();
   const finishFeedback = beginSearchFeedback();
   setStatus('場所を探しています…');
-  try{
+  try {
     const params = new URLSearchParams({q, limit:'8', fields:'minimal'});
-    const res = await fetch(`${SUGGEST_API}?${params}`);
-    if(!res.ok) throw new Error('suggest failed');
+    const res = await fetch(`${SUGGEST_API}?${params}`, {signal:operation.signal});
+    if (!isSearchCurrent(operation)) return;
+    if (!res.ok) throw new Error('suggest failed');
     const data = await res.json();
+    if (!isSearchCurrent(operation)) return;
     const places = (data.vocabulary || []).filter(v => v.type === 'place' && Array.isArray(v.center));
-    let pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
-    if(pick){
+    const pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
+    if (pick) {
       els.placeSuggestions.hidden = true;
-      return await applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search);
+      return await applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search, operation);
     }
-    const s = (data.suggestions || [])[0];
-    if(s && Number.isFinite(Number(s.lat)) && Number.isFinite(Number(s.lng))){
+    const suggestion = (data.suggestions || [])[0];
+    if (suggestion && Number.isFinite(Number(suggestion.lat)) && Number.isFinite(Number(suggestion.lng))) {
       els.placeSuggestions.hidden = true;
-      return await applySearchOrigin({lat:Number(s.lat),lng:Number(s.lng)}, s.name || q, search);
+      return await applySearchOrigin({lat:Number(suggestion.lat),lng:Number(suggestion.lng)}, suggestion.name || q, search, operation);
     }
     showError('場所を特定できませんでした。地名・駅名・施設名を少し詳しく入力してください。');
     setStatus('場所を特定できませんでした');
-  }catch(e){
-    console.error(e);
-    showError('場所の検索中にエラーが発生しました。');
-    setStatus('場所を検索できませんでした');
-  }finally{
+  } catch (error) {
+    if (isSearchCurrent(operation)) {
+      console.error(error);
+      showError('場所の検索中にエラーが発生しました。');
+      setStatus('場所を検索できませんでした');
+    }
+  } finally {
     finishFeedback();
+    finishSearchOperation(operation);
   }
 }
 
-function applySearchOrigin(pos, label, search){
-  lastPosition = pos; lastCenterLabel = label;
-  if (search) return searchNearby(pos, label);
+function applySearchOrigin(pos, label, search, operation = null){
+  if (operation && !isSearchCurrent(operation)) return null;
+  lastPosition = pos;
+  lastCenterLabel = label;
+  if (search) return searchNearby(pos, label, operation);
   invalidateDiningSearch();
   specialFeatures.invalidate();
   setStatus(`${label}を検索地点にしました`);
   return pos;
 }
 async function requestLocation({search = true} = {}){
-  if(searchFeedbackDepth) return;
-  if(!navigator.geolocation){
+  if (searchFeedbackDepth) return;
+  if (!navigator.geolocation) {
     showError('このブラウザでは現在地取得に対応していません。');
     return;
   }
-
+  const operation = beginSearchOperation();
   const finishFeedback = beginSearchFeedback();
   setStatus('現在地を確認しています…');
-
   return new Promise(resolve => requestCurrentPosition(navigator.geolocation,
-    async p => {
-      const pos = {lat:p.coords.latitude, lng:p.coords.longitude};
+    async position => {
+      if (!isSearchCurrent(operation)) {
+        finishFeedback();
+        resolve(null);
+        return;
+      }
+      const pos = {lat:position.coords.latitude, lng:position.coords.longitude};
       try {
-        await applySearchOrigin(pos, '現在地', search);
+        await applySearchOrigin(pos, '現在地', search, operation);
+      } catch (error) {
+        if (isSearchCurrent(operation)) {
+          console.error(error);
+          showError('現在地から検索できませんでした。再度お試しください。');
+        }
       } finally {
         finishFeedback();
-        resolve(pos);
+        finishSearchOperation(operation);
+        resolve(isSearchCurrent(operation) ? pos : null);
       }
     },
-    err => {
+    error => {
+      if (isSearchCurrent(operation)) {
+        const message =
+          error.code === 1 ? '現在地の利用が拒否されました。ブラウザや端末の位置情報設定をご確認いただくか、「場所を指定」で住所・駅名を入力してください。' :
+          error.code === 2 ? '端末の現在地を特定できませんでした。「場所を指定」で住所・駅名を入力して検索してください。' :
+          error.code === 3 ? '現在地の取得に時間がかかっています。再度お試しいただくか、「場所を指定」で住所・駅名を入力してください。' :
+          '現在地を取得できませんでした。「場所を指定」で住所・駅名を入力してください。';
+        showError(message);
+        setStatus('現在地は保存していません');
+      }
       finishFeedback();
-
-      const message =
-        err.code === 1 ? '現在地の利用が拒否されました。ブラウザや端末の位置情報設定をご確認いただくか、「場所を指定」で住所・駅名を入力してください。' :
-        err.code === 2 ? '端末の現在地を特定できませんでした。「場所を指定」で住所・駅名を入力して検索してください。' :
-        err.code === 3 ? '現在地の取得に時間がかかっています。再度お試しいただくか、「場所を指定」で住所・駅名を入力してください。' :
-        '現在地を取得できませんでした。「場所を指定」で住所・駅名を入力してください。';
-      showError(message);
-      setStatus('現在地は保存していません');
+      finishSearchOperation(operation);
       resolve(null);
     },
-    () => setStatus('現在地の取得を再試行しています…')
+    () => { if (isSearchCurrent(operation)) setStatus('現在地の取得を再試行しています…'); }
   ));
 }
 
-async function searchNearby(pos, centerLabel='現在地'){
-  if (activeBenefit === 'expiry') { els.locate.disabled=false; setStatus(''); return; }
-  if(searching){ pendingSearch={pos,centerLabel}; return; }
+async function searchNearby(pos, centerLabel='現在地', existingOperation = null){
+  if (activeBenefit === 'expiry') return;
+  if (searching) return;
+  const operation = existingOperation || beginSearchOperation();
+  if (!isSearchCurrent(operation)) return;
   lastPosition = pos;
   lastCenterLabel = centerLabel;
+  els.diningActions.hidden = true;
+  els.hotelActions.hidden = true;
   specialFeatures.refresh();
+
   if (activeBenefit === 'hotel') {
-    await specialFeaturesReady;
-    specialFeatures.search();
-    els.locate.disabled = false;
-    setStatus(`${centerLabel}を検索地点にしました`);
+    const finishFeedback = beginSearchFeedback();
+    try {
+      await specialFeaturesReady;
+      if (!isSearchCurrent(operation)) return;
+      specialFeatures.search();
+      els.locate.disabled = false;
+      setStatus(`${centerLabel}を検索地点にしました`);
+      const count = qs('#hotelFeatures .feature-results')?.querySelectorAll('.feature-card').length || 0;
+      updateResultNavigation('hotel', count);
+    } catch (error) {
+      if (isSearchCurrent(operation)) {
+        console.error(error);
+        showError('宿泊優待を検索できませんでした。再度お試しください。');
+      }
+    } finally {
+      finishFeedback();
+      finishSearchOperation(operation);
+    }
     return;
   }
-  const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
+
+  const brand = brandCatalog.find(b => brandKey(b) === activeBrand);
   const targets = companies.filter(c => visibleCompanyIds.has(c.id) && selected.has(c.id) && (!brand || brand.issuer_id===c.id));
-  if(!targets.length){ showError('検索する優待を1つ以上選んでください。'); els.locate.disabled=false; return; }
+  if (!targets.length) {
+    showError('検索する優待を1つ以上選んでください。');
+    finishSearchOperation(operation);
+    return;
+  }
 
   searching = true;
   const finishFeedback = beginSearchFeedback();
   const revision = diningSearchRevision;
-  categoryCounts=null; renderCategoryFilters();
+  categoryCounts = null;
+  renderCategoryFilters();
   els.count.textContent = '';
-  els.results.className='results';
-  els.results.innerHTML='<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
+  els.results.className = 'results';
+  els.results.innerHTML = '<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
   setStatus('近隣の優待店を検索中…');
 
-  try{
+  try {
     const radius = Number(els.radius.value);
     const d1Targets = targets.filter(company =>
       ['official_coordinates','worker_reference'].includes(company.locationMode)
     );
     const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
-
-    const d1Groups = d1Targets.length ? await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius))) : [];
-    const d1Results=d1Groups.flatMap(g=>g.results);
-    const batches = openPoiTargets.flatMap(company => (company.poiSearchGroups || chunk(company.poiSearchNames || company.aliases, 14)).map(aliases => ({company, aliases})));
-    const responses = await Promise.allSettled(batches.map(b => queryOpenPOI(b, pos, radius)));
-    if (revision !== diningSearchRevision) return;
-    const raw = [
-      ...d1Results,
-      ...responses.filter(r => r.status==='fulfilled').flatMap(r => r.value)
-    ];
+    const d1Groups = d1Targets.length
+      ? await Promise.all(chunk(d1Targets, 20).map(group => queryD1StoreApi(group, pos, radius, operation.signal)))
+      : [];
+    if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
+    const d1Results = d1Groups.flatMap(g=>g.results);
+    const batches = openPoiTargets.flatMap(company =>
+      (company.poiSearchGroups || chunk(company.poiSearchNames || company.aliases, 14)).map(aliases => ({company,aliases}))
+    );
+    const responses = await Promise.allSettled(batches.map(batch => queryOpenPOI(batch, pos, radius, operation.signal)));
+    if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
+    const failures = responses.filter(result=>result.status==='rejected').length;
+    const raw = [...d1Results, ...responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value)];
+    if (failures && !raw.length) throw new Error('一部の店舗情報を取得できませんでした');
     const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
-    categoryCounts=Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
-    for(const group of d1Groups){
-      for(const id of Object.keys(categoryLabels)) categoryCounts[id]+=Number(group.categoryCounts[id] || 0);
+    categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
+    for (const group of d1Groups) {
+      for (const id of Object.keys(categoryLabels)) categoryCounts[id] += Number(group.categoryCounts[id] || 0);
     }
-    for(const s of dedupe(responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value))){
-      categoryCounts.all++; categoryCounts[s.category || 'restaurant']++;
+    for (const item of dedupe(responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value))) {
+      categoryCounts.all++;
+      categoryCounts[item.category || 'restaurant']++;
     }
     lastResults = normalized;
-    track('benefit_search', {section: 'dining', mode: centerLabel === '現在地' ? 'current' : 'place', result_count: normalized.length});
+    track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
-    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
-  } catch(e){
-    console.error(e);
-    if (revision !== diningSearchRevision) return;
-    if(e?.code === 'RATE_LIMIT'){
-      showError(e.message || '短時間に検索が集中しています。しばらくお待ちください。');
+    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${failures ? '・一部の検索先から情報を取得できませんでした' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
+    updateResultNavigation('dining', els.results.querySelectorAll('.card').length);
+  } catch (error) {
+    if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
+    console.error(error);
+    if (error?.code === 'RATE_LIMIT') {
+      showError(error.message || '短時間に検索が集中しています。しばらくお待ちください。');
       setStatus('検索回数が上限に達しました');
-    }else{
+    } else {
       showError('検索中にエラーが発生しました。時間をおいて再度お試しください。');
       setStatus('検索できませんでした');
     }
   } finally {
-    searching=false;
+    if (isSearchCurrent(operation)) searching = false;
     finishFeedback();
-    if(pendingSearch){ const next=pendingSearch; pendingSearch=null; searchNearby(next.pos,next.centerLabel); }
+    finishSearchOperation(operation);
   }
 }
 
@@ -774,7 +937,7 @@ function queryOfficialStoreDb(company, origin, radius){
   }).filter(Boolean);
 }
 
-async function queryD1StoreApi(targets, pos, radius){
+async function queryD1StoreApi(targets, pos, radius, signal){
   const companiesById = new Map(targets.map(c => [c.id, c]));
   const params = new URLSearchParams({
     lat: String(pos.lat),
@@ -784,7 +947,7 @@ async function queryD1StoreApi(targets, pos, radius){
     ...(activeCategory !== 'all' ? {category: activeCategory} : {}),
     ...(activeBrand && brandCatalog.some(b=>brandKey(b)===activeBrand) ? {brand:brandCatalog.find(b=>brandKey(b)===activeBrand).name} : {})
   });
-  const res = await fetch(`${STORE_API}?${params}`, {cache:'no-store'});
+  const res = await fetch(`${STORE_API}?${params}`, {cache:'no-store',signal});
   if(res.status === 429){
     let data = {};
     try { data = await res.json(); } catch {}
@@ -832,12 +995,12 @@ async function queryD1StoreApi(targets, pos, radius){
   return {results,categoryCounts:counts};
 }
 
-async function queryOpenPOI(batch, pos, radius){
+async function queryOpenPOI(batch, pos, radius, signal){
   // /v1/search はスペース区切りがOR検索。検索後にクライアント側でブランド名を厳密寄りに再判定する。
   const params = new URLSearchParams({
     q: batch.aliases.join(' '), center: `${pos.lng},${pos.lat}`, radius: String(radius), limit: '200'
   });
-  const res = await fetch(`${API}?${params}`);
+  const res = await fetch(`${API}?${params}`, {signal});
   if(!res.ok) throw new Error(`OpenPOI ${res.status}`);
   const data = await res.json();
   return (data.results || []).map(p => classify(p, batch.company, pos)).filter(Boolean);
