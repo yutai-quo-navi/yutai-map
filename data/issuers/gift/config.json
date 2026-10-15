@@ -1,0 +1,70 @@
+{
+  "id": "gift",
+  "code": "9279",
+  "name": "ギフトホールディングス",
+  "fullName": "ギフトホールディングス",
+  "status": "public",
+  "sourceUrl": "https://www.gift-group.co.jp/ir/stock/shareholder-perks",
+  "storeSearchUrl": "https://www.gift-group.co.jp/ir/stock/shareholder-perks/shoplist",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式検索の株主優待・eチケット対象表示で抽出。対象外・開業前・閉店店舗と海外を除外。",
+  "note": "ギフトグループの株主優待・eチケット対象店舗のみ掲載。店頭の持ち帰り用冷凍商品などは対象外です。",
+  "aliases": [
+    "町田商店",
+    "豚山",
+    "元祖油堂",
+    "がっとん",
+    "長岡食堂",
+    "四天王",
+    "赤みそ家"
+  ],
+  "catalogBrands": [
+    "町田商店",
+    "豚山",
+    "元祖油堂",
+    "がっとん",
+    "長岡食堂",
+    "四天王",
+    "赤みそ家"
+  ],
+  "searchNames": [
+    "ギフト",
+    "ギフトホールディングス",
+    "町田商店",
+    "豚山",
+    "元祖油堂",
+    "がっとん",
+    "長岡食堂",
+    "四天王",
+    "赤みそ家"
+  ],
+  "categories": {
+    "町田商店": "restaurant",
+    "豚山": "restaurant",
+    "元祖油堂": "restaurant",
+    "がっとん": "restaurant",
+    "長岡食堂": "restaurant",
+    "四天王": "restaurant",
+    "赤みそ家": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 250,
+    "maxStores": 500,
+    "maxAgeDays": 25,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "shop.machidashoten.com",
+      "shop.butayama.com",
+      "shop.ganso-aburado.com",
+      "shop.gift-group.co.jp"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

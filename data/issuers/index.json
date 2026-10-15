@@ -246,6 +246,27 @@
       "name": "光フードサービス",
       "status": "public",
       "config": "./data/issuers/hikari/config.json"
+    },
+    {
+      "id": "gift",
+      "code": "9279",
+      "name": "ギフトホールディングス",
+      "status": "public",
+      "config": "./data/issuers/gift/config.json"
+    },
+    {
+      "id": "hotland",
+      "code": "3196",
+      "name": "ホットランドホールディングス",
+      "status": "public",
+      "config": "./data/issuers/hotland/config.json"
+    },
+    {
+      "id": "eternal",
+      "code": "3193",
+      "name": "エターナルホスピタリティグループ",
+      "status": "public",
+      "config": "./data/issuers/eternal/config.json"
     }
   ]
 }

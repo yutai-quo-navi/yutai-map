@@ -4,6 +4,9 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  eternal: {name:'鳥貴族',sub:'鳥貴族',color:'#b52025',symbol:'店',asset:'./assets/logo-eternal.svg'},
+  hotland: {name:'築地銀だこ',sub:'築地銀だこ',color:'#b52025',symbol:'店',asset:'./assets/logo-hotland.webp'},
+  gift: {name:'町田商店',sub:'町田商店',color:'#b51c27',symbol:'町',asset:'./assets/logo-gift-machida.webp'},
   hikari: {name:'立呑み 焼きとん 大黒',sub:'大黒',color:'#252525',symbol:'大',asset:'./assets/logo-hikari-daikoku.webp'},
   amiyaki: {name:"あみやき亭",sub:"あみやき亭",color:"#da252b",symbol:'店',asset:"./assets/logo-original-amiyaki.png"},
   towa: {name:"椿屋珈琲",sub:"椿屋珈琲",color:"#253c20",symbol:'店',asset:"./assets/logo-original-towa.png"},

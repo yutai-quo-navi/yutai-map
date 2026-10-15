@@ -1,0 +1,42 @@
+{
+  "id": "eternal",
+  "code": "3193",
+  "name": "エターナルホスピタリティグループ",
+  "fullName": "エターナルホスピタリティグループ",
+  "status": "public",
+  "sourceUrl": "https://eternal-hospitality.co.jp/ir/preferential/",
+  "storeSearchUrl": "https://map.torikizoku.co.jp/all/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "国内の鳥貴族の営業店舗を掲載。鳥貴族〇〇家、やきとり大吉、記念館等は対象外。",
+  "note": "国内の鳥貴族の営業店舗を掲載。鳥貴族〇〇家、やきとり大吉、記念館等は対象外。",
+  "aliases": [
+    "鳥貴族"
+  ],
+  "catalogBrands": [
+    "鳥貴族"
+  ],
+  "searchNames": [
+    "エターナルホスピタリティグループ",
+    "鳥貴族"
+  ],
+  "categories": {
+    "鳥貴族": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 600,
+    "maxStores": 900,
+    "maxAgeDays": 25,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "map.torikizoku.co.jp"
+    ],
+    "maxAdded": 60,
+    "maxRemoved": 40,
+    "maxChanged": 200,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}
