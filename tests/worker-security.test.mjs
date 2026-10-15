@@ -179,7 +179,7 @@ test('a single user search can include 44 issuers without a 20-company truncatio
 
 test('44-company search still displays verified nearby stores when upstream matches are unavailable',async()=>{
   const aliases=Object.fromEntries(Array.from({length:44},(_,i)=>['company'+i,['brand'+i]]));
-  const geoRows=[{issuer_id:'company43',store_id:'nearby',name:'実店舗',lat:35.6813,lng:139.7671,brand_name:'お店',category:'restaurant'}];
+  const geoRows=[{issuer_id:'company43',store_id:'nearby',name:'実店舗',lat:35.6813,lng:139.7671,brand_name:'お店',category:'restaurant',exact_distance:10,__all_count:1,__restaurant_count:1,__cafe_count:0,__bakery_count:0,__foodcourt_count:0,__other_count:0}];
   await withReferenceFixture(aliases,()=>new Response('',{status:429}),async({env,calls})=>{
     const response=await worker.fetch(referenceRequest(Object.keys(aliases).join(',')),env);
     assert.equal(response.status,200);
@@ -264,4 +264,45 @@ test('a shared-counter rejection or outage stops searches before SQL and never f
       if(status===429) assert.match((await response.json()).message,/しばらくお待ちください/);
     }
   }finally{globalThis.caches=oldCache;}
+});
+
+test('44-company wide D1 query returns only nearest stores with complete counts', async()=>{
+  const rows=Array.from({length:30},(_,i)=>({
+    issuer_id:i===29?'company43':'company0',
+    store_id:String(i),name:'store '+i,
+    lat:35.6812,lng:139.7671,category:'restaurant',
+    exact_distance:i*70,
+    __all_count:9191,__restaurant_count:7832,__cafe_count:1282,
+    __bakery_count:20,__foodcourt_count:10,__other_count:47
+  }));
+  await withReferenceFixture({},emptyUpstream,async({env,calls,dbReads})=>{
+    const ids=Array.from({length:44},(_,i)=>'company'+i).join(',');
+    const result=await worker.fetch(request('/v1/stores/search?lat=35.6812&lng=139.7671&radius=30000&issuers='+ids),env);
+    assert.equal(result.status,200);
+    const data=await result.json();
+    assert.equal(data.results.length,30);
+    assert.equal(data.results.at(-1).issuer_id,'company43');
+    assert.equal(data.results[0].distance,0);
+    assert.equal(data.results.at(-1).distance,2030);
+    assert.equal(data.category_counts.all,9191);
+    assert.equal(data.category_counts.cafe,1282);
+    assert.equal(calls.length,0);
+    const query=dbReads.find(sql=>sql.includes('WITH candidates AS'));
+    assert.ok(query);
+    assert.match(query,/LIMIT 30/);
+    assert.match(query,/COUNT\(\*\) AS all_count/);
+  },permit,rows);
+});
+
+test('wide D1 category with zero matches still returns complete category totals',async()=>{
+  const rows=[{store_id:null,__all_count:12,__restaurant_count:12,__cafe_count:0,__bakery_count:0,__foodcourt_count:0,__other_count:0}];
+  await withReferenceFixture({},emptyUpstream,async({env})=>{
+    const ids=Array.from({length:44},(_,i)=>'company'+i).join(',');
+    const result=await worker.fetch(request('/v1/stores/search?lat=35.6812&lng=139.7671&radius=30000&category=cafe&issuers='+ids),env);
+    assert.equal(result.status,200);
+    const data=await result.json();
+    assert.equal(data.results.length,0);
+    assert.equal(data.category_counts.all,12);
+    assert.equal(data.category_counts.cafe,0);
+  },permit,rows);
 });
