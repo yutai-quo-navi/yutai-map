@@ -4,6 +4,8 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  bronco: {name:'ブロンコビリー',sub:'ブロンコビリー',color:'#c7182a',symbol:'店',asset:'./assets/logo-bronco.svg'},
+  tenallied: {name:'てんぐ大ホール',sub:'てんぐ大ホール',color:'#222222',symbol:'店',asset:'./assets/logo-tenallied.webp'},
   kourakuen: {name:'幸楽苑',sub:'幸楽苑',color:'#c7182a',symbol:'幸',asset:'./assets/logo-kourakuen.webp'},
   eternal: {name:'鳥貴族',sub:'鳥貴族',color:'#b52025',symbol:'店',asset:'./assets/logo-eternal.svg'},
   hotland: {name:'築地銀だこ',sub:'築地銀だこ',color:'#b52025',symbol:'店',asset:'./assets/logo-hotland.webp'},

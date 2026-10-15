@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-08",
+  "updated": "2026-10-15",
   "source": "期限DB（Google Sheets）からの確認済みデータ",
   "entries": [
     {
@@ -141,6 +141,26 @@
       "date": "2026-09-30",
       "status": "confirmed",
       "issue": "対象発行回未登録"
+    },
+    {
+      "id": "3091-2027-04-1",
+      "issuer": "bronco",
+      "code": "3091",
+      "name": "ブロンコビリー",
+      "benefit": "株主ご優待券",
+      "date": "2027-04-30",
+      "status": "confirmed",
+      "issue": "ユーザー確認済み"
+    },
+    {
+      "id": "8207-2027-02-1",
+      "issuer": "tenallied",
+      "code": "8207",
+      "name": "テンアライド",
+      "benefit": "株主優待券",
+      "date": "2027-02-28",
+      "status": "confirmed",
+      "issue": "ユーザー確認済み"
     }
   ]
 }

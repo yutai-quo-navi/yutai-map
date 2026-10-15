@@ -1,0 +1,56 @@
+{
+  "id": "bronco",
+  "code": "3091",
+  "name": "ブロンコビリー",
+  "fullName": "ブロンコビリー",
+  "status": "public",
+  "sourceUrl": "https://www.bronco.co.jp/corporate/ir/stock/benefit/",
+  "storeSearchUrl": "https://www.bronco.co.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "ブロンコビリーグループ全店で利用可能な株主優待券の対象店を掲載。公式座標が未掲載の店舗は公式住所・店名との照合で検索します。",
+  "note": "ブロンコビリーグループ全店で利用可能な株主優待券の対象店を掲載。公式座標が未掲載の店舗は公式住所・店名との照合で検索します。",
+  "aliases": [
+    "ブロンコビリー",
+    "かつひろ",
+    "かつ雅",
+    "信貴や"
+  ],
+  "catalogBrands": [
+    "ブロンコビリー",
+    "かつひろ",
+    "かつ雅",
+    "信貴や"
+  ],
+  "searchNames": [
+    "ブロンコビリー",
+    "かつひろ",
+    "かつ雅",
+    "信貴や"
+  ],
+  "categories": {
+    "ブロンコビリー": "restaurant",
+    "かつひろ": "restaurant",
+    "かつ雅": "restaurant",
+    "信貴や": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 120,
+    "maxStores": 250,
+    "maxAgeDays": 25,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "www.bronco.co.jp",
+      "tonkatsu-obanzai-katsuhiro.jp",
+      "shop.katumasa.jp",
+      "shikiya-meieki.com"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

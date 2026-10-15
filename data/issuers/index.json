@@ -274,6 +274,20 @@
       "name": "幸楽苑",
       "status": "public",
       "config": "./data/issuers/kourakuen/config.json"
+    },
+    {
+      "id": "bronco",
+      "code": "3091",
+      "name": "ブロンコビリー",
+      "status": "public",
+      "config": "./data/issuers/bronco/config.json"
+    },
+    {
+      "id": "tenallied",
+      "code": "8207",
+      "name": "テンアライド",
+      "status": "public",
+      "config": "./data/issuers/tenallied/config.json"
     }
   ]
 }

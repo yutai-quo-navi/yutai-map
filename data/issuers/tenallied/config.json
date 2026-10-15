@@ -1,0 +1,69 @@
+{
+  "id": "tenallied",
+  "code": "8207",
+  "name": "テンアライド",
+  "fullName": "テンアライド",
+  "status": "public",
+  "sourceUrl": "https://www.teng.co.jp/ir/hospitality.html",
+  "storeSearchUrl": "https://www.teng.co.jp/shopsearch/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式案内の株主優待券対象8ブランドを掲載。店内飲食に限ります。",
+  "note": "公式案内の株主優待券対象8ブランドを掲載。店内飲食に限ります。",
+  "aliases": [
+    "てんぐ大ホール",
+    "湊や磯吉食堂",
+    "神田屋",
+    "テング酒場",
+    "和食れすとらん天狗",
+    "旬鮮酒場天狗",
+    "ミートキッチンlog50",
+    "ジュークステーキ"
+  ],
+  "catalogBrands": [
+    "てんぐ大ホール",
+    "湊や磯吉食堂",
+    "神田屋",
+    "テング酒場",
+    "和食れすとらん天狗",
+    "旬鮮酒場天狗",
+    "ミートキッチンlog50",
+    "ジュークステーキ"
+  ],
+  "searchNames": [
+    "てんぐ大ホール",
+    "湊や磯吉食堂",
+    "神田屋",
+    "テング酒場",
+    "和食れすとらん天狗",
+    "旬鮮酒場天狗",
+    "ミートキッチンlog50",
+    "ジュークステーキ"
+  ],
+  "categories": {
+    "てんぐ大ホール": "restaurant",
+    "湊や磯吉食堂": "restaurant",
+    "神田屋": "restaurant",
+    "テング酒場": "restaurant",
+    "和食れすとらん天狗": "restaurant",
+    "旬鮮酒場天狗": "restaurant",
+    "ミートキッチンlog50": "restaurant",
+    "ジュークステーキ": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 100,
+    "maxStores": 200,
+    "maxAgeDays": 25,
+    "requireCoordinates": true,
+    "allowedSourceHosts": [
+      "www.teng.co.jp"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}
