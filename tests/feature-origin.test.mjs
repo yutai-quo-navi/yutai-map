@@ -13,7 +13,7 @@ function setup({place=false, denied=false} = {}) {
     els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false,textContent:'現在地から探す',setAttribute(){},removeAttribute(){}},
       cancelSearch:{hidden:true},diningActions:{hidden:true},hotelActions:{hidden:true},radius:{value:'3000',options:[]}},
     navigator:{geolocation:{getCurrentPosition(success,failure){calls.geo++;denied ? failure({code:1}) : success({coords:{latitude:43.06,longitude:141.35}});}}},
-    setTimeout,clearTimeout,AbortController,qs:()=>null,searching:false,
+    setTimeout,clearTimeout,AbortController,qs:()=>null,searching:false,pagingInProgress:false,refreshDiningPager(){},
     invalidateDiningSearch(){},setStatus(){},showError(){},normalize:value=>value,console,
     SUGGEST_API:'https://api.example.com/suggest',URLSearchParams,
     fetch:async()=>({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',center:[130.4,33.59]}]})}),
