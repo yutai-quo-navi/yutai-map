@@ -57,7 +57,8 @@ const els = {
   cancelSearch: qs('#cancelSearchButton'),
   diningActions: qs('#resultActions'), diningHint: qs('#resultHint'),
   hotelActions: qs('#hotelResultActions'), hotelHint: qs('#hotelResultHint'),
-  hotelSearchAgain: qs('#hotelSearchAgain')
+  hotelSearchAgain: qs('#hotelSearchAgain'),
+  loadMoreDining: qs('#loadMoreDining'), paginationStatus: qs('#paginationStatus')
 };
 
 const expirySearch = initExpirySearch({root:qs('#expiryPanel'), alertsRoot:qs('#expiryAlerts'), read:readJSON, write:writeSetting});
@@ -135,6 +136,8 @@ function resetSearchFeedback(){
 function cancelActiveSearch(){
   smoothNavigator.stop();
   if (!searchController) return;
+  const wasPaging = pagingInProgress;
+  pagingInProgress = false;
   searchOperationId++;
   searchController.abort();
   searchController = null;
@@ -144,8 +147,10 @@ function cancelActiveSearch(){
   els.cancelSearch.hidden = true;
   els.diningActions.hidden = true;
   els.hotelActions.hidden = true;
-  invalidateDiningSearch();
-  setStatus('検索を中止しました。条件を変えてもう一度検索できます。');
+  if (!wasPaging) invalidateDiningSearch();
+  else refreshDiningPager();
+  setStatus(wasPaging ? '追加読み込みを中止しました。もう一度お試しください。'
+    : '検索を中止しました。条件を変えてもう一度検索できます。');
 }
 function scrollToSearchTarget(target){
   smoothNavigator.scrollTo(target);
@@ -190,6 +195,65 @@ function changeResultOrigin(){
 }
 let lastResults = [];
 let categoryCounts = null;
+let diningPageState = null;
+let pagingInProgress = false;
+function refreshDiningPager(){
+  const pager = els.loadMoreDining;
+  if(!pager) return;
+  const available = !!diningPageState?.cursor && activeBenefit === 'dining';
+  pager.hidden = !available;
+  pager.disabled = pagingInProgress;
+  pager.textContent = pagingInProgress ? '追加の30件を読み込み中…' : 'さらに30件を見る';
+  if(els.paginationStatus){
+    els.paginationStatus.hidden = !available;
+    els.paginationStatus.textContent = available
+      ? '続きの店舗はボタンを押したときだけ取得します。' : '';
+  }
+}
+async function loadNextDiningPage(){
+  const state = diningPageState;
+  if(!state?.cursor || pagingInProgress || searching || searchController) return;
+  const revision = diningSearchRevision;
+  pagingInProgress = true;
+  const operation = beginSearchOperation();
+  const finishFeedback = beginSearchFeedback();
+  refreshDiningPager();
+  try{
+    const page = await queryD1StoreApi(state.targets, state.origin, state.radius, operation.signal, state.cursor);
+    if(!isSearchCurrent(operation) || revision !== diningSearchRevision || diningPageState !== state) return;
+    const alreadyVisible = els.results.querySelectorAll('.card').length;
+    const previousLength = lastResults.length;
+    lastResults = dedupe([...lastResults, ...page.results]).sort((a,b)=>a.distance-b.distance);
+    state.cursor = page.nextCursor || null;
+    // Only the new thirty (or fewer) cards are inserted: old cards stay mounted.
+    // Re-render when the old page's source interleaves with new distance ties.
+    const sortedBefore = lastResults.slice(0,previousLength);
+    const samePrefix = sortedBefore.every((item,i)=>
+      i < previousLength && lastResults[i] === item
+    );
+    if(samePrefix && alreadyVisible <= previousLength){
+      renderFilteredResults(state.radius, alreadyVisible);
+    }else{
+      renderFilteredResults(state.radius);
+    }
+    if(page.results.length === 0) state.cursor = null;
+    setStatus(page.results.length
+      ? `${page.results.length}件を追加取得しました。次のページは操作時のみ検索します。`
+      : 'これ以上の店舗はありません。');
+  }catch(error){
+    if(isSearchCurrent(operation)){
+      console.error(error);
+      showError(error?.code==='RATE_LIMIT'
+        ? '検索回数の上限に達しました。少し時間をおいてから続きを読み込んでください。'
+        : '続きの店舗を取得できませんでした。もう一度お試しください。');
+    }
+  }finally{
+    pagingInProgress = false;
+    finishFeedback();
+    finishSearchOperation(operation);
+    refreshDiningPager();
+  }
+}
 let suggestTimer = null;
 // Category is a temporary refinement; do not carry a hidden restriction across visits.
 let activeCategory = 'all';
@@ -325,6 +389,7 @@ async function init(){
     scrollToSearchTarget(qs('#hotelFeatures .feature-buttons'));
   });
   els.hotelSearchAgain?.addEventListener('click',rerunFromResults);
+  els.loadMoreDining?.addEventListener('click',loadNextDiningPage);
   els.searchMode?.querySelectorAll('.search-mode-button').forEach(btn => btn.addEventListener('click', () => setSearchMode(btn.dataset.mode)));
   els.placeSearchPanel?.addEventListener('submit', submitPlaceSearch);
   els.placeInput?.addEventListener('input', () => {
@@ -504,7 +569,9 @@ function toggleIssuer(id){
 }
 function invalidateDiningSearch(){
   diningSearchRevision++;
+  diningPageState = null; pagingInProgress = false;
   lastResults = []; categoryCounts = null;
+  refreshDiningPager();
   els.count.textContent = '';
   els.diningActions.hidden = true;
   els.results.className = 'results empty-state';
@@ -895,6 +962,10 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
       categoryCounts[item.category || 'restaurant']++;
     }
     lastResults = normalized;
+    diningPageState = d1Targets.length
+      ? {targets:d1Targets,origin:{...pos},radius,cursor:d1Group.nextCursor}
+      : null;
+    refreshDiningPager();
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
@@ -947,13 +1018,14 @@ function queryOfficialStoreDb(company, origin, radius){
   }).filter(Boolean);
 }
 
-async function queryD1StoreApi(targets, pos, radius, signal){
+async function queryD1StoreApi(targets, pos, radius, signal, cursor = null){
   const companiesById = new Map(targets.map(c => [c.id, c]));
   const params = new URLSearchParams({
     lat: String(pos.lat),
     lng: String(pos.lng),
     radius: String(radius),
     issuers: targets.map(c => c.id).join(','),
+    ...(cursor ? {cursor} : {}),
     ...(activeCategory !== 'all' ? {category: activeCategory} : {}),
     ...(activeBrand && brandCatalog.some(b=>brandKey(b)===activeBrand) ? {brand:brandCatalog.find(b=>brandKey(b)===activeBrand).name} : {})
   });
@@ -1002,7 +1074,11 @@ async function queryD1StoreApi(targets, pos, radius, signal){
     };
   }).filter(Boolean);
   const counts=data.category_counts || results.reduce((out,s)=>{out.all++;out[s.category]=(out[s.category] || 0)+1;return out;},{all:0});
-  return {results,categoryCounts:counts,incomplete:data.incomplete === true};
+  return {
+    results,categoryCounts:counts,incomplete:data.incomplete === true,
+    nextCursor:typeof data.next_cursor === 'string' ? data.next_cursor : null,
+    hasMore:data.has_more === true
+  };
 }
 
 async function queryOpenPOI(batch, pos, radius, signal){
@@ -1173,13 +1249,13 @@ function renderCategoryFilters(){
   }
 }
 
-function renderFilteredResults(radius){
+function renderFilteredResults(radius, appendFrom = 0){
   const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
   const items = lastResults.filter(x=>(activeCategory==='all' || x.category===activeCategory) && (!brand || (x.company.id===brand.issuer_id && x.matchedAlias===brand.name)));
-  renderResults(items, radius);
+  renderResults(items, radius, appendFrom);
 }
 
-function renderResults(items, radius){
+function renderResults(items, radius, appendFrom = 0){
   const total=Number(categoryCounts?.[activeCategory] || 0);
   els.count.innerHTML = numberHTML('dining:results',items.length)+(total>items.length ? `件表示／対象${numberHTML('dining:total',total)}件` : '件');
   if(!items.length){
@@ -1192,8 +1268,9 @@ function renderResults(items, radius){
     });
     return;
   }
-  els.results.className='results'; els.results.innerHTML='';
-  for(const x of items){
+  els.results.className='results';
+  if(!appendFrom) els.results.innerHTML='';
+  for(const x of items.slice(appendFrom)){
     const card=document.createElement('article'); card.className=`card ${issuerTone(x.company.id)}`;
     const storeName = x.officialStore?.name || x.name || x.matchedAlias;
     const storeAddress = x.officialStore?.address || x.address || [x.prefecture,x.city].filter(Boolean).join('');
