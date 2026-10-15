@@ -1,0 +1,78 @@
+{
+  "id": "kisoji",
+  "code": "8160",
+  "name": "木曽路",
+  "fullName": "木曽路",
+  "status": "public",
+  "sourceUrl": "https://www.kisoji.co.jp/ir/yutai.html",
+  "storeSearchUrl": "https://navi.kisoji.co.jp/shop/top",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "木曽路グループ全店で利用できる株主ご優待券の対象店舗を掲載。公式API・全地域一覧・各業態の公式店舗案内を照合。公式座標未掲載の店舗は住所・店名で照合します。",
+  "note": "木曽路グループ全店で利用できる株主ご優待券の対象店舗を掲載。公式API・全地域一覧・各業態の公式店舗案内を照合。公式座標未掲載の店舗は住所・店名で照合します。",
+  "aliases": [
+    "木曽路",
+    "大将軍",
+    "くいどん",
+    "鈴のれん",
+    "とりかく",
+    "大穴",
+    "からしげ"
+  ],
+  "catalogBrands": [
+    "木曽路",
+    "大将軍",
+    "くいどん",
+    "鈴のれん",
+    "とりかく",
+    "大穴",
+    "からしげ"
+  ],
+  "searchNames": [
+    "木曽路",
+    "大将軍",
+    "くいどん",
+    "鈴のれん",
+    "とりかく",
+    "大穴",
+    "からしげ"
+  ],
+  "categories": {
+    "木曽路": "restaurant",
+    "大将軍": "restaurant",
+    "くいどん": "restaurant",
+    "鈴のれん": "restaurant",
+    "とりかく": "restaurant",
+    "大穴": "restaurant",
+    "からしげ": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-16",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 150,
+    "maxStores": 260,
+    "maxAgeDays": 25,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "navi.kisoji.co.jp",
+      "daisyogun.kisoji.co.jp",
+      "kuidon.kisoji.co.jp",
+      "suzunoren.kisoji.co.jp",
+      "torikaku.kisoji.co.jp",
+      "karashige.kisoji.co.jp",
+      "daiana.kisoji.co.jp",
+      "sakabadaiana-yaesuten.com",
+      "sakabadaiana-ningyochoten.com",
+      "sakabadaiana-chiba.com",
+      "sakabadaiana-gotanda.com",
+      "sakabadaiana-kameido.com",
+      "sakabadaiana-takadanobaba.com",
+      "sakabadaiana-kawasaki.com"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

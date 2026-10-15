@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-15",
+  "updated": "2026-10-16",
   "issuers": [
     {
       "id": "skylark",
@@ -288,6 +288,13 @@
       "name": "テンアライド",
       "status": "public",
       "config": "./data/issuers/tenallied/config.json"
+    },
+    {
+      "id": "kisoji",
+      "code": "8160",
+      "name": "木曽路",
+      "status": "public",
+      "config": "./data/issuers/kisoji/config.json"
     }
   ]
 }
