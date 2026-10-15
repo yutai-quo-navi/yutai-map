@@ -1,0 +1,45 @@
+{
+  "id": "kourakuen",
+  "code": "7554",
+  "name": "幸楽苑",
+  "fullName": "幸楽苑",
+  "status": "public",
+  "sourceUrl": "https://hd.kourakuen.co.jp/ir/guidance-of-share-holders",
+  "storeSearchUrl": "https://stores.kourakuen.co.jp/",
+  "matchingMode": "official_store_filter",
+  "officialStoreFilter": "公式検索の国内幸楽苑・餃子の味よしを掲載。優待対象を確認できない「幸楽苑since1954＋幸楽苑のからあげ家」の併設店は除外。",
+  "note": "幸楽苑・餃子の味よしの株主優待対象店舗を掲載。対象未確認の「幸楽苑のからあげ家」併設店は除外。公式座標に不備のある店舗は、公式住所・店名との照合で検索します。",
+  "aliases": [
+    "幸楽苑",
+    "餃子の味よし"
+  ],
+  "catalogBrands": [
+    "幸楽苑",
+    "餃子の味よし"
+  ],
+  "searchNames": [
+    "幸楽苑",
+    "餃子の味よし"
+  ],
+  "categories": {
+    "幸楽苑": "restaurant",
+    "餃子の味よし": "restaurant"
+  },
+  "domesticOnly": true,
+  "verified": "2026-10-15",
+  "locationMode": "official_coordinates",
+  "health": {
+    "minStores": 280,
+    "maxStores": 500,
+    "maxAgeDays": 25,
+    "requireCoordinates": false,
+    "allowedSourceHosts": [
+      "stores.kourakuen.co.jp"
+    ],
+    "maxAdded": 40,
+    "maxRemoved": 25,
+    "maxChanged": 100,
+    "japanOnlyCoordinates": true
+  },
+  "showStoreNote": true
+}

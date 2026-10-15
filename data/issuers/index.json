@@ -267,6 +267,13 @@
       "name": "エターナルホスピタリティグループ",
       "status": "public",
       "config": "./data/issuers/eternal/config.json"
+    },
+    {
+      "id": "kourakuen",
+      "code": "7554",
+      "name": "幸楽苑",
+      "status": "public",
+      "config": "./data/issuers/kourakuen/config.json"
     }
   ]
 }

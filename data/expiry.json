@@ -3475,6 +3475,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "7554-2027-06-1",
+      "code": "7554",
+      "company_name": "幸楽苑",
+      "benefit_name": "株主優待券",
+      "issue": "",
+      "expiry_date": "2027-06-30",
+      "research_month": "2027-06",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-10-15",
+      "status": "confirmed",
+      "notes": "2026-10-15 ユーザー確認：株主優待券の有効期限2027年6月30日。",
+      "issuer_id": "kourakuen",
+      "search_brand": "",
+      "emoji": "",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "7616-2027-06-1",
       "code": "7616",
       "company_name": "コロワイド",
