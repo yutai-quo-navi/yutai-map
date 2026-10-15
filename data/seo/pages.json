@@ -2604,6 +2604,14 @@
       "hash": "847ad47439ee90be971c451e86d4a1b057955a764e99e5255348c51f66050186",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/kourakuen/18ba4f9c39a8bad3/index.html": {
+      "hash": "07504565cd7f22030d9760b1a2ca79bb7d2cc54d88de2055c98a7c1b74846f89",
+      "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/kourakuen/666589acdd36cc2c/index.html": {
+      "hash": "1e12875411c46f195bfd705723dd78ca5a91bf960dc798f4c7e2dbdfb624f259",
+      "lastmod": "2026-10-15"
+    },
     "guides/dining/brands/kura/09df869dacba0929/index.html": {
       "hash": "50524cc9be639ff7475cb47151e3e7d556c8ff808d2b7b47d2be05d833c73d0e",
       "lastmod": "2026-10-14"
@@ -3521,7 +3529,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "d9d3d6749723f5af9f7604f986d95cc60da4b20e1b30a952e9367975e7be0167",
+      "hash": "7864cdcc480ab8f219cddbf77e6b3372be26ee8719a1ca7b0021ee239579bbb3",
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -3607,6 +3615,10 @@
     "guides/dining/issuers/komeda/index.html": {
       "hash": "87971017baf2cd30193a4b8b1ef44ec3cae44b15c14c893da7527c2d4582a59e",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/kourakuen/index.html": {
+      "hash": "a2776c1d6715f67b511f9aaaa9da39b6c724e6a6369e7cb2b76ad1578f9ec3b0",
+      "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/kura/index.html": {
       "hash": "69c67ead6c3cd13b07a021b947a35f250c2dbecd0901cfe1de92d80b5a6f68ce",

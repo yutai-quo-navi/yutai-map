@@ -3710,6 +3710,19 @@
           "store_count": 702
         }
       ]
+    },
+    "kourakuen": {
+      "revision": 355,
+      "brands": [
+        {
+          "brand_name": "幸楽苑",
+          "store_count": 354
+        },
+        {
+          "brand_name": "餃子の味よし",
+          "store_count": 1
+        }
+      ]
     }
   }
 }
