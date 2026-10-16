@@ -25,6 +25,8 @@ export async function readCursor(secret, raw, conditions){
     if(typeof value.i!=='string' || !/^[a-z0-9_-]{1,40}$/.test(value.i)) return null;
     if(typeof value.s!=='string' || !value.s || value.s.length>180) return null;
     if(typeof value.r!=='string' || !Number.isInteger(value.n) || value.n<1) return null;
+    if(!Array.isArray(value.c) || value.c.length!==6 || !value.c.every(n=>Number.isSafeInteger(n) && n>=0)) return null;
+    if(value.c.slice(1).reduce((sum,n)=>sum+n,0)!==value.c[0] || value.n>value.c[0]) return null;
     return value;
   } catch {return null;}
 }

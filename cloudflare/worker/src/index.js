@@ -130,7 +130,8 @@ async function handleRequest(request, env, usage) {
       const hasMore=displayed<total && rows.length>0;
       const last=rows.at(-1);
       const next=hasMore ? await issueCursor(env.CURSOR_SIGNING_KEY,{
-        q:conditions,r:revision,d:last.exact_distance,i:last.issuer_id,s:last.store_id,n:displayed
+        q:conditions,r:revision,d:last.exact_distance,i:last.issuer_id,s:last.store_id,n:displayed,
+        c:['all','restaurant','cafe','bakery','foodcourt','other'].map(key=>geo.counts[key])
       }) : null;
       return json({
         results:rows.map(({exact_distance,...row})=>row),count:rows.length,limit:MAX_RESULTS,
@@ -271,14 +272,15 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     SELECT *, CAST(exact_distance + 0.5 AS INTEGER) AS rounded_distance
     FROM candidates WHERE exact_distance <= ?
   ), totals AS (
-    SELECT
+    ${cursor ? `SELECT ? AS all_count, ? AS restaurant_count, ? AS cafe_count,
+      ? AS bakery_count, ? AS foodcourt_count, ? AS other_count` : `SELECT
       COUNT(*) AS all_count,
       COUNT(*) FILTER (WHERE COALESCE(category,'restaurant') = 'restaurant') AS restaurant_count,
       COUNT(*) FILTER (WHERE category = 'cafe') AS cafe_count,
       COUNT(*) FILTER (WHERE category = 'bakery') AS bakery_count,
       COUNT(*) FILTER (WHERE category = 'foodcourt') AS foodcourt_count,
       COUNT(*) FILTER (WHERE category = 'other') AS other_count
-    FROM nearby
+    FROM nearby`}
   ), closest AS (
     SELECT * FROM nearby
     WHERE 1=1
@@ -307,6 +309,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     lng-lngDelta, lng+lngDelta,
     ...(brand ? [brand] : []),
     radius,
+    ...(cursor ? cursor.c : []),
     ...(category ? [category] : []),
     ...(cursor && !cursor.start ? [
       cursor.d, cursor.d, cursor.i, cursor.i, cursor.s

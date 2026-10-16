@@ -11,6 +11,10 @@ test('all 77 stores page 30+30+17 in precise distance order, without duplicates 
   do {const {status,data,headers}=await search(f,{...(cursor?{cursor}:{})});assert.equal(status,200);assert.equal(data.incomplete,false);assert.equal(headers.get('Cache-Control'),'no-store');sizes.push(data.count);ids.push(...data.results.map(r=>r.store_id));cursor=data.next_cursor;assert.equal(data.has_more,!!cursor);}while(cursor);
   assert.deepEqual(sizes,[30,30,17]);assert.deepEqual(ids,Array.from({length:77},(_,i)=>String(77-i)));assert.equal(new Set(ids).size,77);
   assert.ok(f.queries.filter(q=>q.sql.includes('WITH candidates')).every(q=>q.rows<=30));
+  const pages=f.queries.filter(q=>q.sql.includes('WITH candidates'));
+  assert.ok(pages[0].sql.includes('COUNT(*) AS all_count'));
+  assert.ok(pages.slice(1).every(q=>!q.sql.includes('COUNT(*) AS all_count')),
+    'signed revision-bound totals must be reused instead of recounting on every page');
  }finally{globalThis.fetch=old;f.db.close();}
 });
 test('exact multiple of 30 has no phantom next page; equal distances use issuer and store IDs',async()=>{
