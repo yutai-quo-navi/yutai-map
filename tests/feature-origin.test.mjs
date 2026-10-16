@@ -2,12 +2,13 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {placeCandidates} from '../place-candidates.js';
 import {requestCurrentPosition} from '../geolocation.js';
 
 function setup({place=false, denied=false} = {}) {
   const calls={geo:0, search:0, refresh:0};
   const context=vm.createContext({
-    requestCurrentPosition,lastPosition:null,lastCenterLabel:'現在地',
+    placeCandidates,requestCurrentPosition,lastPosition:null,lastCenterLabel:'現在地',
     specialFeatures:{refresh(){calls.refresh++;},invalidate(){calls.refresh++;}},
     smoothNavigator:{stop(){},scrollTo(){}},
     els:{placeSearchPanel:{hidden:!place},placeInput:{value:'福岡',focus(){}},placeSuggestions:{hidden:true},locate:{disabled:false,textContent:'現在地から探す',setAttribute(){},removeAttribute(){}},
@@ -16,7 +17,7 @@ function setup({place=false, denied=false} = {}) {
     setTimeout,clearTimeout,AbortController,qs:()=>null,searching:false,pagingInProgress:false,refreshDiningPager(){},
     invalidateDiningSearch(){},setStatus(){},showError(){},normalize:value=>value,console,
     SUGGEST_API:'https://api.example.com/suggest',URLSearchParams,
-    fetch:async()=>({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',center:[130.4,33.59]}]})}),
+    fetch:async()=>({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',prefecture:'福岡県',center:[130.4,33.59]}]})}),
     searchNearby(){calls.search++;}
   });
   const source=readFileSync(new URL('../app.js',import.meta.url),'utf8');
@@ -62,7 +63,7 @@ test('cancel during a pending place request ignores its late response',async()=>
   context.cancelActiveSearch();
   assert.equal(context.els.locate.disabled,false);
   assert.equal(context.els.cancelSearch.hidden,true);
-  respond({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',center:[130.4,33.59]}]})});
+  respond({ok:true,json:async()=>({vocabulary:[{type:'place',label:'福岡',prefecture:'福岡県',center:[130.4,33.59]}]})});
   await pending;
   assert.equal(calls.search,0);
   assert.equal(context.lastPosition,null);
