@@ -226,6 +226,7 @@ async function loadNextDiningPage(){
     const previousLength = oldResults.length;
     lastResults = dedupe([...oldResults, ...page.results]).sort((a,b)=>a.distance-b.distance);
     state.cursor = page.nextCursor || null;
+    state.incomplete=page.incomplete; state.coverage=page.coverage;
     // Only the new thirty (or fewer) cards are inserted: old cards stay mounted.
     // Re-render when the old page's source interleaves with new distance ties.
     const samePrefix = oldResults.every((item,i)=>lastResults[i] === item);
@@ -236,11 +237,16 @@ async function loadNextDiningPage(){
     }
     if(page.results.length === 0) state.cursor = null;
     setStatus(page.results.length
-      ? `${page.results.length}件を追加取得しました。次のページは操作時のみ検索します。`
-      : 'これ以上の店舗はありません。');
+      ? `${page.results.length}件を追加取得しました。${state.incomplete ? '一部店舗の確認・座標補完が未完了です。' : '次のページは操作時のみ検索します。'}`
+      : (state.incomplete ? '登録済み座標の最後まで表示しました。一部店舗の確認・座標補完が未完了です。' : 'これ以上の店舗はありません。'));
   }catch(error){
     if(isSearchCurrent(operation)){
       console.error(error);
+      if(error?.code==='CATALOG_CHANGED' || error?.code==='INVALID_CURSOR'){
+        state.cursor=null;
+        showError(error.message);
+        return;
+      }
       showError(error?.code==='RATE_LIMIT'
         ? '検索回数の上限に達しました。少し時間をおいてから続きを読み込んでください。'
         : '続きの店舗を取得できませんでした。もう一度お試しください。');
@@ -961,7 +967,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     }
     lastResults = normalized;
     diningPageState = d1Targets.length
-      ? {targets:d1Targets,origin:{...pos},radius,cursor:d1Group.nextCursor}
+      ? {targets:d1Targets,origin:{...pos},radius,cursor:d1Group.nextCursor,incomplete:d1Group.incomplete,coverage:d1Group.coverage}
       : null;
     refreshDiningPager();
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
@@ -974,7 +980,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
       els.diningHint.textContent = (els.results.querySelectorAll('.card').length
         ? '近隣店舗の一部を表示しています。'
         : '今回の結果は暫定的な0件です。') +
-        '一部の優待会社の店舗照合が未完了です。会社を絞って再検索してください。';
+        '公式一覧との照合または一部店舗の座標補完が未完了です。表示件数は全対象店舗の件数を保証しません。';
     }
   } catch (error) {
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
@@ -1035,6 +1041,11 @@ async function queryD1StoreApi(targets, pos, radius, signal, cursor = null){
     error.code = 'RATE_LIMIT';
     throw error;
   }
+  if(res.status===409 || (cursor && res.status===400)){
+    let data={}; try{data=await res.json();}catch{}
+    const error=new Error(data.message || '店舗情報または検索条件が変わりました。再検索してください。');
+    error.code=res.status===409 ? 'CATALOG_CHANGED' : 'INVALID_CURSOR'; throw error;
+  }
   if(!res.ok) throw new Error(`Store API ${res.status}`);
   const data = await res.json();
 
@@ -1073,7 +1084,7 @@ async function queryD1StoreApi(targets, pos, radius, signal, cursor = null){
   }).filter(Boolean);
   const counts=data.category_counts || results.reduce((out,s)=>{out.all++;out[s.category]=(out[s.category] || 0)+1;return out;},{all:0});
   return {
-    results,categoryCounts:counts,incomplete:data.incomplete === true,
+    results,categoryCounts:counts,incomplete:data.incomplete === true,coverage:data.coverage || null,
     nextCursor:typeof data.next_cursor === 'string' ? data.next_cursor : null,
     hasMore:data.has_more === true
   };

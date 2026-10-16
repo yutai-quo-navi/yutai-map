@@ -1,89 +1,42 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/worker/src/index.js';
-
-const origin='https://yutai-quo-navi.github.io';
-const stores=Array.from({length:77},(_,i)=>({
-  issuer_id:'company1',store_id:String(i).padStart(4,'0'),
-  name:'店'+i,lat:35.68,lng:139.76,category:'restaurant',
-  rounded_distance:Math.floor(i/2),exact_distance:Math.floor(i/2),
-  __all_count:77,__restaurant_count:77,
-  __cafe_count:0,__bakery_count:0,__foodcourt_count:0,__other_count:0
-}));
-const count=()=>({all:77,restaurant:77,cafe:0,bakery:0,foodcourt:0,other:0});
-function fixture(){
-  globalThis.caches={default:{match:async()=>undefined,put:async()=>{}}};
-  const queries=[],upstream=[];
-  const env={
-    API_RATE_LIMITER:{limit:async()=>({success:true})},
-    SEARCH_RATE_LIMITER:{limit:async()=>({success:true})},
-    SEARCH_COUNTER:{idFromName:value=>value,get:()=>({fetch:async()=>Response.json({success:true})})},
-    DB:{prepare(sql){return {bind(...args){this.args=args;return this;},async all(){
-      queries.push({sql,args:this.args||[]});
-      if(sql.includes('FROM issuer_stats'))return {results:[]};
-      assert.match(sql,/WITH candidates AS/);
-      assert.match(sql,/LIMIT 30/);
-      const cursorFilter=sql.includes('rounded_distance > ?');
-      let matching=stores;
-      if(cursorFilter){
-        const [distance,,issuer,,store]=this.args.slice(-5);
-        matching=stores.filter(x=>x.rounded_distance>distance ||
-          (x.rounded_distance===distance &&
-            (x.issuer_id>issuer || (x.issuer_id===issuer && x.store_id>store))));
-      }
-      matching=matching.slice(0,30);
-      if(!matching.length){
-        return {results:[{store_id:null,__all_count:77,__restaurant_count:77,
-          __cafe_count:0,__bakery_count:0,__foodcourt_count:0,__other_count:0}]};
-      }
-      return {results:matching};
-    }};}}
-  };
-  const url=(cursor,additional='')=>{
-    const q=new URLSearchParams({lat:'35.6812',lng:'139.7671',radius:'30000',
-      issuers:'company1',...(cursor ? {cursor} : {}),...(additional ? {limit:additional} : {})});
-    return new Request('https://worker.example.com/v1/stores/search?'+q,{headers:{Origin:origin,'CF-Connecting-IP':'192.0.2.42'}});
-  };
-  return {env,queries,upstream,url};
-}
-
-test('pagination returns 30, 30, 17, then stops: no DB page read before explicit HTTP request',async()=>{
-  const {env,queries,url}=fixture();
-  let cursor=null;
-  const ids=[];
-  for(const expected of [30,30,17]){
-    const priorQueries=queries.length;
-    // Merely holding a cursor is not a request to load the next page.
-    assert.equal(queries.length,priorQueries);
-    const res=await worker.fetch(url(cursor),env);
-    assert.equal(res.status,200);
-    const data=await res.json();
-    assert.equal(data.results.length,expected);
-    assert.deepEqual(data.category_counts,count());
-    ids.push(...data.results.map(x=>x.store_id));
-    cursor=data.next_cursor;
-    assert.equal(Boolean(cursor),expected===30);
-    assert.equal(queries.filter(x=>x.sql.includes('WITH candidates AS')).length,ids.length===30?1:ids.length===60?2:3);
-  }
-  assert.equal(ids.length,77);
-  assert.equal(new Set(ids).size,77,'no duplicates across pages or tied distances');
-  assert.deepEqual(ids,stores.map(x=>x.store_id),'pages preserve distance and stable tie order');
-  assert.equal(cursor,null);
+import {fixture,request} from './helpers/search-db.mjs';
+async function search(f,params={}){const res=await worker.fetch(request(params),f.env);return {status:res.status,data:await res.json(),headers:res.headers};}
+test('all 77 stores page 30+30+17 in precise distance order, without duplicates or external requests',async()=>{
+ const f=fixture();for(let i=0;i<77;i++)f.insert('a',String(77-i),100+i*.01);f.audit('a');
+ const old=globalThis.fetch;globalThis.fetch=()=>assert.fail('Search must never call external APIs');
+ try{
+  let cursor,ids=[],sizes=[];
+  do {const {status,data,headers}=await search(f,{...(cursor?{cursor}:{})});assert.equal(status,200);assert.equal(data.incomplete,false);assert.equal(headers.get('Cache-Control'),'no-store');sizes.push(data.count);ids.push(...data.results.map(r=>r.store_id));cursor=data.next_cursor;assert.equal(data.has_more,!!cursor);}while(cursor);
+  assert.deepEqual(sizes,[30,30,17]);assert.deepEqual(ids,Array.from({length:77},(_,i)=>String(77-i)));assert.equal(new Set(ids).size,77);
+  assert.equal(f.queries.length,0,'all pages must perform zero D1 queries');
+ }finally{globalThis.fetch=old;f.db.close();}
 });
-
-test('requested limit 9000 can never transfer more than thirty stores',async()=>{
-  const {env,queries,url}=fixture();
-  const res=await worker.fetch(url(null,'9000'),env);
-  assert.equal(res.status,200);
-  assert.equal((await res.json()).results.length,30);
-  assert.ok(queries.every(x=>!x.sql.includes('LIMIT 9000')));
+test('exact multiple of 30 has no phantom next page; equal distances use issuer and store IDs',async()=>{
+ const f=fixture();for(let i=0;i<60;i++)f.insert('a',String(i).padStart(3,'0'),1);f.audit('a');
+ const first=await search(f),last=await search(f,{cursor:first.data.next_cursor});assert.equal(last.data.count,30);assert.equal(last.data.next_cursor,null);assert.equal(last.data.has_more,false);assert.equal(last.data.results[0].store_id,'030');f.db.close();
 });
-
-test('invalid paging cursor is rejected before hitting database',async()=>{
-  const {env,queries,url}=fixture();
-  for(const cursor of ['9000','[30000,"company1"]','[-4,"company1","a"]','[3,"bad issuer","a"]']){
-    const res=await worker.fetch(url(cursor),env);
-    assert.equal(res.status,400);
-  }
-  assert.equal(queries.length,0);
+test('a forged, expired or changed-condition cursor is rejected before database reads',async()=>{
+ const f=fixture();for(let i=0;i<31;i++)f.insert('a',String(i),i);f.audit('a');const first=await search(f);const cursor=first.data.next_cursor;
+ for(const params of [{cursor:'start'},{cursor:'[0,"a","1"]'},{cursor:cursor.slice(0,-2)+'aa'},{cursor,lat:'35.7'},{cursor,brand:'different'},{cursor,category:'cafe'},{cursor,radius:'5000'},{cursor,issuers:'b'}]){
+  const n=f.queries.length;assert.equal((await search(f,params)).status,400);assert.equal(f.queries.length,n);
+ }
+ const old=Date.now;Date.now=()=>old()+1900*1000;try{assert.equal((await search(f,{cursor})).status,400);}finally{Date.now=old;}f.db.close();
+});
+test('catalog or coordinate changes invalidate continuation instead of skipping or repeating stores',async()=>{
+ const f=fixture();for(let i=0;i<31;i++)f.insert('a',String(i),i);f.audit('a');const first=await search(f);f.insert('a','new',.1);
+ const r=await search(f,{cursor:first.data.next_cursor});assert.equal(r.status,409);assert.equal(r.data.error,'catalog_changed');f.db.close();
+});
+test('signed continuation does not charge a new search; both search and API guards remain enforced',async()=>{
+ const f=fixture();for(let i=0;i<77;i++)f.insert('a',String(i),i);f.audit('a');let searches=0,api=0;
+ f.env.SEARCH_RATE_LIMITER={limit:async()=>({success:++searches<=1})};f.env.API_RATE_LIMITER={limit:async()=>({success:++api<=3})};
+ const first=await search(f),second=await search(f,{cursor:first.data.next_cursor}),third=await search(f,{cursor:second.data.next_cursor});assert.equal(third.status,200);assert.equal(searches,1);
+ assert.equal((await search(f,{cursor:first.data.next_cursor})).status,429);assert.equal(api,4);f.db.close();
+});
+test('all 44 issuers participate, including the final issuer; explicit limit never increases 30 rows',async()=>{
+ const f=fixture();const ids=Array.from({length:44},(_,i)=>'company'+i);
+ for(const [i,id] of ids.entries()){f.insert(id,String(i),i);f.audit(id);}
+ const a=await search(f,{issuers:ids.join(','),limit:'9000'});assert.equal(a.data.count,30);
+ const b=await search(f,{issuers:ids.join(','),cursor:a.data.next_cursor});assert.equal(b.data.count,14);assert.ok(b.data.results.some(r=>r.issuer_id==='company43'));f.db.close();
 });

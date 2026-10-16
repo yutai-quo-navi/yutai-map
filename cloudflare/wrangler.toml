@@ -40,3 +40,8 @@ new_sqlite_classes = ["SearchCounter"]
 enabled = true
 head_sampling_rate = 0.1
 invocation_logs = false
+
+# Private read-only search snapshots. No public R2 download endpoint.
+[[r2_buckets]]
+binding = "SEARCH_INDEX_BUCKET"
+bucket_name = "yutai-data-backups"
