@@ -33,8 +33,12 @@ export function nearestDeadline(entries, issuer, now = new Date(), benefitPatter
     .filter(e=>e.days!==null && e.days>=0 && (!e.expires_at || Date.parse(e.expires_at)>now.getTime()))
     .sort((a,b)=>b.date.localeCompare(a.date))[0] || null;
 }
+// Display counts the final usable Japanese calendar day; expiry tests keep raw offsets.
+export function countdownDays(days) {
+  return Number.isFinite(days) && days >= 0 ? days + 1 : days;
+}
 export function deadlineLabel(entry) {
-  return entry.days===0 ? '⚠️本日失効' : '⚠️失効'+entry.days+'日前';
+  return entry.days < 0 ? '失効' : 'あと'+countdownDays(entry.days)+'日使える';
 }
 export function latestExpiredDeadline(entries, issuer, now = new Date()) {
   return entries.filter(entry => entry.issuer === issuer && entry.status === 'confirmed')

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {japanDate, daysRemaining, monthEntries, deadlineState, nearestDeadline, latestExpiredDeadline} from '../expiry.js';
+import {japanDate, daysRemaining, monthEntries, deadlineState, nearestDeadline, latestExpiredDeadline, deadlineDays, countdownDays} from '../expiry.js';
 
 test('latest confirmed expiry wins duplicates and a new valid voucher replaces expired status', () => {
   const now=new Date('2026-10-08T00:00:00Z');
@@ -36,4 +36,23 @@ test('approved month-only entries stay in their month without inventing a date',
   assert.equal(monthEntries(entries,'2026-09-05').length,1);
   assert.equal(monthEntries(entries,'2026-10-05').length,0);
   assert.equal(entries[0].expiry_date,'');
+});
+
+test('inclusive display includes the final usable day without extending validity', () => {
+  const expiry='2026-10-17';
+  const voucher={issuer:'test',date:expiry,status:'confirmed'};
+  for(const [instant,raw,shown] of [
+    ['2026-10-16T14:59:59Z',1,2],
+    ['2026-10-16T15:00:00Z',0,1],
+    ['2026-10-17T14:59:59Z',0,1],
+    ['2026-10-17T15:00:00Z',-1,-1]
+  ]) {
+    const now=new Date(instant);
+    assert.equal(deadlineDays(expiry,now),raw);
+    assert.equal(countdownDays(raw),shown);
+    assert.equal(Boolean(nearestDeadline([voucher],'test',now)),raw>=0);
+  }
+  assert.equal(countdownDays(null),null);
+  assert.equal(countdownDays(deadlineDays('2027-01-01',new Date('2026-12-31T00:00:00Z'))),2);
+  assert.equal(nearestDeadline([{...voucher,expires_at:'2026-10-17T03:00:00Z'}],'test',new Date('2026-10-17T03:00:00Z')),null);
 });

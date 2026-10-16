@@ -1,11 +1,11 @@
 import {placeCandidates} from './place-candidates.js?v=20261016-origin';
-import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
+import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261017-inclusive-countdown';
 import {createBrandMark} from './representative-marks.js?v=20261016-anrakutei';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
-import {initExpirySearch} from './expiry-search.js?v=20261014-holding-focus';
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority} from './expiry.js?v=20261015-dining-order-v2';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261014-dom-reconcile';
+import {initExpirySearch} from './expiry-search.js?v=20261017-inclusive-countdown';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority, countdownDays} from './expiry.js?v=20261017-inclusive-countdown';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261017-inclusive-countdown';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
@@ -544,8 +544,8 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   bubble.className='voucher-deadline-bubble'+(entry.days===0 ? ' is-today' : '');
   bubble.textContent=deadlineLabel(entry);
   const count=document.createElement('span'); count.className='deadline-count';
-  count.textContent=entry.days < 0 ? '失効' : entry.days===0 ? (expiryType === '申込期限' ? '本日申込期限' : '本日失効') : entry.days+'日で'+(expiryType === '申込期限' ? '申込期限' : '失効');
-  if(entry.days > 0) count.innerHTML=numberHTML(`deadline:${issuer}:${entry.date}:${expiryType}`,entry.days)+'日で'+(expiryType === '申込期限' ? '申込期限' : '失効');
+  count.textContent=entry.days < 0 ? '失効' : '';
+  if(entry.days >= 0) count.innerHTML='あと'+numberHTML(`deadline:${issuer}:${entry.date}:${expiryType}`,countdownDays(entry.days))+'日'+(expiryType === '申込期限' ? 'で申込期限' : '使える');
   bubble.replaceChildren(count);
   const detail=(expiryType === '申込期限' ? '申込期限：' : '使用期限：')+entry.date.replaceAll('-','/')+' ／ '+entry.issue+'。お手持ちの券面をご確認ください';
   bubble.title=detail;
