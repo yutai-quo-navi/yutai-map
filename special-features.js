@@ -2,7 +2,7 @@ import {numberHTML} from './number-motion.js?v=20261013-reel';
 import {createBrandMark} from './representative-marks.js?v=20261014-restaurants';
 // Feature search uses independent radii and either manual or scheduled data.
 import {track} from './analytics.js?v=20261011';
-import {compareBenefitPriority} from './expiry.js?v=20261009-benefit-order';
+import {compareBenefitPriority, countdownDays} from './expiry.js?v=20261017-inclusive-countdown';
 export const FEATURE_RADIUS_METERS = 3_000_000;
 const MAX_FEATURE_RADIUS_METERS = 4_000_000;
 const validRadius = radius => radius === 'all' || (Number.isFinite(radius) && radius > 0 && radius <= MAX_FEATURE_RADIUS_METERS);
@@ -257,7 +257,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       if (active.voucherName) info.innerHTML += `<p class="feature-note">${esc(active.voucherName)}</p>`;
       const deadline = getDeadline(active.issuer.id, active.deadlineBenefitPattern, active.deadlineExpiryType);
       const deadlineType = active.deadlineExpiryType || '利用期限';
-      if (active.status !== 'ended') info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の${esc(deadlineType)}：${esc(deadline.date)}（${deadline.days === 0 ? '本日まで' : 'あと' + deadline.days + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : `優待券の${esc(deadlineType)}は、お手持ちの券面をご確認ください。`}</p>`;
+      if (active.status !== 'ended') info.innerHTML += `<p class="feature-note">${esc(active.issuer.name)}（${esc(active.issuer.code)}）<br>${deadline ? `優待券の${esc(deadlineType)}：${esc(deadline.date)}（${'あと' + countdownDays(deadline.days) + '日'}）／${esc(deadline.issue)}。お手持ちの券面をご確認ください。` : `優待券の${esc(deadlineType)}は、お手持ちの券面をご確認ください。`}</p>`;
       details.append(info);
     }
     for (const {feature: active, store} of matches) {

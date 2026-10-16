@@ -1,7 +1,7 @@
 // Motion recipe: transitions.dev Notification badge. Used only in dining choice cells.
 export function makeDeadlineBadge(bubble, key) {
   const label = bubble.textContent;
-  const days = label === '本日失効' ? '0' : label.match(/^(\d+)日で失効$/)?.[1];
+  const days = label === '本日失効' ? '1' : (label.match(/^あと(\d+)日使える$/) || label.match(/^(\d+)日で失効$/))?.[1];
   bubble.classList.add('t-badge');
   bubble.classList.toggle('is-urgent', days != null && Number(days) <= 7 || label === '本日失効');
   bubble.classList.toggle('is-expired', label === '失効');

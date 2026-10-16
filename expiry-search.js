@@ -1,5 +1,5 @@
 import {numberHTML} from './number-motion.js?v=20261013-reel';
-import {japanDay, deadlineDays} from './expiry.js?v=20261009-benefit-order';
+import {japanDay, deadlineDays, countdownDays} from './expiry.js?v=20261017-inclusive-countdown';
 
 export const EXPIRY_GROUPS = [
   ['dining','外食優待'], ['hotel','ホテル優待'], ['leisure','遊び・鉄道'],
@@ -97,7 +97,7 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     if(!due.length)return;
     const title=document.createElement('p');title.className='expiry-alert-title';title.textContent='持っている優待の期限が近づいています';alertsRoot.append(title);
     const list=document.createElement('ul');
-    for(const entry of due) {const li=document.createElement('li');li.textContent=`あと${deadlineDays(entry.expiry_date,now())}日　${entry.benefit_name}（${entry.company_name}）`;list.append(li);}
+    for(const entry of due) {const li=document.createElement('li');li.textContent=`あと${countdownDays(deadlineDays(entry.expiry_date,now()))}日　${entry.benefit_name}（${entry.company_name}）`;list.append(li);}
     alertsRoot.append(list);
     const button=document.createElement('button');button.type='button';button.className='text-button';button.textContent='失効検索で確認';button.onclick=()=>{document.getElementById('expiryTab').click();root.scrollIntoView({block:'start',behavior:'smooth'});};alertsRoot.append(button);
   };
@@ -107,7 +107,7 @@ export function initExpirySearch({root, alertsRoot, read, write, now=()=>new Dat
     const sub=generic ? entry.benefit_name : ''; 
     const days=entry.expiry_date?deadlineDays(entry.expiry_date,now()):null;
     const date=entry.expiry_date?entry.expiry_date.replaceAll('-','/'):`${entry.research_month}（日付未定）`;
-    return `<li class="expiry-row" data-expiry="${esc(entry.id)}"><div data-ui-number class="expiry-countdown ${days!==null&&days<=3?'is-critical':days!==null&&days<=7?'is-soon':''}">${days===null?'<small>日付未定</small>':`${days<=7?`<span class="expiry-urgency">${days===0?'本日期限':days<=3?'まもなく期限':'期限が近い'}</span>`:''}<span>あと</span><strong>${numberHTML('expiry:'+entry.id,days)}</strong><span>日</span>`}</div><div class="expiry-benefit"><span>${esc(main)}</span>${sub?`<span class="expiry-benefit-description">${esc(sub)}</span>`:''}<small>${esc(entry.company_name)}（${esc(entry.code)}）</small><small class="expiry-date" data-ui-number>${esc(entry.expiry_type || '利用期限')}：${esc(date)}</small></div><label class="expiry-own-button"><input type="checkbox" class="expiry-owned" aria-label="${esc(entry.company_name+' '+entry.benefit_name+'を持ってる')}" ${settings[entry.id]?.owned?'checked':''}><span>持ってる</span></label></li>`;
+    return `<li class="expiry-row" data-expiry="${esc(entry.id)}"><div data-ui-number class="expiry-countdown ${days!==null&&days<=3?'is-critical':days!==null&&days<=7?'is-soon':''}">${days===null?'<small>日付未定</small>':`${days<=7?`<span class="expiry-urgency">${days===0?'本日期限':days<=3?'まもなく期限':'期限が近い'}</span>`:''}<span>あと</span><strong>${numberHTML('expiry:'+entry.id,countdownDays(days))}</strong><span>日</span>`}</div><div class="expiry-benefit"><span>${esc(main)}</span>${sub?`<span class="expiry-benefit-description">${esc(sub)}</span>`:''}<small>${esc(entry.company_name)}（${esc(entry.code)}）</small><small class="expiry-date" data-ui-number>${esc(entry.expiry_type || '利用期限')}：${esc(date)}</small></div><label class="expiry-own-button"><input type="checkbox" class="expiry-owned" aria-label="${esc(entry.company_name+' '+entry.benefit_name+'を持ってる')}" ${settings[entry.id]?.owned?'checked':''}><span>持ってる</span></label></li>`;
   };
   const groupHTML=(title,rows)=>rows.length?`<section class="expiry-group"><h2>${title}</h2><ul class="expiry-list">${rows.map(rowHTML).join('')}</ul></section>`:'';
   const render=()=>{
