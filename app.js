@@ -1,3 +1,4 @@
+import {placeCandidates} from './place-candidates.js?v=20261016-origin';
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261013-small-badge';
 import {createBrandMark} from './representative-marks.js?v=20261016-anrakutei';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
@@ -747,15 +748,7 @@ async function loadPlaceSuggestions(){
     const res = await fetch(`${SUGGEST_API}?${params}`);
     if(!res.ok) return;
     const data = await res.json();
-    const candidates = [];
-    for(const v of (data.vocabulary || [])){
-      if(v.type === 'place' && Array.isArray(v.center)){
-        candidates.push({label:v.label, sub:[v.prefecture,v.city].filter(Boolean).join(' '), lat:Number(v.center[1]), lng:Number(v.center[0])});
-      }
-    }
-    for(const s of (data.suggestions || [])){
-      candidates.push({label:s.name, sub:s.address || '', lat:Number(s.lat), lng:Number(s.lng)});
-    }
+    const candidates = placeCandidates(data,q);
     renderPlaceSuggestions(candidates.slice(0,8));
   }catch(e){
     console.error(e);
@@ -801,16 +794,10 @@ async function submitPlaceSearch(e, {search = true} = {}){
     if (!res.ok) throw new Error('suggest failed');
     const data = await res.json();
     if (!isSearchCurrent(operation)) return;
-    const places = (data.vocabulary || []).filter(v => v.type === 'place' && Array.isArray(v.center));
-    const pick = places.find(v => normalize(v.label) === normalize(q)) || places[0];
+    const pick = placeCandidates(data,q)[0];
     if (pick) {
       els.placeSuggestions.hidden = true;
-      return await applySearchOrigin({lat:Number(pick.center[1]),lng:Number(pick.center[0])}, pick.label, search, operation);
-    }
-    const suggestion = (data.suggestions || [])[0];
-    if (suggestion && Number.isFinite(Number(suggestion.lat)) && Number.isFinite(Number(suggestion.lng))) {
-      els.placeSuggestions.hidden = true;
-      return await applySearchOrigin({lat:Number(suggestion.lat),lng:Number(suggestion.lng)}, suggestion.name || q, search, operation);
+      return await applySearchOrigin({lat:pick.lat,lng:pick.lng}, pick.label, search, operation);
     }
     showError('場所を特定できませんでした。地名・駅名・施設名を少し詳しく入力してください。');
     setStatus('場所を特定できませんでした');
