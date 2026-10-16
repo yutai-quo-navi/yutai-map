@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {snapshotFixture} from './helpers/snapshot-fixture.mjs';
 import worker, {SearchCounter} from '../cloudflare/worker/src/index.js';
 
 const allowed='https://yutai-quo-navi.github.io';
@@ -40,7 +41,7 @@ test('missing, empty and hostile coordinates cannot reach SQL; health checks wit
   for(const query of ['issuers=colowide','lat=&lng=0&issuers=colowide','lat=NaN&lng=0&issuers=colowide','lat=91&lng=0&issuers=colowide','lat=0&lng=181&issuers=colowide','lat=0&lng=0&radius=-1&issuers=colowide']){
     assert.equal((await worker.fetch(request('/v1/stores/search?'+query),env)).status,400);
   }
-  const healthEnv={ALLOWED_ORIGIN:allowed,API_RATE_LIMITER:permit,DB:{prepare(){return {all:async()=>({results:[{stores:1,referenceStores:1}]})};}}};
+  const healthEnv={SEARCH_INDEX_BUCKET:snapshotFixture([],{health:{stores:1,referenceStores:1}}).bucket,ALLOWED_ORIGIN:allowed,API_RATE_LIMITER:permit,DB:{prepare(){return {all:async()=>({results:[{stores:1,referenceStores:1}]})};}}};
   const health=await worker.fetch(request('/health',{headers:{'CF-Connecting-IP':'192.0.2.10'}}),healthEnv);
   assert.equal(health.status,200);
   assert.equal(health.headers.get('X-Content-Type-Options'),'nosniff');

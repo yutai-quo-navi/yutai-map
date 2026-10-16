@@ -84,7 +84,7 @@ jobs:
             python -c 'import json;d=json.load(open("/tmp/yutai-wide-response.json"));print("Server error:",d.get("error","unknown"))'
             exit 1
           fi
-          python -c 'import json;d=json.load(open("/tmp/yutai-wide-response.json")); print("Stores:",d.get("count"),"Incomplete:",d.get("incomplete"),"Coverage:",d.get("coverage")); assert int(d.get("count",0))>0,"44-company search returned no stores"; assert isinstance(d.get("results"),list) and len(d["results"])==d["count"]; assert d["coverage"]["external_requests"]==0; assert d["incomplete"] is (not d["coverage"]["complete"])'
+          python -c 'import json;d=json.load(open("/tmp/yutai-wide-response.json")); print("Stores:",d.get("count"),"Incomplete:",d.get("incomplete"),"Coverage:",d.get("coverage")); assert int(d.get("count",0))>0,"44-company search returned no stores"; assert isinstance(d.get("results"),list) and len(d["results"])==d["count"]; assert d["coverage"]["external_requests"]==0; assert d["coverage"]["d1_rows_read"]==0; assert d["incomplete"] is (not d["coverage"]["complete"])'
 
       - name: Verify precomputed brand catalog
         run: |
