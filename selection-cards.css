@@ -51,16 +51,18 @@
   pointer-events:none;
 }
 #companyChips .t-badge-dot{
-  width:auto;
-  min-width:22px;
-  height:22px;
-  min-height:22px;
-  padding:0 4px;
+  width:24px;
+  min-width:24px;
+  height:24px;
+  min-height:24px;
+  padding:0;
+  flex:0 0 24px;
   border:2px solid #fff;
-  border-radius:999px;
+  border-radius:50%;
   background:#c7353a;
   box-sizing:border-box;
 }
 #companyChips .t-badge-unit{display:none}
 #companyChips .t-badge.is-urgent .t-badge-dot{border-color:#fff;background:#bf3b32}
-#companyChips .t-badge.is-expired .t-badge-dot{border-color:#fff}
+#companyChips .t-badge.is-expired{top:-14px}
+#companyChips .t-badge.is-expired .t-badge-dot{width:28px;min-width:28px;height:28px;min-height:28px;flex-basis:28px;padding:0;border-radius:50%;border-color:#fff;background:#444;color:#fff;font-size:11px;line-height:1}

@@ -554,7 +554,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
 }
 const issuerDisplayNames = {
   anrakutei:'安楽亭', tenpos:'テンポスHD', kisoji:'木曽路', bronco:'ブロンコビリー', tenallied:'テンアライド', kourakuen:'幸楽苑', hotland:'ホットランドHD', eternal:'エターナルHG', gift:'ギフトHD', hikari:'光フードサービス', genki:'Genki GDC', amiyaki:'あみやき亭', towa:'東和フード',
-  skylark:'すかいらーく', colowide:'コロワイド', create:'クリレス',
+  skylark:'すかいらーく', colowide:'コロワイド', create:'クリエイト・レストランツ',
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
   komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード', foodlife:'F&LC',
