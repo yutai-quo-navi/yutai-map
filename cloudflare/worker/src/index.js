@@ -1,16 +1,12 @@
 export {SearchCounter} from './search-counter.js';
 import {cachedData, readRows} from './data-cache.js';
+import {fingerprint,issueCursor,readCursor} from './search-cursor.js';
 
 const FEATURE_IDS = new Set(['vision-hotels','wakita-hotels','tkp-hotels','wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 30000;
 const MAX_RESULTS = 30;
-const OPENPOI_API = 'https://api.openpoiapi.com/v1/search';
-const OPENPOI_ALIAS_CHUNK = 14;
-const OPENPOI_LIMIT = 200;
-const OPENPOI_MAX_REQUESTS = 40;
 const SEARCH_LOCK_SECONDS = 60;
 const API_RETRY_SECONDS = 60;
-const OPENPOI_TIMEOUT_MS = 8000;
 const MAX_REQUEST_URL_LENGTH = 2048;
 
 export default {
@@ -91,8 +87,6 @@ async function handleRequest(request, env, usage) {
     const radius = Math.min(Number(url.searchParams.get('radius') || 3000), MAX_RADIUS);
     const issuers = parseIssuers(url.searchParams.get('issuers'));
     const requestedCursor = url.searchParams.get('cursor');
-    const cursor = parseStoreCursor(requestedCursor);
-    if (requestedCursor !== null && !cursor) return json({error:'invalid_cursor'},400,cors);
     const brand=(url.searchParams.get('brand') || '').trim().slice(0,200);
     const requestedCategory = (url.searchParams.get('category') || '').trim();
     const category = ['restaurant','cafe','bakery','foodcourt','other'].includes(requestedCategory)
@@ -104,77 +98,49 @@ async function handleRequest(request, env, usage) {
       return json({ error: 'invalid_radius' }, 400, cors);
     if (!issuers.length) return json({ results: [], count: 0 }, 200, cors);
 
+    const conditions = await fingerprint([lat,lng,radius,issuers.slice().sort(),category,brand]);
+    const cursor = requestedCursor === null ? null : await readCursor(env.CURSOR_SIGNING_KEY,requestedCursor,conditions);
+    if(requestedCursor !== null && !cursor) return json({error:'invalid_cursor',message:'検索条件またはページの有効期限が変わりました。再検索してください。'},400,cors);
+    // Initial searches retain both independent ten/minute guards. Signed,
+    // condition-bound continuation pages retain the all-endpoint 60/min guard.
+    // Forged cursors never reach D1 or bypass the initial-search allowance.
+    if(!cursor) {
+      try {
+        const rateLimited = await enforceSearchRateLimit(env,request,cors);
+        if(rateLimited) return rateLimited;
+      } catch {return json({error:'rate_limit_unavailable'},503,cors);}
+    }
     try {
-      const rateLimited = await enforceSearchRateLimit(env, request, cors);
-      if (rateLimited) return rateLimited;
-    } catch { return json({error:'rate_limit_unavailable'},503,cors); }
-
-    try {
-      if (cursor) {
-        // Pagination is an explicit request for one more D1 page. No reference
-        // upsteam requests, prefetches, or large row transfers occur here.
-        const geo = await searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage, cursor);
-        const rows = geo.results;
-        const next = rows.length === MAX_RESULTS ? storeCursor(rows.at(-1)) : null;
-        return json({
-          results:rows,count:rows.length,limit:MAX_RESULTS,category_counts:geo.counts,
-          next_cursor:next,has_more:!!next,geo_only:true
-        },200,{...cors,'Cache-Control':'no-store'});
-      }
-      const referenceConfigs = await findReferenceConfigs(env, issuers, usage);
-      // One issuer can have both official coordinates and unlocated references.
-      const geoIssuers = issuers;
-      const referenceSearches = (await Promise.all(referenceConfigs.map(config =>
-        prepareReferenceSearch(env, config, brand, usage)
-      ))).filter(Boolean);
-      // One visitor search may select dozens of companies. Spread the upstream
-      // budget fairly across issuers instead of rejecting the entire search.
-      // Broad searches must leave headroom for Worker subrequests and upstream limits.
-      // The selected companies still share a single server-side rate-limit slot.
-      const upstreamBudget = issuers.length > 20 ? 24 : OPENPOI_MAX_REQUESTS;
-      const budget = allocateReferenceBudget(referenceSearches, upstreamBudget);
-      const [geo, outcomes] = await Promise.all([
-        searchGeoStores(env, geoIssuers, lat, lng, radius, category, brand, usage),
-        Promise.allSettled(budget.searches.map(search =>
-          searchReferenceIssuer(search, lat, lng, radius)
-        ))
-      ]);
-      const successful = outcomes.filter(result => result.status === 'fulfilled').map(result => result.value);
-      const failures = outcomes.length - successful.length;
-      // When the sole reference source fails, keep the existing explicit error.
-      if (failures && failures === outcomes.length && !geo.results.length) throw new Error('OpenPOI unavailable');
-      const referenceResults = successful.flatMap(result => result.results);
-      const incomplete = budget.truncated || failures > 0 ||
-        successful.some(result => result.failedChunks > 0);
-      const geoTotal=Number(geo.counts.all ?? Object.values(geo.counts).reduce((a,b)=>a+b,0));
-      const categoryCounts = {...geo.counts};
-      for(const s of referenceResults){ const key=s.category || 'restaurant'; categoryCounts[key]=(categoryCounts[key] || 0)+1; }
-      // The wide SQL query already supplies an "all" total. Do not count it
-      // again as a category when merging reference-only store results.
-      categoryCounts.all=geoTotal+referenceResults.length;
-      const combined = dedupeResults([...geo.results, ...referenceResults.filter(s=>!category || s.category===category)])
-        .sort((a,b) => a.distance - b.distance)
-        .slice(0, MAX_RESULTS);
-      const visibleGeo = new Set(geo.results.map(item=>item.issuer_id+'|'+item.store_id));
-      const displayedGeo = combined.filter(item=>visibleGeo.has(item.issuer_id+'|'+item.store_id));
-      const categoryTotal=Number(geo.counts[category || 'all'] ?? geoTotal);
-      const hasMoreGeo = categoryTotal > displayedGeo.length;
-      const nextCursor = hasMoreGeo
-        ? (displayedGeo.length ? storeCursor(displayedGeo.at(-1)) : 'start')
-        : null;
-
+      const coverage = await searchCoverage(env,issuers,brand,usage);
+      const revision = await fingerprint(coverage.versions);
+      if(cursor && cursor.r!==revision) return json({error:'catalog_changed',message:'店舗情報が更新されました。再検索してください。'},409,cors);
+      const geo = await searchGeoStoresWide(env,issuers,lat,lng,radius,category,brand,usage,cursor);
+      const after=await readRows(env,`SELECT s.issuer_id,s.catalog_revision,s.reference_revision,
+        a.status AS audit_status,a.catalog_revision AS audited_catalog_revision,
+        a.reference_revision AS audited_reference_revision,a.checked_at,
+        a.official_count,a.missing_count,a.extra_count,a.identity_mismatch_count,
+        (SELECT revision FROM location_revision WHERE id=1) AS location_revision
+        FROM issuer_stats s LEFT JOIN issuer_catalog_audit a ON a.issuer_id=s.issuer_id
+        WHERE s.issuer_id IN (${issuers.map(()=>'?').join(',')}) ORDER BY s.issuer_id`,issuers,usage);
+      if(await fingerprint(after.map(catalogVersion))!==revision)
+        return json({error:'catalog_changed',message:'検索中に店舗情報が更新されました。再検索してください。'},409,cors);
+      const rows=geo.results;
+      const displayed=(cursor?.n || 0)+rows.length;
+      const total=geo.counts[category || 'all'];
+      const hasMore=displayed<total && rows.length>0;
+      const last=rows.at(-1);
+      const next=hasMore ? await issueCursor(env.CURSOR_SIGNING_KEY,{
+        q:conditions,r:revision,d:last.exact_distance,i:last.issuer_id,s:last.store_id,n:displayed
+      }) : null;
       return json({
-        results: combined, count: combined.length, limit: MAX_RESULTS,
-        category_counts: categoryCounts,
-        incomplete,
-        reference_chunks_checked: budget.checked,
-        reference_chunks_total: budget.total,
-        next_cursor:nextCursor,
-        has_more:!!nextCursor
-      }, 200, {
-        ...cors,
-        'Cache-Control': 'public, max-age=30'
-      });
+        results:rows.map(({exact_distance,...row})=>row),count:rows.length,limit:MAX_RESULTS,
+        category_counts:geo.counts,next_cursor:next,has_more:hasMore,
+        incomplete:!coverage.complete,coverage:{
+          complete:coverage.complete,unresolved_stores:coverage.unresolved,
+          unverified_issuers:coverage.unverified,search_scope:'all_selected_d1_stores',
+          external_requests:0
+        }
+      },200,{...cors,'Cache-Control':'no-store'});
     } catch (error) {
       console.error(error);
       return json({ error: 'search_failed' }, 502, cors);
@@ -243,23 +209,45 @@ async function enforceSearchRateLimit(env, request, cors){
   });
 }
 
-async function findReferenceConfigs(env, issuers, usage){
-  if (!issuers.length) return [];
-  const placeholders = issuers.map(() => '?').join(',');
-  return readRows(env,
-    `SELECT s.issuer_id,s.reference_revision,c.aliases_json,c.updated_at FROM issuer_stats s JOIN issuer_search_config c ON c.issuer_id=s.issuer_id WHERE s.issuer_id IN (${placeholders}) AND s.reference_count > 0`, issuers, usage);
+function catalogVersion(r){
+  return [r.issuer_id,r.catalog_revision,r.reference_revision,r.audit_status,
+    r.audited_catalog_revision,r.audited_reference_revision,r.checked_at,r.official_count,
+    r.missing_count,r.extra_count,r.identity_mismatch_count,r.location_revision];
 }
 
-async function searchGeoStores(env, issuers, lat, lng, radius, category, brand, usage){
-  return searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage);
+async function searchCoverage(env,issuers,brand,usage){
+  const placeholders=issuers.map(()=>'?').join(',');
+  const rows=await readRows(env,`SELECT s.issuer_id,s.catalog_revision,s.reference_revision,
+    a.status AS audit_status,a.catalog_revision AS audited_catalog_revision,
+    a.reference_revision AS audited_reference_revision,a.checked_at,
+    a.official_count,a.missing_count,a.extra_count,a.identity_mismatch_count,
+    (SELECT revision FROM location_revision WHERE id=1) AS location_revision,
+    (SELECT COUNT(*) FROM reference_stores r WHERE r.issuer_id=s.issuer_id
+      ${brand ? 'AND r.brand_name=?' : ''}
+      AND NOT EXISTS(SELECT 1 FROM coordinate_resolutions c WHERE c.issuer_id=r.issuer_id
+        AND c.store_id=r.store_id AND c.status='verified'
+        AND c.name=r.name AND c.address=r.address AND c.phone=r.phone)) AS unresolved_count
+    FROM issuer_stats s LEFT JOIN issuer_catalog_audit a ON a.issuer_id=s.issuer_id
+    WHERE s.issuer_id IN (${placeholders}) ORDER BY s.issuer_id`,[...(brand ? [brand] : []),...issuers],usage);
+  const byId=new Map(rows.map(row=>[row.issuer_id,row]));
+  const unverified=issuers.filter(id=>{
+    const r=byId.get(id);
+    return !r || r.audit_status!=='verified' || r.audited_catalog_revision!==r.catalog_revision ||
+      r.audited_reference_revision!==r.reference_revision || r.official_count==null ||
+      r.missing_count!==0 || r.extra_count!==0 || r.identity_mismatch_count!==0 ||
+      !r.checked_at || Date.now()-Date.parse(r.checked_at)>7*86400000 || !Number.isFinite(Date.parse(r.checked_at));
+  });
+  const unresolved=rows.reduce((n,r)=>n+Number(r.unresolved_count || 0),0);
+  return {complete:!unresolved && !unverified.length,unresolved,unverified,versions:rows.map(catalogVersion)};
 }
 
 async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, brand, usage, cursor = null){
   if (!issuers.length) return {results:[],counts:{}};
 
-  const latDelta = radius / 111320;
+  const angular = radius / 6371000;
+  const latDelta = angular * 180 / Math.PI;
   const cos = Math.max(Math.cos(lat * Math.PI / 180), 0.1);
-  const lngDelta = radius / (111320 * cos);
+  const lngDelta = Math.asin(Math.min(1,Math.sin(angular) / cos)) * 180 / Math.PI;
   const placeholders = issuers.map(() => '?').join(',');
   // Calculate the precise great-circle distance in D1. A wide 44-issuer,
   // 30-km search can have tens of thousands of candidates. Returning all
@@ -274,7 +262,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
         + cos(radians(?)) * cos(radians(lat))
         * pow(sin(radians(lng - ?) / 2), 2)
       ))) AS exact_distance
-    FROM stores
+    FROM searchable_stores
     WHERE issuer_id IN (${placeholders})
       AND lat BETWEEN ? AND ?
       AND lng BETWEEN ? AND ?
@@ -295,13 +283,13 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     SELECT * FROM nearby
     WHERE 1=1
     ${category ? "AND category = ?" : ''}
-    ${cursor && !cursor.start ? `AND (
-      rounded_distance > ? OR
-      (rounded_distance = ? AND (
+    ${cursor ? `AND (
+      exact_distance > ? OR
+      (exact_distance = ? AND (
         issuer_id > ? OR (issuer_id = ? AND store_id > ?)
       ))
     )` : ''}
-    ORDER BY rounded_distance, issuer_id, store_id
+    ORDER BY exact_distance, issuer_id, store_id
     LIMIT ${MAX_RESULTS}
   )
   SELECT closest.*, totals.all_count AS __all_count,
@@ -311,7 +299,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     totals.foodcourt_count AS __foodcourt_count,
     totals.other_count AS __other_count
   FROM totals LEFT JOIN closest ON 1=1
-  ORDER BY closest.rounded_distance, closest.issuer_id, closest.store_id`;
+  ORDER BY closest.exact_distance, closest.issuer_id, closest.store_id`;
 
   const rows = await readRows(env, sql, [
     lat, lat, lng, ...issuers,
@@ -321,7 +309,7 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     radius,
     ...(category ? [category] : []),
     ...(cursor && !cursor.start ? [
-      cursor.distance, cursor.distance, cursor.issuer, cursor.issuer, cursor.store
+      cursor.d, cursor.d, cursor.i, cursor.i, cursor.s
     ] : [])
   ], usage);
 
@@ -338,243 +326,9 @@ async function searchGeoStoresWide(env, issuers, lat, lng, radius, category, bra
     issuer_id:row.issuer_id, store_id:row.store_id, name:row.name,
     address:row.address, phone:row.phone, brand_name:row.brand_name,
     category:row.category, lat:row.lat, lng:row.lng,
-    official_url:row.official_url, distance:Number(row.rounded_distance)
+    official_url:row.official_url, distance:Number(row.rounded_distance),exact_distance:Number(row.exact_distance)
   }));
   return {counts,results};
-}
-
-async function prepareReferenceSearch(env, config, brand, usage){
-  const issuer = config.issuer_id;
-
-  let aliases = [];
-  try { aliases = JSON.parse(config.aliases_json || '[]'); } catch {}
-  aliases = aliases.map(x => String(x || '').trim()).filter(Boolean);
-  if (!aliases.length) return null;
-
-  const refSql = `SELECT issuer_id, store_id, name, address, phone,
-      name_norm, address_norm, phone_norm, brand_name, category, official_url
-    FROM reference_stores
-    WHERE issuer_id = ?
-      ${brand ? 'AND brand_name = ?' : ''}`;
-
-  const key=`references:${issuer}:${config.reference_revision}:${config.updated_at}:${JSON.stringify(brand)}`;
-  const refs = await cachedData(key, 600, () => readRows(env, refSql,
-    [issuer, ...(brand ? [brand] : [])], usage), usage);
-  if (!refs.length) return null;
-
-  const aliasChunks = referenceAliasChunks(brand ? [brand] : aliases);
-  return {issuer, refs, aliasChunks};
-}
-
-// Preserve some coverage for every selected reference issuer. A hard limit
-// protects upstream capacity, but exceeding it must not blank out geo results.
-function allocateReferenceBudget(searches, maxRequests){
-  const total=searches.reduce((sum,search)=>sum+search.aliasChunks.length,0);
-  const scheduled=searches.map(search=>({...search,aliasChunks:[]}));
-  let checked=0, round=0;
-  while(checked<maxRequests){
-    let progressed=false;
-    for(let i=0;i<searches.length && checked<maxRequests;i++){
-      if(round>=searches[i].aliasChunks.length) continue;
-      scheduled[i].aliasChunks.push(searches[i].aliasChunks[round]);
-      checked++;
-      progressed=true;
-    }
-    if(!progressed) break;
-    round++;
-  }
-  return {searches:scheduled.filter(search=>search.aliasChunks.length),checked,total,truncated:checked<total};
-}
-
-async function searchReferenceIssuer({issuer, refs, aliasChunks}, lat, lng, radius){
-  const responses = await Promise.allSettled(aliasChunks.map(async group => {
-    const params = new URLSearchParams({
-      q: group.join(' '),
-      center: `${lng},${lat}`,
-      radius: String(radius),
-      limit: String(OPENPOI_LIMIT)
-    });
-    const res = await fetch(`${OPENPOI_API}?${params}`, {
-      signal: AbortSignal.timeout(OPENPOI_TIMEOUT_MS),
-      // Return redirects without following them; the non-2xx guard below rejects them.
-      redirect: 'manual',
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!res.ok) {
-      await res.body?.cancel();
-      throw new Error(`OpenPOI ${res.status}`);
-    }
-    const data = await res.json();
-    if (!Array.isArray(data.results)) throw new Error('Invalid OpenPOI response');
-    return data.results.slice(0, OPENPOI_LIMIT);
-  }));
-  if (responses.every(response => response.status === 'rejected')) throw new Error('OpenPOI unavailable');
-
-  const candidates = dedupePois(
-    responses
-      .filter(r => r.status === 'fulfilled')
-      .flatMap(r => r.value)
-  );
-
-  const matched = [];
-  for (const p of candidates) {
-    const country = normalize(p.country || p.country_code || p.countryCode || '');
-    if (country && !['japan','jp','日本'].includes(country)) continue;
-
-    const plat = Number(p.lat);
-    const plng = Number(p.lng);
-    if (!Number.isFinite(plat) || !Number.isFinite(plng)) continue;
-
-    const distance = Math.round(haversine(lat, lng, plat, plng));
-    if (distance > radius) continue;
-
-    const ref = matchReferenceStore(p, refs);
-    if (!ref) continue;
-
-    matched.push({
-      issuer_id: ref.issuer_id,
-      store_id: ref.store_id,
-      name: ref.name,
-      address: ref.address || '',
-      phone: ref.phone || '',
-      brand_name: ref.brand_name || '',
-      category: ref.category || 'restaurant',
-      lat: plat,
-      lng: plng,
-      official_url: ref.official_url || '',
-      distance
-    });
-  }
-
-  return {
-    results:dedupeResults(matched).sort((a,b) => a.distance - b.distance),
-    failedChunks:responses.filter(response=>response.status==='rejected').length
-  };
-}
-
-function matchReferenceStore(p, refs){
-  const poiName = normalize(p.name || '');
-  const rawPoiAddress = p.address || [p.prefecture,p.city].filter(Boolean).join('');
-  const poiAddress = normalizeAddress(rawPoiAddress);
-  const poiPhone = String(p.phone || p.tel || '').replace(/\D/g,'');
-  const poiPrefecture = japanesePrefecture(rawPoiAddress || p.prefecture || '');
-
-  let best = null;
-  let bestScore = 0;
-
-  for (const ref of refs) {
-    const officialName = ref.name_norm || normalize(ref.name || '');
-    const officialAddress = normalizeAddress(ref.address || ref.address_norm || '');
-    const officialPhone = ref.phone_norm || String(ref.phone || '').replace(/\D/g,'');
-    const officialPrefecture = japanesePrefecture(ref.address || '');
-
-    if (poiPrefecture && officialPrefecture && poiPrefecture !== officialPrefecture) continue;
-
-    const phoneExact = Boolean(poiPhone && officialPhone && poiPhone === officialPhone);
-
-    let nameScore = 0;
-    if (poiName && officialName) {
-      if (poiName === officialName) nameScore = 100;
-      else if (poiName.length >= 8 && officialName.includes(poiName)) nameScore = 60;
-      else if (officialName.length >= 8 && poiName.includes(officialName)) nameScore = 60;
-      else if (poiName === normalize(String(ref.name || '').match(/^(.+?店)\s+[A-Za-z]/)?.[1] || '')) nameScore = 60;
-      else if (containsOfficialBrandAndBranch(poiName, officialName, ref.brand_name)) nameScore = 55;
-    }
-
-    let addressScore = 0;
-    if (poiAddress && officialAddress) {
-      if (poiAddress === officialAddress) addressScore = 60;
-      else if (poiAddress.length >= 8 && officialAddress.includes(poiAddress)) addressScore = 35;
-      else if (officialAddress.length >= 8 && poiAddress.includes(officialAddress)) addressScore = 35;
-    }
-
-    const acceptable =
-      phoneExact ||
-      nameScore === 100 ||
-      (nameScore >= 60 && addressScore >= 35) ||
-      (nameScore === 55 && addressScore === 60);
-
-    if (!acceptable) continue;
-
-    const score = (phoneExact ? 200 : 0) + nameScore + addressScore;
-    if (score > bestScore) {
-      best = ref;
-      bestScore = score;
-    }
-  }
-
-  return best;
-}
-
-function containsOfficialBrandAndBranch(poiName, officialName, brandName){
-  const brand = normalize(brandName || '');
-  if (!brand || !officialName.startsWith(brand)) return false;
-  const branch = officialName.slice(brand.length);
-  if (branch.length < 3) return false;
-  const brandIndex = poiName.indexOf(brand);
-  return brandIndex >= 0 && poiName.indexOf(branch, brandIndex + brand.length) >= 0;
-}
-
-function referenceAliasChunks(aliases){
-  // OpenPOI searches names AND addresses with space-separated OR terms. A place
-  // name (e.g. the brand 北海道) can fill the candidate limit with unrelated POIs.
-  // Keep broad terms in their own requests so they cannot hide other brands.
-  const unique = [...new Map(aliases.map(alias => [normalize(alias), alias])).values()];
-  const broad = unique.filter(alias => japanesePrefecture(alias) === alias || /\s/.test(alias));
-  const specific = unique.filter(alias => !broad.includes(alias));
-  return [...chunk(specific, OPENPOI_ALIAS_CHUNK), ...broad.map(alias => [alias])];
-}
-
-function normalizeAddress(value){
-  // Official pages and POI sources use different Unicode forms for address separators.
-  return normalize(String(value || '').normalize('NFKC').replace(/[−﹣－]/g, '-').replace(/大字/g, '').replace(/字[^0-9\s]+(?=[0-9])/g, ''));
-}
-
-function japanesePrefecture(value){
-  const s = String(value || '');
-  const match = s.match(/(北海道|東京都|京都府|大阪府|.{2,3}県)/);
-  return match ? match[1] : '';
-}
-
-function dedupePois(items){
-  const map = new Map();
-  for (const p of items) {
-    const lat = Number(p.lat), lng = Number(p.lng);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
-    const key = `${normalize(p.name || '')}|${lat.toFixed(5)}|${lng.toFixed(5)}`;
-    if (!map.has(key)) map.set(key, p);
-  }
-  return [...map.values()];
-}
-
-function dedupeResults(items){
-  const map = new Map();
-  for (const item of items) {
-    const key = `${item.issuer_id}|${item.store_id}`;
-    const old = map.get(key);
-    if (!old || Number(item.distance) < Number(old.distance)) map.set(key, item);
-  }
-  return [...map.values()];
-}
-
-function normalize(s){
-  return String(s || '')
-    .normalize('NFKC')
-    .toLowerCase()
-    .replace(/[\s・･\-‐‑–—ー_]/g,'');
-}
-
-function chunk(arr,n){
-  const out=[];
-  for(let i=0;i<arr.length;i+=n) out.push(arr.slice(i,i+n));
-  return out;
-}
-
-function haversine(a,b,c,d){
-  const R=6371000, r=Math.PI/180;
-  const x=(c-a)*r, y=(d-b)*r;
-  const q=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;
-  return 2*R*Math.asin(Math.sqrt(q));
 }
 
 function corsHeaders(env, request){
@@ -596,25 +350,6 @@ function json(body,status,headers){
   });
 }
 
-// Stateless cursor: small, validated and stable even when many stores are at
-// the same rounded distance. A cursor never permits larger page sizes.
-function parseStoreCursor(raw){
-  if(raw === null) return null;
-  if(raw === 'start') return {start:true};
-  if(raw.length > 320) return null;
-  try{
-    const values=JSON.parse(raw);
-    if(!Array.isArray(values) || values.length!==3) return null;
-    const [distance,issuer,store]=values;
-    if(!Number.isInteger(distance) || distance<0 || distance>MAX_RADIUS+1) return null;
-    if(typeof issuer!=='string' || !/^[a-z0-9_-]{1,40}$/.test(issuer)) return null;
-    if(typeof store!=='string' || !store || store.length>180) return null;
-    return {distance,issuer,store};
-  }catch{return null;}
-}
-function storeCursor(row){
-  return JSON.stringify([Math.round(Number(row.distance)),String(row.issuer_id),String(row.store_id)]);
-}
 function parseIssuers(raw){
   return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,60);
 }
