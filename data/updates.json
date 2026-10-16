@@ -1,8 +1,84 @@
 {
   "version": 1,
-  "generated_at": "2026-10-15T06:31:23+09:00",
-  "event_count": 54,
+  "generated_at": "2026-10-16T21:01:07+09:00",
+  "event_count": 58,
   "events": [
+    {
+      "event_id": "d167e6079f9e5ac233b50cf9d1a8cda25d885358",
+      "at": "2026-10-16T21:01:07+09:00",
+      "run_date": "2026-10-16",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000000804",
+      "name": "松屋 庄内店 ※10月27日15時より一時閉店、11月9日15時オープン",
+      "address": "大阪府豊中市庄内西町2-22-10 幸栄ビル1F",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 庄内店",
+          "after": "松屋 庄内店 ※10月27日15時より一時閉店、11月9日15時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "c65f00a62fa9107f55df69c93734a0e4e1278161",
+      "at": "2026-10-16T21:01:07+09:00",
+      "run_date": "2026-10-16",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000000187",
+      "name": "松屋 武蔵新城店 ※10月29日15時より一時閉店、11月6日15時オープン",
+      "address": "神奈川県川崎市中原区上新城2-10-15 新城ロイヤルプラザ1F",
+      "brand_name": "松屋",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "松屋 武蔵新城店",
+          "after": "松屋 武蔵新城店 ※10月29日15時より一時閉店、11月6日15時オープン"
+        }
+      ]
+    },
+    {
+      "event_id": "1dd9b14abb4f34322760dee3c3a8b8fdf625d5fd",
+      "at": "2026-10-16T21:01:07+09:00",
+      "run_date": "2026-10-16",
+      "kind": "changed",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002260",
+      "name": "松屋 仙台一番町店（松のや併設）",
+      "address": "宮城県仙台市青葉区一番町3-10-17 慶和ビル1F",
+      "brand_name": "松屋・松のや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 38.259146,
+          "after": 38.259144
+        }
+      ]
+    },
+    {
+      "event_id": "09cc7e4a692419aaaf4c178460eac59d2a61c64e",
+      "at": "2026-10-16T21:01:07+09:00",
+      "run_date": "2026-10-16",
+      "kind": "added",
+      "issuer_id": "matsuya",
+      "issuer_code": "9887",
+      "issuer_name": "松屋フーズホールディングス",
+      "store_id": "official:id:0000002607",
+      "name": "松屋 八代店（松のや併設）",
+      "address": "熊本県八代市北の丸町3-34",
+      "brand_name": "松屋・松のや"
+    },
     {
       "event_id": "42f8e389a07498aa34fb7a492670d0e6301d06a3",
       "at": "2026-10-15T06:24:02+09:00",

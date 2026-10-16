@@ -1507,7 +1507,7 @@
       ]
     },
     "matsuya": {
-      "revision": 1,
+      "revision": 2,
       "brands": [
         {
           "brand_name": "松のや",
@@ -1527,7 +1527,7 @@
         },
         {
           "brand_name": "松屋・松のや",
-          "store_count": 472
+          "store_count": 473
         },
         {
           "brand_name": "松屋・松のや・マイカリー食堂",
@@ -3373,7 +3373,7 @@
       ]
     },
     "genki": {
-      "revision": 200,
+      "revision": 202,
       "brands": [
         {
           "brand_name": "GENKI SUSHI×魚べい",
@@ -3405,7 +3405,7 @@
         },
         {
           "brand_name": "魚べい",
-          "store_count": 183
+          "store_count": 185
         }
       ]
     },
