@@ -2,4 +2,10 @@
 
 [株主優待券が使えるお店検索](https://yutai-quo-navi.github.io/yutai-map/)
 
-[出典: OpenPOI API](https://openpoiapi.com/attribution.html)
+外食の検索・件数・ページ送り・ブランド一覧は、非公開R2の位置インデックスをWorkerで参照します。検索時のD1読み取り・外部店舗検索はありません。地点候補の入力補助はOpenPOI suggestを利用します。
+
+D1は店舗収集の管理元と定期インデックス生成に使用します。宿泊等の `/v1/features/` はD1の `feature_snapshots` をキャッシュして配信するため、D1バインディングと `data-cache.js` は引き続き必要です。
+
+`wrangler.toml.example` は本番と同じバインディング構成を保ちます。R2バケットは非公開のまま使用し、インデックスの公開ダウンロード経路は設けません。
+
+廃止した `issuer_search_config` は新規スキーマ・更新処理から除外しています。既存D1内のテーブル自体は削除していません。

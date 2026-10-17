@@ -14,7 +14,6 @@ import {createSmoothNavigator} from './smooth-scroll.js?v=20261016-soft-scroll';
 import {saintmarcBenefitForStore} from './saintmarc-benefit.js?v=20261009-saintmarc-public';
 initNumberMotion(document.body);
 initNotificationBadges(document.querySelector('#companyChips'));
-const API = 'https://api.openpoiapi.com/v1/search';
 const SUGGEST_API = 'https://api.openpoiapi.com/v1/suggest';
 const STORE_API = 'https://yutai-map-api.yutaisamurai.workers.dev/v1/stores/search';
 let visibleCompanyIds = new Set();
@@ -220,7 +219,7 @@ async function loadNextDiningPage(){
   const finishFeedback = beginSearchFeedback();
   refreshDiningPager();
   try{
-    const page = await queryD1StoreApi(state.targets, state.origin, state.radius, operation.signal, state.cursor);
+    const page = await queryIndexedStoreApi(state.targets, state.origin, state.radius, operation.signal, state.cursor);
     if(!isSearchCurrent(operation) || revision !== diningSearchRevision || diningPageState !== state) return;
     const alreadyVisible = els.results.querySelectorAll('.card').length;
     const oldResults = lastResults;
@@ -329,17 +328,7 @@ async function init(){
     companies = await Promise.all(
       visibleIssuers.map(async x => {
         const c = await fetch(x.config).then(r => r.json());
-        if(c.storeDataPath && !['official_coordinates','worker_reference','openpoi'].includes(c.locationMode)){
-          try{
-            const db = await fetch(c.storeDataPath).then(r => r.json());
-            c.officialStores = db.stores || [];
-          }catch(e){
-            console.warn(`公式店舗DBを読み込めませんでした: ${c.id}`, e);
-            c.officialStores = [];
-          }
-        }else{
-          c.officialStores = [];
-        }
+        c.officialStores = [];
         return c;
       })
     );
@@ -924,43 +913,21 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
 
   try {
     const radius = Number(els.radius.value);
-    const d1Targets = targets.filter(company =>
-      ['official_coordinates','worker_reference'].includes(company.locationMode)
-    );
-    const openPoiTargets = targets.filter(company => !d1Targets.includes(company));
-    // All selected D1 issuers belong to one visitor search. Sending one
-    // request prevents a 44-company search from spending 3 rate-limit slots.
-    const d1Group = d1Targets.length
-      ? await queryD1StoreApi(d1Targets, pos, radius, operation.signal)
-      : {results:[],categoryCounts:{},incomplete:false};
+    // Every selected issuer is searched by the same immutable spatial index.
+    const indexTargets = targets;
+    const indexGroup = await queryIndexedStoreApi(targets, pos, radius, operation.signal);
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
-    const d1Results = d1Group.results;
-    const batches = openPoiTargets.flatMap(company =>
-      (company.poiSearchGroups || chunk(company.poiSearchNames || company.aliases, 14)).map(aliases => ({company,aliases}))
-    );
-    const responses = await Promise.allSettled(batches.map(batch => queryOpenPOI(batch, pos, radius, operation.signal)));
-    if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
-    const failures = responses.filter(result=>result.status==='rejected').length;
-    const raw = [...d1Results, ...responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value)];
-    if (failures && !raw.length) throw new Error('一部の店舗情報を取得できませんでした');
-    const normalized = dedupe(raw).sort((a,b) => a.distance - b.distance);
-    categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,0]));
-    for (const id of Object.keys(categoryLabels)) {
-      categoryCounts[id] += Number(d1Group.categoryCounts[id] || 0);
-    }
-    for (const item of dedupe(responses.filter(r=>r.status==='fulfilled').flatMap(r=>r.value))) {
-      categoryCounts.all++;
-      categoryCounts[item.category || 'restaurant']++;
-    }
+    const normalized = indexGroup.results;
+    categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,Number(indexGroup.categoryCounts[id] || 0)]));
     lastResults = normalized;
-    diningPageState = d1Targets.length
-      ? {targets:d1Targets,origin:{...pos},radius,cursor:d1Group.nextCursor,incomplete:d1Group.incomplete,coverage:d1Group.coverage}
+    diningPageState = indexTargets.length
+      ? {targets:indexTargets,origin:{...pos},radius,cursor:indexGroup.nextCursor,incomplete:indexGroup.incomplete,coverage:indexGroup.coverage}
       : null;
     refreshDiningPager();
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
     renderCategoryFilters();
     renderFilteredResults(radius);
-    const incomplete = !!d1Group.incomplete || failures > 0;
+    const incomplete = !!indexGroup.incomplete;
     setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${incomplete ? '・一部の系列店舗情報は照合できていません' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
     updateResultNavigation('dining', els.results.querySelectorAll('.card').length);
     if (incomplete) {
@@ -986,30 +953,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
   }
 }
 
-function queryOfficialStoreDb(company, origin, radius){
-  return (company.officialStores || []).map(s => {
-    const lat = Number(s.lat ?? s.latitude);
-    const lng = Number(s.lng ?? s.longitude);
-    if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
-    const distance = haversine(origin.lat, origin.lng, lat, lng);
-    if(distance > radius) return null;
-    return {
-      name: s.name,
-      address: s.address,
-      phone: s.phone || '',
-      lat,
-      lng,
-      company,
-      matchedAlias: s.brand_name || company.name,
-      category: s.category || 'restaurant',
-      officialStore: s,
-      officialVerified: true,
-      distance
-    };
-  }).filter(Boolean);
-}
-
-async function queryD1StoreApi(targets, pos, radius, signal, cursor = null){
+async function queryIndexedStoreApi(targets, pos, radius, signal, cursor = null){
   const companiesById = new Map(targets.map(c => [c.id, c]));
   const params = new URLSearchParams({
     lat: String(pos.lat),
@@ -1077,108 +1021,7 @@ async function queryD1StoreApi(targets, pos, radius, signal, cursor = null){
   };
 }
 
-async function queryOpenPOI(batch, pos, radius, signal){
-  // /v1/search はスペース区切りがOR検索。検索後にクライアント側でブランド名を厳密寄りに再判定する。
-  const params = new URLSearchParams({
-    q: batch.aliases.join(' '), center: `${pos.lng},${pos.lat}`, radius: String(radius), limit: '200'
-  });
-  const res = await fetch(`${API}?${params}`, {signal});
-  if(!res.ok) throw new Error(`OpenPOI ${res.status}`);
-  const data = await res.json();
-  return (data.results || []).map(p => classify(p, batch.company, pos)).filter(Boolean);
-}
-
-function classify(p, company, origin){
-  if(company.domesticOnly){
-    const country = normalize(p.country || p.country_code || p.countryCode || '');
-    if(country && !['japan','jp','日本'].includes(country)) return null;
-  }
-
-  if(company.storeDataPath && !['official_coordinates','openpoi'].includes(company.locationMode)){
-    const country = normalize(p.country || p.country_code || p.countryCode || '');
-    if(country && !['japan','jp','日本'].includes(country)) return null;
-
-    const officialStore = matchOfficialStore(p, company.officialStores || []);
-    if(!officialStore) return null;
-
-    const alias = officialStore.brand_name || [...(company.aliases || [])]
-      .sort((a,b) => normalize(b).length - normalize(a).length)
-      .find(x => normalize(officialStore.name).includes(normalize(x))) || company.name;
-
-    const lat = Number(p.lat), lng = Number(p.lng);
-    if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
-
-    return {
-      ...p,
-      lat,
-      lng,
-      company,
-      matchedAlias: alias,
-      category: officialStore.category || company.categories?.[alias] || 'restaurant',
-      officialStore,
-      officialVerified: true,
-      distance: haversine(origin.lat, origin.lng, lat, lng)
-    };
-  }
-
-  const hay = normalize(`${p.name||''} ${p.name_kana||''}`);
-  const excludedLegacy = (company.excludedNames || []).some(x => hay.includes(normalize(x)));
-  const excludedBrand = (company.excludedBrands || []).some(x => hay.includes(normalize(x)));
-  const excludedStore = (company.excludedStores || []).some(x => hay.includes(normalize(x)));
-  if(excludedLegacy || excludedBrand || excludedStore) return null;
-  const aliases = company.aliasBrands ? [...company.aliases].sort((a,b) => normalize(b).length - normalize(a).length) : company.aliases;
-  const alias = aliases.find(x => hay.includes(normalize(x)));
-  if(!alias) return null;
-  const category = company.categories?.[alias] || 'other';
-  const lat = Number(p.lat), lng = Number(p.lng);
-  if(!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
-  return {
-    ...p, lat, lng, company, matchedAlias: company.aliasBrands?.[alias] || company.brandName || alias, category,
-    distance: haversine(origin.lat, origin.lng, lat, lng)
-  };
-}
-
-function matchOfficialStore(p, stores){
-  if(!stores.length) return null;
-
-  const poiName = normalize(p.name || '');
-  const poiAddress = normalize(p.address || [p.prefecture,p.city].filter(Boolean).join(''));
-  const poiPhone = String(p.phone || p.tel || '').replace(/\D/g,'');
-
-  let best = null;
-  let bestScore = 0;
-
-  for(const s of stores){
-    const officialName = normalize(s.name || '');
-    const officialAddress = normalize(s.address || '');
-    const officialPhone = String(s.phone || '').replace(/\D/g,'');
-
-    let score = 0;
-
-    if(poiPhone && officialPhone && poiPhone === officialPhone) score += 100;
-
-    if(poiName && officialName){
-      if(poiName === officialName) score += 80;
-      else if(poiName.length >= 6 && officialName.includes(poiName)) score += 50;
-      else if(officialName.length >= 6 && poiName.includes(officialName)) score += 50;
-    }
-
-    if(poiAddress && officialAddress){
-      if(poiAddress === officialAddress) score += 40;
-      else if(poiAddress.length >= 8 && officialAddress.includes(poiAddress)) score += 25;
-      else if(officialAddress.length >= 8 && poiAddress.includes(officialAddress)) score += 25;
-    }
-
-    if(score > bestScore){
-      best = s;
-      bestScore = score;
-    }
-  }
-
-  return bestScore >= 50 ? best : null;
-}
 function normalize(s){ return String(s).normalize('NFKC').toLowerCase().replace(/[\s・･\-‐‑–—ー_]/g,''); }
-function chunk(arr,n){ const out=[]; for(let i=0;i<arr.length;i+=n) out.push(arr.slice(i,i+n)); return out; }
 function dedupe(items){
   const map=new Map();
   for(const x of items){
@@ -1198,12 +1041,6 @@ function dedupe(items){
     }
   }
   return [...map.values()];
-}
-function haversine(a,b,c,d){
-  const R=6371000, rad=x=>x*Math.PI/180;
-  const dLat=rad(c-a), dLng=rad(d-b);
-  const q=Math.sin(dLat/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(dLng/2)**2;
-  return 2*R*Math.asin(Math.sqrt(q));
 }
 function distanceText(m){ return m < 1000 ? `${Math.round(m/10)*10}m` : `${(m/1000).toFixed(m<10000?1:0)}km`; }
 function safeExternalUrl(value){
