@@ -69,8 +69,8 @@ try{
   assert.equal(baseline.dining.length,publicIssuers.length);
   assert.equal(baseline.hotel.length,sourceFeatures.length);
   await page.waitForFunction(()=>document.body.dataset.appReady==='true',undefined,{timeout:25000});
-  await page.waitForFunction(()=>[...document.querySelectorAll('#hotelFeatures [data-feature] .benefit-choice-count')]
-    .filter(x=>x.textContent.includes('件')).length===sourceFeatures.length,undefined,{timeout:25000});
+  await page.waitForFunction(expected=>[...document.querySelectorAll('#hotelFeatures [data-feature] .benefit-choice-count')]
+    .filter(x=>x.textContent.includes('件')).length===expected,sourceFeatures.length,{timeout:25000});
   await page.waitForTimeout(250);
   const after=await page.evaluate(()=>{
     const s=window.__cardOrderMotion;
