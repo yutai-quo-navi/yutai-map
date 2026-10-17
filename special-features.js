@@ -275,7 +275,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     }
     output.append(details);
     if(section==='hotel'){
-      const more=document.createElement('button');more.type='button';more.className='issuer-map-button';more.textContent=remoteLoading?'追加の30件を読み込み中…':'さらに30件を見る';more.hidden=!remotePage?.next_cursor;more.disabled=remoteLoading;
+      const more=document.createElement('button');more.type='button';more.className='search-repeat-button';more.textContent=remoteLoading?'追加の30件を読み込み中…':'さらに30件を見る';more.hidden=!remotePage?.next_cursor;more.disabled=remoteLoading;
       more.addEventListener('click',()=>runHotelSearch(undefined,true).catch(error=>{if(error.name!=='AbortError'){output.insertAdjacentHTML('beforeend','<p class="feature-note">追加取得できませんでした。再検索してください。</p>');}}));output.append(more);
       if(remotePage?.limited){const note=document.createElement('p');note.className='feature-note';note.textContent='表示は近い順に60件までです。ほかの候補を探すには、検索地点を変えるか、検索範囲を狭めて再検索してください。';output.append(note);}
     }
