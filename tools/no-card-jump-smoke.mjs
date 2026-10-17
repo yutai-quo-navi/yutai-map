@@ -10,7 +10,6 @@ const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.js
   '.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif'};
 const sourceFeatures = JSON.parse(await readFile(resolve(root,'data/features/index.json'),'utf8')).features
   .filter(feature => feature.section === 'hotel');
-const hotelOrder = sourceFeatures.map(feature => feature.id);
 const server=createServer(async(req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   const path=resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
@@ -39,15 +38,15 @@ try{
       const list=publicIssuers.map((issuer,i)=>({issuer_id:issuer.id,name:'テスト店'+i,count:99999-i*2500}));
       await route.fulfill({status:200,json:{brands:list}});return;
     }
-    const match=url.pathname.match(/^\/v1\/features\/([a-z0-9-]+)$/);
-    if(match){
-      const id=match[1],index=hotelOrder.indexOf(id);
+    if(url.pathname==='/v1/hotels/catalog'){
+      // The private spatial index exposes only verified counts, never hotel rows.
+      // Delay its response so that the DOM stability check includes async hydration.
       await new Promise(resolve=>setTimeout(resolve,750));
-      const stores=Array.from({length:Math.max(1,sourceFeatures.length-index)},(_,i)=>({
-        id:id+'-store-'+i,name:'検証用施設'+i,address:'東京都千代田区千代田1-1',
-        conditions:'利用可能',lat:35.68,lng:139.76,verified:true
+      const features=sourceFeatures.map((feature,index)=>({
+        id:feature.id,storeCount:Math.max(1,sourceFeatures.length-index),
+        checkedOn:'2026-10-14',stores:[]
       }));
-      await route.fulfill({status:200,json:{id,stores,checkedOn:'2026-10-14'}});return;
+      await route.fulfill({status:200,json:{features}});return;
     }
     await route.abort();
   });
@@ -71,7 +70,7 @@ try{
   assert.equal(baseline.hotel.length,sourceFeatures.length);
   await page.waitForFunction(()=>document.body.dataset.appReady==='true',undefined,{timeout:25000});
   await page.waitForFunction(()=>[...document.querySelectorAll('#hotelFeatures [data-feature] .benefit-choice-count')]
-    .filter(x=>x.textContent.includes('件')).length>=10,undefined,{timeout:25000});
+    .filter(x=>x.textContent.includes('件')).length===sourceFeatures.length,undefined,{timeout:25000});
   await page.waitForTimeout(250);
   const after=await page.evaluate(()=>{
     const s=window.__cardOrderMotion;
