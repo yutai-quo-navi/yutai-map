@@ -65,6 +65,8 @@ try{
         if(requestUrl.pathname==='/data/features/index.json') return route.fulfill({json:{features:[hotelFixture]}});
         return route.continue();
       }
+      if(requestUrl.pathname==='/v1/hotels/catalog')return route.fulfill({json:{features:[{...hotelFixture,stores:[],storeCount:1,indexed:true}]}});
+      if(requestUrl.pathname==='/v1/hotels/search')return route.fulfill({json:{results:hotelFixture.stores.map(s=>({...s,store_id:s.id,feature_id:hotelFixture.id,distance:120})),total:1,next_cursor:null,limited:false}});
       if(requestUrl.pathname==='/v1/brands')return route.fulfill({json:{brands:stores.map(s=>({issuer_id:s.issuer_id,name:s.brand_name,count:1}))}});
       if(requestUrl.pathname==='/v1/stores/search'){
         const issuers=(requestUrl.searchParams.get('issuers')||'').split(',');

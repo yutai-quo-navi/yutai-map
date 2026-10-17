@@ -65,6 +65,7 @@ async function handleRequest(request, env, usage) {
     }
     if (url.pathname.startsWith('/v1/features/')) {
       const id = url.pathname.slice('/v1/features/'.length);
+      if(id.endsWith('-hotels')||['kyoritsu-hotel-discount','kyoritsu-resort-plan'].includes(id))return json({error:'use_hotel_search'},410,cors);
       if (!FEATURE_IDS.has(id)) return json({error:'not_found'},404,cors);
       try {
         const row = await cachedData(`feature:${id}`, 300, async () => {

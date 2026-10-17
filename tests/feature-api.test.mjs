@@ -20,13 +20,11 @@ test('feature endpoint rejects unknown datasets and survives missing D1 data', a
   assert.equal((await worker.fetch(request('/v1/features/private-dataset'),env)).status,404);
   assert.equal((await worker.fetch(request('/v1/features/balnibarbi-dining'),env)).status,503);
 });
-test('hotel voucher endpoints bind distinct dataset IDs and retain rate limiting', async () => {
+test('legacy hotel catalog downloads are disabled and retain rate limiting', async () => {
   for (const id of ['vision-hotels','wakita-hotels','tkp-hotels','wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels','daiwa-house-hotels','kyoritsu-hotel-discount','kyoritsu-resort-plan']) {
     let limited = 0;
-    const env = {API_RATE_LIMITER:{limit:async()=>{limited++;return {success:true};}},DB:{prepare(){return {
-      bind(actual) {assert.equal(actual,id);return {all:async()=>({results:[{payload_json:JSON.stringify({id,stores:[]})}]})};}
-    };}}};
+    const env = {API_RATE_LIMITER:{limit:async()=>{limited++;return {success:true};}},DB:{prepare(){assert.fail('Retired catalog must not read D1');}}};
     const response=await worker.fetch(request('/v1/features/'+id),env);
-    assert.equal(response.status,200);assert.equal((await response.json()).id,id);assert.equal(limited,1);
+    assert.equal(response.status,410);assert.equal((await response.json()).error,'use_hotel_search');assert.equal(limited,1);
   }
 });

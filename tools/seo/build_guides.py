@@ -248,7 +248,7 @@ def render(source):
         feature_links.append(link(url(fpath), name) + f' <span>掲載{len(stores)}施設</span>')
         intro = feature.get('description', '')
         body = f'<h2>利用する優待</h2><p>{esc(feature.get("voucherName") or feature["title"])}</p><p>{esc(intro)}</p><p>対象施設の確認日：<time>{esc(feature["checkedOn"])}</time></p><p><a class="cta" href="{esc(search_url(section="hotel", feature=fid))}">この宿泊優待で探す</a></p><h2>掲載ホテル・施設</h2>'
-        body += ul(link(url(hotel_path(fid, s)), s['name']) + '<br><span>' + esc(s['address']) + '</span>' for s in stores)
+        body += '<p>対象施設は検索画面で、検索地点から近い順にご確認ください。初回30件、追加表示は1回・合計60件までです。</p>'
         body += sources((feature.get('sourceUrl'), '株主優待の公式案内'))
         pages[fpath] = page(fpath, name + 'の宿泊優待・対象ホテル', f'{name}の宿泊優待に対応する掲載{len(stores)}施設の住所・利用条件・公式確認先を案内します。', body, [('宿泊優待ガイド', url(hotels)), (name, url(fpath))])
         for store in stores:

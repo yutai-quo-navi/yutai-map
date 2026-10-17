@@ -42,7 +42,7 @@ export function validateFeature(feature) {
   if (feature.status === 'ended' && (feature.updateMode !== 'manual' ||
       !validDate(feature.validThrough) || !validDate(feature.checkedOn) || !safeUrl(feature.sourceUrl)))
     throw new Error('Unverified ended feature');
-  if (feature.status === 'public' && (!feature.stores.length || !safeUrl(feature.sourceUrl) ||
+  if (feature.status === 'public' && (!(feature.indexed === true ? Number.isSafeInteger(feature.storeCount) && feature.storeCount > 0 && feature.stores.length === 0 : feature.stores.length) || !safeUrl(feature.sourceUrl) ||
       !validDate(feature.checkedOn) || (feature.availability !== 'continuous' &&
       (!validDate(feature.validFrom) || !validDate(feature.validThrough) ||
       feature.validFrom > feature.validThrough || feature.checkedOn > feature.validThrough)) ||
@@ -72,6 +72,7 @@ export function featureStores(feature, origin) {
 export function featureDistanceLabel(meters) {
   return meters < 1000 ? `${Math.round(meters)}m` : `${(meters / 1000).toLocaleString('ja-JP', {maximumFractionDigits:1})}km`;
 }
+const featureCount = feature => feature.indexed ? feature.storeCount : feature.stores.length;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
 // Merge voucher-specific results into one list ordered from the same search origin.
@@ -84,6 +85,8 @@ export function featureSearchResults(features, origin, getRadius = featureRadius
 export async function initSpecialFeatures({root, getOrigin, getCenterLabel, createDeadlineBubble, getDeadline, getRadius, preview = false, section = 'dining', catalog = null, initialFeature = ''}) {
   if (!root) return {refresh() {}, search() {}, invalidate() {}};
   let features = [], hasSearched = false, originUnavailable = false;
+  let remotePage=null,remoteLoading=false,requestVersion=0,remoteController=null;
+  const invalidateResults=()=>{hasSearched=false;remotePage=null;remoteLoading=false;requestVersion++;remoteController?.abort();};
   const selectedRadii = new Map();
   const selectedFeatures = new Set();
   const unit = section === 'hotel' ? '施設' : '店舗';
@@ -102,14 +105,14 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     const displayed = visibleFeatures(features, today(), preview)
       .map(feature => ({feature,position:stableOrder.get(feature.id),priority:{
         days:getDeadline(feature.issuer.id, feature.deadlineBenefitPattern, feature.deadlineExpiryType)?.days,
-        ended:feature.status === 'ended', count:feature.stores.length
+        ended:feature.status === 'ended', count:featureCount(feature)
       }}))
       .sort((a,b) => {
         if (a.position != null && b.position != null) return a.position-b.position;
         if (a.position != null) return -1;
         if (b.position != null) return 1;
         return section === 'hotel'
-          ? b.feature.stores.length-a.feature.stores.length
+          ? featureCount(b.feature)-featureCount(a.feature)
           : compareBenefitPriority(a.priority,b.priority);
       })
       .map(item => item.feature);
@@ -134,7 +137,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
           button.addEventListener('click', () => {
             selectedFeatures.has(feature.id) ? selectedFeatures.delete(feature.id) : selectedFeatures.add(feature.id);
             track('benefit_select', {section, benefit_id: feature.id, selected: selectedFeatures.has(feature.id)});
-            hasSearched = false; render();
+            invalidateResults(); render();
             root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
           });
           button.dataset.logoCardHydrated = 'true';
@@ -142,7 +145,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         // The initial HTML intentionally omits a fabricated count; add verified
         // totals and deadline data when the feature snapshot actually arrives.
         const count = button.querySelector('.benefit-choice-count');
-        if (count) count.innerHTML = numberHTML('feature:'+feature.id,feature.stores.length)+'<span class="number-unit">件</span>';
+        if (count) count.innerHTML = numberHTML('feature:'+feature.id,featureCount(feature))+'<span class="number-unit">件</span>';
         const name = button.querySelector('.benefit-choice-name');
         if (name) name.textContent = feature.shortName || feature.issuer.name;
         const detail = button.querySelector('.benefit-choice-detail');
@@ -169,7 +172,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       const name = document.createElement('span'); name.className = 'benefit-choice-name';
       name.textContent = feature.shortName || feature.issuer.name;
       const count = document.createElement('span'); count.className = 'benefit-choice-count';
-      count.innerHTML = numberHTML('feature:'+feature.id,feature.stores.length)+'<span class="number-unit">件</span>';
+      count.innerHTML = numberHTML('feature:'+feature.id,featureCount(feature))+'<span class="number-unit">件</span>';
       const check=document.createElement('span'); check.className='issuer-check'; check.setAttribute('aria-hidden','true');
       const copy = document.createElement('span'); copy.className = 'benefit-choice-copy';
       nameRow.append(name,count); copy.append(nameRow);
@@ -192,7 +195,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       button.addEventListener('click', () => {
         selectedFeatures.has(feature.id) ? selectedFeatures.delete(feature.id) : selectedFeatures.add(feature.id);
         track('benefit_select', {section, benefit_id: feature.id, selected: selectedFeatures.has(feature.id)});
-        hasSearched = false; render();
+        invalidateResults(); render();
         root.querySelector(`[data-feature="${feature.id}"]`)?.focus();
       });
       button.dataset.logoCardHydrated = 'true';
@@ -220,7 +223,7 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
         select.value = String(currentRadius(feature));
         select.addEventListener('change', () => {
           selectedRadii.set(feature.id, select.value === 'all' ? 'all' : Number(select.value));
-          hasSearched = false;
+          invalidateResults();
           if (selectedFeatures.has(feature.id)) {
             render(); root.querySelector(`[data-feature-radius="${feature.id}"]`)?.focus();
           }
@@ -232,23 +235,25 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
     for (const oldItem of existingItems.values()) oldItem.remove();
     root.querySelector('.feature-results').id = resultsId;
     const chosen = displayed.filter(feature => selectedFeatures.has(feature.id));
-    if (!chosen.length) return;
+    if (!chosen.length) {root.querySelector('.feature-results').replaceChildren();return;}
     if (!hasSearched) {
       root.querySelector('.feature-results').innerHTML = '<p class="feature-note">条件を選んで「現在地から探す」または「この場所で探す」を押してください</p>';
       return;
     }
     const nationwide = chosen.every(feature => currentRadius(feature) === 'all');
     const origin = originUnavailable ? null : getOrigin();
-    const matches = featureSearchResults(chosen, origin, currentRadius);
+    const matches = section === 'hotel' ? (remotePage?.results || []).map(store=>({feature:features.find(f=>f.id===store.feature_id),store})).filter(x=>x.feature) : featureSearchResults(chosen, origin, currentRadius);
     const output = root.querySelector('.feature-results');
     if (!nationwide && (originUnavailable || !origin)) {
       output.innerHTML = '<p class="feature-note">距離を表示するには、現在地の利用を許可するか、場所を指定してください。</p>';
       return;
     }
+    if(section==='hotel'&&remoteLoading&&!remotePage){output.innerHTML='<p class="feature-note">対象施設を検索中…</p>';return;}
+    if(section==='hotel'&&!remotePage){output.innerHTML='<p class="feature-note">検索を完了できませんでした。条件を確認して再検索してください。</p>';return;}
     const label = getCenterLabel();
     const details = document.createElement('div');
-    const total = chosen.reduce((sum, feature) => sum + feature.stores.length, 0);
-    output.innerHTML = `<p class="feature-note">${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(chosen[0])/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${numberHTML(section+':results',matches.length)}件表示・全${numberHTML(section+':total',total)}${unit}</p>`;
+    const total = chosen.reduce((sum, feature) => sum + featureCount(feature), 0);
+    output.innerHTML = `<p class="feature-note">${origin ? `${nationwide ? `全国の対象${unit}` : `${esc(label)}から${(currentRadius(chosen[0])/1000).toLocaleString('ja-JP')}km以内`}・直線距離が近い順` : `全国の対象${unit}・掲載順（検索地点を指定すると距離を表示して近い順）`}／${numberHTML(section+':results',matches.length)}件表示・全${numberHTML(section+':total',section==='hotel' ? remotePage?.total || 0 : total)}${unit}</p>`;
     if (origin && !matches.length && total) output.innerHTML += `<p class="feature-note">この範囲に対象${unit}はありません。検索範囲を広げるか、別の場所を指定してください。</p>`;
     for (const active of chosen) {
       const info = document.createElement('div');
@@ -269,6 +274,11 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
       output.append(card);
     }
     output.append(details);
+    if(section==='hotel'){
+      const more=document.createElement('button');more.type='button';more.className='issuer-map-button';more.textContent=remoteLoading?'追加の30件を読み込み中…':'さらに30件を見る';more.hidden=!remotePage?.next_cursor;more.disabled=remoteLoading;
+      more.addEventListener('click',()=>runHotelSearch(undefined,true).catch(error=>{if(error.name!=='AbortError'){output.insertAdjacentHTML('beforeend','<p class="feature-note">追加取得できませんでした。再検索してください。</p>');}}));output.append(more);
+      if(remotePage?.limited){const note=document.createElement('p');note.className='feature-note';note.textContent='表示は近い順に60件までです。ほかの候補を探すには、検索地点を変えるか、検索範囲を狭めて再検索してください。';output.append(note);}
+    }
   };
   try {
     features = (await (catalog || loadFeatureCatalog())).filter(feature => (feature.section || 'dining') === section);
@@ -277,10 +287,37 @@ export async function initSpecialFeatures({root, getOrigin, getCenterLabel, crea
   } catch (error) {
     root.hidden = true; console.warn('特集を読み込めませんでした', error);
   }
+  async function runHotelSearch(signal,append=false){
+    if(append&&(!remotePage?.next_cursor||remoteLoading))return;
+    if(!append)invalidateResults();
+    if(!selectedFeatures.size)visibleFeatures(features,today(),preview).forEach(f=>selectedFeatures.add(f.id));
+    const chosen=visibleFeatures(features,today(),preview).filter(f=>selectedFeatures.has(f.id));
+    const origin=getOrigin(),radius=getRadius?getRadius():currentRadius(chosen[0]);
+    if(!chosen.length||!origin){hasSearched=true;originUnavailable=!origin;render();return;}
+    const version=++requestVersion;remoteController=new AbortController();
+    const abort=()=>remoteController?.abort();
+    signal?.addEventListener('abort',abort,{once:true});
+    if(signal?.aborted)remoteController.abort();
+    hasSearched=true;originUnavailable=false;remoteLoading=true;render();
+    try{
+      const params=new URLSearchParams({lat:origin.lat,lng:origin.lng,radius,features:chosen.map(f=>f.id).join(','),...(append?{cursor:remotePage.next_cursor}:{})});
+      const response=await fetch('https://yutai-map-api.yutaisamurai.workers.dev/v1/hotels/search?'+params,{signal:remoteController.signal,cache:'no-store'});
+      if(!response.ok)throw new Error('Hotel search '+response.status);
+      const page=await response.json();
+      if(version!==requestVersion)return;
+      remotePage={...page,results:[...(append?remotePage.results:[]),...page.results]};
+      if(remotePage.results.length>60)throw new Error('Hotel display limit exceeded');
+      if(!append)track('benefit_search',{section,mode:getCenterLabel()==='現在地'?'current':'place',result_count:page.total});
+    }finally{
+      signal?.removeEventListener('abort',abort);
+      if(version===requestVersion){remoteLoading=false;render();}
+    }
+  }
   return {
     refresh() { render(); },
-    invalidate() { hasSearched = false; render(); },
-    search() {
+    invalidate() { invalidateResults(); render(); },
+    async search(signal) {
+      if(section==='hotel')return runHotelSearch(signal);
       if (!selectedFeatures.size) visibleFeatures(features, today(), preview).forEach(feature => selectedFeatures.add(feature.id));
       originUnavailable = !getOrigin(); hasSearched = true; render();
       const chosen = visibleFeatures(features, today(), preview).filter(feature => selectedFeatures.has(feature.id));
@@ -300,7 +337,17 @@ export async function loadFeatureCatalog(fetcher = fetch) {
 
 // One unavailable remote feature must not hide other verified features.
 export async function loadFeatureData(configs, fetcher = fetch) {
+  const hotelConfigs=configs.filter(c=>c.section==='hotel');
+  let hotelMetadata=[];
+  if(hotelConfigs.length){
+    try{const response=await fetcher('https://yutai-map-api.yutaisamurai.workers.dev/v1/hotels/catalog');if(response.ok)hotelMetadata=(await response.json()).features || [];}catch{}
+  }
   const results = await Promise.allSettled(configs.map(async config => {
+    if(config.section==='hotel'){
+      const metadata=hotelMetadata.find(f=>f.id===config.id);
+      if(!metadata||metadata.stores?.length)throw new Error('Hotel metadata unavailable');
+      return validateFeature({...config,...metadata,stores:[],indexed:true});
+    }
     if (config.updateMode !== 'scheduled') return validateFeature(config);
     if (!safeUrl(config.storeDataUrl)) throw new Error('Invalid feature data URL');
     const response = await fetcher(config.storeDataUrl, {signal:AbortSignal.timeout(10000)});

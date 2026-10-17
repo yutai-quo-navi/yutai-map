@@ -176,3 +176,9 @@ test('all 13 historical lunch locations calculate distance even after voucher ex
   assert.deepEqual(featureStores({...feature,radiusMeters:100000}, {lat:43.06,lng:141.35}).map(store=>store.id), ['near']);
   assert.throws(() => validateFeature({...draft, radiusMeters:'anything'}));
 });
+
+test('hotel metadata loads without requesting a facility catalog',async()=>{
+ const config=JSON.parse(readFileSync(new URL('../data/features/index.json',import.meta.url))).features.find(f=>f.section==='hotel');const calls=[];
+ const loaded=await loadFeatureData([config],async url=>{calls.push(url);return Response.json({features:[{...config,storeCount:532,indexed:true,stores:[],checkedOn:'2026-10-17'}]});});
+ assert.deepEqual(calls,['https://yutai-map-api.yutaisamurai.workers.dev/v1/hotels/catalog']);assert.equal(loaded[0].storeCount,532);assert.deepEqual(loaded[0].stores,[]);
+});
