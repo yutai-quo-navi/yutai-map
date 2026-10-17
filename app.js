@@ -5,7 +5,7 @@ import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261017-inclusive-countdown';
 import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority, countdownDays} from './expiry.js?v=20261017-inclusive-countdown';
-import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261017-inclusive-countdown';
+import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261017-hotel-index';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
 import {initBenefitTabs} from './benefit-tabs.js?v=20261011-guides';
@@ -205,9 +205,9 @@ function refreshDiningPager(){
   pager.disabled = pagingInProgress;
   pager.textContent = pagingInProgress ? '追加の30件を読み込み中…' : 'さらに30件を見る';
   if(els.paginationStatus){
-    els.paginationStatus.hidden = !available;
+    els.paginationStatus.hidden = !available && !diningPageState?.limited;
     els.paginationStatus.textContent = available
-      ? '続きの店舗はボタンを押したときだけ取得します。' : '';
+      ? '追加表示は1回・合計60件までです。' : diningPageState?.limited ? '表示は近い順に60件までです。ほかの候補を探すには、検索地点を変えるか、検索範囲を狭めて再検索してください。' : '';
   }
 }
 async function loadNextDiningPage(){
@@ -226,7 +226,7 @@ async function loadNextDiningPage(){
     const previousLength = oldResults.length;
     lastResults = dedupe([...oldResults, ...page.results]).sort((a,b)=>a.distance-b.distance);
     state.cursor = page.nextCursor || null;
-    state.incomplete=page.incomplete; state.coverage=page.coverage;
+    state.incomplete=page.incomplete; state.coverage=page.coverage; state.limited=page.limited;
     // Only the new thirty (or fewer) cards are inserted: old cards stay mounted.
     // Re-render when the old page's source interleaves with new distance ties.
     const samePrefix = oldResults.every((item,i)=>lastResults[i] === item);
@@ -237,7 +237,7 @@ async function loadNextDiningPage(){
     }
     if(page.results.length === 0) state.cursor = null;
     setStatus(page.results.length
-      ? `${page.results.length}件を追加取得しました。${state.incomplete ? '一部店舗の確認・座標補完が未完了です。' : '次のページは操作時のみ検索します。'}`
+      ? `${page.results.length}件を追加取得しました。${state.incomplete ? '一部店舗の確認・座標補完が未完了です。' : (state.limited ? '表示は近い順に60件までです。検索地点を変えるか、検索範囲を狭めて再検索してください。' : '対象店舗をすべて表示しました。')}`
       : (state.incomplete ? '登録済み座標の最後まで表示しました。一部店舗の確認・座標補完が未完了です。' : 'これ以上の店舗はありません。'));
   }catch(error){
     if(isSearchCurrent(operation)){
@@ -354,7 +354,7 @@ async function init(){
       createDeadlineBubble: (issuer, pattern, type) => deadlineBubble(issuer, pattern, true, type),
       getDeadline: (issuer, pattern, type) => featureDeadline(issuer, pattern, type),
       preview: dev === 'features' || dev === 'all'
-    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, search() { controllers.forEach(controller => controller.search()); }, invalidate() { controllers.forEach(controller => controller.invalidate()); }}; });
+    }))).then(controllers => { specialFeatures = {refresh() { controllers.forEach(controller => controller.refresh()); }, async search(signal) { await Promise.all(controllers.map(controller => controller.search(signal))); }, invalidate() { controllers.forEach(controller => controller.invalidate()); }}; });
     persistSelection();
     renderChips();
     renderCategoryFilters();
@@ -876,7 +876,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     try {
       await specialFeaturesReady;
       if (!isSearchCurrent(operation)) return;
-      specialFeatures.search();
+      await specialFeatures.search(operation.signal);
       els.locate.disabled = false;
       setStatus(`${centerLabel}を検索地点にしました`);
       const count = qs('#hotelFeatures .feature-results')?.querySelectorAll('.feature-card').length || 0;
@@ -921,7 +921,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     categoryCounts = Object.fromEntries(Object.keys(categoryLabels).map(id=>[id,Number(indexGroup.categoryCounts[id] || 0)]));
     lastResults = normalized;
     diningPageState = indexTargets.length
-      ? {targets:indexTargets,origin:{...pos},radius,cursor:indexGroup.nextCursor,incomplete:indexGroup.incomplete,coverage:indexGroup.coverage}
+      ? {targets:indexTargets,origin:{...pos},radius,cursor:indexGroup.nextCursor,incomplete:indexGroup.incomplete,coverage:indexGroup.coverage,limited:indexGroup.limited}
       : null;
     refreshDiningPager();
     track('benefit_search', {section:'dining', mode:centerLabel === '現在地' ? 'current' : 'place', result_count:normalized.length});
@@ -1017,7 +1017,7 @@ async function queryIndexedStoreApi(targets, pos, radius, signal, cursor = null)
   return {
     results,categoryCounts:counts,incomplete:data.incomplete === true,coverage:data.coverage || null,
     nextCursor:typeof data.next_cursor === 'string' ? data.next_cursor : null,
-    hasMore:data.has_more === true
+    hasMore:data.has_more === true,limited:data.limited === true
   };
 }
 
