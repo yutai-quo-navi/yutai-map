@@ -5,7 +5,6 @@ import {getSearchSnapshot} from './search-snapshot.js';
 
 const FEATURE_IDS = new Set(['vision-hotels','wakita-hotels','tkp-hotels','wealth-hotels','greens-hotels','tosei-hotels','sunfrontier-hotels','resol-hotels','seibu-free-hotels', 'daiwa-house-hotels', 'balnibarbi-dining', 'kyoritsu-hotel-discount', 'kyoritsu-resort-plan']);
 const MAX_RADIUS = 30000;
-const MAX_RESULTS = 30;
 const SEARCH_LOCK_SECONDS = 60;
 const API_RETRY_SECONDS = 60;
 const MAX_REQUEST_URL_LENGTH = 2048;

@@ -28,7 +28,20 @@ namespace_id = "1002"
 limit = 60
 period = 60
 
+[[durable_objects.bindings]]
+name = "SEARCH_COUNTER"
+class_name = "SearchCounter"
+
+[[migrations]]
+tag = "search-counter-v1"
+new_sqlite_classes = ["SearchCounter"]
+
 [observability.logs]
 enabled = true
 head_sampling_rate = 0.1
 invocation_logs = false
+
+# Private read-only search snapshots. No public R2 download endpoint.
+[[r2_buckets]]
+binding = "SEARCH_INDEX_BUCKET"
+bucket_name = "yutai-data-backups"

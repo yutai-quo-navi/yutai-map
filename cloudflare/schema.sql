@@ -33,12 +33,6 @@ CREATE TABLE IF NOT EXISTS reference_stores (
 CREATE INDEX IF NOT EXISTS idx_reference_stores_issuer ON reference_stores(issuer_id);
 CREATE INDEX IF NOT EXISTS idx_reference_stores_phone ON reference_stores(issuer_id, phone_norm);
 
-CREATE TABLE IF NOT EXISTS issuer_search_config (
-  issuer_id TEXT PRIMARY KEY,
-  aliases_json TEXT NOT NULL DEFAULT '[]',
-  updated_at TEXT NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS store_raw (
   issuer_id TEXT NOT NULL,
   store_id TEXT NOT NULL,
