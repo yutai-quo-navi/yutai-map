@@ -1,5 +1,4 @@
 export {SearchCounter} from './search-counter.js';
-import {cachedData, readRows} from './data-cache.js';
 import {hotelCatalog,searchHotels} from './hotel-search.js';
 import {searchSnapshot} from './spatial-search.js';
 import {getSearchSnapshot} from './search-snapshot.js';
@@ -12,15 +11,11 @@ const MAX_REQUEST_URL_LENGTH = 2048;
 
 export default {
   async fetch(request, env) {
-    const usage = {queries:0,rows_read:0,rows_written:0,cache_hits:0};
-    try { return await handleRequest(request, env, usage); }
-    finally {
-      if (usage.queries || usage.cache_hits) console.log(JSON.stringify({event:'d1_usage',operation:new URL(request.url).pathname,...usage}));
-    }
+    return handleRequest(request, env);
   }
 };
 
-async function handleRequest(request, env, usage) {
+async function handleRequest(request, env) {
     const url = new URL(request.url);
     const cors = corsHeaders(env, request);
 
@@ -63,19 +58,7 @@ async function handleRequest(request, env, usage) {
       try{const result=await searchHotels(env,{lat,lng,radius,features,requestedCursor});return json(result.body,result.status,cors);}
       catch{return json({error:'hotel_index_unavailable'},503,cors);}
     }
-    if (url.pathname.startsWith('/v1/features/')) {
-      const id = url.pathname.slice('/v1/features/'.length);
-      if (!FEATURE_IDS.has(id)) return json({error:'not_found'},404,cors);
-      try {
-        const row = await cachedData(`feature:${id}`, 300, async () => {
-          const [value] = await readRows(env, 'SELECT payload_json FROM feature_snapshots WHERE feature_id = ?', [id], usage);
-          if (!value) throw new Error('Missing feature');
-          return value;
-        }, usage);
-        if (!row) return json({error:'feature_unavailable'},503,cors);
-        return json(JSON.parse(row.payload_json),200,{...cors,'Cache-Control':'public, max-age=300'});
-      } catch { return json({error:'feature_unavailable'},503,cors); }
-    }
+    if(url.pathname.startsWith('/v1/features/'))return json({error:'use_indexed_search'},FEATURE_IDS.has(url.pathname.slice('/v1/features/'.length))?410:404,cors);
 
     if (url.pathname === '/v1/brands') {
       const ids=parseIssuers(url.searchParams.get('issuers'));
