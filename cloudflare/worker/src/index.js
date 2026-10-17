@@ -1,5 +1,6 @@
 export {SearchCounter} from './search-counter.js';
 import {cachedData, readRows} from './data-cache.js';
+import {hotelCatalog,searchHotels} from './hotel-search.js';
 import {searchSnapshot} from './spatial-search.js';
 import {getSearchSnapshot} from './search-snapshot.js';
 
@@ -31,7 +32,7 @@ async function handleRequest(request, env, usage) {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (request.method !== 'GET') return json({ error: 'method_not_allowed' }, 405, cors);
 
-    const databasePath = ['/health','/v1/brands','/v1/stores/search'].includes(url.pathname) || FEATURE_IDS.has(url.pathname.replace(/^\/v1\/features\//, ''));
+    const databasePath = ['/health','/v1/brands','/v1/stores/search','/v1/hotels/catalog','/v1/hotels/search'].includes(url.pathname) || FEATURE_IDS.has(url.pathname.replace(/^\/v1\/features\//, ''));
     if (databasePath) {
       const limited = await enforceApiRateLimit(env, request, cors);
       if (limited) return limited;
@@ -46,6 +47,22 @@ async function handleRequest(request, env, usage) {
       }
     }
 
+    if(url.pathname==='/v1/hotels/catalog'){
+      try{return json(await hotelCatalog(env),200,{...cors,'Cache-Control':'public, max-age=300'});}
+      catch{return json({error:'hotel_index_unavailable'},503,cors);}
+    }
+    if(url.pathname==='/v1/hotels/search'){
+      const features=parseIssuers(url.searchParams.get('features'));
+      const lat=Number(url.searchParams.get('lat')),lng=Number(url.searchParams.get('lng'));
+      const rawRadius=url.searchParams.get('radius'),radius=rawRadius==='all'?'all':Number(rawRadius);
+      if(!url.searchParams.get('lat')?.trim()||!url.searchParams.get('lng')?.trim()||!Number.isFinite(lat)||!Number.isFinite(lng)||Math.abs(lat)>90||Math.abs(lng)>180||
+         !(radius==='all'||Number.isFinite(radius)&&radius>0&&radius<=4000000)||!features.length)
+        return json({error:'invalid_hotel_search'},400,cors);
+      const requestedCursor=url.searchParams.get('cursor');
+      if(requestedCursor===null){try{const limited=await enforceSearchRateLimit(env,request,cors);if(limited)return limited;}catch{return json({error:'rate_limit_unavailable'},503,cors);}}
+      try{const result=await searchHotels(env,{lat,lng,radius,features,requestedCursor});return json(result.body,result.status,cors);}
+      catch{return json({error:'hotel_index_unavailable'},503,cors);}
+    }
     if (url.pathname.startsWith('/v1/features/')) {
       const id = url.pathname.slice('/v1/features/'.length);
       if (!FEATURE_IDS.has(id)) return json({error:'not_found'},404,cors);

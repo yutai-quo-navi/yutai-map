@@ -16,8 +16,8 @@ export class SpatialIndex {
   const p=this.points+id*64,offset=this.v.getUint32(p+56,true),len=this.v.getUint32(p+60,true);
   return JSON.parse(this.decoder.decode(new Uint8Array(this.v.buffer,this.strings+offset,len)));
  }
- query({lat,lng,radius,issuers,brand='',category='',cursor=null,limit=30}){
-  if(!Number.isFinite(lat)||!Number.isFinite(lng)||!Number.isFinite(radius)||radius<=0||radius>30000||Math.abs(lat)>90||Math.abs(lng)>180||!Number.isInteger(limit)||limit<1||limit>30)throw Error('Invalid spatial query');
+ query({lat,lng,radius,issuers,brand='',category='',cursor=null,limit=30,maxRadius=30000}){
+  if(!Number.isFinite(lat)||!Number.isFinite(lng)||!Number.isFinite(radius)||radius<=0||radius>maxRadius||Math.abs(lat)>90||Math.abs(lng)>180||!Number.isInteger(limit)||limit<1||limit>30)throw Error('Invalid spatial query');
   const v=this.v, selected=new Set(issuers),groups=this.metadata.groups;
   const allowed=groups.map(g=>selected.has(g[0])&&(!brand||brand===g[1]));
   const nearestAllowed=groups.map((g,i)=>allowed[i]&&(!category||category===g[2]));

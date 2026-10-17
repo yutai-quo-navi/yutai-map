@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import worker from '../cloudflare/worker/src/index.js';
 import {fixture,request} from './helpers/search-db.mjs';
 async function search(f,params={}){const res=await worker.fetch(request(params),f.env);return {status:res.status,data:await res.json(),headers:res.headers};}
-test('all 77 stores page 30+30+17 in precise distance order, without duplicates or external requests',async()=>{
+test('77 matching stores return only nearest 30+30 in precise distance order, without duplicates or external requests',async()=>{
  const f=fixture();for(let i=0;i<77;i++)f.insert('a',String(77-i),100+i*.01);f.audit('a');
  const old=globalThis.fetch;globalThis.fetch=()=>assert.fail('Search must never call external APIs');
  try{
   let cursor,ids=[],sizes=[];
   do {const {status,data,headers}=await search(f,{...(cursor?{cursor}:{})});assert.equal(status,200);assert.equal(data.incomplete,false);assert.equal(headers.get('Cache-Control'),'no-store');sizes.push(data.count);ids.push(...data.results.map(r=>r.store_id));cursor=data.next_cursor;assert.equal(data.has_more,!!cursor);}while(cursor);
-  assert.deepEqual(sizes,[30,30,17]);assert.deepEqual(ids,Array.from({length:77},(_,i)=>String(77-i)));assert.equal(new Set(ids).size,77);
+  assert.deepEqual(sizes,[30,30]);assert.deepEqual(ids,Array.from({length:60},(_,i)=>String(77-i)));assert.equal(new Set(ids).size,60);
   assert.equal(f.queries.length,0,'all pages must perform zero D1 queries');
  }finally{globalThis.fetch=old;f.db.close();}
 });
@@ -31,7 +31,8 @@ test('catalog or coordinate changes invalidate continuation instead of skipping 
 test('signed continuation does not charge a new search; both search and API guards remain enforced',async()=>{
  const f=fixture();for(let i=0;i<77;i++)f.insert('a',String(i),i);f.audit('a');let searches=0,api=0;
  f.env.SEARCH_RATE_LIMITER={limit:async()=>({success:++searches<=1})};f.env.API_RATE_LIMITER={limit:async()=>({success:++api<=3})};
- const first=await search(f),second=await search(f,{cursor:first.data.next_cursor}),third=await search(f,{cursor:second.data.next_cursor});assert.equal(third.status,200);assert.equal(searches,1);
+ const first=await search(f),second=await search(f,{cursor:first.data.next_cursor});assert.equal(second.status,200);assert.equal(second.data.next_cursor,null);assert.equal(second.data.limited,true);assert.equal(second.data.category_counts.all,77);assert.equal(searches,1);
+ assert.equal((await search(f,{cursor:first.data.next_cursor})).status,200);
  assert.equal((await search(f,{cursor:first.data.next_cursor})).status,429);assert.equal(api,4);f.db.close();
 });
 test('all 44 issuers participate, including the final issuer; explicit limit never increases 30 rows',async()=>{
@@ -39,4 +40,12 @@ test('all 44 issuers participate, including the final issuer; explicit limit nev
  for(const [i,id] of ids.entries()){f.insert(id,String(i),i);f.audit(id);}
  const a=await search(f,{issuers:ids.join(','),limit:'9000'});assert.equal(a.data.count,30);
  const b=await search(f,{issuers:ids.join(','),cursor:a.data.next_cursor});assert.equal(b.data.count,14);assert.ok(b.data.results.some(r=>r.issuer_id==='company43'));f.db.close();
+});
+
+test('even a valid signed old cursor cannot fetch a third page',async()=>{
+ const f=fixture();for(let i=0;i<77;i++)f.insert('a',String(i),i);const first=await search(f),second=await search(f,{cursor:first.data.next_cursor});
+ const {issueCursor}=await import('../cloudflare/worker/src/search-cursor.js');
+ const token=JSON.parse(Buffer.from(first.data.next_cursor.split('.')[0],'base64url'));
+ const forged=await issueCursor('fixture-only-snapshot-signing-key-32-characters',{...token,n:60});
+ assert.equal((await search(f,{cursor:forged})).status,400);assert.equal(second.data.next_cursor,null);f.db.close();
 });
