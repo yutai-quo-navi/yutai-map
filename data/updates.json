@@ -1,8 +1,34 @@
 {
   "version": 1,
-  "generated_at": "2026-10-16T21:01:07+09:00",
-  "event_count": 58,
+  "generated_at": "2026-10-17T09:20:36+09:00",
+  "event_count": 60,
   "events": [
+    {
+      "event_id": "fb17bdaf96d7e113ebd419288130df7575460151",
+      "at": "2026-10-17T09:20:36+09:00",
+      "run_date": "2026-10-17",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6632",
+      "name": "はま寿司 ひたちなか昭和通り店",
+      "address": "茨城県ひたちなか市中根892-1",
+      "brand_name": "はま寿司"
+    },
+    {
+      "event_id": "7abb166c244fcfe5d28895a373521864635e705c",
+      "at": "2026-10-17T09:20:36+09:00",
+      "run_date": "2026-10-17",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6642",
+      "name": "オリーブの丘 札幌平岡店",
+      "address": "北海道札幌市清田区平岡8条1-1-10",
+      "brand_name": "オリーブの丘"
+    },
     {
       "event_id": "d167e6079f9e5ac233b50cf9d1a8cda25d885358",
       "at": "2026-10-16T21:01:07+09:00",

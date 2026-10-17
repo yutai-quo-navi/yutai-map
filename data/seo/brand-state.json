@@ -1133,7 +1133,7 @@
       ]
     },
     "zensho": {
-      "revision": 2,
+      "revision": 4,
       "brands": [
         {
           "brand_name": "かつ庵",
@@ -1149,7 +1149,7 @@
         },
         {
           "brand_name": "はま寿司",
-          "store_count": 686
+          "store_count": 687
         },
         {
           "brand_name": "エルトリート",
@@ -1157,7 +1157,7 @@
         },
         {
           "brand_name": "オリーブの丘",
-          "store_count": 67
+          "store_count": 68
         },
         {
           "brand_name": "ココス",
