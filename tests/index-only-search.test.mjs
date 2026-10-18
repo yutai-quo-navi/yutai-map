@@ -8,5 +8,10 @@ test('all public issuers use one index request without browser POI/catalog fallb
  for(const old of ['queryOpenPOI','queryOfficialStoreDb','matchOfficialStore','function classify(','poiSearchGroups','https://api.openpoiapi.com/v1/search']) assert.ok(!source.includes(old),old);
  assert.ok(source.includes('https://api.openpoiapi.com/v1/suggest'));
  const manifest=JSON.parse(fs.readFileSync(new URL('../data/issuers/index.json',import.meta.url)));
- assert.equal(manifest.issuers.filter(x=>x.status==='public').length,44);
+ const ids=manifest.issuers.filter(x=>x.status==='public').map(x=>x.id);
+ assert.ok(ids.includes('jgroup'),'New official J-Group issuer must be indexed');
+ assert.ok(!ids.includes('sfp')&&!ids.includes('dd'),'Excluded issuers cannot become public');
+ assert.equal(new Set(ids).size,ids.length,'Duplicate issuer IDs');
+ const counts=JSON.parse(fs.readFileSync(new URL('../data/issuers/store-counts.json',import.meta.url)));
+ assert.deepEqual([...ids].sort(),Object.keys(counts).sort(),'Every published issuer needs an independent location count');
 });
