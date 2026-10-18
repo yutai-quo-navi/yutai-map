@@ -309,6 +309,13 @@
       "name": "安楽亭",
       "status": "public",
       "config": "./data/issuers/anrakutei/config.json"
+    },
+    {
+      "id": "jgroup",
+      "code": "3063",
+      "name": "ジェイグループホールディングス",
+      "status": "development",
+      "config": "./data/issuers/jgroup/config.json"
     }
   ]
 }
