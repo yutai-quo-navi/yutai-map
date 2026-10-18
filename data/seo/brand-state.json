@@ -4237,6 +4237,31 @@
           "store_count": 3
         }
       ]
+    },
+    "pepper": {
+      "revision": 174,
+      "brands": [
+        {
+          "brand_name": "いきなり！ステーキ",
+          "store_count": 166
+        },
+        {
+          "brand_name": "かいり",
+          "store_count": 4
+        },
+        {
+          "brand_name": "かつき亭",
+          "store_count": 1
+        },
+        {
+          "brand_name": "すきはな",
+          "store_count": 1
+        },
+        {
+          "brand_name": "炭焼ステーキくに",
+          "store_count": 2
+        }
+      ]
     }
   }
 }

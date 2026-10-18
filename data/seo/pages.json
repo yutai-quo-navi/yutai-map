@@ -3076,6 +3076,26 @@
       "hash": "91a750a762af38de069f3bfd432643c85dc96ed6c44435f3dc88d55d49323727",
       "lastmod": "2026-10-13"
     },
+    "guides/dining/brands/pepper/00dadb85db94ea1c/index.html": {
+      "hash": "b8b1568b04a57f4c854689bf26e5a6b921abc42d569334e65e5db860d128d926",
+      "lastmod": "2026-10-18"
+    },
+    "guides/dining/brands/pepper/1236847f20fea15f/index.html": {
+      "hash": "1a8615991a2f1931374ca26a3b14b002ccf8208c53a5b0343bbe545cbef088b1",
+      "lastmod": "2026-10-18"
+    },
+    "guides/dining/brands/pepper/8e57de05b36ce287/index.html": {
+      "hash": "1c717d78df38277e99ab9d716811f167a2eb64babc0a633c16269a5c75eaf734",
+      "lastmod": "2026-10-18"
+    },
+    "guides/dining/brands/pepper/8f68b3c08bcfcfbc/index.html": {
+      "hash": "40e5cbbe4bb12f37b5a504e60cb4fe4596883a740ab777b37b1d0d5e6d864fe7",
+      "lastmod": "2026-10-18"
+    },
+    "guides/dining/brands/pepper/c2cf3b0302aec1ca/index.html": {
+      "hash": "b430e33ae8f1340da2168fe432f9951e9eb1d165351492be975163ec1aec15ca",
+      "lastmod": "2026-10-18"
+    },
     "guides/dining/brands/ringerhut/28c70ea11318bc2a/index.html": {
       "hash": "9fec9ccf82a9c3a8d03bedb348163e3b9f1ad0c3f298b4458e26cdfa4c1384b9",
       "lastmod": "2026-10-11"
@@ -4013,7 +4033,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "181e15826c223be73826c643a3c04d4efd12af2ca3e04b484b5bb1f6f4297d84",
+      "hash": "6044a27805479af53e63f1b0e7e4e094a2690833b40bf2bc32bd8e61e7877116",
       "lastmod": "2026-10-18"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4143,6 +4163,10 @@
     "guides/dining/issuers/ohsho/index.html": {
       "hash": "12582fb13044b7fdb234249367ad98c5012925db32a363c25c3e446805bb0149",
       "lastmod": "2026-10-13"
+    },
+    "guides/dining/issuers/pepper/index.html": {
+      "hash": "d267c769c575dfa87e6d709a030134c5dc3592370c87c1e855ca4f71bed8b120",
+      "lastmod": "2026-10-18"
     },
     "guides/dining/issuers/ringerhut/index.html": {
       "hash": "1ac4939718cada0c5c0938b36260e230b2d56dc0bad206e65a3d6228859bbfb8",
