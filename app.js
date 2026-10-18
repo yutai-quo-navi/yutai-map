@@ -547,7 +547,7 @@ const issuerDisplayNames = {
   zensho:'ゼンショー', toridoll:'トリドール', yoshinoya:'吉野家HD',
   monogatari:'物語コーポ', matsuya:'松屋フーズ', royal:'ロイヤルHD', mcd:'マクドナルド',
   komeda:'コメダHD', dnh:'ドトール・日レス', mos:'モスフード', foodlife:'F&LC',
-  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル', yossix:'ヨシックスHD'
+  yamaokaya:'山岡家', chikaranomoto:'力の源HD', ohsho:'王将フード', joyfull:'ジョイフル', yossix:'ヨシックスHD', jgroup:'Jグループ'
 };
 function shortIssuerName(company){
   return issuerDisplayNames[company.id] || company.name;
@@ -1009,6 +1009,9 @@ async function queryIndexedStoreApi(targets, pos, radius, signal, cursor = null)
       category: s.category || 'restaurant',
       officialStore,
       benefitDiscountPercent: saintmarcBenefit?.discountPercent || null,
+      benefitNote: company.id==='jgroup' && s.store_id==='official:jgroup:3432'
+        ? '名古屋めし食堂 丸八 伏見別邸は平日17時以降のみ利用可。土日祝・ランチ・年末年始・GW・お盆・9月連休の指定期間は利用不可。'
+        : '',
       officialVerified: true,
       distance
     };
@@ -1129,6 +1132,7 @@ function renderResults(items, radius, appendFrom = 0){
         <span class="badge beta">${x.officialVerified ? '公式DB確認' : 'β 要公式確認'}</span>
       </div>
       ${(x.company.locationMode==='openpoi' || x.company.showStoreNote) && x.company.note ? `<p class="store-address">${esc(x.company.note)}</p>` : ''}
+      ${x.benefitNote ? `<p class="store-address"><strong>優待利用条件：</strong>${esc(x.benefitNote)} <a href="https://www.jgroup.jp/news/20260916-3445/" target="_blank" rel="noopener">公式告知</a></p>` : ''}
       <div class="card-actions">
         <a class="issuer-map-button" href="${routeUrl}" target="_blank" rel="noopener">経路を見る</a>
         <a href="${esc(officialUrl)}" target="_blank" rel="noopener">優待公式</a>
