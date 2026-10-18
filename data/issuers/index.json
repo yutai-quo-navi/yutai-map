@@ -316,6 +316,13 @@
       "name": "ジェイグループホールディングス",
       "status": "public",
       "config": "./data/issuers/jgroup/config.json"
+    },
+    {
+      "id": "pepper",
+      "code": "3053",
+      "name": "ペッパーフードサービス",
+      "status": "public",
+      "config": "./data/issuers/pepper/config.json"
     }
   ]
 }
