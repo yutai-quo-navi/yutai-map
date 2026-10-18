@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16",
+  "updated": "2026-10-18",
   "issuers": [
     {
       "id": "skylark",
@@ -309,6 +309,13 @@
       "name": "安楽亭",
       "status": "public",
       "config": "./data/issuers/anrakutei/config.json"
+    },
+    {
+      "id": "jgroup",
+      "code": "3063",
+      "name": "ジェイグループホールディングス",
+      "status": "public",
+      "config": "./data/issuers/jgroup/config.json"
     }
   ]
 }
