@@ -1,0 +1,38 @@
+{
+  "id": "pepper",
+  "code": "3053",
+  "name": "ペッパーフードサービス",
+  "fullName": "ペッパーフードサービス",
+  "status": "public",
+  "sourceUrl": "https://www.pepper-fs.co.jp/ir/treatment.php",
+  "storeSearchUrl": "https://www.pepper-fs.co.jp/_img/ir/stores/tp202609.pdf",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-18",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "いきなり！ステーキ",
+    "炭焼ステーキくに",
+    "かつき亭",
+    "すきはな",
+    "かいり"
+  ],
+  "note": "公式の優待対象一覧と現在の店舗情報を照合した国内店舗を掲載。ペッパーランチは対象外です。",
+  "showStoreNote": true,
+  "aliases": [
+    "いきなり！ステーキ",
+    "炭焼ステーキくに",
+    "かつき亭",
+    "すきはな",
+    "かいり"
+  ],
+  "searchNames": [
+    "ペッパーフード",
+    "いきなりステーキ",
+    "いきなり！ステーキ",
+    "炭焼ステーキくに",
+    "かつき亭",
+    "すきはな",
+    "かいり"
+  ]
+}
