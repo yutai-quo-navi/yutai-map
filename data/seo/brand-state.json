@@ -3992,6 +3992,251 @@
           "store_count": 2
         }
       ]
+    },
+    "jgroup": {
+      "revision": 100,
+      "brands": [
+        {
+          "brand_name": "BACCANO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Botanical Garden SARUCAFE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Egg Baby Café",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GINZA我歩",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Gappo",
+          "store_count": 2
+        },
+        {
+          "brand_name": "MOUNTAIN COFFEE BEANS SHOP",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Meat ＆",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Mou Mou Cafe",
+          "store_count": 1
+        },
+        {
+          "brand_name": "PRANA STYLE",
+          "store_count": 1
+        },
+        {
+          "brand_name": "REGOLITH",
+          "store_count": 1
+        },
+        {
+          "brand_name": "THE ALL DAY COFFEE CAZAN",
+          "store_count": 1
+        },
+        {
+          "brand_name": "THE ONE AND ONLY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "The Oyster Bar",
+          "store_count": 1
+        },
+        {
+          "brand_name": "The Oyster House",
+          "store_count": 1
+        },
+        {
+          "brand_name": "あしびな～",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うな匠",
+          "store_count": 1
+        },
+        {
+          "brand_name": "えどわん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "お台所 六六堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "きじょうもん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "きばくもん",
+          "store_count": 4
+        },
+        {
+          "brand_name": "すしつま",
+          "store_count": 1
+        },
+        {
+          "brand_name": "たまか食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ためつ食堂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "たんと",
+          "store_count": 1
+        },
+        {
+          "brand_name": "つづみや",
+          "store_count": 2
+        },
+        {
+          "brand_name": "てしごと家",
+          "store_count": 4
+        },
+        {
+          "brand_name": "でーもん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ほっこり",
+          "store_count": 5
+        },
+        {
+          "brand_name": "スタミナ焼肉 ニューサンヤ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ブッチャーブラザーズ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "マリナラ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "三枡三蔵",
+          "store_count": 1
+        },
+        {
+          "brand_name": "二六丸",
+          "store_count": 1
+        },
+        {
+          "brand_name": "十八代 光蔵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "博多かわ屋",
+          "store_count": 7
+        },
+        {
+          "brand_name": "吉珍楼",
+          "store_count": 1
+        },
+        {
+          "brand_name": "名古屋めし食堂 丸八",
+          "store_count": 3
+        },
+        {
+          "brand_name": "吟醸マグロ",
+          "store_count": 6
+        },
+        {
+          "brand_name": "大津SA",
+          "store_count": 1
+        },
+        {
+          "brand_name": "大阪王将",
+          "store_count": 2
+        },
+        {
+          "brand_name": "寿司と串とわたくし",
+          "store_count": 2
+        },
+        {
+          "brand_name": "寿司と串と樽酒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "寿司と天ぷらとわたくし",
+          "store_count": 1
+        },
+        {
+          "brand_name": "寿司と天ぷらと樽酒",
+          "store_count": 1
+        },
+        {
+          "brand_name": "昔の矢場とん",
+          "store_count": 2
+        },
+        {
+          "brand_name": "東京おでんラブストーリー 錦3丁目",
+          "store_count": 1
+        },
+        {
+          "brand_name": "東京ブッチャーズ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "東京ブッチャーズ with OKACHI Beer Lab",
+          "store_count": 1
+        },
+        {
+          "brand_name": "森のブッチャーズ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "清水パーキングエリア",
+          "store_count": 1
+        },
+        {
+          "brand_name": "渋谷ちゃんぷる～",
+          "store_count": 1
+        },
+        {
+          "brand_name": "燦家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "猿Cafe",
+          "store_count": 1
+        },
+        {
+          "brand_name": "芋蔵",
+          "store_count": 10
+        },
+        {
+          "brand_name": "芋蔵GIRI",
+          "store_count": 1
+        },
+        {
+          "brand_name": "跳魚",
+          "store_count": 1
+        },
+        {
+          "brand_name": "雑草家",
+          "store_count": 1
+        },
+        {
+          "brand_name": "頂",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鶏が好きだと酒びたい",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ＣＡＺＡＮ珈琲店",
+          "store_count": 3
+        }
+      ]
     }
   }
 }
