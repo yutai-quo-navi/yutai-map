@@ -320,7 +320,7 @@ async function init(){
     if (section === 'dining' && lastResults.length) renderFilteredResults(Number(els.radius.value));
   }});
   try {
-    const manifest = await fetch('./data/issuers/index.json').then(r => r.json());
+    const manifest = await fetch('./data/issuers/index.json', {cache:'no-store'}).then(r => r.json());
     const dev = new URLSearchParams(location.search).get('dev');
     const visibleIssuers = manifest.issuers.filter(x =>
       x.status === 'public' || (x.status === 'development' && (dev === x.id || dev === 'all'))
