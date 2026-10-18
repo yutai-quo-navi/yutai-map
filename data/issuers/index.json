@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-16",
+  "updated": "2026-10-18",
   "issuers": [
     {
       "id": "skylark",
@@ -314,7 +314,7 @@
       "id": "jgroup",
       "code": "3063",
       "name": "ジェイグループホールディングス",
-      "status": "development",
+      "status": "public",
       "config": "./data/issuers/jgroup/config.json"
     }
   ]
