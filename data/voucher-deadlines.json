@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-15",
-  "source": "期限DB（Google Sheets）からの確認済みデータ",
+  "updated": "2026-10-23",
+  "source": "期限DB（Google Sheets）及び各社公式情報からの確認済みデータ",
   "entries": [
     {
       "id": "3197-2026-09-seed",
@@ -161,6 +161,28 @@
       "date": "2027-02-28",
       "status": "confirmed",
       "issue": "ユーザー確認済み"
+    },
+    {
+      "id": "2882-2026-official",
+      "issuer": "eatand",
+      "code": "2882",
+      "name": "イートアンドホールディングス",
+      "benefit": "イートアンドグループお食事券",
+      "date": "2027-02-28",
+      "status": "confirmed",
+      "issue": "2026年発行分",
+      "sourceUrl": "https://www.eat-and.jp/ir/stock-bond/benefit.html"
+    },
+    {
+      "id": "3068-2026-official",
+      "issuer": "wdi",
+      "code": "3068",
+      "name": "WDI",
+      "benefit": "株主優待券（電子チケット）",
+      "date": "2027-06-30",
+      "status": "confirmed",
+      "issue": "2026年発行分",
+      "sourceUrl": "https://www.wdi.co.jp/ir/yuutai.html"
     }
   ]
 }

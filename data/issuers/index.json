@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-18",
+  "updated": "2026-10-23",
   "issuers": [
     {
       "id": "skylark",
@@ -323,6 +323,20 @@
       "name": "ペッパーフードサービス",
       "status": "public",
       "config": "./data/issuers/pepper/config.json"
+    },
+    {
+      "id": "eatand",
+      "code": "2882",
+      "name": "イートアンドホールディングス",
+      "status": "public",
+      "config": "./data/issuers/eatand/config.json"
+    },
+    {
+      "id": "wdi",
+      "code": "3068",
+      "name": "WDI",
+      "status": "public",
+      "config": "./data/issuers/wdi/config.json"
     }
   ]
 }
