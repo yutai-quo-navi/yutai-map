@@ -4262,6 +4262,120 @@
           "store_count": 2
         }
       ]
+    },
+    "eatand": {
+      "revision": 371,
+      "brands": [
+        {
+          "brand_name": "Coccinelle",
+          "store_count": 3
+        },
+        {
+          "brand_name": "R Baker",
+          "store_count": 26
+        },
+        {
+          "brand_name": "R Baker mini",
+          "store_count": 1
+        },
+        {
+          "brand_name": "SAPPORO餃子製造所",
+          "store_count": 4
+        },
+        {
+          "brand_name": "THE GROUNDS BAKER",
+          "store_count": 1
+        },
+        {
+          "brand_name": "大阪王将",
+          "store_count": 315
+        },
+        {
+          "brand_name": "太陽のトマト麺",
+          "store_count": 10
+        },
+        {
+          "brand_name": "横濱一品香",
+          "store_count": 11
+        }
+      ]
+    },
+    "wdi": {
+      "revision": 144,
+      "brands": [
+        {
+          "brand_name": "うどん出汁酒場うつけ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ウルフギャング・ステーキハウス",
+          "store_count": 8
+        },
+        {
+          "brand_name": "エッグスンシングス",
+          "store_count": 5
+        },
+        {
+          "brand_name": "カプリチョーザ",
+          "store_count": 94
+        },
+        {
+          "brand_name": "カリフォルニア・ピザ・キッチン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "サラベス",
+          "store_count": 5
+        },
+        {
+          "brand_name": "サービスエリア",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ストーンバーグ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "センチュリーコート",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ティム・ホー・ワン",
+          "store_count": 4
+        },
+        {
+          "brand_name": "トニーローマ",
+          "store_count": 5
+        },
+        {
+          "brand_name": "ハードロックカフェ",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ババ・ガンプ・シュリンプ",
+          "store_count": 3
+        },
+        {
+          "brand_name": "フージンツリー",
+          "store_count": 4
+        },
+        {
+          "brand_name": "ブリーズ・オブ・トウキョウ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ブヴェット",
+          "store_count": 1
+        },
+        {
+          "brand_name": "プリミ・バチ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "巨牛荘",
+          "store_count": 2
+        }
+      ]
     }
   }
 }
