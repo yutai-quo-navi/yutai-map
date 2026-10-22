@@ -1,0 +1,46 @@
+{
+  "id": "eatand",
+  "code": "2882",
+  "name": "イートアンドホールディングス",
+  "fullName": "イートアンドホールディングス",
+  "status": "public",
+  "sourceUrl": "https://www.eat-and.jp/ir/stock-bond/benefit.html",
+  "storeSearchUrl": "https://www.osaka-ohsho.com/store/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-23",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "Coccinelle",
+    "R Baker",
+    "R Baker mini",
+    "SAPPORO餃子製造所",
+    "THE GROUNDS BAKER",
+    "大阪王将",
+    "太陽のトマト麺",
+    "横濱一品香"
+  ],
+  "aliases": [
+    "Coccinelle",
+    "R Baker",
+    "R Baker mini",
+    "SAPPORO餃子製造所",
+    "THE GROUNDS BAKER",
+    "大阪王将",
+    "太陽のトマト麺",
+    "横濱一品香"
+  ],
+  "searchNames": [
+    "イートアンドホールディングス",
+    "Coccinelle",
+    "R Baker",
+    "R Baker mini",
+    "SAPPORO餃子製造所",
+    "THE GROUNDS BAKER",
+    "大阪王将",
+    "太陽のトマト麺",
+    "横濱一品香"
+  ],
+  "note": "公式の優待対象一覧と現在の店舗情報・位置を照合できた店舗を掲載。未確認店舗は掲載対象外です。通販専用クーポンは店頭では利用できません。",
+  "showStoreNote": true
+}

@@ -4,6 +4,8 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  eatand: {name:'大阪王将',sub:'イートアンド',color:'#c02025',symbol:'店',asset:'./assets/logo-eatand-osaka.webp'},
+  wdi: {name:'カプリチョーザ',sub:'WDI',color:'#a82025',symbol:'店',asset:'./assets/logo-wdi-capri.webp'},
   pepper: {name:'いきなり！ステーキ',sub:'ペッパーフードサービス',color:'#c21a1f',symbol:'店',asset:'./assets/logo-pepper-ikinari.webp'},
   anrakutei: {name:'安楽亭',sub:'安楽亭',color:'#df001a',symbol:'店',asset:'./assets/logo-anrakutei.svg'},
   tenpos: {name:'ステーキのあさくま',sub:'あさくま',color:'#8b0000',symbol:'店',asset:'./assets/logo-tenpos-asakuma.png'},
