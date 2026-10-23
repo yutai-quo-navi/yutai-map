@@ -337,6 +337,13 @@
       "name": "WDI",
       "status": "public",
       "config": "./data/issuers/wdi/config.json"
+    },
+    {
+      "id": "hachiban",
+      "code": "9950",
+      "name": "ハチバン",
+      "status": "public",
+      "config": "./data/issuers/hachiban/config.json"
     }
   ]
 }
