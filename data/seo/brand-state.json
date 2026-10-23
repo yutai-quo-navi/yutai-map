@@ -3373,7 +3373,7 @@
       ]
     },
     "genki": {
-      "revision": 202,
+      "revision": 203,
       "brands": [
         {
           "brand_name": "GENKI SUSHI×魚べい",
@@ -3385,7 +3385,7 @@
         },
         {
           "brand_name": "うま勝",
-          "store_count": 2
+          "store_count": 3
         },
         {
           "brand_name": "てっか丸",
@@ -4374,6 +4374,43 @@
         {
           "brand_name": "巨牛荘",
           "store_count": 2
+        }
+      ]
+    },
+    "hachiban": {
+      "revision": 125,
+      "brands": [
+        {
+          "brand_name": "八兆屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "八兆屋駅の蔵",
+          "store_count": 3
+        },
+        {
+          "brand_name": "八兆庵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "八千屋",
+          "store_count": 2
+        },
+        {
+          "brand_name": "市の蔵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "金澤醤油豚骨８番らーめん",
+          "store_count": 2
+        },
+        {
+          "brand_name": "長八",
+          "store_count": 1
+        },
+        {
+          "brand_name": "８番らーめん",
+          "store_count": 112
         }
       ]
     }

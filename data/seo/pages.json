@@ -2229,8 +2229,8 @@
       "lastmod": "2026-10-14"
     },
     "guides/dining/brands/genki/fd7f2ba55e50153d/index.html": {
-      "hash": "51f99281b02e3e447d5bbcba4f71fa2d9ba09203d9baaf7eadf3028423a14156",
-      "lastmod": "2026-10-15"
+      "hash": "303742aad3217dddcfd29ac9c62030c5cf990dc7da33f5b2c0f809df66215d4d",
+      "lastmod": "2026-10-23"
     },
     "guides/dining/brands/gift/225442c71c4aafbf/index.html": {
       "hash": "f8b24094e8bae74d0dc75fa4fcf23f8609564cee4ffac520c34928a7d72f6edf",
@@ -2259,6 +2259,38 @@
     "guides/dining/brands/gift/974825d6b6a0e8f6/index.html": {
       "hash": "81f2e9b222ac3d7e382bbb68efe728d2110f1cc1c9b0af1a6f32356b9a156d3e",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/brands/hachiban/1163bacde1828d3c/index.html": {
+      "hash": "b165e13bd3744d75364ad1c6db3d4f371904edf2c2fa94b4b1a0224b1156a3c3",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/2495c78a7df60495/index.html": {
+      "hash": "dccdfbb78eb39a6e260daff928d12b77cd409637510da06b54c669ab000cf346",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/3b1bb4d5aa5e4248/index.html": {
+      "hash": "4de05632db3315f75b9cac5b3032b5e01bd3d84c81b09f5afe33722eb4c409e4",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/40517f605846f1f0/index.html": {
+      "hash": "2a8a49830567cc939e0f269a6270a2c1f97221beb0e902ff64cbfdb2401117fe",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/4c52754237937647/index.html": {
+      "hash": "78b1da8d4e336d09a26bcaacb3c87d536fe028b2f75a40517609699f834c7eb7",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/a88529cfa5da432c/index.html": {
+      "hash": "55a1cb21c54513d3165b9c623539b93739c1e3951fff2a80b4df2be073b387ea",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/c6666dcdf24f4ead/index.html": {
+      "hash": "fe3aaf9ce523b179db56a41eec4a10749d98281c186865ed83486188b1575f33",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/hachiban/c95d2f2d24b34e4a/index.html": {
+      "hash": "06470b5a6a63859cc4d4a6a90c93d5c5c4a282884930eea7244ac1e8b64425b1",
+      "lastmod": "2026-10-23"
     },
     "guides/dining/brands/hiday/017f9d103766f83e/index.html": {
       "hash": "42d30fa9da9ef64aadd6c09643dc8b6082c69f6af6b696c846196d3213400ce8",
@@ -4137,7 +4169,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "3af74335c18db5886c874f2f342aa69a77369cfbf24205d97b21339ea5a2add1",
+      "hash": "b8153fa3220f646c9ce0303c248a163aefcdf28b9c7e318ff91dc82310a1a63b",
       "lastmod": "2026-10-23"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4201,12 +4233,16 @@
       "lastmod": "2026-10-15"
     },
     "guides/dining/issuers/genki/index.html": {
-      "hash": "6aca7d314cc4e9dd0d078aacdca832587d381cce897b4d118fd59091bd0c47d1",
-      "lastmod": "2026-10-17"
+      "hash": "cb1e3fc35319174129636554d16bd63818676832cd5251be1cbb9806c42276ee",
+      "lastmod": "2026-10-23"
     },
     "guides/dining/issuers/gift/index.html": {
       "hash": "b1ad1a70518c99033c97885d5a473d91d44af8b08a9a25326d5ce0aa6dae8118",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/hachiban/index.html": {
+      "hash": "b62f7b9e615bbdf6328f196ec01f34b167bb7051f80e8d564e436da213e762fd",
+      "lastmod": "2026-10-23"
     },
     "guides/dining/issuers/hiday/index.html": {
       "hash": "f55b8b46fc900645bf117190c16d3d51f2549997dd210e6b44281deb4d366477",
