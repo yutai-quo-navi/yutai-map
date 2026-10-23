@@ -1,0 +1,49 @@
+{
+  "id": "hachiban",
+  "code": "9950",
+  "name": "ハチバン",
+  "fullName": "株式会社ハチバン",
+  "status": "public",
+  "sourceUrl": "https://www.hachiban.co.jp/ir/dividend.html",
+  "storeSearchUrl": "https://www.hachiban.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-23",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "８番らーめん",
+    "金澤醤油豚骨８番らーめん",
+    "八兆屋",
+    "八兆屋駅の蔵",
+    "長八",
+    "市の蔵",
+    "八兆庵",
+    "八千屋"
+  ],
+  "aliases": [
+    "ハチバン",
+    "８番らーめん",
+    "8番らーめん",
+    "八番らーめん",
+    "金澤醤油豚骨８番らーめん",
+    "八兆屋",
+    "八兆屋駅の蔵",
+    "長八",
+    "市の蔵",
+    "八兆庵",
+    "八千屋"
+  ],
+  "searchNames": [
+    "ハチバン",
+    "8番らーめん",
+    "８番らーめん",
+    "八兆屋",
+    "八兆屋駅の蔵",
+    "長八",
+    "市の蔵",
+    "八兆庵",
+    "八千屋"
+  ],
+  "note": "ハチバン（9950）の公式株主優待対象店舗一覧と現行の公式店舗情報を照合して掲載。イオンタウン湖南店は位置確認中のため非掲載。優待対象一覧にない姫路駅前店も非掲載です。",
+  "showStoreNote": true
+}
