@@ -1,0 +1,52 @@
+{
+  "id": "ikka",
+  "code": "7127",
+  "name": "一家ホールディングス",
+  "fullName": "株式会社一家ホールディングス",
+  "status": "public",
+  "sourceUrl": "https://ikka-holdings.co.jp/ir/stock/benefit/",
+  "storeSearchUrl": "https://ikka-holdings.co.jp/shopsearch/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-23",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "Terrace Dining TANGO",
+    "こだわりもん一家",
+    "にのや",
+    "大衆ジンギスカン酒場ラムちゃん",
+    "屋台屋 博多劇場",
+    "韓国屋台ハンサム"
+  ],
+  "aliases": [
+    "一家HD",
+    "一家ホールディングス",
+    "一家",
+    "博多劇場",
+    "ラムちゃん",
+    "ハンサム",
+    "TANGO",
+    "Terrace Dining TANGO",
+    "こだわりもん一家",
+    "にのや",
+    "大衆ジンギスカン酒場ラムちゃん",
+    "屋台屋 博多劇場",
+    "韓国屋台ハンサム"
+  ],
+  "searchNames": [
+    "一家HD",
+    "一家ホールディングス",
+    "博多劇場",
+    "ラムちゃん",
+    "ハンサム",
+    "TANGO",
+    "Terrace Dining TANGO",
+    "こだわりもん一家",
+    "にのや",
+    "大衆ジンギスカン酒場ラムちゃん",
+    "屋台屋 博多劇場",
+    "韓国屋台ハンサム"
+  ],
+  "note": "【12月は全店舗で優待利用不可】一家HD（7127）の公式「株主優待利用可能店舗」に絞って掲載。電子チケットは1円単位、紙の券は500円単位でお釣りは出ません。他のサービス券・アプリ特典との併用不可。位置未確認の一部店舗は非掲載です。",
+  "showStoreNote": true
+}
