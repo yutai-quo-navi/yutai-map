@@ -1,6 +1,6 @@
 import {placeCandidates} from './place-candidates.js?v=20261016-origin';
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261017-inclusive-countdown';
-import {createBrandMark} from './representative-marks.js?v=20261023-ikka';
+import {createBrandMark} from './representative-marks.js?v=20261024-sakai';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261017-inclusive-countdown';
@@ -546,6 +546,7 @@ const issuerDisplayNames = {
   daisyo:'大庄',
   kichiri:'きちりHD',
   ikka:'一家HD',
+  sakai:'焼肉坂井HD',
   eatand:'イートアンド',
   wdi:'WDI',
   pepper:'ペッパーフード',
