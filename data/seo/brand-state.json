@@ -4640,6 +4640,211 @@
           "store_count": 3
         }
       ]
+    },
+    "sakai": {
+      "revision": 436,
+      "brands": [
+        {
+          "brand_name": "123ファクトリー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "あげてんや",
+          "store_count": 5
+        },
+        {
+          "brand_name": "あじこう",
+          "store_count": 1
+        },
+        {
+          "brand_name": "うさぎの杜ベーカリー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "えん屋",
+          "store_count": 6
+        },
+        {
+          "brand_name": "おむらいす亭",
+          "store_count": 29
+        },
+        {
+          "brand_name": "ちゃんこ江戸沢",
+          "store_count": 3
+        },
+        {
+          "brand_name": "てんてけてん",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とりあえず吾平",
+          "store_count": 19
+        },
+        {
+          "brand_name": "ぱたぱた家",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ふらりむらさき",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ふらんす亭",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ゆるりと菜村さ来",
+          "store_count": 9
+        },
+        {
+          "brand_name": "アモール･デ･ガウディ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "アンニョン",
+          "store_count": 12
+        },
+        {
+          "brand_name": "カルビ大陸",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ジャンボおしどり寿司",
+          "store_count": 5
+        },
+        {
+          "brand_name": "ステーキG.C",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ステーキMAX",
+          "store_count": 6
+        },
+        {
+          "brand_name": "ステーキハンバーグ＆サラダバー けん",
+          "store_count": 3
+        },
+        {
+          "brand_name": "バーチョ・ディ・ジュリエッタ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ピザテン.フォー",
+          "store_count": 78
+        },
+        {
+          "brand_name": "ブコ・ディ・ムーロ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "ヤマダモンゴル",
+          "store_count": 4
+        },
+        {
+          "brand_name": "七福",
+          "store_count": 4
+        },
+        {
+          "brand_name": "七輪坂井",
+          "store_count": 1
+        },
+        {
+          "brand_name": "中国料理 敦煌",
+          "store_count": 5
+        },
+        {
+          "brand_name": "博多ラーメンセンター 源龍",
+          "store_count": 1
+        },
+        {
+          "brand_name": "和食・鍋 しゃぶしゃぶ清水",
+          "store_count": 1
+        },
+        {
+          "brand_name": "囲炉家村さ来",
+          "store_count": 1
+        },
+        {
+          "brand_name": "地魚屋",
+          "store_count": 3
+        },
+        {
+          "brand_name": "塩がま屋",
+          "store_count": 2
+        },
+        {
+          "brand_name": "壁の穴",
+          "store_count": 11
+        },
+        {
+          "brand_name": "寿司居酒屋 太郎丸",
+          "store_count": 2
+        },
+        {
+          "brand_name": "平禄三昧",
+          "store_count": 1
+        },
+        {
+          "brand_name": "平禄寿司",
+          "store_count": 36
+        },
+        {
+          "brand_name": "村さ来",
+          "store_count": 28
+        },
+        {
+          "brand_name": "泉門天",
+          "store_count": 1
+        },
+        {
+          "brand_name": "海鮮居酒家 いろは丸",
+          "store_count": 2
+        },
+        {
+          "brand_name": "炉ばた 七福",
+          "store_count": 1
+        },
+        {
+          "brand_name": "炭一鉄",
+          "store_count": 2
+        },
+        {
+          "brand_name": "炭火焼肉屋さかい",
+          "store_count": 33
+        },
+        {
+          "brand_name": "焼肉屋さかい",
+          "store_count": 15
+        },
+        {
+          "brand_name": "肉匠坂井",
+          "store_count": 46
+        },
+        {
+          "brand_name": "長崎ちゃんぽん十鉄",
+          "store_count": 2
+        },
+        {
+          "brand_name": "長崎ちゃんめん",
+          "store_count": 32
+        },
+        {
+          "brand_name": "餃子歩兵",
+          "store_count": 2
+        },
+        {
+          "brand_name": "饂飩の四國",
+          "store_count": 3
+        },
+        {
+          "brand_name": "魚七",
+          "store_count": 1
+        },
+        {
+          "brand_name": "鰻 髙之屋",
+          "store_count": 1
+        }
+      ]
     }
   }
 }
