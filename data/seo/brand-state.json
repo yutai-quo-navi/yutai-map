@@ -4413,6 +4413,111 @@
           "store_count": 112
         }
       ]
+    },
+    "daisyo": {
+      "revision": 192,
+      "brands": [
+        {
+          "brand_name": "MIYABI CAFE",
+          "store_count": 2
+        },
+        {
+          "brand_name": "OHトロキッチン",
+          "store_count": 5
+        },
+        {
+          "brand_name": "RUMP CAP",
+          "store_count": 3
+        },
+        {
+          "brand_name": "お好みもんじゃ",
+          "store_count": 4
+        },
+        {
+          "brand_name": "お魚総本家",
+          "store_count": 6
+        },
+        {
+          "brand_name": "とり家 ゑび寿（えびす）",
+          "store_count": 10
+        },
+        {
+          "brand_name": "やきとん 大喜利",
+          "store_count": 4
+        },
+        {
+          "brand_name": "やる気酒場",
+          "store_count": 2
+        },
+        {
+          "brand_name": "カラオケファンタジー",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ジンギスカン悟大",
+          "store_count": 3
+        },
+        {
+          "brand_name": "マ・メゾン",
+          "store_count": 1
+        },
+        {
+          "brand_name": "三四味屋",
+          "store_count": 1
+        },
+        {
+          "brand_name": "博多天神もつ鍋お多福",
+          "store_count": 6
+        },
+        {
+          "brand_name": "呑兵衛",
+          "store_count": 5
+        },
+        {
+          "brand_name": "大庄水産",
+          "store_count": 18
+        },
+        {
+          "brand_name": "定食のまる大",
+          "store_count": 7
+        },
+        {
+          "brand_name": "庄や",
+          "store_count": 54
+        },
+        {
+          "brand_name": "日本海庄や",
+          "store_count": 11
+        },
+        {
+          "brand_name": "東京酒BAL 塩梅",
+          "store_count": 3
+        },
+        {
+          "brand_name": "満天酒場",
+          "store_count": 26
+        },
+        {
+          "brand_name": "築地日本海",
+          "store_count": 13
+        },
+        {
+          "brand_name": "茶寮 結",
+          "store_count": 1
+        },
+        {
+          "brand_name": "蕎麦蔵結",
+          "store_count": 2
+        },
+        {
+          "brand_name": "銀座結中條",
+          "store_count": 1
+        },
+        {
+          "brand_name": "馬肉酒場 三村",
+          "store_count": 3
+        }
+      ]
     }
   }
 }
