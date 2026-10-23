@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "issuers": [
     {
       "id": "skylark",
@@ -365,6 +365,13 @@
       "name": "一家ホールディングス",
       "status": "public",
       "config": "./data/issuers/ikka/config.json"
+    },
+    {
+      "id": "sakai",
+      "code": "2694",
+      "name": "焼肉坂井ホールディングス",
+      "status": "public",
+      "config": "./data/issuers/sakai/config.json"
     }
   ]
 }
