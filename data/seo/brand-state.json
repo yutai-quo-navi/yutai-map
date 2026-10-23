@@ -4611,6 +4611,35 @@
           "store_count": 1
         }
       ]
+    },
+    "ikka": {
+      "revision": 84,
+      "brands": [
+        {
+          "brand_name": "Terrace Dining TANGO",
+          "store_count": 1
+        },
+        {
+          "brand_name": "こだわりもん一家",
+          "store_count": 6
+        },
+        {
+          "brand_name": "にのや",
+          "store_count": 13
+        },
+        {
+          "brand_name": "大衆ジンギスカン酒場ラムちゃん",
+          "store_count": 14
+        },
+        {
+          "brand_name": "屋台屋 博多劇場",
+          "store_count": 47
+        },
+        {
+          "brand_name": "韓国屋台ハンサム",
+          "store_count": 3
+        }
+      ]
     }
   }
 }

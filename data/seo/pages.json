@@ -2536,6 +2536,30 @@
       "hash": "ef5d052833cba6c848c614390467a5d43c2326cc261fa76b45d8de7f6ddc06cb",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/ikka/67b4a4b273de47b1/index.html": {
+      "hash": "4256204222cd2c44b597bba3caff92fb383f70e801ad02f3b2fa70cf96c4576d",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/ikka/8a2f5c5c9e1f5684/index.html": {
+      "hash": "17715d857b4c64ca04211ae0d7bc21408de7cfd7a54a165c4c088462424f1f35",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/ikka/8fb1ff161e42d63b/index.html": {
+      "hash": "253a33d7e3b0fca96802a793352998bac2512a82bb7831971e1b1b3687e096d3",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/ikka/afd0f59264f0bf3f/index.html": {
+      "hash": "af349e255100b31b5bcb3149d42e97d880da7b7a0add8375d1365f90514b4106",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/ikka/b4b437054a4d9be2/index.html": {
+      "hash": "34eea8ef70be6ad33c7b8e6f29735f2f30f9b5ebcfeb2ce63fcdd920a9b56831",
+      "lastmod": "2026-10-23"
+    },
+    "guides/dining/brands/ikka/d0a44ffaed10bb9c/index.html": {
+      "hash": "c0590bf7a4846f6841e099f14b50725fda327576fadd1ca9123e743851d5d8a8",
+      "lastmod": "2026-10-23"
+    },
     "guides/dining/brands/jgroup/01900c922bdafd14/index.html": {
       "hash": "57ea474d06577e18adcd0b3404e97bcc4099bc2f097567627094cfcff7102cab",
       "lastmod": "2026-10-18"
@@ -4357,7 +4381,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "6f4638ce3fc8c18f7751009909c1cefe06cbb2566292db9437005e64e068cf76",
+      "hash": "e1206986dec51e0f2d1e0ccc1180a11d7d9ae8e490aa535104e1a8bc650c67f8",
       "lastmod": "2026-10-23"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4451,6 +4475,10 @@
     "guides/dining/issuers/ichibanya/index.html": {
       "hash": "6c0532ded3813229cb81924de378299d2b520940857c906d281d4edea3ae1e5e",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/ikka/index.html": {
+      "hash": "12effb12e768c3dd71726a7eb81bcc96790d9f385afb815ff5b3df4c49e8b9eb",
+      "lastmod": "2026-10-23"
     },
     "guides/dining/issuers/jgroup/index.html": {
       "hash": "9236e9784eb298ad3f2efa1e85fadd2a678f5e30ad8442e3d47992a0f00b17f3",
