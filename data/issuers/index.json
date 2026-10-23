@@ -344,6 +344,13 @@
       "name": "ハチバン",
       "status": "public",
       "config": "./data/issuers/hachiban/config.json"
+    },
+    {
+      "id": "daisyo",
+      "code": "9979",
+      "name": "大庄",
+      "status": "public",
+      "config": "./data/issuers/daisyo/config.json"
     }
   ]
 }
