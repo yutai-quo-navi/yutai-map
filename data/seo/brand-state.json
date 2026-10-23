@@ -4518,6 +4518,99 @@
           "store_count": 3
         }
       ]
+    },
+    "kichiri": {
+      "revision": 112,
+      "brands": [
+        {
+          "brand_name": "3 Little Eggs",
+          "store_count": 2
+        },
+        {
+          "brand_name": "GOKU BURGER",
+          "store_count": 1
+        },
+        {
+          "brand_name": "GOOD MEAT STOCK",
+          "store_count": 1
+        },
+        {
+          "brand_name": "KICHIRI",
+          "store_count": 33
+        },
+        {
+          "brand_name": "MEAT COMPANY",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Orobianco",
+          "store_count": 1
+        },
+        {
+          "brand_name": "Plataran Resort & Restaurant",
+          "store_count": 1
+        },
+        {
+          "brand_name": "TWO SPOON",
+          "store_count": 1
+        },
+        {
+          "brand_name": "VEGEGO",
+          "store_count": 19
+        },
+        {
+          "brand_name": "ajito",
+          "store_count": 1
+        },
+        {
+          "brand_name": "igu&peace イグアンドピース",
+          "store_count": 1
+        },
+        {
+          "brand_name": "いしがまやハンバーグ",
+          "store_count": 32
+        },
+        {
+          "brand_name": "いしがま工房",
+          "store_count": 1
+        },
+        {
+          "brand_name": "ちゃぶちゃぶ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "とん久",
+          "store_count": 4
+        },
+        {
+          "brand_name": "はかた地どり福栄組合",
+          "store_count": 3
+        },
+        {
+          "brand_name": "ひな鶏伊勢ゐ",
+          "store_count": 2
+        },
+        {
+          "brand_name": "真菜や",
+          "store_count": 1
+        },
+        {
+          "brand_name": "福力",
+          "store_count": 1
+        },
+        {
+          "brand_name": "肉の満牛萬",
+          "store_count": 3
+        },
+        {
+          "brand_name": "菜々や",
+          "store_count": 1
+        },
+        {
+          "brand_name": "長野県 長寿食堂",
+          "store_count": 1
+        }
+      ]
     }
   }
 }
