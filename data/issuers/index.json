@@ -351,6 +351,13 @@
       "name": "大庄",
       "status": "public",
       "config": "./data/issuers/daisyo/config.json"
+    },
+    {
+      "id": "kichiri",
+      "code": "3082",
+      "name": "きちりホールディングス",
+      "status": "public",
+      "config": "./data/issuers/kichiri/config.json"
     }
   ]
 }
