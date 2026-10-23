@@ -358,6 +358,13 @@
       "name": "きちりホールディングス",
       "status": "public",
       "config": "./data/issuers/kichiri/config.json"
+    },
+    {
+      "id": "ikka",
+      "code": "7127",
+      "name": "一家ホールディングス",
+      "status": "public",
+      "config": "./data/issuers/ikka/config.json"
     }
   ]
 }
