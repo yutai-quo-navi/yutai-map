@@ -543,3 +543,6 @@
    This is a positioning-only adjustment; optical logo scaling is reserved for review. */
 #companyChips .representative-mark-image,
 #hotelFeatures .representative-mark-image{transform:translateY(2px)}
+
+/* The official Tsukada header wordmark is white on transparency. */
+[data-representative-brand="塚田農場"] .representative-mark-image{filter:brightness(0)}

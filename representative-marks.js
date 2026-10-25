@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  tsukada: {name:'塚田農場',sub:'エー・ピーホールディングス',color:'#d95829',symbol:'店',asset:'./assets/logo-tsukada.webp'},
   dandadan: {name:'肉汁餃子のダンダダン',sub:'NATTY SWANKYホールディングス',color:'#ba1721',symbol:'店',asset:'./assets/logo-dandadan.webp'},
   choushimaru: {name:'すし銚子丸',sub:'銚子丸',color:'#aa1420',symbol:'店',asset:'./assets/logo-choushimaru.webp'},
   kairikiya: {name:'ラーメン魁力屋',sub:'SAKIGAKE HD',color:'#d90000',symbol:'店',asset:'./assets/logo-kairikiya.webp'},

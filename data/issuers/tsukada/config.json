@@ -1,0 +1,34 @@
+{
+  "id": "tsukada",
+  "code": "3175",
+  "name": "エー・ピーホールディングス",
+  "fullName": "株式会社エー・ピーホールディングス",
+  "status": "public",
+  "sourceUrl": "https://ap-holdings.jp/ir/stock/benefit/",
+  "storeSearchUrl": "https://shop.tsukadanojo.jp/all/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "塚田農場"
+  ],
+  "aliases": [
+    "塚田農場",
+    "塚田",
+    "つかだのうじょう",
+    "APホールディングス",
+    "エー・ピーホールディングス",
+    "3175"
+  ],
+  "searchNames": [
+    "塚田農場",
+    "塚田",
+    "つかだ",
+    "ツカダ",
+    "炭火焼鳥塚田農場",
+    "北海道塚田"
+  ],
+  "note": "エー・ピーホールディングス（3175）の株主優待電子チケット。公式の優待利用可能店舗一覧と現行店舗を照合しています。塚田農場の公式検索に掲載される北海道系・炭火焼鳥・鶏屋を含みます。「塚田農場おべんとラボ」は対象外。",
+  "showStoreNote": true
+}

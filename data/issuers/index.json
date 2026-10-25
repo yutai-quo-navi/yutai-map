@@ -400,6 +400,13 @@
       "name": "NATTY SWANKYホールディングス",
       "status": "public",
       "config": "./data/issuers/dandadan/config.json"
+    },
+    {
+      "id": "tsukada",
+      "code": "3175",
+      "name": "エー・ピーホールディングス",
+      "status": "public",
+      "config": "./data/issuers/tsukada/config.json"
     }
   ]
 }
