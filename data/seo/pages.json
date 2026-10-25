@@ -4016,6 +4016,10 @@
       "hash": "cdf509c9e5988622c3969394c87a6bf4569719c897341e6c0ca7243aa6827a2b",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/tanaka/0dee44d60fdc1a5c/index.html": {
+      "hash": "f946a261489438e41e3f2daff8fbc3cb23202fb74a559e89a12e3900ee820de8",
+      "lastmod": "2026-10-25"
+    },
     "guides/dining/brands/tenallied/10af82240d156506/index.html": {
       "hash": "a97ab5416b02e2ba3ba1634e43c96f46614df9307869bc04bead48a3b2a90e3a",
       "lastmod": "2026-10-15"
@@ -4581,8 +4585,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "a79f378ec2e18daf6acc00e7f97fcc85adf8e289e5a6f3e64b2f93648c7f5c0a",
-      "lastmod": "2026-10-24"
+      "hash": "b81cc164d644a84be03b48bad401ec5496387eccbc46566749b76518fa76bfdb",
+      "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/amiyaki/index.html": {
       "hash": "a5ee74caaef2d137e334733ac67dd23ad8118e9d10983826515abe3c3874a649",
@@ -4759,6 +4763,10 @@
     "guides/dining/issuers/srs/index.html": {
       "hash": "af9138a73624a04dbd7de9cc6efa77785f81fb0f55ace8ff363868e440fdd13f",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/tanaka/index.html": {
+      "hash": "fa87136733a4b55934c678165f8d18c708a5716ee746ac288dd114e613517f13",
+      "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/tenallied/index.html": {
       "hash": "64f82c1f16860deb6c06b6eb45e07e50f905b1d7d16b1e7c2d7084c258e4b431",

@@ -4845,6 +4845,15 @@
           "store_count": 1
         }
       ]
+    },
+    "tanaka": {
+      "revision": 356,
+      "brands": [
+        {
+          "brand_name": "串カツ田中",
+          "store_count": 356
+        }
+      ]
     }
   }
 }
