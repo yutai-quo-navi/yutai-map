@@ -748,6 +748,10 @@
       "hash": "73c66d3d2a2fca7b15d982128412830418c54afe639b28891b0f5b244a7351c9",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/choushimaru/1f198ac7ac457343/index.html": {
+      "hash": "b38de2ad1033cd53a72b5180f2ba15e0e3a96fcdf08ef0860cc38d3398621c3a",
+      "lastmod": "2026-10-25"
+    },
     "guides/dining/brands/colowide/04025613e04d8b23/index.html": {
       "hash": "576265c2e2485ffaed7572c44aa25b9f5856c0a0ec246d4e93b77d2bd2f7a2de",
       "lastmod": "2026-10-11"
@@ -4589,7 +4593,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "8372d7731e5342cdd6e66aac9084d62174fea8d82301d62b22d5fe0fc64d480f",
+      "hash": "5c7e3541c8c195b33e796b3f8f1567bd619684aa739465c8db8096a603a8535a",
       "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4619,6 +4623,10 @@
     "guides/dining/issuers/chimney/index.html": {
       "hash": "a6519aa5f9b3bee526704fa4509590ae1297da150865bbcb2c62fd4371025708",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/choushimaru/index.html": {
+      "hash": "de25167d2a6e20155d4d9934767f67b59a2dc006fc9452f711c527218f21bba5",
+      "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/colowide/index.html": {
       "hash": "fad8e1cd9146b3c4f600d8571f993dc7df54b2a93c67d1d940ebfc68168c6b37",
