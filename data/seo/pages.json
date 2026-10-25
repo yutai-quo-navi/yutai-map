@@ -4336,6 +4336,10 @@
       "hash": "0f6fcb3bbc1d812345e53f243c037f8a3f05b84d86c6bae61e7894c598a137cc",
       "lastmod": "2026-10-14"
     },
+    "guides/dining/brands/tsukada/ab907fb8dcaf8ec9/index.html": {
+      "hash": "fee178de2d9f6f34ca4b2b946c1c3db8988552251928f664d1bf6cfce4687b4c",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/wdi/0c02c583615d3781/index.html": {
       "hash": "f1b54d4b6c173860dea3433b342deb762025651f6c8ead1502e65561322d7a27",
       "lastmod": "2026-10-23"
@@ -4597,7 +4601,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "c06adeefdff4275d63cf2663d7ab33d030c9ad0088bff80f885107aee9a0d670",
+      "hash": "23f92992dab897a35e5e7d12a216a35dc27c4976d4c0315db8484da93a3194a3",
       "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4807,6 +4811,10 @@
     "guides/dining/issuers/towa/index.html": {
       "hash": "91007759b6cffac2a265ea0f5641d01a9ac603a50ed4728bf8bca531f548bf9b",
       "lastmod": "2026-10-14"
+    },
+    "guides/dining/issuers/tsukada/index.html": {
+      "hash": "70632f448b8c7fa5ca95b3ebd8c75ecff76ab98048001252a8cbf2c1b35d0104",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/wdi/index.html": {
       "hash": "ff73e6b1664352344680cae926dcfb3d0429471639c0ac5f9da486bd9c4fc8e1",

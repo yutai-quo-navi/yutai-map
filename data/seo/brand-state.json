@@ -4881,6 +4881,15 @@
           "store_count": 128
         }
       ]
+    },
+    "tsukada": {
+      "revision": 50,
+      "brands": [
+        {
+          "brand_name": "塚田農場",
+          "store_count": 50
+        }
+      ]
     }
   }
 }
