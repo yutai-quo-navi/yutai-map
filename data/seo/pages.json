@@ -2804,6 +2804,10 @@
       "hash": "69a5129b3f0bc80347440fbab0ec2e378deab2fc96dfd330af8bcbe12019dcc0",
       "lastmod": "2026-10-15"
     },
+    "guides/dining/brands/kairikiya/79b7cbbecb207530/index.html": {
+      "hash": "d257bfb433a77a80b90653ba686a579d855468d749e2db62d7c393126a1c4138",
+      "lastmod": "2026-10-25"
+    },
     "guides/dining/brands/kichiri/04e058ded2465aa6/index.html": {
       "hash": "7e2a0cf567d4bf26580f74e7fca421a951f7f20b1448bb3c8c208ae52a911bd8",
       "lastmod": "2026-10-23"
@@ -4585,7 +4589,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "b81cc164d644a84be03b48bad401ec5496387eccbc46566749b76518fa76bfdb",
+      "hash": "8372d7731e5342cdd6e66aac9084d62174fea8d82301d62b22d5fe0fc64d480f",
       "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4691,6 +4695,10 @@
     "guides/dining/issuers/joyfull/index.html": {
       "hash": "51c92a20b6c19272d72e4adb1b77878594cd8edd2bfcd0f7e427e87d1277bdca",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/kairikiya/index.html": {
+      "hash": "9b9b178ff954119d9c25ed9c34dd8d0beb67e16870c4b27b65646ec0a97680ee",
+      "lastmod": "2026-10-25"
     },
     "guides/dining/issuers/kichiri/index.html": {
       "hash": "bd40eae0e3835ba865c4867fc0295bdb64fff581c07f26405b4b3b20a4541c35",
