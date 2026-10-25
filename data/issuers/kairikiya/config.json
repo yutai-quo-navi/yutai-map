@@ -1,0 +1,33 @@
+{
+  "id": "kairikiya",
+  "code": "5891",
+  "name": "SAKIGAKEホールディングス",
+  "fullName": "株式会社SAKIGAKEホールディングス",
+  "status": "public",
+  "sourceUrl": "https://www.sakigake-holdings.co.jp/ir/about",
+  "storeSearchUrl": "https://shop.kairikiya.co.jp/stores?brand=49012",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-25",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "ラーメン魁力屋"
+  ],
+  "aliases": [
+    "魁力屋",
+    "ラーメン魁力屋",
+    "かいりきや",
+    "カイリキヤ",
+    "SAKIGAKE",
+    "SAKIGAKE HD",
+    "さきがけ"
+  ],
+  "searchNames": [
+    "魁力屋",
+    "ラーメン魁力屋",
+    "かいりきや",
+    "カイリキヤ"
+  ],
+  "note": "SAKIGAKE HD（5891）の株主優待チケット。今回はラーメン魁力屋のみ掲載。店内飲食・店頭テイクアウトに利用可、デリバリー不可、お釣りなし。足利店は公式の位置情報が未登録のため非掲載。三田製麺所は今回の追加対象に含みません。",
+  "showStoreNote": true
+}

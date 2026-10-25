@@ -379,6 +379,13 @@
       "name": "ユニシアホールディングス",
       "status": "public",
       "config": "./data/issuers/tanaka/config.json"
+    },
+    {
+      "id": "kairikiya",
+      "code": "5891",
+      "name": "SAKIGAKEホールディングス",
+      "status": "public",
+      "config": "./data/issuers/kairikiya/config.json"
     }
   ]
 }

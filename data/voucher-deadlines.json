@@ -194,6 +194,17 @@
       "status": "confirmed",
       "issue": "2026年5月末基準・2026年8月下旬発行分",
       "sourceUrl": "https://unisia.co.jp/ir/stock/ownership/"
+    },
+    {
+      "id": "5891-2027-03-issued-202609",
+      "issuer": "kairikiya",
+      "code": "5891",
+      "name": "SAKIGAKEホールディングス",
+      "benefit": "株主優待チケット",
+      "date": "2027-03-31",
+      "status": "confirmed",
+      "issue": "2026年6月末基準・2026年9月発送分",
+      "sourceUrl": "https://www.sakigake-holdings.co.jp/ir/about"
     }
   ]
 }

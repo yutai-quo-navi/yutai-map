@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  kairikiya: {name:'ラーメン魁力屋',sub:'SAKIGAKE HD',color:'#d90000',symbol:'店',asset:'./assets/logo-kairikiya.webp'},
   tanaka: {name:'串カツ田中',sub:'ユニシアHD',color:'#c61722',symbol:'店',asset:'./assets/logo-tanaka.webp'},
   sakai: {name:'肉匠坂井',sub:'焼肉坂井',color:'#b28f34',symbol:'店',asset:'./assets/logo-sakai.webp'},
   ikka: {name:'博多劇場',sub:'一家',color:'#ba2028',symbol:'店',asset:'./assets/logo-ikka.webp'},
