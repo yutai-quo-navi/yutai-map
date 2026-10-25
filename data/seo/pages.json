@@ -1952,6 +1952,10 @@
       "hash": "67d0c631fd8c9f250f8db6532362160045d993ed9c1d30db830c8a8632d4dac8",
       "lastmod": "2026-10-23"
     },
+    "guides/dining/brands/dandadan/cdd0eb3e3edf785f/index.html": {
+      "hash": "4541e4b2952f04e95d23a8e4cc2855de69a3eda9bd2860314e6ae7fa83737421",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/dnh/1a82de77403a9984/index.html": {
       "hash": "03f0a278b5c053dbae4f5172ea9cf8550e9b52022a4c05adab522247b9b69fce",
       "lastmod": "2026-10-11"
@@ -4593,8 +4597,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "5c7e3541c8c195b33e796b3f8f1567bd619684aa739465c8db8096a603a8535a",
-      "lastmod": "2026-10-25"
+      "hash": "c06adeefdff4275d63cf2663d7ab33d030c9ad0088bff80f885107aee9a0d670",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
       "hash": "a5ee74caaef2d137e334733ac67dd23ad8118e9d10983826515abe3c3874a649",
@@ -4643,6 +4647,10 @@
     "guides/dining/issuers/daisyo/index.html": {
       "hash": "e74395ca8011db196790b74a7f8258251187232a874224c53fd927adc44b2ee3",
       "lastmod": "2026-10-23"
+    },
+    "guides/dining/issuers/dandadan/index.html": {
+      "hash": "f1901f3c956347091a10ed104552daa6afdfa2b81f5aaab999d8756067474092",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/dnh/index.html": {
       "hash": "e42ebc1a42ac31906ff56d122f2bd8f8fdaad6cf9598d26ec279c9c4652fddbc",
