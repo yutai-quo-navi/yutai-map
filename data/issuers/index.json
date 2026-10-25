@@ -407,6 +407,13 @@
       "name": "エー・ピーホールディングス",
       "status": "public",
       "config": "./data/issuers/tsukada/config.json"
+    },
+    {
+      "id": "renoir",
+      "code": "9853",
+      "name": "銀座ルノアール",
+      "status": "public",
+      "config": "./data/issuers/renoir/config.json"
     }
   ]
 }

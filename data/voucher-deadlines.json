@@ -238,6 +238,17 @@
       "status": "confirmed",
       "issue": "2026年1月末権利分",
       "sourceUrl": "https://nattyswanky.com/ir/benefits"
+    },
+    {
+      "id": "9853-2027-06-30-official",
+      "issuer": "renoir",
+      "code": "9853",
+      "name": "銀座ルノアール",
+      "benefit": "株主ご優待券",
+      "date": "2027-06-30",
+      "status": "confirmed",
+      "issue": "2026年3月末基準日分",
+      "sourceUrl": "https://www.ginza-renoir.co.jp/ir/hospitality.html"
     }
   ]
 }

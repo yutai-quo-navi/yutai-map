@@ -1,0 +1,31 @@
+{
+  "id": "renoir",
+  "code": "9853",
+  "name": "銀座ルノアール",
+  "fullName": "株式会社銀座ルノアール",
+  "status": "public",
+  "sourceUrl": "https://www.ginza-renoir.co.jp/ir/hospitality.html",
+  "storeSearchUrl": "https://www.ginza-renoir.co.jp/shopsearch/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "喫茶室ルノアール"
+  ],
+  "aliases": [
+    "銀座ルノアール",
+    "喫茶室ルノアール",
+    "ルノアール",
+    "るのあーる",
+    "9853"
+  ],
+  "searchNames": [
+    "喫茶室ルノアール",
+    "ルノアール",
+    "るのあーる",
+    "ルノアール喫茶室"
+  ],
+  "note": "銀座ルノアール（9853）の株主ご優待券。今回は「喫茶室ルノアール」のみ掲載。公式店舗一覧と各店の住所・電話番号・営業情報・座標を照合しています。",
+  "showStoreNote": true
+}
