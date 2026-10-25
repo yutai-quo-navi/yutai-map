@@ -3384,6 +3384,10 @@
       "hash": "b430e33ae8f1340da2168fe432f9951e9eb1d165351492be975163ec1aec15ca",
       "lastmod": "2026-10-18"
     },
+    "guides/dining/brands/renoir/0eb39bff7894928c/index.html": {
+      "hash": "bc3fcb884fe68204f9729b835811a32b1f11f4f2643350e2d6b18fd75bb1cdbd",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/ringerhut/28c70ea11318bc2a/index.html": {
       "hash": "9fec9ccf82a9c3a8d03bedb348163e3b9f1ad0c3f298b4458e26cdfa4c1384b9",
       "lastmod": "2026-10-11"
@@ -4601,7 +4605,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "23f92992dab897a35e5e7d12a216a35dc27c4976d4c0315db8484da93a3194a3",
+      "hash": "fa70cdbd8287bf2ff5e41d2676863b6662b13b770d3ba345d4179938eeb9d1ab",
       "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4767,6 +4771,10 @@
     "guides/dining/issuers/pepper/index.html": {
       "hash": "d267c769c575dfa87e6d709a030134c5dc3592370c87c1e855ca4f71bed8b120",
       "lastmod": "2026-10-18"
+    },
+    "guides/dining/issuers/renoir/index.html": {
+      "hash": "713899e4f218ad28bf1b5a499d89918b036f9a95d313981ed843b94e4ce7903a",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/ringerhut/index.html": {
       "hash": "1ac4939718cada0c5c0938b36260e230b2d56dc0bad206e65a3d6228859bbfb8",

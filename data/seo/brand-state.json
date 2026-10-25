@@ -4890,6 +4890,15 @@
           "store_count": 50
         }
       ]
+    },
+    "renoir": {
+      "revision": 82,
+      "brands": [
+        {
+          "brand_name": "喫茶室ルノアール",
+          "store_count": 82
+        }
+      ]
     }
   }
 }
