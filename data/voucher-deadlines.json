@@ -205,6 +205,17 @@
       "status": "confirmed",
       "issue": "2026年6月末基準・2026年9月発送分",
       "sourceUrl": "https://www.sakigake-holdings.co.jp/ir/about"
+    },
+    {
+      "id": "3075-2026-11-issued-202605",
+      "issuer": "choushimaru",
+      "code": "3075",
+      "name": "銚子丸",
+      "benefit": "株主優待お食事券",
+      "date": "2026-11-30",
+      "status": "confirmed",
+      "issue": "2026年2月末基準・2026年5月発送分",
+      "sourceUrl": "https://www.choushimaru.co.jp/info_2026_0527_01/"
     }
   ]
 }

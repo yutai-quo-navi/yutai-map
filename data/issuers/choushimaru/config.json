@@ -1,0 +1,30 @@
+{
+  "id": "choushimaru",
+  "code": "3075",
+  "name": "銚子丸",
+  "fullName": "株式会社銚子丸",
+  "status": "public",
+  "sourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260113/20260113532282.pdf",
+  "storeSearchUrl": "https://stores.choushimaru.co.jp/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-25",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "すし銚子丸"
+  ],
+  "aliases": [
+    "銚子丸",
+    "すし銚子丸",
+    "ちょうしまる",
+    "チョウシマル"
+  ],
+  "searchNames": [
+    "銚子丸",
+    "すし銚子丸",
+    "ちょうしまる",
+    "チョウシマル"
+  ],
+  "note": "銚子丸（3075）の株主優待お食事券。今回は「すし銚子丸」のみ掲載。休業中の東寺山店・閉店した茂原店は非掲載。優待制度は同社の適時開示資料で確認しています。",
+  "showStoreNote": true
+}

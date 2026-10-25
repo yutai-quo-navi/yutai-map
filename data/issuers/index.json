@@ -386,6 +386,13 @@
       "name": "SAKIGAKEホールディングス",
       "status": "public",
       "config": "./data/issuers/kairikiya/config.json"
+    },
+    {
+      "id": "choushimaru",
+      "code": "3075",
+      "name": "銚子丸",
+      "status": "public",
+      "config": "./data/issuers/choushimaru/config.json"
     }
   ]
 }
