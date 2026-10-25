@@ -372,6 +372,13 @@
       "name": "焼肉坂井ホールディングス",
       "status": "public",
       "config": "./data/issuers/sakai/config.json"
+    },
+    {
+      "id": "tanaka",
+      "code": "3547",
+      "name": "ユニシアホールディングス",
+      "status": "public",
+      "config": "./data/issuers/tanaka/config.json"
     }
   ]
 }

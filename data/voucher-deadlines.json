@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-25",
   "source": "期限DB（Google Sheets）及び各社公式情報からの確認済みデータ",
   "entries": [
     {
@@ -183,6 +183,17 @@
       "status": "confirmed",
       "issue": "2026年発行分",
       "sourceUrl": "https://www.wdi.co.jp/ir/yuutai.html"
+    },
+    {
+      "id": "3547-2027-02-issued-202608",
+      "issuer": "tanaka",
+      "code": "3547",
+      "name": "ユニシアホールディングス",
+      "benefit": "株主優待電子チケット",
+      "date": "2027-02-28",
+      "status": "confirmed",
+      "issue": "2026年5月末基準・2026年8月下旬発行分",
+      "sourceUrl": "https://unisia.co.jp/ir/stock/ownership/"
     }
   ]
 }

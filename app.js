@@ -1,6 +1,6 @@
 import {placeCandidates} from './place-candidates.js?v=20261016-origin';
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261017-inclusive-countdown';
-import {createBrandMark} from './representative-marks.js?v=20261024-sakai';
+import {createBrandMark} from './representative-marks.js?v=20261025-tanaka';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261017-inclusive-countdown';
@@ -542,6 +542,7 @@ function deadlineBubble(issuer, pattern, feature = false, expiryType = '利用�
   return bubble;
 }
 const issuerDisplayNames = {
+  tanaka:'ユニシアHD',
   hachiban:'ハチバン',
   daisyo:'大庄',
   kichiri:'きちりHD',

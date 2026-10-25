@@ -1,0 +1,29 @@
+{
+  "id": "tanaka",
+  "code": "3547",
+  "name": "ユニシアホールディングス",
+  "fullName": "株式会社ユニシアホールディングス",
+  "status": "public",
+  "sourceUrl": "https://unisia.co.jp/ir/stock/ownership/",
+  "storeSearchUrl": "https://restaurant.kushi-tanaka.com/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-25",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "串カツ田中"
+  ],
+  "aliases": [
+    "ユニシア",
+    "ユニシアHD",
+    "串カツ田中",
+    "串カツ田中ホールディングス",
+    "くしかつたなか"
+  ],
+  "searchNames": [
+    "串カツ田中",
+    "くしかつたなか"
+  ],
+  "note": "ユニシアHD（3547）の株主優待電子チケット。今回は串カツ田中のみ掲載。店内飲食・テイクアウトに利用可、デリバリー不可、お釣りなし。東京ドーム店は対象確認中のため非掲載。開店前の店舗は非掲載。",
+  "showStoreNote": true
+}

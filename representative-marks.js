@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  tanaka: {name:'串カツ田中',sub:'ユニシアHD',color:'#c61722',symbol:'店',asset:'./assets/logo-tanaka.webp'},
   sakai: {name:'肉匠坂井',sub:'焼肉坂井',color:'#b28f34',symbol:'店',asset:'./assets/logo-sakai.webp'},
   ikka: {name:'博多劇場',sub:'一家',color:'#ba2028',symbol:'店',asset:'./assets/logo-ikka.webp'},
   kichiri: {name:'KICHIRI',sub:'きちり',color:'#d88936',symbol:'店',asset:'./assets/logo-kichiri.webp'},
