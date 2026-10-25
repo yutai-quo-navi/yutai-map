@@ -1,0 +1,29 @@
+{
+  "id": "dandadan",
+  "code": "7674",
+  "name": "NATTY SWANKYホールディングス",
+  "fullName": "株式会社NATTY SWANKYホールディングス",
+  "status": "public",
+  "sourceUrl": "https://nattyswanky.com/ir/benefits",
+  "storeSearchUrl": "https://www.dandadan.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "肉汁餃子のダンダダン"
+  ],
+  "aliases": [
+    "ダンダダン",
+    "肉汁餃子のダンダダン",
+    "NATTY SWANKY",
+    "7674"
+  ],
+  "searchNames": [
+    "ダンダダン",
+    "肉汁餃子のダンダダン",
+    "だんだだん"
+  ],
+  "note": "NATTY SWANKYホールディングス（7674）の株主優待お食事券。全国の肉汁餃子のダンダダンで店内飲食・テイクアウトに利用できます。デリバリーは対象外。店舗位置は公式サイトが案内する地図の店舗名・電話番号を照合しています。 宇都宮西口店は地図の電話番号照合が未完了のため非掲載。",
+  "showStoreNote": true
+}

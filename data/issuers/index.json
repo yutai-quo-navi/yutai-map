@@ -393,6 +393,13 @@
       "name": "銚子丸",
       "status": "public",
       "config": "./data/issuers/choushimaru/config.json"
+    },
+    {
+      "id": "dandadan",
+      "code": "7674",
+      "name": "NATTY SWANKYホールディングス",
+      "status": "public",
+      "config": "./data/issuers/dandadan/config.json"
     }
   ]
 }

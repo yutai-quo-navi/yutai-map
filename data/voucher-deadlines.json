@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-25",
+  "updated": "2026-10-26",
   "source": "期限DB（Google Sheets）及び各社公式情報からの確認済みデータ",
   "entries": [
     {
@@ -216,6 +216,28 @@
       "status": "confirmed",
       "issue": "2026年2月末基準・2026年5月発送分",
       "sourceUrl": "https://www.choushimaru.co.jp/info_2026_0527_01/"
+    },
+    {
+      "id": "7674-2026-10-31-official",
+      "issuer": "dandadan",
+      "code": "7674",
+      "name": "NATTY SWANKYホールディングス",
+      "benefit": "株主優待お食事券",
+      "date": "2026-10-31",
+      "status": "confirmed",
+      "issue": "2025年7月末権利分",
+      "sourceUrl": "https://nattyswanky.com/ir/benefits"
+    },
+    {
+      "id": "7674-2027-04-30-official",
+      "issuer": "dandadan",
+      "code": "7674",
+      "name": "NATTY SWANKYホールディングス",
+      "benefit": "株主優待お食事券",
+      "date": "2027-04-30",
+      "status": "confirmed",
+      "issue": "2026年1月末権利分",
+      "sourceUrl": "https://nattyswanky.com/ir/benefits"
     }
   ]
 }
