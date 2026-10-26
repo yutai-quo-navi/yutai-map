@@ -1,0 +1,29 @@
+{
+  "id": "asakuma",
+  "code": "7678",
+  "name": "あさくま",
+  "fullName": "株式会社あさくま",
+  "status": "public",
+  "sourceUrl": "https://www.asakuma.co.jp/irinfo/stock/",
+  "storeSearchUrl": "https://www.asakuma.co.jp/shoplist.html",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "ステーキのあさくま"
+  ],
+  "aliases": [
+    "あさくま",
+    "アサクマ",
+    "ステーキのあさくま",
+    "7678"
+  ],
+  "searchNames": [
+    "あさくま",
+    "アサクマ",
+    "ステーキのあさくま"
+  ],
+  "note": "あさくま（7678）の株主優待食事券。今回は「ステーキのあさくま」のみ掲載。テンポスホールディングスの優待券とは発行会社が異なります。お手持ちの券面の有効期限・利用条件をご確認ください。",
+  "showStoreNote": true
+}

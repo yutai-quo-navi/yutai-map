@@ -421,6 +421,13 @@
       "name": "東京一番フーズ",
       "status": "public",
       "config": "./data/issuers/ichibanfoods/config.json"
+    },
+    {
+      "id": "asakuma",
+      "code": "7678",
+      "name": "あさくま",
+      "status": "public",
+      "config": "./data/issuers/asakuma/config.json"
     }
   ]
 }
