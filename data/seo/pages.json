@@ -3424,6 +3424,10 @@
       "hash": "4d284c602fb55d37b40f14af67a99d216c41f4e90788dfecad7b391cc1876110",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/rockfield/ed6ab25a2fc80dde/index.html": {
+      "hash": "94df799882a289c8ac8f9810880ac99e9c1dad82a3e09c64984bfa9dec87d60f",
+      "lastmod": "2026-10-27"
+    },
     "guides/dining/brands/royal/07b6cf25170d8d65/index.html": {
       "hash": "8ddb03d6a132fb6c3a77164181ab1cd88ee26756dd04b8b7674c622d4df5ee2a",
       "lastmod": "2026-10-11"
@@ -4629,7 +4633,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "90031bc4d0b211ddf8790242d9e58a1bbd784524538f2bf5eaf0487215b77342",
+      "hash": "95e22d72b3a85556b7ad87eac7f4b0cdddc0db8034e18cf89c243d0447118b59",
       "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4827,6 +4831,10 @@
     "guides/dining/issuers/ringerhut/index.html": {
       "hash": "1ac4939718cada0c5c0938b36260e230b2d56dc0bad206e65a3d6228859bbfb8",
       "lastmod": "2026-10-11"
+    },
+    "guides/dining/issuers/rockfield/index.html": {
+      "hash": "8e5cb2d650439be1c3e1d32db6bcfcaccca48c16d3d29ebb54fbb91ad83145ce",
+      "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/royal/index.html": {
       "hash": "26972da5c7810045a7cd01158c147639169e8b51180985a2111a2bd22b2cbd0a",
