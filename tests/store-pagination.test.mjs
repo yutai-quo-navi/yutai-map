@@ -49,3 +49,15 @@ test('even a valid signed old cursor cannot fetch a third page',async()=>{
  const forged=await issueCursor('fixture-only-snapshot-signing-key-32-characters',{...token,n:60});
  assert.equal((await search(f,{cursor:forged})).status,400);assert.equal(second.data.next_cursor,null);f.db.close();
 });
+
+// Issuer capacity is independent of the 60-store display cap.
+test('100 issuers include the final company without D1 reads or a larger response',async()=>{
+ const f=fixture();const ids=Array.from({length:100},(_,i)=>'company'+i);
+ for(const [i,id] of ids.entries()){f.insert(id,String(i),100-i);f.audit(id);}
+ const first=await search(f,{issuers:ids.join(',')});
+ assert.equal(first.status,200);assert.equal(first.data.category_counts.all,100);
+ assert.equal(first.data.count,30);assert.ok(first.data.results.some(r=>r.issuer_id==='company99'));
+ const second=await search(f,{issuers:ids.join(','),cursor:first.data.next_cursor});
+ assert.equal(second.data.count,30);assert.equal(second.data.has_more,false);assert.equal(second.data.next_cursor,null);
+ assert.equal(f.queries.length,0);f.db.close();
+});

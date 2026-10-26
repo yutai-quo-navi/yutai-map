@@ -185,5 +185,5 @@ function json(body,status,headers){
 }
 
 function parseIssuers(raw){
-  return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,60);
+  return [...new Set((raw || '').split(',').map(x=>x.trim()).filter(x=>/^[a-z0-9_-]{1,40}$/.test(x)))].slice(0,100);
 }
