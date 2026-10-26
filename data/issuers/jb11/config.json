@@ -1,0 +1,33 @@
+{
+  "id": "jb11",
+  "code": "3066",
+  "name": "JBイレブン",
+  "fullName": "株式会社JBイレブン",
+  "status": "public",
+  "sourceUrl": "https://www.jb11.co.jp/ir/yutai.php",
+  "storeSearchUrl": "https://www.ikkoku-sakigake.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "一刻魁堂"
+  ],
+  "aliases": [
+    "JBイレブン",
+    "ＪＢイレブン",
+    "ジェイビーイレブン",
+    "一刻魁堂",
+    "いっこくさきがけどう",
+    "一刻堂",
+    "3066"
+  ],
+  "searchNames": [
+    "一刻魁堂",
+    "いっこくさきがけどう",
+    "一刻堂",
+    "JBイレブン"
+  ],
+  "note": "JBイレブン（3066）の株主優待。今回は「一刻魁堂」のみ掲載。食事券と50％割引券では利用条件が異なり、50％割引券の割引上限は5,000円です。券面の有効期限・利用条件をご確認ください。",
+  "showStoreNote": true
+}

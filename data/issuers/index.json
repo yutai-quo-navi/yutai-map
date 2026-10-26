@@ -428,6 +428,13 @@
       "name": "あさくま",
       "status": "public",
       "config": "./data/issuers/asakuma/config.json"
+    },
+    {
+      "id": "jb11",
+      "code": "3066",
+      "name": "JBイレブン",
+      "status": "public",
+      "config": "./data/issuers/jb11/config.json"
     }
   ]
 }
