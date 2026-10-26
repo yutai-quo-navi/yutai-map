@@ -442,6 +442,13 @@
       "name": "関門海",
       "status": "public",
       "config": "./data/issuers/kanmonkai/config.json"
+    },
+    {
+      "id": "kannanmaru",
+      "code": "7585",
+      "name": "かんなん丸",
+      "status": "public",
+      "config": "./data/issuers/kannanmaru/config.json"
     }
   ]
 }

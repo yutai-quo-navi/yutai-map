@@ -1,0 +1,30 @@
+{
+  "id": "kannanmaru",
+  "code": "7585",
+  "name": "かんなん丸",
+  "fullName": "株式会社かんなん丸",
+  "status": "public",
+  "sourceUrl": "https://kannanmaru.co.jp/shareholder_benefits/",
+  "storeSearchUrl": "https://kannanmaru.co.jp/syoya/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-27",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "庄や"
+  ],
+  "aliases": [
+    "かんなん丸",
+    "かんなんまる",
+    "庄や",
+    "しょうや",
+    "7585"
+  ],
+  "searchNames": [
+    "庄や",
+    "しょうや",
+    "かんなん丸"
+  ],
+  "note": "かんなん丸（7585）の株主優待飲食券が使える、かんなん丸運営の「庄や」を掲載。全国の庄や共通ではありません。大庄（9979）発行の優待券とは対象店舗が異なります。鳩ヶ谷店は閉店のため掲載対象外です。券面の有効期限・利用条件をご確認ください。",
+  "showStoreNote": true
+}
