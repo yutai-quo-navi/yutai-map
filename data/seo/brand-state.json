@@ -4926,6 +4926,15 @@
           "store_count": 44
         }
       ]
+    },
+    "kanmonkai": {
+      "revision": 59,
+      "brands": [
+        {
+          "brand_name": "玄品",
+          "store_count": 59
+        }
+      ]
     }
   }
 }
