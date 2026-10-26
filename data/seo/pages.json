@@ -2832,6 +2832,10 @@
       "hash": "e36ddfa3c30f06dd6dc9540b744f1397620d40038715d66498d34036b0340847",
       "lastmod": "2026-10-27"
     },
+    "guides/dining/brands/kannanmaru/6248fce58534abdd/index.html": {
+      "hash": "823df00d52782315b32b64c59cae0a399436d9dd93d81f7f71cc7017058488e5",
+      "lastmod": "2026-10-27"
+    },
     "guides/dining/brands/kichiri/04e058ded2465aa6/index.html": {
       "hash": "7e2a0cf567d4bf26580f74e7fca421a951f7f20b1448bb3c8c208ae52a911bd8",
       "lastmod": "2026-10-23"
@@ -4621,7 +4625,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "fcd6f91d77a17b87b9e2ab0d14b0265b1b83ac06d42ce8f8130f60f38f42d0e1",
+      "hash": "b9e60ed591b751d649bf534c74361d5ae2fdbdda8ce90ba06acce7cedfab98f6",
       "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4754,6 +4758,10 @@
     },
     "guides/dining/issuers/kanmonkai/index.html": {
       "hash": "a0d801de78629d8b426c9277e1a4719c0190e57f4ed34fead965ec72db068d9b",
+      "lastmod": "2026-10-27"
+    },
+    "guides/dining/issuers/kannanmaru/index.html": {
+      "hash": "6ffa467b587694ef111f2dc1992057b5ee6a2d7fbb32521f97a2c11a46e7486c",
       "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/kichiri/index.html": {
