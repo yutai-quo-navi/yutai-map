@@ -7,7 +7,7 @@ const dining = [
   'skylark','colowide','create','zensho','toridoll','yoshinoya','mcd',
   'monogatari','matsuya','royal','balnibarbi','daiichikosho','fujio','srs',
   'arclands','kineya','saintmarc','chimney','ringerhut','hiday','ichibanya',
-  'komeda','dnh','mos','yamaokaya','chikaranomoto','ohsho','joyfull','yossix','foodlife','kura','genki','amiyaki','towa','hikari','gift','eternal','hotland','kourakuen','bronco','tenallied','kisoji','tenpos','anrakutei','jgroup','pepper','eatand','wdi','hachiban','daisyo','kichiri','ikka','sakai','tanaka','kairikiya','choushimaru','dandadan','tsukada','renoir','ichibanfoods','asakuma','jb11','kanmonkai','kannanmaru'
+  'komeda','dnh','mos','yamaokaya','chikaranomoto','ohsho','joyfull','yossix','foodlife','kura','genki','amiyaki','towa','hikari','gift','eternal','hotland','kourakuen','bronco','tenallied','kisoji','tenpos','anrakutei','jgroup','pepper','eatand','wdi','hachiban','daisyo','kichiri','ikka','sakai','tanaka','kairikiya','choushimaru','dandadan','tsukada','renoir','ichibanfoods','asakuma','jb11','kanmonkai','kannanmaru','hamayuu'
 ];
 const hotel = [
   'daiwa-house-hotels','seibu-free-hotels','kyoritsu-hotel-discount',

@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  hamayuu: {name:'浜木綿',sub:'浜木綿',color:'#171717',symbol:'店',asset:'./assets/logo-hamayuu.svg'},
   kannanmaru: {name:'庄や',sub:'かんなん丸',color:'#a82025',symbol:'店',asset:'./assets/logo-daisyo.webp'},
   kanmonkai: {name:'玄品',sub:'関門海',color:'#45272b',symbol:'店',asset:'./assets/logo-kanmonkai.png'},
   jb11: {name:'一刻魁堂',sub:'JBイレブン',color:'#b50000',symbol:'店',asset:'./assets/logo-jb11.png'},

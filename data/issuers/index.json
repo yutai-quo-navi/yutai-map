@@ -449,6 +449,13 @@
       "name": "かんなん丸",
       "status": "public",
       "config": "./data/issuers/kannanmaru/config.json"
+    },
+    {
+      "id": "hamayuu",
+      "code": "7682",
+      "name": "浜木綿",
+      "status": "public",
+      "config": "./data/issuers/hamayuu/config.json"
     }
   ]
 }

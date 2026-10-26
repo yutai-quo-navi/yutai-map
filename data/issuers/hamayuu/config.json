@@ -1,0 +1,30 @@
+{
+  "id": "hamayuu",
+  "code": "7682",
+  "name": "浜木綿",
+  "fullName": "株式会社浜木綿",
+  "status": "public",
+  "sourceUrl": "https://ir.hamayuu.co.jp/ja/ir/stock/yutai.html",
+  "storeSearchUrl": "https://www.hamayuu.co.jp/tenpo/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-27",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "浜木綿"
+  ],
+  "aliases": [
+    "浜木綿",
+    "はまゆう",
+    "ハマユウ",
+    "中国料理浜木綿",
+    "7682"
+  ],
+  "searchNames": [
+    "浜木綿",
+    "はまゆう",
+    "中国料理浜木綿"
+  ],
+  "note": "浜木綿（7682）の株主優待券が使える「中国料理 浜木綿」を掲載。1枚1,000円分で、店頭販売・テイクアウトにも利用できます。お釣りは出ず、他の割引券とは併用できません。改装休業中の山手通本店と、位置を確定できない末盛店・東海店・黒川店は地図未掲載です。券面の有効期限・利用条件をご確認ください。",
+  "showStoreNote": true
+}
