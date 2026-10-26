@@ -546,3 +546,6 @@
 
 /* The official Tsukada header wordmark is white on transparency. */
 [data-representative-brand="塚田農場"] .representative-mark-image{filter:brightness(0)}
+
+/* Official Dandadan header artwork is white on transparency. */
+[data-representative-brand="肉汁餃子のダンダダン"] .representative-mark-image{filter:brightness(0)}
