@@ -176,6 +176,10 @@
       "hash": "a9406826c3b4d796e61df2e38e29f012fbf7a2dcc813289c401064e2fd322491",
       "lastmod": "2026-10-11"
     },
+    "guides/dining/brands/asakuma/5514052f627d5c29/index.html": {
+      "hash": "af934359f00a5fa322acbb8112b39fd4b0b24b97e2ce431d1a1741920cb7e645",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/balnibarbi/045160540a7364e2/index.html": {
       "hash": "9f529447dd48a1b4f99a90c0a9270c13e9f17bfa8a38066d3974bea685fd76fd",
       "lastmod": "2026-10-11"
@@ -4609,7 +4613,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "296bed2a8a66b285cf57f705c7e94543ad01b938ea8988bccd88377ac74be74e",
+      "hash": "12494e9daf883b758b491e069af39ebc36397cde5a13333c57353d4fed74e883",
       "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4623,6 +4627,10 @@
     "guides/dining/issuers/arclands/index.html": {
       "hash": "00ad36318f750915730edcacf5c217f6d608f4a65e06037695ac6a8744d9e970",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/asakuma/index.html": {
+      "hash": "f1cc2cc3ce49a89eb038f7a74208b8c0e29529edb111e910eec3a1050a75537e",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/balnibarbi/index.html": {
       "hash": "0cb4007eca899d34bfa4a922bc6818a81802dd8720bbac863d8f97f7a34a297d",

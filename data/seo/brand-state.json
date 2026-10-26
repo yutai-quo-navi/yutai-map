@@ -4908,6 +4908,15 @@
           "store_count": 37
         }
       ]
+    },
+    "asakuma": {
+      "revision": 73,
+      "brands": [
+        {
+          "brand_name": "ステーキのあさくま",
+          "store_count": 73
+        }
+      ]
     }
   }
 }
