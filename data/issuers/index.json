@@ -456,6 +456,13 @@
       "name": "浜木綿",
       "status": "public",
       "config": "./data/issuers/hamayuu/config.json"
+    },
+    {
+      "id": "rockfield",
+      "code": "2910",
+      "name": "ロック・フィールド",
+      "status": "public",
+      "config": "./data/issuers/rockfield/config.json"
     }
   ]
 }

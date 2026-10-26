@@ -1,0 +1,29 @@
+{
+  "id": "rockfield",
+  "code": "2910",
+  "name": "ロック・フィールド",
+  "fullName": "株式会社ロック・フィールド",
+  "status": "public",
+  "sourceUrl": "https://www.rockfield.co.jp/ir/stock/yutai/",
+  "storeSearchUrl": "https://www.rockfield.co.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-27",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "RF1"
+  ],
+  "aliases": [
+    "ロック・フィールド",
+    "ロックフィールド",
+    "RF1",
+    "アール・エフ・ワン",
+    "2910"
+  ],
+  "searchNames": [
+    "RF1",
+    "アール・エフ・ワン"
+  ],
+  "note": "ロック・フィールド（2910）の「そうざい券」が使えるRF1を掲載。惣菜・サラダなどを購入できるテイクアウトのお店です。麻布台ヒルズ店・ドンク＆RF1高岳店・キッザニア3店は優待対象外です。休業・仮設営業で現在の位置を確認できないエキュート大宮店とセレオ八王子店は地図未掲載です。券面の有効期限・利用条件をご確認ください。",
+  "showStoreNote": true
+}
