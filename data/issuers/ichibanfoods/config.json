@@ -1,0 +1,31 @@
+{
+  "id": "ichibanfoods",
+  "code": "3067",
+  "name": "東京一番フーズ",
+  "fullName": "株式会社東京一番フーズ",
+  "status": "public",
+  "sourceUrl": "https://www.tokyo-ichiban-foods.co.jp/ir/stockholder.php",
+  "storeSearchUrl": "https://www.torafugu.co.jp/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-26",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "とらふぐ亭"
+  ],
+  "aliases": [
+    "東京一番フーズ",
+    "とらふぐ亭",
+    "とらふぐてい",
+    "トラフグテイ",
+    "3067"
+  ],
+  "searchNames": [
+    "とらふぐ亭",
+    "とらふぐてい",
+    "トラフグテイ",
+    "東京一番フーズ"
+  ],
+  "note": "東京一番フーズ（3067）の株主様ご優待券。指定コース引換型です。ご予約時に優待利用を申告し、券の有効期間・利用条件をご確認ください。他割引との併用不可。今回は「とらふぐ亭」のみ掲載し、休業中の本八幡店は非掲載。",
+  "showStoreNote": true
+}

@@ -249,6 +249,17 @@
       "status": "confirmed",
       "issue": "2026年3月末基準日分",
       "sourceUrl": "https://www.ginza-renoir.co.jp/ir/hospitality.html"
+    },
+    {
+      "id": "3067-2026-09-30-official",
+      "issuer": "ichibanfoods",
+      "code": "3067",
+      "name": "東京一番フーズ",
+      "benefit": "株主様ご優待券（指定コース引換）",
+      "date": "2026-09-30",
+      "status": "confirmed",
+      "issue": "2026年3月末基準・2026年5月発送分",
+      "sourceUrl": "https://www.tokyo-ichiban-foods.co.jp/ir/stockholder.php"
     }
   ]
 }

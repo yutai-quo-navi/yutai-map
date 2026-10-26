@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-24",
+  "updated": "2026-10-26",
   "issuers": [
     {
       "id": "skylark",
@@ -414,6 +414,13 @@
       "name": "銀座ルノアール",
       "status": "public",
       "config": "./data/issuers/renoir/config.json"
+    },
+    {
+      "id": "ichibanfoods",
+      "code": "3067",
+      "name": "東京一番フーズ",
+      "status": "public",
+      "config": "./data/issuers/ichibanfoods/config.json"
     }
   ]
 }

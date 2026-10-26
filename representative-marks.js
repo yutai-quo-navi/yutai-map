@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  ichibanfoods: {name:'とらふぐ亭',sub:'東京一番フーズ',color:'#1b343f',symbol:'店',asset:'./assets/logo-ichibanfoods.svg'},
   renoir: {name:'喫茶室ルノアール',sub:'銀座ルノアール',color:'#8a2b2f',symbol:'店',asset:'./assets/logo-renoir.webp'},
   tsukada: {name:'塚田農場',sub:'エー・ピーホールディングス',color:'#d95829',symbol:'店',asset:'./assets/logo-tsukada.webp'},
   dandadan: {name:'肉汁餃子のダンダダン',sub:'NATTY SWANKYホールディングス',color:'#ba1721',symbol:'店',asset:'./assets/logo-dandadan.webp'},
