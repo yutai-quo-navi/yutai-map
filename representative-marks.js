@@ -4,6 +4,7 @@
 // The representative logo does not imply that every store in that brand accepts benefits.
 
 const dining = {
+  kanmonkai: {name:'玄品',sub:'関門海',color:'#45272b',symbol:'店',asset:'./assets/logo-kanmonkai.png'},
   jb11: {name:'一刻魁堂',sub:'JBイレブン',color:'#b50000',symbol:'店',asset:'./assets/logo-jb11.png'},
   asakuma: {name:'ステーキのあさくま',sub:'あさくま',color:'#9d242a',symbol:'店',asset:'./assets/logo-tenpos-asakuma.png'},
   ichibanfoods: {name:'とらふぐ亭',sub:'東京一番フーズ',color:'#1b343f',symbol:'店',asset:'./assets/logo-ichibanfoods.svg'},

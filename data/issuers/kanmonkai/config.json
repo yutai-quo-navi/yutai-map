@@ -1,0 +1,32 @@
+{
+  "id": "kanmonkai",
+  "code": "3372",
+  "name": "関門海",
+  "fullName": "株式会社関門海",
+  "status": "public",
+  "sourceUrl": "https://www.kanmonkai.co.jp/ir/kabu_yutai.html",
+  "storeSearchUrl": "https://www.tettiri.com/shop/",
+  "matchingMode": "official_store_filter",
+  "locationMode": "official_coordinates",
+  "verified": "2026-10-27",
+  "domesticOnly": true,
+  "catalogBrands": [
+    "玄品"
+  ],
+  "aliases": [
+    "関門海",
+    "かんもんかい",
+    "玄品",
+    "玄品ふぐ",
+    "げんぴん",
+    "3372"
+  ],
+  "searchNames": [
+    "玄品",
+    "玄品ふぐ",
+    "げんぴん",
+    "関門海"
+  ],
+  "note": "関門海（3372）の株主優待。玄品の税込4,000円以上のとらふぐ料理コースに、1コースにつき2,000円券1枚を利用できます。12月1日～翌年1月中旬は利用できません。券面の有効期限・利用条件をご確認ください。焼き福・別業態・海外店舗は掲載対象外。位置を確認できない道頓堀 難波別館は地図未掲載です。",
+  "showStoreNote": true
+}

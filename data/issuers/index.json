@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-10-26",
+  "updated": "2026-10-27",
   "issuers": [
     {
       "id": "skylark",
@@ -435,6 +435,13 @@
       "name": "JBイレブン",
       "status": "public",
       "config": "./data/issuers/jb11/config.json"
+    },
+    {
+      "id": "kanmonkai",
+      "code": "3372",
+      "name": "関門海",
+      "status": "public",
+      "config": "./data/issuers/kanmonkai/config.json"
     }
   ]
 }
