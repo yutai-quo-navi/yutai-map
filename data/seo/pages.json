@@ -2532,6 +2532,10 @@
       "hash": "098da3beeb07354387758e49a866e5d10ccb678941e557e46ed005fdebaf08bb",
       "lastmod": "2026-10-15"
     },
+    "guides/dining/brands/ichibanfoods/be25047106b074a9/index.html": {
+      "hash": "d994bb991a3fd0f38e3c87e8eff29d549e92d11d7f3f79f2fd08066e810f7155",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/ichibanya/30620e27abf277c8/index.html": {
       "hash": "12868cf92f7727d13b49c8063eedfe758db2205795042950785f688133945841",
       "lastmod": "2026-10-11"
@@ -4565,8 +4569,8 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/brands/zensho/5368e1316df7c64f/index.html": {
-      "hash": "df41926ba9c6b9c58e15b33bf65eed74c39b889dddbdaf7137984c5b51db338f",
-      "lastmod": "2026-10-17"
+      "hash": "b4e7fa81be5d4b55af20be378f729ef9622b83207e9bc9e0ed4e0d27e3956f95",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/brands/zensho/538977a44e3dea3a/index.html": {
       "hash": "0ad2a985b25d9bc22530658d2167642e7a7e8d26d3e93186c6b50adef38bcdca",
@@ -4585,8 +4589,8 @@
       "lastmod": "2026-10-20"
     },
     "guides/dining/brands/zensho/8992323c2260f495/index.html": {
-      "hash": "7e0cb7d2c18e8d8401eac15e8932f0de1b92f06dc1bbc69e5330caf71d4fa4e4",
-      "lastmod": "2026-10-17"
+      "hash": "50dc085fdc14203a87f890217f495d8ae7363d370cfbdd4ca1c3991db09d24c2",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/brands/zensho/cba8845e29b1c442/index.html": {
       "hash": "17fb26ecf8b0005b26bdc1142525bb7a1ff0287291cedaa82be2e4a1137977a3",
@@ -4605,7 +4609,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "fa70cdbd8287bf2ff5e41d2676863b6662b13b770d3ba345d4179938eeb9d1ab",
+      "hash": "296bed2a8a66b285cf57f705c7e94543ad01b938ea8988bccd88377ac74be74e",
       "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4703,6 +4707,10 @@
     "guides/dining/issuers/hotland/index.html": {
       "hash": "856a8984d9e92a9524751236ed22fca6d992fa7077485d640a43dc142158f61d",
       "lastmod": "2026-10-15"
+    },
+    "guides/dining/issuers/ichibanfoods/index.html": {
+      "hash": "b122f13ae0316e32074d05e5faf7ecfc785162602e77a21e4c412fbba18ff216",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/ichibanya/index.html": {
       "hash": "6c0532ded3813229cb81924de378299d2b520940857c906d281d4edea3ae1e5e",
@@ -4841,8 +4849,8 @@
       "lastmod": "2026-10-13"
     },
     "guides/dining/issuers/zensho/index.html": {
-      "hash": "8f1bf1143f93516992ca0050b51370a7cfa0752920dbf42e69d55f059f3d91a9",
-      "lastmod": "2026-10-20"
+      "hash": "f1ad7df4a5d982ba48ddbd193d403888a8606d7c69eaf9313bd97c5cee02242b",
+      "lastmod": "2026-10-26"
     },
     "guides/hotels/benefits/daiwa-house-hotels/index.html": {
       "hash": "9e959db9fb73311356c8d4c05dcc9c0b142b2812932112c9d2731f5c047d4103",

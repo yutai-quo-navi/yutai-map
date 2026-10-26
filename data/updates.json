@@ -1,8 +1,76 @@
 {
   "version": 1,
-  "generated_at": "2026-10-19T13:53:36+09:00",
-  "event_count": 61,
+  "generated_at": "2026-10-26T13:54:39+09:00",
+  "event_count": 65,
   "events": [
+    {
+      "event_id": "d750d2d2250dd11b24b6f421ccddb65ac81b9b64",
+      "at": "2026-10-26T13:54:39+09:00",
+      "run_date": "2026-10-26",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6643",
+      "name": "オリーブの丘 福島野田店",
+      "address": "福島県福島市野田町1-16-57",
+      "brand_name": "オリーブの丘"
+    },
+    {
+      "event_id": "797687fe5b304b620be553e1edf06018054ce477",
+      "at": "2026-10-26T13:54:39+09:00",
+      "run_date": "2026-10-26",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:5535",
+      "name": "オリーブの丘 千葉青葉の森公園店",
+      "address": "千葉県千葉市中央区青葉町1259",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "043-312-9738",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "7091df26fc4b037e79398f0b24ae88d086447375",
+      "at": "2026-10-26T13:54:39+09:00",
+      "run_date": "2026-10-26",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6633",
+      "name": "はま寿司 東京国際フォーラム店",
+      "address": "東京都千代田区丸の内3-5-1 東京国際フォーラム 地上広場Aブロック1F",
+      "brand_name": "はま寿司"
+    },
+    {
+      "event_id": "2d195a3db9b6c50684b87885d2534956f73dae8d",
+      "at": "2026-10-26T13:54:39+09:00",
+      "run_date": "2026-10-26",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6621",
+      "name": "オリーブの丘 札幌新琴似店",
+      "address": "北海道札幌市北区新琴似2条7-1-52",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "011-214-0113"
+        }
+      ]
+    },
     {
       "event_id": "de8fc9b97d2861017cef31a3cf66538a57a93594",
       "at": "2026-10-19T13:53:36+09:00",

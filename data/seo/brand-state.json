@@ -1133,7 +1133,7 @@
       ]
     },
     "zensho": {
-      "revision": 5,
+      "revision": 7,
       "brands": [
         {
           "brand_name": "かつ庵",
@@ -1149,7 +1149,7 @@
         },
         {
           "brand_name": "はま寿司",
-          "store_count": 687
+          "store_count": 688
         },
         {
           "brand_name": "エルトリート",
@@ -1157,7 +1157,7 @@
         },
         {
           "brand_name": "オリーブの丘",
-          "store_count": 68
+          "store_count": 69
         },
         {
           "brand_name": "ココス",
@@ -4897,6 +4897,15 @@
         {
           "brand_name": "喫茶室ルノアール",
           "store_count": 82
+        }
+      ]
+    },
+    "ichibanfoods": {
+      "revision": 37,
+      "brands": [
+        {
+          "brand_name": "とらふぐ亭",
+          "store_count": 37
         }
       ]
     }
