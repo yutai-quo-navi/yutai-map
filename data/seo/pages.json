@@ -2404,6 +2404,10 @@
       "hash": "06470b5a6a63859cc4d4a6a90c93d5c5c4a282884930eea7244ac1e8b64425b1",
       "lastmod": "2026-10-23"
     },
+    "guides/dining/brands/hamayuu/f8ac27719d6e9eba/index.html": {
+      "hash": "6736cf4fbd768ae1ee9881f83954654677b0fd75079d1a110aac4faaf3a34a1b",
+      "lastmod": "2026-10-27"
+    },
     "guides/dining/brands/hiday/017f9d103766f83e/index.html": {
       "hash": "42d30fa9da9ef64aadd6c09643dc8b6082c69f6af6b696c846196d3213400ce8",
       "lastmod": "2026-10-11"
@@ -4625,7 +4629,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "b9e60ed591b751d649bf534c74361d5ae2fdbdda8ce90ba06acce7cedfab98f6",
+      "hash": "90031bc4d0b211ddf8790242d9e58a1bbd784524538f2bf5eaf0487215b77342",
       "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4715,6 +4719,10 @@
     "guides/dining/issuers/hachiban/index.html": {
       "hash": "b62f7b9e615bbdf6328f196ec01f34b167bb7051f80e8d564e436da213e762fd",
       "lastmod": "2026-10-23"
+    },
+    "guides/dining/issuers/hamayuu/index.html": {
+      "hash": "478e7a9b942b5b410e7131dd747c4c2ec77da60eb96c4df01895e216df10779a",
+      "lastmod": "2026-10-27"
     },
     "guides/dining/issuers/hiday/index.html": {
       "hash": "f55b8b46fc900645bf117190c16d3d51f2549997dd210e6b44281deb4d366477",
