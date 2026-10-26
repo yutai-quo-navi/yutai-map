@@ -2576,6 +2576,10 @@
       "hash": "c0590bf7a4846f6841e099f14b50725fda327576fadd1ca9123e743851d5d8a8",
       "lastmod": "2026-10-23"
     },
+    "guides/dining/brands/jb11/8382042c9112c6d2/index.html": {
+      "hash": "ac1dd3532fb45fa96a1e8530693fb13d4fb6631ff32f3322fbba3039ad925670",
+      "lastmod": "2026-10-26"
+    },
     "guides/dining/brands/jgroup/01900c922bdafd14/index.html": {
       "hash": "57ea474d06577e18adcd0b3404e97bcc4099bc2f097567627094cfcff7102cab",
       "lastmod": "2026-10-18"
@@ -4613,7 +4617,7 @@
       "lastmod": "2026-10-11"
     },
     "guides/dining/index.html": {
-      "hash": "12494e9daf883b758b491e069af39ebc36397cde5a13333c57353d4fed74e883",
+      "hash": "6baad1f97a18dfec9e04132d6a0119e5e8da29d0d22a18324fba87f094f2287a",
       "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/amiyaki/index.html": {
@@ -4727,6 +4731,10 @@
     "guides/dining/issuers/ikka/index.html": {
       "hash": "12effb12e768c3dd71726a7eb81bcc96790d9f385afb815ff5b3df4c49e8b9eb",
       "lastmod": "2026-10-23"
+    },
+    "guides/dining/issuers/jb11/index.html": {
+      "hash": "3bc1b1151ae3c8a0d7409fdb1d244e273a94787c21f573c467e447c32ce968cc",
+      "lastmod": "2026-10-26"
     },
     "guides/dining/issuers/jgroup/index.html": {
       "hash": "9236e9784eb298ad3f2efa1e85fadd2a678f5e30ad8442e3d47992a0f00b17f3",
