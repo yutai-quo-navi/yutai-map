@@ -1,3 +1,4 @@
+import {searchScopeLabel, coverageMessage, emptySearchMessage, validateSearchResponse} from './dining-search-state.js?v=20261027-search-scope';
 import {placeCandidates} from './place-candidates.js?v=20261016-origin';
 import {makeDeadlineBadge, initNotificationBadges} from './notification-badge.js?v=20261017-inclusive-countdown';
 import {createBrandMark} from './representative-marks.js?v=20261027-rockfield';
@@ -410,6 +411,7 @@ async function init(){
   });
   els.pickerApply.addEventListener('click', () => {
     selected.clear(); draftSelection.forEach(id => selected.add(id));
+    activeBrand=''; writeSetting('yutai-brand',''); els.brandSearch.value='';
     resetCategoryFilter();
     const rerun = editingFromResults && !!lastPosition;
     editingFromResults = false;
@@ -669,7 +671,7 @@ function renderChips(){
     existingGroups.delete(c.id);
   });
   for (const group of existingGroups.values()) group.remove();
-  qs('#selectionSummary').innerHTML=numberHTML('dining:selected',available.filter(c=>selected.has(c.id)).length)+'社 選択中';
+  updateSelectionSummary();
 }
 function updateChipSelection(id){
   const button=els.chips.querySelector('[data-issuer="'+id+'"]');
@@ -678,8 +680,12 @@ function updateChipSelection(id){
     button.className='selected-issuer benefit-choice '+(active ? issuerTone(id) : 'is-unselected');
     button.setAttribute('aria-pressed',String(active));
   }
+  updateSelectionSummary();
+}
+function updateSelectionSummary(){
   const count=companies.filter(c=>visibleCompanyIds.has(c.id)&&selected.has(c.id)).length;
-  qs('#selectionSummary').innerHTML=numberHTML('dining:selected',count)+'社 選択中';
+  const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
+  qs('#selectionSummary').innerHTML=numberHTML('dining:selected',count)+'社 選択中'+(brand ? '<small>（検索は'+esc(brand.name)+'のみ）</small>' : '');
 }
 function refreshDeadlineDisplay(){
   const next=japanDay();
@@ -928,6 +934,7 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
   categoryCounts = null;
   renderCategoryFilters();
   els.count.textContent = '';
+  els.diningActions.hidden = true;
   els.results.className = 'results';
   els.results.innerHTML = '<div class="empty-state"><p>近くの優待店を探しています…</p></div>';
   setStatus('近隣の優待店を検索中…');
@@ -949,14 +956,10 @@ async function searchNearby(pos, centerLabel='現在地', existingOperation = nu
     renderCategoryFilters();
     renderFilteredResults(radius);
     const incomplete = !!indexGroup.incomplete;
-    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました${incomplete ? '・一部の系列店舗情報は照合できていません' : ''}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
+    const scope=searchScopeLabel(selected.size,brand,activeCategory==='all'?'':categoryLabels[activeCategory]);
+    setStatus(`${centerLabel}から${radius/1000}km以内を検索しました・${scope}${centerLabel==='現在地' ? '・現在地は運営者側に保存していません' : ''}`);
     updateResultNavigation('dining', els.results.querySelectorAll('.card').length);
-    if (incomplete) {
-      els.diningHint.textContent = (els.results.querySelectorAll('.card').length
-        ? '近隣店舗の一部を表示しています。'
-        : '今回の結果は暫定的な0件です。') +
-        '公式一覧との照合または一部店舗の座標補完が未完了です。表示件数は全対象店舗の件数を保証しません。';
-    }
+    els.diningHint.textContent = scope+'。'+(normalized.length ? `${normalized.length}件を表示しています。` : emptySearchMessage({brand,category:activeCategory==='all'?'':categoryLabels[activeCategory],coverage:indexGroup.coverage,incomplete}))+' '+coverageMessage(indexGroup.coverage,incomplete);
   } catch (error) {
     if (!isSearchCurrent(operation) || revision !== diningSearchRevision) return;
     console.error(error);
@@ -999,7 +1002,7 @@ async function queryIndexedStoreApi(targets, pos, radius, signal, cursor = null)
     error.code=res.status===409 ? 'CATALOG_CHANGED' : 'INVALID_CURSOR'; throw error;
   }
   if(!res.ok) throw new Error(`Store API ${res.status}`);
-  const data = await res.json();
+  const data = validateSearchResponse(await res.json(), targets.map(c=>c.id));
 
   const results=(data.results || []).map(s => {
     const company = companiesById.get(s.issuer_id);
@@ -1037,7 +1040,7 @@ async function queryIndexedStoreApi(targets, pos, radius, signal, cursor = null)
       distance
     };
   }).filter(Boolean);
-  const counts=data.category_counts || results.reduce((out,s)=>{out.all++;out[s.category]=(out[s.category] || 0)+1;return out;},{all:0});
+  const counts=data.category_counts;
   return {
     results,categoryCounts:counts,incomplete:data.incomplete === true,coverage:data.coverage || null,
     nextCursor:typeof data.next_cursor === 'string' ? data.next_cursor : null,
@@ -1117,11 +1120,14 @@ function renderResults(items, radius, appendFrom = 0){
   els.count.innerHTML = numberHTML('dining:results',items.length)+(total>items.length ? `件表示／対象${numberHTML('dining:total',total)}件` : '件');
   if(!items.length){
     els.results.className='results empty-state';
-    const restricted=activeCategory!=='all' || activeBrand;
-    els.results.innerHTML=`<p>${radius/1000}km以内では<br>${activeCategory!=='all' ? `「${esc(categoryLabels[activeCategory])}」の条件に一致する店舗がありません` : '対象店舗を見つけられませんでした'}</p>${restricted ? '<button type="button" class="category-filter" id="clearResultFilters">絞り込みを解除</button>' : ''}`;
+    const brand=brandCatalog.find(b=>brandKey(b)===activeBrand);
+    const restricted=activeCategory!=='all' || brand;
+    const message=emptySearchMessage({brand,category:activeCategory==='all'?'':categoryLabels[activeCategory],coverage:diningPageState?.coverage,incomplete:diningPageState?.incomplete});
+    els.results.innerHTML=`<p>${radius/1000}km以内では<br>${esc(message)}</p>${restricted ? '<button type="button" class="category-filter" id="clearResultFilters">絞り込みを解除して再検索</button>' : ''}`;
     qs('#clearResultFilters')?.addEventListener('click',()=>{
       activeBrand=''; writeSetting('yutai-brand',''); els.brandSearch.value=''; renderBrandOptions(); resetCategoryFilter();
       invalidateDiningSearch();
+      if(lastPosition) rerunFromResults();
     });
     return;
   }
@@ -1358,11 +1364,11 @@ async function loadBrandCatalog(){
     const apiBrands=groups.flat();
     brandCatalog=[...apiBrands,...configuredBrands.filter(b=>!apiBrands.some(a=>brandKey(a)===brandKey(b)))].filter(b=>visibleCompanyIds.has(b.issuer_id) && typeof b.name==='string' && b.name);
     renderChips();
-    syncTypedBrand(); renderBrandOptions();
+    renderBrandOptions();
   } catch {
     if(request!==brandRequest) return;
     if(configuredBrands.length){
-      brandCatalog=configuredBrands; renderChips(); syncTypedBrand(); renderBrandOptions();
+      brandCatalog=configuredBrands; renderChips(); renderBrandOptions();
       els.brandCandidateStatus.textContent='一部のブランド候補を取得できませんでした。ページを再読み込みしてください。';
       return;
     }
@@ -1435,7 +1441,7 @@ function brandSearchTerms(brand){
 function hideBrandSuggestions(){ els.brandSuggestions.hidden=true; els.brandCandidateStatus.textContent=''; }
 function syncTypedBrand(){
   const query=normalizeBrandQuery(els.brandSearch.value);
-  if(!query) return;
+  if(!query){ if(activeBrand) chooseBrand(''); return; }
   const matches=brandCatalog.filter(b=>normalizeBrandQuery(b.name)===query ||
     (brandReadings[b.name] && normalizeBrandQuery(brandReadings[b.name].split(' ')[0])===query));
   if(matches.length!==1) return;
@@ -1448,7 +1454,7 @@ function chooseBrand(key, preserveQuery=false){
     selected.add(brand.issuer_id); persistSelection(); renderChips();
   }
   activeBrand=key; writeSetting('yutai-brand',key);
-  if(!preserveQuery) els.brandSearch.value='';
+  if(!preserveQuery) els.brandSearch.value=brand?.name || '';
   brandCandidateLimit=12;
   renderBrandOptions(); hideBrandSuggestions(); resetCategoryFilter();
   invalidateDiningSearch();
@@ -1461,6 +1467,7 @@ function renderBrandOptions(show=false){
   const chosen=available.find(b=>brandKey(b)===activeBrand);
   els.brandSelection.textContent=chosen ? chosen.name+' ／ '+(companies.find(c=>c.id===chosen.issuer_id)?.name||'') : (selected.size ? '選択した優待の全ブランド' : '店名・ブランドを入力するか、優待を選んでください');
   els.brandReset.hidden=!chosen;
+  updateSelectionSummary();
   els.brandSearch.disabled=!available.length;
   const open=(show || document.activeElement===els.brandSearch) && Boolean(els.brandSearch.value.trim());
   els.brandSuggestions.replaceChildren();
