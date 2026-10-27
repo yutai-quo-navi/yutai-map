@@ -70,7 +70,10 @@ try{
       if(requestUrl.pathname==='/v1/brands')return route.fulfill({json:{brands:stores.map(s=>({issuer_id:s.issuer_id,name:s.brand_name,count:1}))}});
       if(requestUrl.pathname==='/v1/stores/search'){
         const issuers=(requestUrl.searchParams.get('issuers')||'').split(',');
-        return route.fulfill({json:{results:stores.filter(s=>issuers.includes(s.issuer_id))}});
+        const results=stores.filter(s=>issuers.includes(s.issuer_id));
+        const category_counts={all:results.length,restaurant:results.length,cafe:0,bakery:0,foodcourt:0,other:0};
+        return route.fulfill({json:{results,count:results.length,category_counts,incomplete:false,
+          has_more:false,next_cursor:null,coverage:{complete:true,unresolved_stores:0,unverified_issuers:[]}}});
       }
       if(requestUrl.pathname==='/v1/suggest')return route.fulfill({json:{vocabulary:[{type:'place',label:'テスト地点',center:[139.767,35.681]}]}});
       if(requestUrl.pathname==='/v1/search')return route.fulfill({json:{results:[]}});
