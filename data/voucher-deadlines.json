@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-10-30",
   "source": "期限DB（Google Sheets）及び各社公式情報からの確認済みデータ",
   "entries": [
     {
@@ -260,6 +260,26 @@
       "status": "confirmed",
       "issue": "2026年3月末基準・2026年5月発送分",
       "sourceUrl": "https://www.tokyo-ichiban-foods.co.jp/ir/stockholder.php"
+    },
+    {
+      "id": "3418-2027-09-1",
+      "issuer": "balnibarbi",
+      "code": "3418",
+      "name": "バルニバービ",
+      "benefit": "飲食券・電子チケット等",
+      "date": "2027-09-30",
+      "status": "confirmed",
+      "issue": "2026年新着分"
+    },
+    {
+      "id": "3063-2027-10-1",
+      "issuer": "jgroup",
+      "code": "3063",
+      "name": "ジェイグループHD",
+      "benefit": "食事券",
+      "date": "2027-10-31",
+      "status": "confirmed",
+      "issue": "2026年新着分"
     }
   ]
 }
