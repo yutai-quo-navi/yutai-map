@@ -252,7 +252,7 @@
       ]
     },
     "create": {
-      "revision": 2,
+      "revision": 12,
       "brands": [
         {
           "brand_name": "AW55",
@@ -467,6 +467,14 @@
           "store_count": 1
         },
         {
+          "brand_name": "あいだや",
+          "store_count": 1
+        },
+        {
+          "brand_name": "あいだや２",
+          "store_count": 1
+        },
+        {
           "brand_name": "あずさ珈琲",
           "store_count": 14
         },
@@ -505,6 +513,10 @@
         {
           "brand_name": "きみはん",
           "store_count": 2
+        },
+        {
+          "brand_name": "こいけのいえけい",
+          "store_count": 1
         },
         {
           "brand_name": "ごっつええ本舗",
@@ -559,6 +571,10 @@
           "store_count": 17
         },
         {
+          "brand_name": "つけめん金龍",
+          "store_count": 1
+        },
+        {
           "brand_name": "とうふ料理　吉座",
           "store_count": 1
         },
@@ -611,6 +627,10 @@
           "store_count": 1
         },
         {
+          "brand_name": "らぁめん小池",
+          "store_count": 1
+        },
+        {
           "brand_name": "わさび　御殿場プレミアム・アウトレット",
           "store_count": 1
         },
@@ -624,6 +644,10 @@
         },
         {
           "brand_name": "カフェ・トレイル＆トラック　イクスピアリ",
+          "store_count": 1
+        },
+        {
+          "brand_name": "キング製麺",
           "store_count": 1
         },
         {
@@ -755,12 +779,20 @@
           "store_count": 1
         },
         {
+          "brand_name": "中華蕎麦にし乃",
+          "store_count": 1
+        },
+        {
           "brand_name": "九龍點心",
           "store_count": 2
         },
         {
           "brand_name": "五の五",
           "store_count": 8
+        },
+        {
+          "brand_name": "伊之瀬",
+          "store_count": 1
         },
         {
           "brand_name": "伊達祭　大津店",
@@ -869,6 +901,10 @@
         {
           "brand_name": "旬菜しゃぶ重",
           "store_count": 6
+        },
+        {
+          "brand_name": "本郷苑",
+          "store_count": 1
         },
         {
           "brand_name": "東大門　エスパル郡山",
@@ -1036,6 +1072,10 @@
         },
         {
           "brand_name": "金ごま屋　コクーン新都心",
+          "store_count": 1
+        },
+        {
+          "brand_name": "釜焼きチャーシュー こじま",
           "store_count": 1
         },
         {
