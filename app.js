@@ -5,7 +5,7 @@ import {createBrandMark} from './representative-marks.js?v=20261027-rockfield';
 import {numberHTML, initNumberMotion} from './number-motion.js?v=20261013-reel';
 import {requestCurrentPosition} from './geolocation.js?v=20261011';
 import {initExpirySearch} from './expiry-search.js?v=20261017-inclusive-countdown';
-import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority, countdownDays} from './expiry.js?v=20261017-inclusive-countdown';
+import {nearestDeadline, latestExpiredDeadline, deadlineLabel, japanDay, voucherEntriesFromLedger, compareDiningPriority, countdownDays} from './expiry.js?v=20261101-deadline-order';
 import {initSpecialFeatures, loadFeatureCatalog} from './special-features.js?v=20261017-hotel-index-live';
 import {guideSearchSelection} from './guide-search.js?v=20261011';
 import {track} from './analytics.js?v=20261011';
@@ -609,24 +609,15 @@ function renderChips(){
       (company.showExpiredDeadline ? latestExpiredDeadline(entries, company.id, now) : null))?.days,
     count: counts.get(company.id) ?? company.officialStores.length
   });
-  // HTML is published in deadline/store-count order from existing D1 aggregates.
-  // Keep that published order while remote catalogues load (no logo jumps).
-  // HTML already displays the complete grid on first paint. Keep that exact
-  // visual order when asynchronous deadlines and store counts arrive. Otherwise
-  // the same cards jump twice: once after issuer/expiry loading and again after
-  // /v1/brands responds. New/unlisted issuers are appended after the existing
-  // positions, with their existing priority comparator used only among newcomers.
-  const stableOrder = new Map([...els.chips.querySelectorAll('[data-issuer]')]
-    .map((button,index) => [button.dataset.issuer,index]));
+  // Reuse mounted logo nodes, but always reconcile their current deadline order.
+  // Published counts avoid temporary count ties while the brand API loads.
+  const publishedCounts = new Map([...els.chips.querySelectorAll('[data-issuer]')]
+    .map(button => [button.dataset.issuer, Number(button.dataset.storeCount) || 0]));
   const available = companies.filter(c => visibleCompanyIds.has(c.id))
-    .map(company => ({company, position:stableOrder.get(company.id), priority:priority(company)}))
-    .sort((a,b) => {
-      if (a.position != null && b.position != null) return a.position-b.position;
-      if (a.position != null) return -1;
-      if (b.position != null) return 1;
-      return compareDiningPriority(a.priority,b.priority);
-    })
-    .map(item => item.company);
+    .sort((a,b) => compareDiningPriority(
+      {...priority(a), count:publishedCounts.get(a.id) ?? priority(a).count},
+      {...priority(b), count:publishedCounts.get(b.id) ?? priority(b).count}
+    ) || a.id.localeCompare(b.id));
   available.forEach((c,index) => {
     const active = selected.has(c.id);
     let group = existingGroups.get(c.id);
@@ -657,7 +648,7 @@ function renderChips(){
     } else {
       badge.className = 'selected-issuer benefit-choice '+(active ? issuerTone(c.id) : 'is-unselected');
       badge.setAttribute('aria-pressed',String(active));
-      // Only the deadline badge may need updating at a Japanese date change.
+      // Refresh the badge along with the current Japanese date and ordering.
       if (badge.dataset.deadlineDay !== dayToken) {
         badge.querySelector('.t-badge')?.remove();
         const bubble = deadlineBubble(c.id);
@@ -1528,3 +1519,4 @@ function renderFavorites(){
     els.favoritesList.appendChild(card);
   }
 }
+

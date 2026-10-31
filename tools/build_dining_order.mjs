@@ -28,10 +28,11 @@ export async function publishDiningOrder(root=resolve(import.meta.dirname,'..'),
   const order=issuers.map(x=>({id:x.id,days:nearestDeadline(entries,x.id,now)?.days,count:counts[x.id]}))
     .sort((a,b)=>compareDiningPriority(a,b)||a.id.localeCompare(b.id));
   const opening=region[1].replace(/ data-order-day="[^"]*"/,'').replace('aria-label="優待会社の選択"','aria-label="優待会社の選択" data-order-day="'+japanDay(now)+'"');
-  const result=html.replace(region[0],opening+order.map(x=>cards.get(x.id)).join('\n          ')+region[3]);
+  const result=html.replace(region[0],opening+order.map(x=>cards.get(x.id).replace(/ data-store-count="[^"]*"/,'').replace('data-issuer="'+x.id+'"','data-issuer="'+x.id+'" data-store-count="'+counts[x.id]+'"')).join('\n          ')+region[3]);
   if(result!==html)await writeFile(htmlPath,result);
   console.log('Published dining order: '+order.map(x=>x.id).join(', '));
   return order;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))
   await publishDiningOrder(process.argv[2]);
+

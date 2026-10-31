@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {compareDiningPriority,nearestDeadline,voucherEntriesFromLedger} from '../expiry.js';
 
-test('dining uses deadlines then actual counts; expired Balnibarbi shares undated ordering',()=>{
+test('dining uses all active deadlines, then counts for undated and expired benefits',()=>{
   const rows=[{id:'tiny',count:10},{id:'balnibarbi',days:-15,count:94},
     {id:'major',count:3000},{id:'today',days:0,count:1},{id:'later',days:136,count:59},
     {id:'near-small',days:46,count:831},{id:'near-large',days:46,count:1229}];
   assert.deepEqual(rows.sort(compareDiningPriority).map(x=>x.id),
-    ['today','near-large','near-small','major','balnibarbi','later','tiny']);
+    ['today','near-large','near-small','later','major','tiny','balnibarbi']);
 });
 
 test('published HTML is already ordered using complete public aggregate counts',async()=>{
@@ -34,8 +34,9 @@ test('Hikari expiry is the confirmed user supplied electronic dining coupon',asy
  assert.equal(row.category,'dining');assert.equal(row.verification_method,'user');
 });
 
-test('a distant Hikari expiry never outranks McDonalds; 60-day boundary matches badges',()=>{
+test('distant expiries and the 60-day boundary also follow deadline order',()=>{
  const rows=[{id:'hikari',days:136,count:59},{id:'mcd',days:167,count:3040},
  {id:'urgent',days:59,count:1},{id:'boundary',days:60,count:100}];
- assert.deepEqual(rows.sort(compareDiningPriority).map(x=>x.id),['urgent','mcd','boundary','hikari']);
+ assert.deepEqual(rows.sort(compareDiningPriority).map(x=>x.id),['urgent','boundary','hikari','mcd']);
 });
+

@@ -1,9 +1,6 @@
-// Dining: only visible urgent deadlines (<60 days) take priority; all others use store counts.
-// A visible expired badge (e.g. Balnibarbi) does not force its card to the bottom.
+// Dining follows every confirmed active deadline, then undated and expired benefits.
 export function compareDiningPriority(a,b) {
-  const active = item => Number.isFinite(item.days) && item.days >= 0 && item.days < 60 && !item.ended;
-  return Number(active(b))-Number(active(a)) ||
-    (active(a) && active(b) ? a.days-b.days : 0) || (b.count || 0)-(a.count || 0);
+  return compareBenefitPriority(a,b);
 }
 // Shared voucher deadlines use Japanese calendar days, independently of device timezone.
 // Active deadlines first, then undated benefits; expired benefits stay last.
@@ -77,3 +74,4 @@ export function voucherEntriesFromLedger(entries, expiryType = '利用期限', i
       issue:entry.issue || '対象発行回未登録'
     }));
 }
+
