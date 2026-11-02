@@ -1,8 +1,3375 @@
 {
   "version": 1,
-  "generated_at": "2026-10-26T13:54:39+09:00",
-  "event_count": 65,
+  "generated_at": "2026-11-01T16:41:00+09:00",
+  "event_count": 226,
   "events": [
+    {
+      "event_id": "a8264e9ee5cc8309a7b723a27c8937ce6c45710f",
+      "at": "2026-11-01T16:41:00+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "kineya",
+      "issuer_code": "9850",
+      "issuer_name": "グルメ杵屋",
+      "store_id": "official:gmo:21336",
+      "name": "うま勝栃木店",
+      "address": "栃木県栃木市平柳町2-16-10",
+      "brand_name": "うま勝"
+    },
+    {
+      "event_id": "7e8e34014cdda46a5f20ab07e268c4c7805d844e",
+      "at": "2026-11-01T16:41:00+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "kineya",
+      "issuer_code": "9850",
+      "issuer_name": "グルメ杵屋",
+      "store_id": "official:gmo:21488",
+      "name": "魚べいつくば研究学園店",
+      "address": "茨城県つくば市研究学園5-18-10",
+      "brand_name": "魚べい"
+    },
+    {
+      "event_id": "2f68bb4bef6aad66d497b68e1b7030c62da6df43",
+      "at": "2026-11-01T16:41:00+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "kineya",
+      "issuer_code": "9850",
+      "issuer_name": "グルメ杵屋",
+      "store_id": "official:gmo:21501",
+      "name": "元気寿司那須塩原店",
+      "address": "栃木県那須塩原市阿波町９９-１",
+      "brand_name": "元気寿司"
+    },
+    {
+      "event_id": "92e02694d8fed81b81c6a66eabcf137f77255df6",
+      "at": "2026-11-01T16:32:12+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "arclands",
+      "issuer_code": "9842",
+      "issuer_name": "アークランズ",
+      "store_id": "official:code:2058",
+      "name": "ごちとん エキュート大宮店",
+      "address": "埼玉県さいたま市大宮区錦町630　エキュート大宮EゾーンE6",
+      "brand_name": "ごちとん"
+    },
+    {
+      "event_id": "63b6af7f8ba2a7f561726439a4cafddca0798e91",
+      "at": "2026-11-01T16:32:12+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "arclands",
+      "issuer_code": "9842",
+      "issuer_name": "アークランズ",
+      "store_id": "official:code:478",
+      "name": "かつや 伊勢崎宮子町店",
+      "address": "群馬県伊勢崎市宮子町2919",
+      "brand_name": "かつや",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 36.328489,
+          "after": 36.328486
+        }
+      ]
+    },
+    {
+      "event_id": "566dd1ea9af0d4eb2b7a957ae9e30e84fc4abab7",
+      "at": "2026-11-01T16:32:12+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "arclands",
+      "issuer_code": "9842",
+      "issuer_name": "アークランズ",
+      "store_id": "official:code:1574",
+      "name": "からやま 千葉祐光店",
+      "address": "千葉県千葉市中央区祐光4-1-1",
+      "brand_name": "からやま",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.61897,
+          "after": 35.618968
+        }
+      ]
+    },
+    {
+      "event_id": "56de8d3c3feb79bf13947da2a142fd8860fc3261",
+      "at": "2026-11-01T16:27:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3212",
+      "name": "和食さと 伊丹北店",
+      "address": "兵庫県伊丹市北本町2-25",
+      "brand_name": "和食さと"
+    },
+    {
+      "event_id": "546b326e5872e28e19f5f516952113307a4faf84",
+      "at": "2026-11-01T16:27:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3126",
+      "name": "天丼・天ぷら本舗 さん天 明石大久保店",
+      "address": "兵庫県明石市大久保町大窪330-1",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "4978cf4bcd14c257a3445a1a1d8c8626b3a6d4e3",
+      "at": "2026-11-01T16:27:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3502",
+      "name": "得得うどん 須崎大間店",
+      "address": "高知県須崎市大間東町4-107",
+      "brand_name": "得得",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "高知県須崎市大間東町107",
+          "after": "高知県須崎市大間東町4-107"
+        },
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 33.4071992,
+          "after": 33.407158491779754
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 133.2871467,
+          "after": 133.2871714929062
+        }
+      ]
+    },
+    {
+      "event_id": "19c830cfd6bb90ce4202b6f9ec1fded2dea1ce9e",
+      "at": "2026-11-01T16:27:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "srs",
+      "issuer_code": "8163",
+      "issuer_name": "SRSホールディングス",
+      "store_id": "official:id:3132",
+      "name": "天丼・天ぷら本舗 さん天 金剛店",
+      "address": "大阪府大阪狭山市半田6丁目1183-1",
+      "brand_name": "さん天"
+    },
+    {
+      "event_id": "f65845c4f9ceca42fc50e87efab154e9452ed782",
+      "at": "2026-11-01T15:54:22+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "fujio",
+      "issuer_code": "2752",
+      "issuer_name": "フジオフードグループ本社",
+      "store_id": "official:id:2802",
+      "name": "天麩羅 えびのや イオン南風原店",
+      "address": "沖縄県島尻郡南風原町字宮平264 イオン南風原 1F",
+      "brand_name": "天麩羅 えびのや"
+    },
+    {
+      "event_id": "ab0b7d517d79aad292ed12f66c3088a3b43165f3",
+      "at": "2026-11-01T15:54:22+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "fujio",
+      "issuer_code": "2752",
+      "issuer_name": "フジオフードグループ本社",
+      "store_id": "official:id:4243",
+      "name": "麺乃庄 よろず庵 南森町店",
+      "address": "大阪府大阪市北区天神橋２丁目４番９号明洋ビル1階",
+      "brand_name": "麺乃庄 よろず庵"
+    },
+    {
+      "event_id": "399df1d3372f9b2be4d829f0b47e598a068d3d41",
+      "at": "2026-11-01T15:54:22+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "fujio",
+      "issuer_code": "2752",
+      "issuer_name": "フジオフードグループ本社",
+      "store_id": "official:id:4244",
+      "name": "かっぽうぎ 南森町店",
+      "address": "大阪府大阪市北区天神橋２丁目４番９号 明洋ビル2階",
+      "brand_name": "かっぽうぎ"
+    },
+    {
+      "event_id": "2235a9aef4a8d2c3055e7727a2f4988a05c51fcd",
+      "at": "2026-11-01T15:22:08+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "daiichikosho",
+      "issuer_code": "7458",
+      "issuer_name": "第一興商",
+      "store_id": "official:id:369",
+      "name": "【10/27 OPEN】全席個室 蒸しと酒 みちる札幌駅前店",
+      "address": "北海道札幌市中央区北4条西2丁目1-1 カメイビル2F",
+      "brand_name": "蒸しと酒 みちる"
+    },
+    {
+      "event_id": "584d62abaa4124e6e314c2f1be6c64ea80ad6d9d",
+      "at": "2026-11-01T14:48:15+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "royal",
+      "issuer_code": "8179",
+      "issuer_name": "ロイヤルホールディングス",
+      "store_id": "official:id:0000000077",
+      "name": "ロイヤルホスト小平学園店",
+      "address": "東京都小平市仲町402",
+      "brand_name": "ロイヤルホスト"
+    },
+    {
+      "event_id": "bc38c5955de18372eadd2181174bc573bf7ed123",
+      "at": "2026-11-01T14:21:30+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "toridoll",
+      "issuer_code": "3397",
+      "issuer_name": "トリドールホールディングス",
+      "store_id": "official:id:111529",
+      "name": "丸亀製麺相馬",
+      "address": "福島県相馬市馬場野字山越272－2",
+      "brand_name": "丸亀製麺"
+    },
+    {
+      "event_id": "7fa6337d9c788666c223f67d869e6b533a40a6c3",
+      "at": "2026-11-01T14:21:30+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "toridoll",
+      "issuer_code": "3397",
+      "issuer_name": "トリドールホールディングス",
+      "store_id": "official:id:113255",
+      "name": "丸亀製麺松山南久米",
+      "address": "愛媛県松山市南久米町535番1​",
+      "brand_name": "丸亀製麺"
+    },
+    {
+      "event_id": "765f1b40a10376869f4fc3d84a8b209aeba6a4fa",
+      "at": "2026-11-01T14:21:30+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "toridoll",
+      "issuer_code": "3397",
+      "issuer_name": "トリドールホールディングス",
+      "store_id": "official:id:113250",
+      "name": "丸亀製麺サントムーン柿田川",
+      "address": "静岡県駿東郡清水町伏見52-1サントムーン柿田川オアシス2F",
+      "brand_name": "丸亀製麺"
+    },
+    {
+      "event_id": "49a86527af49701b939e6eaab210f82b19e4483e",
+      "at": "2026-11-01T14:21:30+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "toridoll",
+      "issuer_code": "3397",
+      "issuer_name": "トリドールホールディングス",
+      "store_id": "official:id:110074",
+      "name": "丸亀製麺イオンモール熊本",
+      "address": "熊本県上益城郡嘉島町大字上島字長池2232イオンモール熊本2F",
+      "brand_name": "丸亀製麺"
+    },
+    {
+      "event_id": "fbe5367774033bf98d729e31cdbb8c52d60bbcf5",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1575",
+      "name": "ごっつええ本舗　関西国際空港第２ターミナルビル（国内線）",
+      "address": "大阪府泉南郡 田尻町泉州空港中13番地及び11-1番地 関西国際空港第2ターミナルビル（国内線）",
+      "brand_name": "ごっつええ本舗",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 34.4374206726636,
+          "after": 34.43759050016315
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 135.2312154553769,
+          "after": 135.23060178079916
+        }
+      ]
+    },
+    {
+      "event_id": "e2356288408280b3a0f3754ac1861d619f4cab48",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1593",
+      "name": "菜菜麻辣湯　ららぽーと安城",
+      "address": "愛知県安城市 大東町9-30 ららぽーと安城 3Fフードコート",
+      "brand_name": "菜菜麻辣湯"
+    },
+    {
+      "event_id": "d6f9ff5576d9a3204a89cde0a6540c5895d74e3d",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:650",
+      "name": "しゃぶ菜　イオンモール大阪ドームシティ",
+      "address": "大阪府大阪市西区 千代崎3-13-1 イオンモール大阪ドームシティ4F",
+      "brand_name": "しゃぶ菜",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "旬菜しゃぶ重　イオンモール大阪ドームシティ",
+          "after": "しゃぶ菜　イオンモール大阪ドームシティ"
+        }
+      ]
+    },
+    {
+      "event_id": "d194815906a92c58a44075f6f7c04c9d6e4ad9cf",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:552",
+      "name": "デザート王国　イオンモール高の原",
+      "address": "京都府木津川市 相楽台1-3 イオンモール高の原4F",
+      "brand_name": "デザート王国",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "D’s Sweet Marche　イオンモール高の原",
+          "after": "デザート王国　イオンモール高の原"
+        }
+      ]
+    },
+    {
+      "event_id": "c9687341a91e10b64ff998a6d2f2509b29837d78",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1581",
+      "name": "中華蕎麦にし乃",
+      "address": "東京都文京区本郷3-30-7 熊野ビル B101",
+      "brand_name": "中華蕎麦にし乃",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2018-02-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "113-0033"
+        }
+      ]
+    },
+    {
+      "event_id": "c50bad2ed7b971f20fa36e04f4933896279d29dc",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1580",
+      "name": "らぁめん小池",
+      "address": "東京都世田谷区上北沢4-19-18 上北沢ハイネスコーポ 1F",
+      "brand_name": "らぁめん小池",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2014-09-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "156-0057"
+        }
+      ]
+    },
+    {
+      "event_id": "c3772908f94a1cbcd42217141092e94bd302cf67",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:499",
+      "name": "銀座　炎蔵",
+      "address": "東京都中央区 銀座4-1 西銀座デパート2階",
+      "brand_name": "銀座　炎蔵"
+    },
+    {
+      "event_id": "a64202307db4ed0fce5180e7dc1dd152cbe54301",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:643",
+      "name": "デザート王国　イオンモール成田",
+      "address": "千葉県成田市 ウイング土屋24 イオンモール成田2F",
+      "brand_name": "デザート王国",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "D’s Sweet Marche　イオンモール成田",
+          "after": "デザート王国　イオンモール成田"
+        }
+      ]
+    },
+    {
+      "event_id": "a17a426c9fe89d81d4e5255b7223c6613afc3a86",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:577",
+      "name": "しゃぶ菜　イオンモール草津",
+      "address": "滋賀県草津市 新浜町300 イオンモール草津1F",
+      "brand_name": "しゃぶ菜",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "旬菜しゃぶ重　イオンモール草津",
+          "after": "しゃぶ菜　イオンモール草津"
+        }
+      ]
+    },
+    {
+      "event_id": "a15c6a4ae64f931f7146753f5d10a9ec547ea28f",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1588",
+      "name": "伊之瀬",
+      "address": "東京都渋谷区代々木2-20-19 新宿東洋ビル 102",
+      "brand_name": "伊之瀬",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2024-09-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "150-0002"
+        }
+      ]
+    },
+    {
+      "event_id": "9b510575f9f1e4ddbed7658f4762ede005ad10a1",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1582",
+      "name": "キング製麺",
+      "address": "東京都北区王子本町1-14-1 高崎ビル 1F",
+      "brand_name": "キング製麺",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2019-03-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "114-0022"
+        }
+      ]
+    },
+    {
+      "event_id": "9043ff5e11043b4d575d8c6b544c040d29fe7fae",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1589",
+      "name": "釜焼きチャーシュー こじま",
+      "address": "東京都豊島区南池袋2-17-11",
+      "brand_name": "釜焼きチャーシュー こじま",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2026-04-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "171-0022"
+        }
+      ]
+    },
+    {
+      "event_id": "8c419af8ca85416cb982115630bee4e8b389e168",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:575",
+      "name": "しゃぶ菜　イオンモール新瑞橋",
+      "address": "愛知県名古屋市南区 菊住1-7-10 イオンモール新瑞橋3F",
+      "brand_name": "しゃぶ菜",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "旬菜しゃぶ重　イオンモール新瑞橋",
+          "after": "しゃぶ菜　イオンモール新瑞橋"
+        }
+      ]
+    },
+    {
+      "event_id": "83ca3016dabe62b1b062294f8db7f6b74436d6ad",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1574",
+      "name": "ラーメンBOX　関西国際空港第2ターミナルビル（国内線）",
+      "address": "大阪府泉南郡 田尻町泉州空港中13番地及び11-1番地 関西国際空港第2ターミナルビル（国内線）",
+      "brand_name": "ラーメンBOX　関西国際空港第2ターミナルビル（国内線）",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 34.4374206726636,
+          "after": 34.437490283893126
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 135.2312154553769,
+          "after": 135.23084573970328
+        }
+      ]
+    },
+    {
+      "event_id": "58704272317952ff32cc382fe6861f964d5dcc3f",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:805",
+      "name": "デザート王国　イオンモール津南",
+      "address": "三重県津市 高茶屋小森町145番地 イオンモール津南3F",
+      "brand_name": "デザート王国",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "Creperie　Cafe　Sucre　イオンモール津南",
+          "after": "デザート王国　イオンモール津南"
+        }
+      ]
+    },
+    {
+      "event_id": "54ed19a2b78eb6f241154f0d431d71dcc1d8dee8",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1586",
+      "name": "あいだや２",
+      "address": "東京都台東区上野6-7-19",
+      "brand_name": "あいだや２",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2025-03-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "110-0005"
+        }
+      ]
+    },
+    {
+      "event_id": "43aeee5c15e18ebc82eb74e5ac8479f0441ccb78",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1585",
+      "name": "あいだや",
+      "address": "東京都台東区上野6-1-6 御徒町グリーンハイツ 101B",
+      "brand_name": "あいだや",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2023-10-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "110-0005"
+        }
+      ]
+    },
+    {
+      "event_id": "43553371d8ebf270cb01f7190a9d2c4ae0720cf4",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:662",
+      "name": "しゃぶ菜　イオンモール熊本",
+      "address": "熊本県上益城郡 嘉島町大字上島字長池2232 イオンモール熊本1F",
+      "brand_name": "しゃぶ菜"
+    },
+    {
+      "event_id": "38533f545a42fc8bfe56d75dafd81791306dc6e4",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1583",
+      "name": "つけめん金龍",
+      "address": "東京都千代田区神田司町2-15-16 サトウビル 1F",
+      "brand_name": "つけめん金龍",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "つけめん"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2021-05-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "114-0022"
+        }
+      ]
+    },
+    {
+      "event_id": "32eba09ca6a6ebfad92d9eab505d2be7b3221f4f",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1587",
+      "name": "本郷苑",
+      "address": "東京都文京区本郷2-26-9 1F",
+      "brand_name": "本郷苑",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2024-03-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "113-0033"
+        }
+      ]
+    },
+    {
+      "event_id": "25ef3f760fa3fffc12ca58c63bbd03440c6d5afc",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1592",
+      "name": "菜菜麻辣湯 イクスピアリ店",
+      "address": "千葉県浦安市 舞浜1-4 イクスピアリ1F イクスピアリ・キッチン内",
+      "brand_name": "菜菜麻辣湯"
+    },
+    {
+      "event_id": "00a570a28f27d3739554bf3ca3d62f1e5e8a98f7",
+      "at": "2026-11-01T14:19:10+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "create",
+      "issuer_code": "3387",
+      "issuer_name": "クリエイト・レストランツ・ホールディングス",
+      "store_id": "official:id:1584",
+      "name": "こいけのいえけい",
+      "address": "東京都文京区千石4-25-6 夏野マンション 102",
+      "brand_name": "こいけのいえけい",
+      "changed_fields": [
+        {
+          "key": "business_type",
+          "label": "業態",
+          "before": null,
+          "after": "ラーメン"
+        },
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": null,
+          "after": "0000-00-00"
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": null,
+          "after": "2022-10-01"
+        },
+        {
+          "key": "original_id",
+          "label": "original_id",
+          "before": null,
+          "after": "0"
+        },
+        {
+          "key": "postal_code",
+          "label": "郵便番号",
+          "before": null,
+          "after": "101-0048"
+        }
+      ]
+    },
+    {
+      "event_id": "dad11a4cce858855145740a9fa6d67108223a7f3",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000006425",
+      "name": "吉野家 関店（テイクアウト専門店）",
+      "address": "岐阜県関市緑ヶ丘２丁目５－４０",
+      "brand_name": "テイクアウト・デリバリー専門店",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.489368,
+          "after": 35.489029
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 136.902487,
+          "after": 136.902523
+        }
+      ]
+    },
+    {
+      "event_id": "d45a546a38e656c60da63df8d2d4cc400f02fcb8",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000587",
+      "name": "吉野家 枚方東香里店",
+      "address": "大阪府枚方市東香里南町５２－３０",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "d1595447b28677241d79349aa703083a4fc7fcbf",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012644",
+      "name": "吉野家 マックスバリュ平塚河内店（テイクアウト・デリバリー専門店）",
+      "address": "神奈川県平塚市河内２丁目１８－５５",
+      "brand_name": "テイクアウト・デリバリー専門店",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.340098,
+          "after": 35.34011
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 139.314552,
+          "after": 139.314089
+        }
+      ]
+    },
+    {
+      "event_id": "d0d63f04ab60f0b602c73295ebd07afef51c3b98",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000001331",
+      "name": "はなまるうどん りんくうシークル店",
+      "address": "大阪府泉佐野市りんくう往来南3 りんくうプレジャータウン 2Fフードコート",
+      "brand_name": "はなまるうどん"
+    },
+    {
+      "event_id": "b73f46b4ba7b5d384d0e0d7223ea1fc4eec9bae6",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000609",
+      "name": "吉野家 ３２９号線与那原店",
+      "address": "沖縄県島尻郡与那原町与那原１０４３",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "b365c350c2df1cf71172ebf6a04f9143f9001a51",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000004508",
+      "name": "吉野家 東林間店（テイクアウト・デリバリー専門店） - 閉店 -",
+      "address": "神奈川県相模原市南区上鶴間７丁目６－６中島ビル１階",
+      "brand_name": "テイクアウト・デリバリー専門店",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "吉野家 東林間店（テイクアウト・デリバリー専門店）",
+          "after": "吉野家 東林間店（テイクアウト・デリバリー専門店） - 閉店 -"
+        }
+      ]
+    },
+    {
+      "event_id": "b096b02adf5d4dbbf0322a641ef10cb07a184adf",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012741",
+      "name": "吉野家 枚方東香里店",
+      "address": "大阪府枚方市東香里南町５２－３０",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "aafe0b7b57c07e095436a91b7d19424a4d2ff12a",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000011430",
+      "name": "吉野家 和歌山秋月店",
+      "address": "和歌山県和歌山市秋月２８１－１",
+      "brand_name": "クッキング＆コンフォート",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 34.226765,
+          "after": 34.226858
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 135.207588,
+          "after": 135.207654
+        }
+      ]
+    },
+    {
+      "event_id": "a255b60cf44ae5d9dc702e6aa9378c00453091d9",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012660",
+      "name": "吉野家 渋谷道玄坂通店",
+      "address": "東京都渋谷区道玄坂２丁目２５－１２",
+      "brand_name": "クッキング＆コンフォート",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.657084,
+          "after": 35.657083
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 139.700086,
+          "after": 139.700121
+        }
+      ]
+    },
+    {
+      "event_id": "6de7a2a3e01e3de568f8039809a72f263ac96ae5",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000384",
+      "name": "吉野家 尾頭橋店（休業中）",
+      "address": "愛知県名古屋市中川区尾頭橋１丁目８－９",
+      "brand_name": "吉野家",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "吉野家 尾頭橋店",
+          "after": "吉野家 尾頭橋店（休業中）"
+        }
+      ]
+    },
+    {
+      "event_id": "60eb4309686238b0c30aa3bb86fb3fb0a0f6d5e1",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000664",
+      "name": "吉野家 富山豊田町店",
+      "address": "富山県富山市豊田町２－１２３－１",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "58b7a3bc7cb153d5517179a3398613394fc4535c",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012744",
+      "name": "吉野家 ３２９号線与那原店",
+      "address": "沖縄県島尻郡与那原町与那原１０４３",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "4f321a8c6c70a5de9c9166c958222bf95b55c6b5",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012746",
+      "name": "吉野家 習志野台店",
+      "address": "千葉県船橋市習志野１丁目９－２３",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "49daf5677214f99585a717f7fc842a24a2ccc84d",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000008188",
+      "name": "かるびのとりこ 春日部店",
+      "address": "埼玉県春日部市中央４丁目７－６",
+      "brand_name": "かるびのとりこ",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.969702,
+          "after": 35.969701
+        }
+      ]
+    },
+    {
+      "event_id": "3e3e7032a6187f0b8d7bc48432ac734faed93934",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012742",
+      "name": "吉野家 菊川加茂店",
+      "address": "静岡県菊川市加茂６１９０",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "3c5009c2acc04fdf2a47a043ace6093b4dd02187",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000000594",
+      "name": "吉野家 習志野台店",
+      "address": "千葉県船橋市習志野１丁目９－２３",
+      "brand_name": "吉野家"
+    },
+    {
+      "event_id": "296c243d304f01bc76da75aa87ede84e6c2a1b60",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012743",
+      "name": "吉野家 富山豊田町店",
+      "address": "富山県富山市豊田町２－１２３－１",
+      "brand_name": "クッキング＆コンフォート"
+    },
+    {
+      "event_id": "1f47f96b5d44ebbace494afe135c84e9da1044d5",
+      "at": "2026-11-01T13:53:53+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "yoshinoya",
+      "issuer_code": "9861",
+      "issuer_name": "吉野家ホールディングス",
+      "store_id": "official:id:0000012745",
+      "name": "うまげな ミーナ津田沼店",
+      "address": "千葉県習志野市津田沼1-3-1",
+      "brand_name": "うまげな"
+    },
+    {
+      "event_id": "e0c4b9717b74bcc3f3a2f190153cece26e241c78",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:4064",
+      "name": "ガスト 奈良藤ノ木台店（から好し取扱店）",
+      "address": "奈良県奈良市藤ノ木台１丁目１－２３",
+      "brand_name": "ガスト"
+    },
+    {
+      "event_id": "b11e5c1a7e810175ec721563abe72a883b7193e3",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8906",
+      "name": "ペルティカ 多摩境店",
+      "address": "東京都町田市小山町１１５８－１",
+      "brand_name": "ペルティカ"
+    },
+    {
+      "event_id": "9601f6bc1fbf7ab090c70eb18cc260b6ed1a8f52",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8864",
+      "name": "点心甜心 志木店",
+      "address": "埼玉県志木市本町５丁目８－１４",
+      "brand_name": "点心甜心",
+      "changed_fields": [
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2049.12.31",
+          "after": ""
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": "2026.05.01",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "857eb1656fe63b4377b50fb15a6f7fa65d16565b",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8907",
+      "name": "しゃぶ葉 イオンモール福岡伊都店",
+      "address": "福岡県福岡市西区北原１丁目３－１　　　別館１階",
+      "brand_name": "しゃぶ葉"
+    },
+    {
+      "event_id": "7df942b6444374e7e7533ca94dd39e87043b7ded",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8859",
+      "name": "しゃぶ葉 北仙台店",
+      "address": "宮城県仙台市青葉区昭和町３－７",
+      "brand_name": "しゃぶ葉",
+      "changed_fields": [
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2049.12.31",
+          "after": ""
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": "2026.05.02",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "3412ff845d47f0350c0f66fe4d5d295336118331",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8858",
+      "name": "バーミヤン 苫小牧店",
+      "address": "北海道苫小牧市明野新町１丁目１－１０",
+      "brand_name": "バーミヤン",
+      "changed_fields": [
+        {
+          "key": "close_date",
+          "label": "閉店日",
+          "before": "2049.12.31",
+          "after": ""
+        },
+        {
+          "key": "open_date",
+          "label": "開店日",
+          "before": "2026.04.29",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "138d9fc804d48ed930b036a6e728389ae2b7a571",
+      "at": "2026-11-01T13:43:27+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "skylark",
+      "issuer_code": "3197",
+      "issuer_name": "すかいらーくホールディングス",
+      "store_id": "official:id:8905",
+      "name": "八郎そば 大和深見店",
+      "address": "神奈川県大和市深見西４丁目４－４",
+      "brand_name": "八郎そば"
+    },
+    {
+      "event_id": "85c6d426570118910a835f778517a63348acab24",
+      "at": "2026-11-01T13:29:26+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "monogatari",
+      "issuer_code": "3097",
+      "issuer_name": "物語コーポレーション",
+      "store_id": "official:id:2893",
+      "name": "お好み焼本舗 岡崎羽根店",
+      "address": "愛知県岡崎市羽根北町5-5-3",
+      "brand_name": "お好み焼本舗",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0564-57-0147",
+          "after": "050-1725-8384"
+        }
+      ]
+    },
+    {
+      "event_id": "4899a90ba90a5a51993aa0d07bc804e94b283c67",
+      "at": "2026-11-01T13:29:26+09:00",
+      "run_date": "2026-11-01",
+      "kind": "added",
+      "issuer_id": "monogatari",
+      "issuer_code": "3097",
+      "issuer_name": "物語コーポレーション",
+      "store_id": "official:shop-code:syodai_marugen:6309",
+      "name": "丸源ラーメン 旭川永山店",
+      "address": "北海道旭川市永山3条10-2-2",
+      "brand_name": "丸源ラーメン"
+    },
+    {
+      "event_id": "08299756edac0f24568da35e75401b75461b3509",
+      "at": "2026-11-01T13:29:26+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "monogatari",
+      "issuer_code": "3097",
+      "issuer_name": "物語コーポレーション",
+      "store_id": "official:id:3126",
+      "name": "焼きたてのかるび 安城南店",
+      "address": "愛知県安城市南町17-16",
+      "brand_name": "焼きたてのかるび",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "0566-91-6350"
+        }
+      ]
+    },
+    {
+      "event_id": "fea0fe5b70506e1f60b92dc10907ca0a5e4cb3b9",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24124",
+      "name": "いろはにほへと 遠軽店",
+      "address": "北海道紋別郡遠軽町大通２丁目2−１",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0158-46-6168",
+          "after": "050-1722-1899"
+        }
+      ]
+    },
+    {
+      "event_id": "fe6d8f930ae0d0b222fd3a5301e81b9b3340ea3b",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:137917",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場 新宿歌舞伎町ゴジラロード店",
+      "address": "東京都新宿区 歌舞伎町1-15-5ビックレモンビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-5287-1588",
+          "after": "050-1785-8404"
+        }
+      ]
+    },
+    {
+      "event_id": "fdbd40e6aa7f61d153725d628da18a8c1771ff8d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26758",
+      "name": "寧々家 一関駅前店",
+      "address": "岩手県一関市駅前3",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-4800",
+          "after": "050-1785-0128"
+        }
+      ]
+    },
+    {
+      "event_id": "fc925fd198b1dee3a2fc6ad2392cc23aa1c214fd",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26794",
+      "name": "いろはにほへと 長岡駅前店",
+      "address": "新潟県長岡市東坂之上町1丁目6-10",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-1827",
+          "after": "050-1725-6289"
+        }
+      ]
+    },
+    {
+      "event_id": "f8bb56eda5bd8e9fdd6162c529f85d11e1bafcc5",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:22371",
+      "name": "いろはにほへと 伊達店",
+      "address": "北海道伊達市網代町11−１",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0142-22-1681",
+          "after": "050-1792-9171"
+        }
+      ]
+    },
+    {
+      "event_id": "f6998753b6e8ed60ac4d7a6804575eb9ab99820b",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:32150",
+      "name": "寧々家 福島駅前店",
+      "address": "福島県福島市置賜町5-34",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6538",
+          "after": "050-1725-8572"
+        }
+      ]
+    },
+    {
+      "event_id": "f3999f42e20e8220c4ef9dc7f86984066d8cbc3a",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24125",
+      "name": "いろはにほへと 深川店",
+      "address": "北海道深川市三条９−８",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0164-26-1682",
+          "after": "050-1784-7285"
+        }
+      ]
+    },
+    {
+      "event_id": "f1c1878ced1976993d58c7474e12175ec7275d5c",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26741",
+      "name": "寧々家 一宮駅前店",
+      "address": "愛知県一宮市栄3丁目8-18",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-1383",
+          "after": "050-1792-5690"
+        }
+      ]
+    },
+    {
+      "event_id": "eedd8a4eb6b5e1cfee8134c9e08a88a4d9adf54e",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24997",
+      "name": "かっぱ寿司 貝塚店 Kappa Sushi Kaizuka",
+      "address": "大阪府貝塚市小瀬1-27-1",
+      "brand_name": ""
+    },
+    {
+      "event_id": "eb0c2f91fe8659c1b6ffbfb420412c0f227518d4",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26474",
+      "name": "海へ 南３条店",
+      "address": "北海道札幌市中央区南３条西２丁目木下ビル１階",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-290-4129",
+          "after": "050-1726-4576"
+        }
+      ]
+    },
+    {
+      "event_id": "eafbde98c84b157e02793916cdbe7d011f84b8f0",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26753",
+      "name": "寧々家 長岡駅前店",
+      "address": "新潟県長岡市大手通1丁目4-3ドルミー駅前ビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-7415",
+          "after": "050-1793-4616"
+        }
+      ]
+    },
+    {
+      "event_id": "e9ff680e8ae33b9e8df14b910dd723de0db6cbc6",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26697",
+      "name": "寧々家 水戸駅南口店",
+      "address": "茨城県水戸市桜川1丁目4-53F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-2479",
+          "after": "050-1786-2449"
+        }
+      ]
+    },
+    {
+      "event_id": "e671d614d53676e82a606d51e65f13d7ec64b29b",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:150809",
+      "name": "甘太郎食堂 逗子店",
+      "address": "神奈川県逗子市逗子５丁目２−５１",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "【8月19日OPEN】甘太郎食堂 逗子店",
+          "after": "甘太郎食堂 逗子店"
+        }
+      ]
+    },
+    {
+      "event_id": "e26cb0f194bf3b844e309ef41786568a870e093d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26714",
+      "name": "いろはにほへと 飯田駅前店",
+      "address": "長野県飯田市中央通り4丁目40",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-4347",
+          "after": "050-1726-3836"
+        }
+      ]
+    },
+    {
+      "event_id": "dee03f0ceac6a6f448d1741cf5a388dbd02da6b9",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23990",
+      "name": "北の味紀行と地酒 北海道 溝の口店",
+      "address": "神奈川県川崎市高津区溝口1-1-3味の食彩館5F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "044-813-2260",
+          "after": "050-1725-5705"
+        }
+      ]
+    },
+    {
+      "event_id": "ddfac6b973d1a3d2f617a9a3579c0119eef28b90",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24038",
+      "name": "上方ごちそう処 贔屓屋高槻店",
+      "address": "大阪府高槻市高槻町10-12",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "072-681-3514",
+          "after": "050-1726-5654"
+        }
+      ]
+    },
+    {
+      "event_id": "dc22f37ec20c0d7ae2f7707bd5ef4c2a85d6558d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:64672",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場品川店",
+      "address": "東京都港区港南２－２－１ミナトビル４Ｆ",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-6433-1611",
+          "after": "050-1726-7699"
+        }
+      ]
+    },
+    {
+      "event_id": "d4ea148a20083ff42cf979306f8caee44a876198",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26803",
+      "name": "いろはにほへと 会津若松店",
+      "address": "福島県会津若松市駅前町6-42山惣センタービル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-1181",
+          "after": "050-1726-7742"
+        }
+      ]
+    },
+    {
+      "event_id": "d3c2a9ac724ca97c48a7f40acdc6a365f013fe8f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26754",
+      "name": "寧々家 新潟駅前店",
+      "address": "新潟県新潟市中央区東大通1丁目2-30第3マルカビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-2458",
+          "after": "050-1726-4463"
+        }
+      ]
+    },
+    {
+      "event_id": "d04493aed57ea531cd67c89252ca3e80be592909",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26750",
+      "name": "いろはにほへと 勝田駅前店",
+      "address": "茨城県ひたちなか市勝田中央3-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-9363",
+          "after": "050-1722-9851"
+        }
+      ]
+    },
+    {
+      "event_id": "ccfe822f76e0db98792db016c43acfb5e1fdd2e5",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26757",
+      "name": "いろはにほへと 鶴岡駅前店",
+      "address": "山形県鶴岡市末広町6-2ちぐさビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6525",
+          "after": "050-1726-7682"
+        }
+      ]
+    },
+    {
+      "event_id": "ccd5675c5641c2bb5d57b8f182466be89bcae9d5",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23991",
+      "name": "北の味紀行と地酒 北海道 朝霞台店",
+      "address": "埼玉県朝霞市浜崎1-3-6ルクールB1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "048-486-0850",
+          "after": "050-1807-9263"
+        }
+      ]
+    },
+    {
+      "event_id": "c82054191d5d96e5625113d4c3d896b418144f64",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26737",
+      "name": "いろはにほへと 彦根駅前店",
+      "address": "滋賀県彦根市大東町2-32",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-3612",
+          "after": "050-1808-6754"
+        }
+      ]
+    },
+    {
+      "event_id": "c4ebec9ef9b9a06b8d1a738f0d5b448a614963a9",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23996",
+      "name": "北の味紀行と地酒 北海道 八王子店",
+      "address": "東京都八王子市旭町2-5八王子ツインタワーA館6F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "042-655-1277",
+          "after": "050-1721-2815"
+        }
+      ]
+    },
+    {
+      "event_id": "c12939c64540f6d445fa12322f0af94818e9f98f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26685",
+      "name": "寧々家 山形大野目店",
+      "address": "山形県山形市大野目2丁目57-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-9512",
+          "after": "050-1785-9078"
+        }
+      ]
+    },
+    {
+      "event_id": "bcce98f8a81cd4e1a4b21eec34f0623a2d6670cd",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:150800",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場 川崎リバーク店",
+      "address": "神奈川県川崎市川崎区駅前本町12‐1リバーク川崎 B1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "【7月23日OPEN】格安ビールと鉄鍋餃子 3・6・5酒場 川崎リバーク店",
+          "after": "格安ビールと鉄鍋餃子 3・6・5酒場 川崎リバーク店"
+        }
+      ]
+    },
+    {
+      "event_id": "b9e27a5d9875b412979118a40914a83c1452fa55",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26702",
+      "name": "寧々家 山形あかねヶ丘店",
+      "address": "山形県山形市あかねケ丘3丁目19-7",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-3838",
+          "after": "050-1807-9084"
+        }
+      ]
+    },
+    {
+      "event_id": "af4b76f0a0b5fc7f1f667006f06af9223cfd62b3",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23934",
+      "name": "北の味紀行と地酒 北海道 東京オペラシティ店",
+      "address": "東京都新宿区西新宿3-20-2東京オペラシティタワー53F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-5353-7111",
+          "after": "050-1793-5583"
+        }
+      ]
+    },
+    {
+      "event_id": "af0ced26cdfd60bfd5802fd070b5f46fca907d40",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26704",
+      "name": "寧々家 伊那店",
+      "address": "長野県伊那市坂下3340-イ",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-2609",
+          "after": "050-1720-6212"
+        }
+      ]
+    },
+    {
+      "event_id": "ae028396b47f9fb114379e303b77b874756434ae",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24122",
+      "name": "いろはにほへと 帯広緑ヶ丘店",
+      "address": "北海道帯広市西8条南17-3-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0155-20-5077",
+          "after": "050-1725-6651"
+        }
+      ]
+    },
+    {
+      "event_id": "ac08af8b87970b0b3046b3ea6c33d9d096b0e3a1",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26752",
+      "name": "いろはにほへと 古川駅前店",
+      "address": "宮城県大崎市古川台町7-15",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6623",
+          "after": "050-1725-3451"
+        }
+      ]
+    },
+    {
+      "event_id": "ab9eb32714118b3380229bba94c6617362166fe3",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26721",
+      "name": "寧々家 ひたちなか店",
+      "address": "茨城県ひたちなか市大字東石川1655-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "029-272-8154",
+          "after": "050-1794-7656"
+        }
+      ]
+    },
+    {
+      "event_id": "a8772120b0a4a9305fd44c71e3fee7163e0ace30",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26769",
+      "name": "いろはにほへと 伊那店",
+      "address": "長野県伊那市坂下3319-5",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-1579",
+          "after": "050-1785-9069"
+        }
+      ]
+    },
+    {
+      "event_id": "a57138d9eeba21a751f1be744a3ec1d0329d4664",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26751",
+      "name": "いろはにほへと 松阪駅前店",
+      "address": "三重県松阪市日野町616",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-2954",
+          "after": "050-1726-6957"
+        }
+      ]
+    },
+    {
+      "event_id": "a50011ead1615b57953575e840d5023f83202215",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26720",
+      "name": "いろはにほへと 八戸八日町店",
+      "address": "青森県八戸市大字八日町41",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-9350",
+          "after": "050-1726-9480"
+        }
+      ]
+    },
+    {
+      "event_id": "9edf9895ae552c5d5ac69923f4b397141d488b98",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24062",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場横浜南幸店",
+      "address": "神奈川県横浜市西区南幸2-15-1 ティーノビル4F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "045-410-0065",
+          "after": "050-1722-6679"
+        }
+      ]
+    },
+    {
+      "event_id": "9cce69a5558cc890705c5eb44b4a8a7a8f49ed82",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24940",
+      "name": "かっぱ寿司 和歌山店 Kappa Sushi Wakayama",
+      "address": "和歌山県和歌山市元町奉行丁２−１２",
+      "brand_name": ""
+    },
+    {
+      "event_id": "9c9e24d70ea109d83ba097e4e9a67bac6c6ab7c2",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26710",
+      "name": "寧々家 栃木店",
+      "address": "栃木県栃木市箱森町48-11",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6536",
+          "after": "050-1785-0327"
+        }
+      ]
+    },
+    {
+      "event_id": "9a199d9525b33394369c41dc914e84eb2d9876ab",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26774",
+      "name": "いろはにほへと 山形駅前店",
+      "address": "山形県山形市香澄町3丁目1-9後藤ビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-1824",
+          "after": "050-1793-8399"
+        }
+      ]
+    },
+    {
+      "event_id": "98105ca3bef1bdf2061a3e9837af9c177c814b32",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:134294",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場 調布店",
+      "address": "東京都調布市布田1-41−２原政ビル 4F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "042-442-6110",
+          "after": "050-1726-3260"
+        }
+      ]
+    },
+    {
+      "event_id": "955b5b2f8b310e48c8430f6d195f51b98142933b",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23941",
+      "name": "北の味紀行と地酒 北海道 渋谷駅前店",
+      "address": "東京都渋谷区渋谷1-24-10渋谷全線座ビル３F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-5774-0625",
+          "after": "050-1722-3712"
+        }
+      ]
+    },
+    {
+      "event_id": "92298c26e36e7de769aae4cb15e737353dd6ec63",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26475",
+      "name": "海へ 南６条店",
+      "address": "北海道札幌市中央区南6条西3ニューオリンピアビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-531-1682",
+          "after": "050-1785-3792"
+        }
+      ]
+    },
+    {
+      "event_id": "8f0f095a091e2684a9c4e875ee8e4978e8c3fea5",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26485",
+      "name": "いろはにほへと 栄町店",
+      "address": "北海道札幌市東区北４２条東15−２今崎ビル 2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-743-1682",
+          "after": "050-1725-4929"
+        }
+      ]
+    },
+    {
+      "event_id": "862b07afa9299a5a4b3b788c44a27a86329236cb",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26763",
+      "name": "いろはにほへと 盛岡駅前店",
+      "address": "岩手県盛岡市盛岡駅前通9-2ステーションサイド甚ビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-2475",
+          "after": "050-1808-8250"
+        }
+      ]
+    },
+    {
+      "event_id": "8591621616646be7bcb9fe84deb4cd5354d79558",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26734",
+      "name": "寧々家 阿見店",
+      "address": "茨城県稲敷郡阿見町住吉2丁目15-3",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-0247",
+          "after": "050-1794-5946"
+        }
+      ]
+    },
+    {
+      "event_id": "857cf405f3cdb0952ecc48c11dbb7e03b8bee721",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:22374",
+      "name": "いろはにほへと 千歳店",
+      "address": "北海道千歳市幸町3-19-1ふじやセブンビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0123-26-1682",
+          "after": "050-1785-9426"
+        }
+      ]
+    },
+    {
+      "event_id": "8348b60887a981fec24e23527c466cfcb3f2c30d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24933",
+      "name": "かっぱ寿司 奈良柏木店 Kappa Sushi Nara Kashiwagi",
+      "address": "奈良県奈良市柏木町413-1",
+      "brand_name": ""
+    },
+    {
+      "event_id": "82dcaead68c696b88d768fd2d6ef5dd9154e0c3a",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26469",
+      "name": "いろはにほへと 北見駅前店",
+      "address": "北海道北見市大通西3−２サンロードビル 1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0157-26-1682",
+          "after": "050-1785-8696"
+        }
+      ]
+    },
+    {
+      "event_id": "806cef6aafec5625b561a17dcc61a5e15a0c6019",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:150799",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場 春日部駅前店",
+      "address": "埼玉県春日部市中央1-1-8第6宝光ビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "【7月17日OPEN】格安ビールと鉄鍋餃子 3・6・5酒場 春日部駅前店",
+          "after": "格安ビールと鉄鍋餃子 3・6・5酒場 春日部駅前店"
+        }
+      ]
+    },
+    {
+      "event_id": "7f64ad24bf6c64495c637785ee55d6bbd493bdea",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26718",
+      "name": "いろはにほへと 大垣駅前店",
+      "address": "岐阜県大垣市高屋町1丁目150-3エイゲンビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-2131",
+          "after": "050-1724-5304"
+        }
+      ]
+    },
+    {
+      "event_id": "7ec4b303e84d9fd34a5583854fb5e6f4a228d03e",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26476",
+      "name": "海へ 釧路中央店",
+      "address": "北海道釧路市末広町２丁目１−１浪漫座ビル 2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0154-32-2201",
+          "after": "050-1725-3642"
+        }
+      ]
+    },
+    {
+      "event_id": "7b9389c726c8795d6e6bb6c3752637b15199690f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26747",
+      "name": "寧々家 豊橋駅前店",
+      "address": "愛知県豊橋市広小路1丁目5",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-1209",
+          "after": "050-1725-2948"
+        }
+      ]
+    },
+    {
+      "event_id": "7b16701438743b2040885bc9d803a39f86e99b7f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "removed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24999",
+      "name": "かっぱ寿司 堺美原店 Kappa Sushi Sakai Mihara",
+      "address": "大阪府堺市美原区黒山169-1",
+      "brand_name": ""
+    },
+    {
+      "event_id": "7b032c8001d6d19b7325f800a89355f65d05c82d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26706",
+      "name": "寧々家 多賀城店",
+      "address": "宮城県多賀城市八幡1丁目3-46",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-8043",
+          "after": "050-1726-7095"
+        }
+      ]
+    },
+    {
+      "event_id": "7afb3bc14cc78012e8b385cdf0c084ea8206da1f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:23995",
+      "name": "北の味紀行と地酒 北海道 目黒西口店",
+      "address": "東京都品川区上大崎2-27-1サンフェリスタ目黒4F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-3495-1530",
+          "after": "050-1721-7435"
+        }
+      ]
+    },
+    {
+      "event_id": "79ff35d2ed6bfffc35ed18e8cfc126e07788579f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26748",
+      "name": "いろはにほへと 一関駅前店",
+      "address": "岩手県一関市駅前401F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6527",
+          "after": "050-1807-3870"
+        }
+      ]
+    },
+    {
+      "event_id": "7904d38fdb1d2e6ecffb089fddb99e2f83f0250f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26707",
+      "name": "寧々家 秋田泉店",
+      "address": "秋田県秋田市泉南1丁目2-102F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "018-864-3611",
+          "after": "050-1785-7636"
+        }
+      ]
+    },
+    {
+      "event_id": "782c28e3755764791b5697e0f79765e782496de2",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26746",
+      "name": "いろはにほへと 大曲駅前店",
+      "address": "秋田県大仙市大曲通町2-18",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-9651",
+          "after": "050-1720-5978"
+        }
+      ]
+    },
+    {
+      "event_id": "74d7d597526e0ba48619658c96c5f25fea646e67",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:83859",
+      "name": "BEER DINER SUPERDRY TOKYO",
+      "address": "東京都墨田区吾妻橋１丁目２３−３６アサヒビール アネックス2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "ビアダイナー スーパードライ トウキョウ",
+          "after": "BEER DINER SUPERDRY TOKYO"
+        }
+      ]
+    },
+    {
+      "event_id": "6dc25eee1308b64f685ba025edd99ece3c42cdd5",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26775",
+      "name": "いろはにほへと 石巻駅前店",
+      "address": "宮城県石巻市穀町12-25",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-1878",
+          "after": "050-1726-9117"
+        }
+      ]
+    },
+    {
+      "event_id": "62807c8be4895fcea506c06899fb70e6721a559c",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26738",
+      "name": "いろはにほへと 水沢駅前店",
+      "address": "岩手県奥州市水沢中町117マルカンビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-1767",
+          "after": "050-1721-9769"
+        }
+      ]
+    },
+    {
+      "event_id": "58eed4665d37ceb3af0d4837242f7cbf2e3a7cad",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26755",
+      "name": "寧々家 古川駅前店",
+      "address": "宮城県大崎市古川駅前大通2丁目3-8",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-8240",
+          "after": "050-1726-3970"
+        }
+      ]
+    },
+    {
+      "event_id": "560dde021627407f3734fea7f0e31ab542a9abc2",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24017",
+      "name": "格安ビールと鉄鍋餃子 ３・６・５酒場 千葉駅前店",
+      "address": "千葉県千葉市中央区富士見２丁目５−１江沢ビル 6F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "043-202-7624",
+          "after": "050-1808-6971"
+        }
+      ]
+    },
+    {
+      "event_id": "553d8858ecaa3c3752fd4754a0d082976723d41f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24012",
+      "name": "北の味紀行と地酒 北海道 秋葉原電気街北口店",
+      "address": "東京都千代田区外神田１丁目１８−１９bito akiba ９F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-3527-1433",
+          "after": "050-1726-4160"
+        }
+      ]
+    },
+    {
+      "event_id": "52fe365dca5ea3ee854bf2bf4595ce496a5f717d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26678",
+      "name": "寧々家 仙台幸町店",
+      "address": "宮城県仙台市宮城野区大梶11-3",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "022-292-1896",
+          "after": "050-1785-1363"
+        }
+      ]
+    },
+    {
+      "event_id": "4e4e0e917959838e22bedcbf95b7e27a7c26c17c",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26471",
+      "name": "いろはにほへと すすきの南7条店",
+      "address": "北海道札幌市中央区南７条西３丁目belle7番館ビルB1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-533-0330",
+          "after": "050-1726-6755"
+        }
+      ]
+    },
+    {
+      "event_id": "4d9d70266b55249023484f41386770d83419f23b",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24050",
+      "name": "上方ごちそう処 贔屓屋三宮店",
+      "address": "兵庫県神戸市中央区北長狭通1-4-10幸楽ビルB1-2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "078-332-5456",
+          "after": "050-1725-1367"
+        }
+      ]
+    },
+    {
+      "event_id": "45a57ef0178278d76647b32bdad1085f06f8f85c",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26478",
+      "name": "いろはにほへと 静内店",
+      "address": "北海道日高郡新ひだか町静内本町２丁目１−２５ﾚｸｻｽﾋﾞﾙ",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0146-42-1682",
+          "after": "050-1726-7757"
+        }
+      ]
+    },
+    {
+      "event_id": "40ccaff330fe265f371dfeefd1bd75c895f8c2c4",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26674",
+      "name": "寧々家 山形松見町店",
+      "address": "山形県山形市南原町3丁目21-20",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "023-615-6120",
+          "after": "050-1726-6377"
+        }
+      ]
+    },
+    {
+      "event_id": "407510c2a12b620f3fbd993243e7e22f7a5eabd9",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24126",
+      "name": "海へ 苫小牧店",
+      "address": "北海道苫小牧市表町2-1-14王子不動産第三ビルB1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0144-38-1711",
+          "after": "050-1807-4261"
+        }
+      ]
+    },
+    {
+      "event_id": "3e948475b9f39074361e97e20da4416e91be6454",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26473",
+      "name": "海へ 川沿店",
+      "address": "北海道札幌市南区川沿４条２丁目２アパホテル&リゾート札幌1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-572-1682",
+          "after": "050-1724-4857"
+        }
+      ]
+    },
+    {
+      "event_id": "3baeb87f64bcf647cc6394b9a030baff75c10b74",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26761",
+      "name": "いろはにほへと 北上駅前店",
+      "address": "岩手県北上市大通り1丁目4-23",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6533",
+          "after": "050-1724-2211"
+        }
+      ]
+    },
+    {
+      "event_id": "3b285385bc3f978354a74c52f2e1f767e8c47545",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26489",
+      "name": "いろはにほへと あいの里店",
+      "address": "北海道札幌市北区あいの里１条２−５東光ストアあいの里店 2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-770-5546",
+          "after": "050-1726-4686"
+        }
+      ]
+    },
+    {
+      "event_id": "38d976b1a79d6df664c87e94f61476a9fc79d1c9",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:83858",
+      "name": "BEER DINER SUPERDRY TOKYO STAND&BURGER",
+      "address": "東京都墨田区吾妻橋1-23-36アネックスビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "ビアダイナー スーパードライ トウキョウ STAND＆BURGER",
+          "after": "BEER DINER SUPERDRY TOKYO STAND&BURGER"
+        }
+      ]
+    },
+    {
+      "event_id": "327ea61c8ce4ffda029bfa39fbac8e9b20ffec6f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:24003",
+      "name": "北の味紀行と地酒 北海道 武蔵小杉店",
+      "address": "神奈川県川崎市中原区小杉町1-403武蔵小杉タワープレイス 2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "044-738-1682",
+          "after": "050-1792-8673"
+        }
+      ]
+    },
+    {
+      "event_id": "2a4c85817ce7011024dafbde476c2274fa538670",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26701",
+      "name": "寧々家 仙台吉成店",
+      "address": "宮城県仙台市青葉区吉成台2丁目1-25",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "022-303-5665",
+          "after": "050-1721-0446"
+        }
+      ]
+    },
+    {
+      "event_id": "2a389c6c285aa00ebfaa0628b0767f32bef184d7",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:118959",
+      "name": "酒場トリノ 横浜西口店",
+      "address": "神奈川県横浜市西区北幸1-8-6横浜西口三栄ビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "045-577-9892",
+          "after": "050-1721-0703"
+        }
+      ]
+    },
+    {
+      "event_id": "290911d91d251826934dc504e577febcfffca3df",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:98887",
+      "name": "いろはにほへと 弘前駅前店",
+      "address": "青森県弘前市大字大町1丁目3-5",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-0587",
+          "after": "050-1792-3463"
+        }
+      ]
+    },
+    {
+      "event_id": "27c2255a7c14370c4d687d18924949b019879582",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26727",
+      "name": "寧々家 浜松駅前モール街店",
+      "address": "静岡県浜松市中区鍛冶町503-4松菱通りB-2ビル1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-3613",
+          "after": "050-1726-6427"
+        }
+      ]
+    },
+    {
+      "event_id": "24d12e887e53c63ae67590e490134ff29dddecbf",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:77551",
+      "name": "いろはにほへと 秋田駅前店",
+      "address": "秋田県秋田市千秋久保田町２−５４",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-3601",
+          "after": "050-1785-4579"
+        }
+      ]
+    },
+    {
+      "event_id": "23930459bbe9a82569be2fc12e47a00edc59a80f",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26716",
+      "name": "寧々家 宇都宮駅東店",
+      "address": "栃木県宇都宮市宿郷3丁目4-18",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5486-2498",
+          "after": "050-1726-4931"
+        }
+      ]
+    },
+    {
+      "event_id": "21d09d4018d44eae58cf575354b7a7269a694477",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26729",
+      "name": "寧々家 会津若松駅前店",
+      "address": "福島県会津若松市駅前町1-10会津若松駅食品館ピボット内",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0242-33-1680",
+          "after": "050-1807-4825"
+        }
+      ]
+    },
+    {
+      "event_id": "2156ce4161601570a375dda30c6729b6761f1725",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26764",
+      "name": "いろはにほへと 水戸駅南口店",
+      "address": "茨城県水戸市桜川1丁目3-3",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-9365",
+          "after": "050-1784-9035"
+        }
+      ]
+    },
+    {
+      "event_id": "1a621b07a809bf10374a979b9e5f125de7de70d2",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:105750",
+      "name": "格安ビールと鉄鍋餃子 ３・６・５酒場新宿西口店",
+      "address": "東京都新宿区西新宿１丁目１６−１１ Aiビル B1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "03-5325-4560",
+          "after": "050-1722-0172"
+        }
+      ]
+    },
+    {
+      "event_id": "1835cbce7a486141b8ae200fd6befecb427e1888",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:75683",
+      "name": "格安ビールと鉄鍋餃子3・6・5酒場溝の口店",
+      "address": "神奈川県川崎市高津区溝口1-1-3 味の食彩館４F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "044-813-2366",
+          "after": "050-1726-0961"
+        }
+      ]
+    },
+    {
+      "event_id": "16481a7b74d1ca57d40d47b6a35f5de59d238e21",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26472",
+      "name": "いろはにほへと 幣舞橋店",
+      "address": "北海道釧路市末広町２−１−１浪漫座ビル 1F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0154-32-7713",
+          "after": "050-1809-5232"
+        }
+      ]
+    },
+    {
+      "event_id": "13b7d0209e55fe962de4f9962294871aca77978a",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:22360",
+      "name": "海へ 南５条店",
+      "address": "北海道札幌市中央区南5条西4-9-1バッカスビル2F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "011-521-1682",
+          "after": "050-1724-0235"
+        }
+      ]
+    },
+    {
+      "event_id": "0f572871e61386c501f9582f9dae410fdd554c8d",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26722",
+      "name": "寧々家 日立駅前店",
+      "address": "茨城県日立市平和町1丁目18-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-6540",
+          "after": "050-1720-6193"
+        }
+      ]
+    },
+    {
+      "event_id": "0bff02e75da6cce8e97c49540be76930672b822c",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26715",
+      "name": "寧々家 鹿沼店",
+      "address": "栃木県鹿沼市西茂呂3丁目2-13",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5484-1825",
+          "after": "050-1726-8267"
+        }
+      ]
+    },
+    {
+      "event_id": "081bf5e18ecf8013266966b6ae13b58f11120ba7",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26713",
+      "name": "暖や 秋田大学病院前店",
+      "address": "秋田県秋田市広面字蓮沼16-1",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "050-5485-9364",
+          "after": "050-1725-8143"
+        }
+      ]
+    },
+    {
+      "event_id": "07d4f8bdcbb71c5296f0552307b381265c4c3aa3",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:151429",
+      "name": "格安ビールと鉄鍋餃子 3・6・5酒場 横浜西口店",
+      "address": "神奈川県横浜市西区北幸1-8-6横浜西口三栄ビル 3F",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "【8月27日OPEN】格安ビールと鉄鍋餃子 3・6・5酒場 横浜西口店",
+          "after": "格安ビールと鉄鍋餃子 3・6・5酒場 横浜西口店"
+        }
+      ]
+    },
+    {
+      "event_id": "0148a8d326ecb09cfacffabec2d12cba6b364961",
+      "at": "2026-11-01T12:57:25+09:00",
+      "run_date": "2026-11-01",
+      "kind": "changed",
+      "issuer_id": "colowide",
+      "issuer_code": "7616",
+      "issuer_name": "コロワイド",
+      "store_id": "official:id:26484",
+      "name": "いろはにほへと 幌別店",
+      "address": "北海道登別市中央町6−２−６",
+      "brand_name": "",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "0143-84-1682",
+          "after": "050-1785-8861"
+        }
+      ]
+    },
     {
       "event_id": "d750d2d2250dd11b24b6f421ccddb65ac81b9b64",
       "at": "2026-10-26T13:54:39+09:00",
