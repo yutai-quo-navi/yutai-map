@@ -1169,7 +1169,7 @@
       ]
     },
     "zensho": {
-      "revision": 7,
+      "revision": 18,
       "brands": [
         {
           "brand_name": "かつ庵",
@@ -1177,15 +1177,15 @@
         },
         {
           "brand_name": "すき家",
-          "store_count": 2003
+          "store_count": 2008
         },
         {
           "brand_name": "なか卯",
-          "store_count": 446
+          "store_count": 445
         },
         {
           "brand_name": "はま寿司",
-          "store_count": 688
+          "store_count": 689
         },
         {
           "brand_name": "エルトリート",
@@ -1201,11 +1201,11 @@
         },
         {
           "brand_name": "ジョリーパスタ",
-          "store_count": 326
+          "store_count": 325
         },
         {
           "brand_name": "ゼッテリア",
-          "store_count": 272
+          "store_count": 271
         },
         {
           "brand_name": "ビッグボーイ",
@@ -3152,7 +3152,7 @@
       ]
     },
     "komeda": {
-      "revision": 1063,
+      "revision": 1067,
       "brands": [
         {
           "brand_name": "BAKERY ADEMOK",
@@ -3168,7 +3168,7 @@
         },
         {
           "brand_name": "コメダ珈琲店",
-          "store_count": 1034
+          "store_count": 1038
         },
         {
           "brand_name": "ジェリコ堂",
@@ -3185,7 +3185,7 @@
       ]
     },
     "dnh": {
-      "revision": 1244,
+      "revision": 1245,
       "brands": [
         {
           "brand_name": "エクセルシオール カフェ",
@@ -3213,7 +3213,7 @@
         },
         {
           "brand_name": "ドトールコーヒーショップ",
-          "store_count": 1037
+          "store_count": 1036
         },
         {
           "brand_name": "ドトールスタンド",
@@ -4875,7 +4875,7 @@
       ]
     },
     "tanaka": {
-      "revision": 356,
+      "revision": 358,
       "brands": [
         {
           "brand_name": "串カツ田中",
@@ -4893,11 +4893,11 @@
       ]
     },
     "choushimaru": {
-      "revision": 82,
+      "revision": 83,
       "brands": [
         {
           "brand_name": "すし銚子丸",
-          "store_count": 82
+          "store_count": 83
         }
       ]
     },

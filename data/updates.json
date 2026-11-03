@@ -1,8 +1,300 @@
 {
   "version": 1,
-  "generated_at": "2026-11-01T16:41:00+09:00",
-  "event_count": 226,
+  "generated_at": "2026-11-02T21:34:41+09:00",
+  "event_count": 246,
   "events": [
+    {
+      "event_id": "fa6ab652f1a2424888a1da92b21c1a719b75c6ab",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6630",
+      "name": "すき家 鹿屋共栄店",
+      "address": "鹿児島県鹿屋市共栄町20-14",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "dc089d1dbe74d9d910067d06ba105ff36d44b4e3",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:87",
+      "name": "すき家 黒川北店",
+      "address": "愛知県名古屋市北区黒川本通5-19-1",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "da5b2fecfb0959e37d8f2203fa5103d57672fc85",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:5470",
+      "name": "オリーブの丘 市原姉崎店",
+      "address": "千葉県市原市姉崎2117-1",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "0436-63-6925"
+        }
+      ]
+    },
+    {
+      "event_id": "bbe016cdf44335f0751be137efa7c63f67d329c4",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:3572",
+      "name": "ジョリーパスタ 浜松中沢店",
+      "address": "静岡県浜松市中央区中沢町8-22",
+      "brand_name": "ジョリーパスタ"
+    },
+    {
+      "event_id": "bbdb023c61ac07db5df2653e1893f5728a7b7b6d",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6627",
+      "name": "すき家 2国芦屋清水店",
+      "address": "兵庫県芦屋市清水町4番6号",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "afd69b737fac2268635567f620aed3df9752816f",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6279",
+      "name": "ゼッテリア 旭川A・s・h店",
+      "address": "北海道旭川市一条通7-43-40",
+      "brand_name": "ゼッテリア"
+    },
+    {
+      "event_id": "9aa22747884b2ef7a8b21d4cf6b4065d0359bc36",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:5289",
+      "name": "オリーブの丘 北本二ツ家店",
+      "address": "埼玉県北本市二ツ家4-84",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "048-501-7711",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "938eb817a9fa0c988381c827e2a74cf9ff8e7698",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:669",
+      "name": "すき家 118号常陸大宮泉店",
+      "address": "茨城県常陸大宮市泉字中村田462-6",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "85825973f490c99f3863afaf76ccb8113faa0cd0",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6628",
+      "name": "すき家 432号松江古志原店",
+      "address": "島根県松江市古志原6-19-41",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "7bed5896b91561d4c2a377b9f0cdbb9f08a480f9",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6629",
+      "name": "すき家 金沢北安江店",
+      "address": "石川県金沢市北安江1-3-8",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "77015acf1637fa125b2e00cfa1047aacd40a1f5b",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6634",
+      "name": "はま寿司 岡山西市店",
+      "address": "岡山県岡山市南区西市305-5",
+      "brand_name": "はま寿司"
+    },
+    {
+      "event_id": "1752a5f1b5e3eb9b43949013130e33d93197e0a3",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:144",
+      "name": "すき家 高岡駅南店",
+      "address": "富山県高岡市駅南5-5-5",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "101ea120ff989a416e4bd1f967d74f85c615c1b7",
+      "at": "2026-11-02T21:34:41+09:00",
+      "run_date": "2026-11-02",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:2139",
+      "name": "なか卯 西葛西駅前店",
+      "address": "東京都江戸川区西葛西6-7 メトロセンター西葛西Ｂ棟2号",
+      "brand_name": "なか卯"
+    },
+    {
+      "event_id": "671098f72bc2387e11e0f711e8fa2335dc519fac",
+      "at": "2026-11-02T15:33:22+09:00",
+      "run_date": "2026-11-02",
+      "kind": "changed",
+      "issuer_id": "dnh",
+      "issuer_code": "3087",
+      "issuer_name": "ドトール・日レスホールディングス",
+      "store_id": "official:dnh:1012566",
+      "name": "ドトールコーヒーショップ 都営浅草橋駅店",
+      "address": "東京都台東区 浅草橋 １‐１８‐１１  地下１Ｆ改札外コンコース",
+      "brand_name": "ドトールコーヒーショップ",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.694125,
+          "after": 35.694124
+        }
+      ]
+    },
+    {
+      "event_id": "5a737eb9bc0fab9097a3e5dc0c2cb7e61aba029e",
+      "at": "2026-11-02T15:33:22+09:00",
+      "run_date": "2026-11-02",
+      "kind": "changed",
+      "issuer_id": "dnh",
+      "issuer_code": "3087",
+      "issuer_name": "ドトール・日レスホールディングス",
+      "store_id": "official:dnh:2011805",
+      "name": "ドトールコーヒーショップ 広島本通り店",
+      "address": "広島県広島市中区 本通 ５‐７",
+      "brand_name": "ドトールコーヒーショップ",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 34.39017,
+          "after": 34.390169
+        }
+      ]
+    },
+    {
+      "event_id": "33660f504eda31977a709a1406c16b80a3b647f9",
+      "at": "2026-11-02T15:33:22+09:00",
+      "run_date": "2026-11-02",
+      "kind": "removed",
+      "issuer_id": "dnh",
+      "issuer_code": "3087",
+      "issuer_name": "ドトール・日レスホールディングス",
+      "store_id": "official:dnh:1011947",
+      "name": "ドトールコーヒーショップ 上野御徒町中央通り店",
+      "address": "東京都台東区 上野 ６‐１３‐６",
+      "brand_name": "ドトールコーヒーショップ"
+    },
+    {
+      "event_id": "ff200aadb178ff20057462b47fc2420de199627f",
+      "at": "2026-11-02T15:30:29+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "komeda",
+      "issuer_code": "3543",
+      "issuer_name": "コメダホールディングス",
+      "store_id": "official:komeda:1214",
+      "name": "コメダ珈琲店 ミーナ津田沼店",
+      "address": "千葉県習志野市津田沼１−３−１ミーナ津田沼　１階",
+      "brand_name": "コメダ珈琲店"
+    },
+    {
+      "event_id": "c5d2c6901c6b6996164c75bd7c01a5c273e6c495",
+      "at": "2026-11-02T15:30:29+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "komeda",
+      "issuer_code": "3543",
+      "issuer_name": "コメダホールディングス",
+      "store_id": "official:komeda:1223",
+      "name": "コメダ珈琲店 心斎橋店",
+      "address": "大阪府大阪市中央区心斎橋筋２丁目２−２３不二家心斎橋ビル２階",
+      "brand_name": "コメダ珈琲店"
+    },
+    {
+      "event_id": "8a91447c627e5b7f5957767574c9d357eaa92589",
+      "at": "2026-11-02T15:30:29+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "komeda",
+      "issuer_code": "3543",
+      "issuer_name": "コメダホールディングス",
+      "store_id": "official:komeda:1224",
+      "name": "コメダ珈琲店 針中野店",
+      "address": "大阪府大阪市東住吉区湯里１丁目１４−３ブループラス針中野１階",
+      "brand_name": "コメダ珈琲店"
+    },
+    {
+      "event_id": "2bdbf28e9d5b042631beb5f77f3bafbe8300f721",
+      "at": "2026-11-02T15:30:29+09:00",
+      "run_date": "2026-11-02",
+      "kind": "added",
+      "issuer_id": "komeda",
+      "issuer_code": "3543",
+      "issuer_name": "コメダホールディングス",
+      "store_id": "official:komeda:1212",
+      "name": "コメダ珈琲店 板橋仲宿店",
+      "address": "東京都板橋区仲宿５６ー１６日神パレステージ板橋仲宿　１階",
+      "brand_name": "コメダ珈琲店"
+    },
     {
       "event_id": "a8264e9ee5cc8309a7b723a27c8937ce6c45710f",
       "at": "2026-11-01T16:41:00+09:00",
