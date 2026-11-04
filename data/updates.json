@@ -1,8 +1,35 @@
 {
   "version": 1,
-  "generated_at": "2026-11-02T21:34:41+09:00",
-  "event_count": 246,
+  "generated_at": "2026-11-03T15:38:04+09:00",
+  "event_count": 247,
   "events": [
+    {
+      "event_id": "ed0a72f1d9675cbe13f040c0dffd0832a9f91949",
+      "at": "2026-11-03T15:38:04+09:00",
+      "run_date": "2026-11-03",
+      "kind": "changed",
+      "issuer_id": "chikaranomoto",
+      "issuer_code": "3561",
+      "issuer_name": "力の源ホールディングス",
+      "store_id": "official:chikaranomoto:1146",
+      "name": "一風堂 SOCOLA所沢店",
+      "address": "埼玉県所沢市大字北秋津2031番1",
+      "brand_name": "一風堂",
+      "changed_fields": [
+        {
+          "key": "lat",
+          "label": "緯度",
+          "before": 35.77888,
+          "after": 35.78409575096351
+        },
+        {
+          "key": "lng",
+          "label": "経度",
+          "before": 139.4781956,
+          "after": 139.4823047442108
+        }
+      ]
+    },
     {
       "event_id": "fa6ab652f1a2424888a1da92b21c1a719b75c6ab",
       "at": "2026-11-02T21:34:41+09:00",
