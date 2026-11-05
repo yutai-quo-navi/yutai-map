@@ -1,8 +1,105 @@
 {
   "version": 1,
-  "generated_at": "2026-11-03T15:38:04+09:00",
-  "event_count": 247,
+  "generated_at": "2026-11-05T07:53:05+09:00",
+  "event_count": 252,
   "events": [
+    {
+      "event_id": "c87cf04e68f4515312483b692c9505d73b3f29ab",
+      "at": "2026-11-04T16:34:33+09:00",
+      "run_date": "2026-11-04",
+      "kind": "changed",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:88",
+      "name": "ジョイフル 宇島店",
+      "address": "福岡県豊前市赤熊403",
+      "brand_name": "ジョイフル",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "福岡県豊前市赤熊403　　　　　　　　　　　　　　　　　",
+          "after": "福岡県豊前市赤熊403"
+        }
+      ]
+    },
+    {
+      "event_id": "965950aec286f0f3230faf3948bdf0f714482106",
+      "at": "2026-11-04T16:34:33+09:00",
+      "run_date": "2026-11-04",
+      "kind": "changed",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:76",
+      "name": "ジョイフル 都城店",
+      "address": "宮崎県都城市平江町23-6",
+      "brand_name": "ジョイフル",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "宮崎県都城市平江町23-6　　　　　　　　　　　　　　　",
+          "after": "宮崎県都城市平江町23-6"
+        }
+      ]
+    },
+    {
+      "event_id": "6a8296a24fc5709f90be58007bc4bd6a1f4b3e73",
+      "at": "2026-11-04T16:34:33+09:00",
+      "run_date": "2026-11-04",
+      "kind": "changed",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:513",
+      "name": "ジョイフル 下松宮前店",
+      "address": "山口県下松市豊井西二丁目10-26",
+      "brand_name": "ジョイフル",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "山口県下松市東豊井1534-1",
+          "after": "山口県下松市豊井西二丁目10-26"
+        }
+      ]
+    },
+    {
+      "event_id": "4af1a508d9ea5d4125745ab6734fa8c281bc9dae",
+      "at": "2026-11-04T16:34:33+09:00",
+      "run_date": "2026-11-04",
+      "kind": "changed",
+      "issuer_id": "joyfull",
+      "issuer_code": "9942",
+      "issuer_name": "ジョイフル",
+      "store_id": "official:joyfull:612",
+      "name": "ジョイフルEXPRESS イオンモール高岡店",
+      "address": "富山県高岡市下伏間江383 イオンモール高岡 フードコート内",
+      "brand_name": "ジョイフル",
+      "changed_fields": [
+        {
+          "key": "name",
+          "label": "店名",
+          "before": "ジョイフルEXPRESS イオンモール高岡店＜2026年10月27日オープン！＞",
+          "after": "ジョイフルEXPRESS イオンモール高岡店"
+        }
+      ]
+    },
+    {
+      "event_id": "efd8b27dfed05070a8e4715892baa84838fe57f3",
+      "at": "2026-11-04T16:32:25+09:00",
+      "run_date": "2026-11-04",
+      "kind": "added",
+      "issuer_id": "ohsho",
+      "issuer_code": "9936",
+      "issuer_name": "王将フードサービス",
+      "store_id": "official:ohsho:4063",
+      "name": "餃子の王将 都島本通店",
+      "address": "大阪府大阪市都島区都島本通3丁目27-4",
+      "brand_name": "餃子の王将"
+    },
     {
       "event_id": "ed0a72f1d9675cbe13f040c0dffd0832a9f91949",
       "at": "2026-11-03T15:38:04+09:00",
