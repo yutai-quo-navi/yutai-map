@@ -3905,6 +3905,28 @@
       "expiry_year": 2027
     },
     {
+      "id": "9950-2027-12-1",
+      "code": "9950",
+      "company_name": "ハチバン",
+      "benefit_name": "株主優待券",
+      "issue": "2026年新着分",
+      "expiry_date": "2027-12-31",
+      "research_month": "2027-12",
+      "expiry_type": "利用期限",
+      "category": "dining",
+      "brands": [],
+      "source_url": "",
+      "secondary_source_url": "",
+      "checked_on": "2026-11-07",
+      "status": "confirmed",
+      "notes": "2026-11-07 ユーザー提供：新券到着、有効期限2027年12月31日。",
+      "issuer_id": "hachiban",
+      "search_brand": "",
+      "emoji": "🍜",
+      "verification_method": "user",
+      "expiry_year": 2027
+    },
+    {
       "id": "9850-2028-05-electronic",
       "code": "9850",
       "company_name": "グルメ杵屋",
