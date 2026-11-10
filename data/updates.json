@@ -1,8 +1,68 @@
 {
   "version": 1,
-  "generated_at": "2026-11-05T07:53:05+09:00",
-  "event_count": 252,
+  "generated_at": "2026-11-09T21:59:23+09:00",
+  "event_count": 256,
   "events": [
+    {
+      "event_id": "b262eb207f3c8c04cbbe94bb906c1ff299b4ce46",
+      "at": "2026-11-09T21:59:23+09:00",
+      "run_date": "2026-11-09",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:1924",
+      "name": "すき家 鶴瀬駅西口店",
+      "address": "埼玉県富士見市鶴瀬西1-70-1 鶴瀬駅西口ビル１F",
+      "brand_name": "すき家",
+      "changed_fields": [
+        {
+          "key": "address",
+          "label": "住所",
+          "before": "埼玉県富士見市鶴馬2602-2 鶴瀬駅西口ビル1F",
+          "after": "埼玉県富士見市鶴瀬西1-70-1 鶴瀬駅西口ビル１F"
+        }
+      ]
+    },
+    {
+      "event_id": "52bf7699ebd149c1d11a4f617756d0cb43f4da32",
+      "at": "2026-11-09T21:59:23+09:00",
+      "run_date": "2026-11-09",
+      "kind": "removed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:1313",
+      "name": "すき家 16号木更津貝渕店",
+      "address": "千葉県木更津市貝渕4-10-10",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "204fd52e6159e69b7bf7494138ab7fa62e7187aa",
+      "at": "2026-11-09T21:59:23+09:00",
+      "run_date": "2026-11-09",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6640",
+      "name": "はま寿司 臼杵店",
+      "address": "大分県臼杵市野田202",
+      "brand_name": "はま寿司"
+    },
+    {
+      "event_id": "0663f2d94a146357860bf920e8e94142e12c64d7",
+      "at": "2026-11-09T21:59:23+09:00",
+      "run_date": "2026-11-09",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6636",
+      "name": "すき家 高岡大野店",
+      "address": "富山県高岡市大野113番地1",
+      "brand_name": "すき家"
+    },
     {
       "event_id": "c87cf04e68f4515312483b692c9505d73b3f29ab",
       "at": "2026-11-04T16:34:33+09:00",
