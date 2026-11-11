@@ -3844,7 +3844,7 @@
       ]
     },
     "tenpos": {
-      "revision": 227,
+      "revision": 230,
       "brands": [
         {
           "brand_name": "THE漁師DON",
@@ -3912,7 +3912,7 @@
         },
         {
           "brand_name": "八剣伝",
-          "store_count": 13
+          "store_count": 12
         },
         {
           "brand_name": "八右衛門",
@@ -3949,10 +3949,6 @@
         {
           "brand_name": "炭火のでん",
           "store_count": 1
-        },
-        {
-          "brand_name": "炭火焼鳥てんちゃん",
-          "store_count": 2
         },
         {
           "brand_name": "焼そばセンター",
