@@ -1,6 +1,6 @@
 {
   "source": "https://maps.zensho.co.jp/jp/shop.html",
-  "generated_at": "2026-11-09T21:59:23+09:00",
+  "generated_at": "2026-11-16T21:52:41+09:00",
   "eligible_filter": "shareholder_coupon",
   "brands": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "name": "すき家",
-      "eligible_store_count": 2008
+      "eligible_store_count": 2009
     },
     {
       "name": "なか卯",
@@ -17,7 +17,7 @@
     },
     {
       "name": "はま寿司",
-      "eligible_store_count": 690
+      "eligible_store_count": 691
     },
     {
       "name": "エルトリート",

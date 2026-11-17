@@ -1169,7 +1169,7 @@
       ]
     },
     "zensho": {
-      "revision": 21,
+      "revision": 23,
       "brands": [
         {
           "brand_name": "かつ庵",
@@ -1177,7 +1177,7 @@
         },
         {
           "brand_name": "すき家",
-          "store_count": 2008
+          "store_count": 2009
         },
         {
           "brand_name": "なか卯",
@@ -1185,7 +1185,7 @@
         },
         {
           "brand_name": "はま寿司",
-          "store_count": 690
+          "store_count": 691
         },
         {
           "brand_name": "エルトリート",
@@ -3609,7 +3609,7 @@
       ]
     },
     "gift": {
-      "revision": 316,
+      "revision": 317,
       "brands": [
         {
           "brand_name": "がっとん",
@@ -3629,7 +3629,7 @@
         },
         {
           "brand_name": "豚山",
-          "store_count": 58
+          "store_count": 57
         },
         {
           "brand_name": "赤みそ家",
@@ -3731,20 +3731,20 @@
       ]
     },
     "eternal": {
-      "revision": 704,
+      "revision": 707,
       "brands": [
         {
           "brand_name": "鳥貴族",
-          "store_count": 704
+          "store_count": 703
         }
       ]
     },
     "kourakuen": {
-      "revision": 356,
+      "revision": 357,
       "brands": [
         {
           "brand_name": "幸楽苑",
-          "store_count": 355
+          "store_count": 356
         },
         {
           "brand_name": "餃子の味よし",
@@ -3844,7 +3844,7 @@
       ]
     },
     "tenpos": {
-      "revision": 230,
+      "revision": 330,
       "brands": [
         {
           "brand_name": "THE漁師DON",

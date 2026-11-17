@@ -1,8 +1,76 @@
 {
   "version": 1,
-  "generated_at": "2026-11-09T21:59:23+09:00",
-  "event_count": 256,
+  "generated_at": "2026-11-16T21:52:41+09:00",
+  "event_count": 260,
   "events": [
+    {
+      "event_id": "8fd007134dab0538966b57a5ae3b1b404b8502fe",
+      "at": "2026-11-16T21:52:41+09:00",
+      "run_date": "2026-11-16",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:5535",
+      "name": "オリーブの丘 千葉青葉の森公園店",
+      "address": "千葉県千葉市中央区青葉町1259",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "043-312-9738"
+        }
+      ]
+    },
+    {
+      "event_id": "5612aff0c35d55a67a0995480704c84d55a622fa",
+      "at": "2026-11-16T21:52:41+09:00",
+      "run_date": "2026-11-16",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6637",
+      "name": "すき家 宇都宮兵庫塚店",
+      "address": "栃木県宇都宮市兵庫塚3-41-22",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "2fe382fb0f81b93c5190091ff8474393cf74f1bf",
+      "at": "2026-11-16T21:52:41+09:00",
+      "run_date": "2026-11-16",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:5551",
+      "name": "オリーブの丘 つくば研究学園店",
+      "address": "茨城県つくば市研究学園7-20-1",
+      "brand_name": "オリーブの丘",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "029-879-8061",
+          "after": ""
+        }
+      ]
+    },
+    {
+      "event_id": "2bac20b3cde66f5a1a86cfc1c4a4427f22fc7d65",
+      "at": "2026-11-16T21:52:41+09:00",
+      "run_date": "2026-11-16",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6641",
+      "name": "はま寿司 相馬店",
+      "address": "福島県相馬市沖ノ内1-8-4",
+      "brand_name": "はま寿司"
+    },
     {
       "event_id": "b262eb207f3c8c04cbbe94bb906c1ff299b4ce46",
       "at": "2026-11-09T21:59:23+09:00",
