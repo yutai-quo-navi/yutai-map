@@ -1,8 +1,94 @@
 {
   "version": 1,
-  "generated_at": "2026-11-16T21:52:41+09:00",
-  "event_count": 260,
+  "generated_at": "2026-11-23T23:50:53+09:00",
+  "event_count": 266,
   "events": [
+    {
+      "event_id": "f8c80b1f1781dc16c10f2692cffc09a411f40c1f",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6639",
+      "name": "すき家 札幌平岡店",
+      "address": "北海道札幌市清田区平岡8条1-1-5",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "f39455fec4553b5efc83db22567c9c7dadeaa005",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "changed",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6635",
+      "name": "ジョリーパスタ 福島矢野目店",
+      "address": "福島県福島市南矢野目字中谷地30-7",
+      "brand_name": "ジョリーパスタ",
+      "changed_fields": [
+        {
+          "key": "phone",
+          "label": "電話",
+          "before": "",
+          "after": "024-563-4440"
+        }
+      ]
+    },
+    {
+      "event_id": "949ba2a30955a21a4d7dd55dae2587eee5408137",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6658",
+      "name": "ココス 富士吉田店",
+      "address": "山梨県富士吉田市上吉田1-1-5",
+      "brand_name": "ココス"
+    },
+    {
+      "event_id": "7202fa77a9edecf3979eddac47bebc47fcbf4a87",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6638",
+      "name": "すき家 16号木更津潮見店",
+      "address": "千葉県木更津市潮見4-12-1",
+      "brand_name": "すき家"
+    },
+    {
+      "event_id": "201240dcf0807632e2d54fd31f468d1ca4fad104",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6645",
+      "name": "はま寿司 広島大州店",
+      "address": "広島県広島市南区大州1-1-33",
+      "brand_name": "はま寿司"
+    },
+    {
+      "event_id": "15db187ded00a9d2d5828353359149e8c6cf4b11",
+      "at": "2026-11-23T23:50:53+09:00",
+      "run_date": "2026-11-23",
+      "kind": "added",
+      "issuer_id": "zensho",
+      "issuer_code": "7550",
+      "issuer_name": "ゼンショーホールディングス",
+      "store_id": "official:id:6644",
+      "name": "はま寿司 稚内店",
+      "address": "北海道稚内市大黒2-6-15",
+      "brand_name": "はま寿司"
+    },
     {
       "event_id": "8fd007134dab0538966b57a5ae3b1b404b8502fe",
       "at": "2026-11-16T21:52:41+09:00",

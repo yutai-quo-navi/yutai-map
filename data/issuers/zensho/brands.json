@@ -1,6 +1,6 @@
 {
   "source": "https://maps.zensho.co.jp/jp/shop.html",
-  "generated_at": "2026-11-16T21:52:41+09:00",
+  "generated_at": "2026-11-23T23:50:53+09:00",
   "eligible_filter": "shareholder_coupon",
   "brands": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "name": "すき家",
-      "eligible_store_count": 2009
+      "eligible_store_count": 2011
     },
     {
       "name": "なか卯",
@@ -17,7 +17,7 @@
     },
     {
       "name": "はま寿司",
-      "eligible_store_count": 691
+      "eligible_store_count": 693
     },
     {
       "name": "エルトリート",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ココス",
-      "eligible_store_count": 506
+      "eligible_store_count": 507
     },
     {
       "name": "ジョリーパスタ",
